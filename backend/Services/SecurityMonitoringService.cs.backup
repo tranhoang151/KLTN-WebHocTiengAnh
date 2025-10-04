@@ -1,0 +1,912 @@
+using Google.Cloud.Firestore;
+using System.Text.Json;
+using System.Net;
+
+namespace BingGoWebAPI.Services
+{
+    /// <summary>
+    /// Security Monitoring Service for comprehensive security event tracking and analysis
+    /// Implements real-time security monitoring, threat detection, and incident response
+    /// </summary>
+    public interface ISecurityMonitoringService
+    {
+        Task LogSecurityEventAsync(SecurityEvent securityEvent);
+        Task<List<SecurityEvent>> GetSecurityEventsAsync(DateTime fromDate, DateTime toDate, SecurityEventType? eventType = null);
+        Task<SecurityThreatAnalysis> AnalyzeSecurityThreatsAsync(TimeSpan timeWindow);
+        Task<List<SecurityIncident>> GetActiveIncidentsAsync();
+        Task<SecurityIncident> CreateIncidentAsync(SecurityIncidentRequest request);
+        Task<bool> UpdateIncidentStatusAsync(string incidentId, SecurityIncidentStatus status, string notes);
+        Task<SecurityDashboardData> GetSecurityDashboardDataAsync();
+        Task<bool> TriggerSecurityAlertAsync(SecurityAlert alert);
+        Task<List<SecurityMetric>> GetSecurityMetricsAsync(DateTime fromDate, DateTime toDate);
+        Task<SecurityComplianceReport> GenerateComplianceReportAsync(DateTime fromDate, DateTime toDate);
+    }
+
+    public class SecurityMonitoringService : ISecurityMonitoringService
+    {
+        private readonly FirestoreDb _firestore;
+        private readonly ILogger<SecurityMonitoringService> _logger;
+        private readonly IIntrusionDetectionService _intrusionDetection;
+        private readonly IAuditLogService _auditLogService;
+        private readonly IConfiguration _configuration;
+        private readonly IServiceProvider _serviceProvider;
+
+        public SecurityMonitoringService(
+            FirestoreDb firestore,
+            ILogger<SecurityMonitoringService> logger,
+            IIntrusionDetectionService intrusionDetection,
+            IAuditLogService auditLogService,
+            IConfiguration configuration,
+            IServiceProvider serviceProvider)
+        {
+            _firestore = firestore;
+            _logger = logger;
+            _intrusionDetection = intrusionDetection;
+            _auditLogService = auditLogService;
+            _configuration = configuration;
+            _serviceProvider = serviceProvider;
+        }
+
+        /// <summary>
+        /// Log security event for monitoring and analysis
+        /// </summary>
+        public async Task LogSecurityEventAsync(SecurityEvent securityEvent)
+        {
+            try
+            {
+                securityEvent.Id = Guid.NewGuid().ToString();
+                securityEvent.Timestamp = DateTime.UtcNow;
+                securityEvent.ProcessedAt = DateTime.UtcNow;
+
+                // Enrich event with additional context
+                await EnrichSecurityEventAsync(securityEvent);
+
+                // Store in Firestore
+                await _firestore.Collection("securityEvents").Document(securityEvent.Id).SetAsync(securityEvent);
+
+                // Analyze for threats in real-time
+                await AnalyzeEventForThreatsAsync(securityEvent);
+
+                // Log to system logger
+                _logger.LogInformation("Security event logged: {EventType} from {Source} - {Description}",
+                    securityEvent.EventType, securityEvent.Source, securityEvent.Description);
+
+                // Check if event requires immediate attention
+                if (securityEvent.Severity >= SecurityEventSeverity.High)
+                {
+                    await HandleHighSeverityEventAsync(securityEvent);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error logging security event: {EventType}", securityEvent.EventType);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get security events within date range
+        /// </summary>
+        public async Task<List<SecurityEvent>> GetSecurityEventsAsync(DateTime fromDate, DateTime toDate, SecurityEventType? eventType = null)
+        {
+            try
+            {
+                var query = _firestore.Collection("securityEvents")
+                    .WhereGreaterThanOrEqualTo("timestamp", fromDate)
+                    .WhereLessThanOrEqualTo("timestamp", toDate)
+                    .OrderByDescending("timestamp")
+                    .Limit(1000);
+
+                if (eventType.HasValue)
+                {
+                    query = query.WhereEqualTo("eventType", eventType.Value.ToString());
+                }
+
+                var snapshot = await query.GetSnapshotAsync();
+                return snapshot.Documents.Select(doc => doc.ConvertTo<SecurityEvent>()).ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving security events");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Analyze security threats within time window
+        /// </summary>
+        public async Task<SecurityThreatAnalysis> AnalyzeSecurityThreatsAsync(TimeSpan timeWindow)
+        {
+            try
+            {
+                var fromDate = DateTime.UtcNow.Subtract(timeWindow);
+                var events = await GetSecurityEventsAsync(fromDate, DateTime.UtcNow);
+
+                var analysis = new SecurityThreatAnalysis
+                {
+                    AnalysisDate = DateTime.UtcNow,
+                    TimeWindow = timeWindow,
+                    TotalEvents = events.Count
+                };
+
+                // Analyze by event type
+                analysis.EventsByType = events
+                    .GroupBy(e => e.EventType)
+                    .ToDictionary(g => g.Key.ToString(), g => g.Count());
+
+                // Analyze by severity
+                analysis.EventsBySeverity = events
+                    .GroupBy(e => e.Severity)
+                    .ToDictionary(g => g.Key.ToString(), g => g.Count());
+
+                // Identify top threat sources
+                analysis.TopThreatSources = events
+                    .Where(e => e.Severity >= SecurityEventSeverity.Medium)
+                    .GroupBy(e => e.Source)
+                    .OrderByDescending(g => g.Count())
+                    .Take(10)
+                    .ToDictionary(g => g.Key, g => g.Count());
+
+                // Calculate threat score
+                analysis.ThreatScore = CalculateThreatScore(events);
+
+                // Identify patterns
+                analysis.ThreatPatterns = await IdentifyThreatPatternsAsync(events);
+
+                // Generate recommendations
+                analysis.Recommendations = GenerateSecurityRecommendations(analysis);
+
+                return analysis;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error analyzing security threats");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get active security incidents
+        /// </summary>
+        public async Task<List<SecurityIncident>> GetActiveIncidentsAsync()
+        {
+            try
+            {
+                var query = _firestore.Collection("securityIncidents")
+                    .WhereIn("status", new[] {
+                        SecurityIncidentStatus.Open.ToString(),
+                        SecurityIncidentStatus.InProgress.ToString()
+                    })
+                    .OrderByDescending("createdAt");
+
+                var snapshot = await query.GetSnapshotAsync();
+                return snapshot.Documents.Select(doc => doc.ConvertTo<SecurityIncident>()).ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving active incidents");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create new security incident
+        /// </summary>
+        public async Task<SecurityIncident> CreateIncidentAsync(SecurityIncidentRequest request)
+        {
+            try
+            {
+                var incident = new SecurityIncident
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Title = request.Title,
+                    Description = request.Description,
+                    Severity = request.Severity,
+                    Status = SecurityIncidentStatus.Open,
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = request.CreatedBy,
+                    AssignedTo = request.AssignedTo,
+                    Tags = request.Tags,
+                    RelatedEvents = request.RelatedEventIds,
+                    Priority = CalculateIncidentPriority(request.Severity, request.ImpactLevel)
+                };
+
+                await _firestore.Collection("securityIncidents").Document(incident.Id).SetAsync(incident);
+
+                // Log incident creation
+                await _auditLogService.LogSecurityIncidentAsync(incident.CreatedBy, "INCIDENT_CREATED",
+                    $"Security incident created: {incident.Title}");
+
+                // Send notifications
+                await SendIncidentNotificationAsync(incident, "created");
+
+                _logger.LogWarning("Security incident created: {IncidentId} - {Title}", incident.Id, incident.Title);
+
+                return incident;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error creating security incident");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update incident status
+        /// </summary>
+        public async Task<bool> UpdateIncidentStatusAsync(string incidentId, SecurityIncidentStatus status, string notes)
+        {
+            try
+            {
+                var incidentRef = _firestore.Collection("securityIncidents").Document(incidentId);
+                var incidentDoc = await incidentRef.GetSnapshotAsync();
+
+                if (!incidentDoc.Exists)
+                {
+                    return false;
+                }
+
+                var updates = new Dictionary<string, object>
+                {
+                    ["status"] = status.ToString(),
+                    ["updatedAt"] = DateTime.UtcNow,
+                    ["statusNotes"] = notes
+                };
+
+                if (status == SecurityIncidentStatus.Resolved)
+                {
+                    updates["resolvedAt"] = DateTime.UtcNow;
+                }
+
+                await incidentRef.UpdateAsync(updates);
+
+                // Log status change
+                await _auditLogService.LogSecurityIncidentAsync("system", "INCIDENT_STATUS_UPDATED",
+                    $"Incident {incidentId} status changed to {status}");
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating incident status for {IncidentId}", incidentId);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Get security dashboard data
+        /// </summary>
+        public async Task<SecurityDashboardData> GetSecurityDashboardDataAsync()
+        {
+            try
+            {
+                var now = DateTime.UtcNow;
+                var last24Hours = now.AddHours(-24);
+                var last7Days = now.AddDays(-7);
+
+                var dashboard = new SecurityDashboardData
+                {
+                    GeneratedAt = now
+                };
+
+                // Get recent events
+                var recentEvents = await GetSecurityEventsAsync(last24Hours, now);
+                dashboard.EventsLast24Hours = recentEvents.Count;
+                dashboard.HighSeverityEventsLast24Hours = recentEvents.Count(e => e.Severity >= SecurityEventSeverity.High);
+
+                // Get active incidents
+                var activeIncidents = await GetActiveIncidentsAsync();
+                dashboard.ActiveIncidents = activeIncidents.Count;
+                dashboard.CriticalIncidents = activeIncidents.Count(i => i.Severity == SecurityEventSeverity.Critical);
+
+                // Get threat analysis
+                var threatAnalysis = await AnalyzeSecurityThreatsAsync(TimeSpan.FromDays(7));
+                dashboard.ThreatScore = threatAnalysis.ThreatScore;
+                dashboard.TopThreats = threatAnalysis.TopThreatSources.Take(5).ToList();
+
+                // Get compliance status
+                var complianceReport = await GenerateComplianceReportAsync(last7Days, now);
+                dashboard.ComplianceScore = complianceReport.OverallScore;
+                dashboard.ComplianceIssues = complianceReport.Issues.Count;
+
+                // Get system health
+                dashboard.SystemHealth = await GetSystemHealthStatusAsync();
+
+                return dashboard;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error generating security dashboard data");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Trigger security alert
+        /// </summary>
+        public async Task<bool> TriggerSecurityAlertAsync(SecurityAlert alert)
+        {
+            try
+            {
+                alert.Id = Guid.NewGuid().ToString();
+                alert.CreatedAt = DateTime.UtcNow;
+                alert.Status = SecurityAlertStatus.Active;
+
+                // Store alert
+                await _firestore.Collection("securityAlerts").Document(alert.Id).SetAsync(alert);
+
+                // Send notifications based on severity
+                await SendSecurityAlertNotificationsAsync(alert);
+
+                // Log alert
+                _logger.LogWarning("Security alert triggered: {AlertType} - {Message}", alert.AlertType, alert.Message);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error triggering security alert");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Get security metrics
+        /// </summary>
+        public async Task<List<SecurityMetric>> GetSecurityMetricsAsync(DateTime fromDate, DateTime toDate)
+        {
+            try
+            {
+                var events = await GetSecurityEventsAsync(fromDate, toDate);
+                var metrics = new List<SecurityMetric>();
+
+                // Calculate daily metrics
+                var dailyGroups = events.GroupBy(e => e.Timestamp.Date);
+
+                foreach (var group in dailyGroups)
+                {
+                    var dayEvents = group.ToList();
+
+                    metrics.Add(new SecurityMetric
+                    {
+                        Date = group.Key,
+                        MetricType = "TotalEvents",
+                        Value = dayEvents.Count,
+                        Description = "Total security events"
+                    });
+
+                    metrics.Add(new SecurityMetric
+                    {
+                        Date = group.Key,
+                        MetricType = "HighSeverityEvents",
+                        Value = dayEvents.Count(e => e.Severity >= SecurityEventSeverity.High),
+                        Description = "High severity security events"
+                    });
+
+                    metrics.Add(new SecurityMetric
+                    {
+                        Date = group.Key,
+                        MetricType = "FailedLogins",
+                        Value = dayEvents.Count(e => e.EventType == SecurityEventType.AuthenticationFailure),
+                        Description = "Failed login attempts"
+                    });
+
+                    metrics.Add(new SecurityMetric
+                    {
+                        Date = group.Key,
+                        MetricType = "SuspiciousActivity",
+                        Value = dayEvents.Count(e => e.EventType == SecurityEventType.SuspiciousActivity),
+                        Description = "Suspicious activity events"
+                    });
+                }
+
+                return metrics.OrderBy(m => m.Date).ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error calculating security metrics");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generate compliance report
+        /// </summary>
+        public async Task<SecurityComplianceReport> GenerateComplianceReportAsync(DateTime fromDate, DateTime toDate)
+        {
+            try
+            {
+                var report = new SecurityComplianceReport
+                {
+                    GeneratedAt = DateTime.UtcNow,
+                    FromDate = fromDate,
+                    ToDate = toDate
+                };
+
+                // Check authentication compliance
+                await CheckAuthenticationComplianceAsync(report, fromDate, toDate);
+
+                // Check data protection compliance
+                await CheckDataProtectionComplianceAsync(report, fromDate, toDate);
+
+                // Check access control compliance
+                await CheckAccessControlComplianceAsync(report, fromDate, toDate);
+
+                // Check audit logging compliance
+                await CheckAuditLoggingComplianceAsync(report, fromDate, toDate);
+
+                // Calculate overall score
+                report.OverallScore = CalculateComplianceScore(report);
+
+                return report;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error generating compliance report");
+                throw;
+            }
+        }
+
+        #region Private Methods
+
+        private async Task EnrichSecurityEventAsync(SecurityEvent securityEvent)
+        {
+            // Add geolocation if IP address is available
+            if (!string.IsNullOrEmpty(securityEvent.IpAddress))
+            {
+                securityEvent.GeoLocation = await GetGeoLocationAsync(securityEvent.IpAddress);
+            }
+
+            // Add user agent analysis
+            if (!string.IsNullOrEmpty(securityEvent.UserAgent))
+            {
+                securityEvent.DeviceInfo = AnalyzeUserAgent(securityEvent.UserAgent);
+            }
+
+            // Add threat intelligence
+            securityEvent.ThreatIntelligence = await GetThreatIntelligenceAsync(securityEvent);
+        }
+
+        private async Task AnalyzeEventForThreatsAsync(SecurityEvent securityEvent)
+        {
+            // Use intrusion detection service
+            var threatDetected = await _intrusionDetection.AnalyzeEventAsync(securityEvent);
+
+            if (threatDetected)
+            {
+                await TriggerSecurityAlertAsync(new SecurityAlert
+                {
+                    AlertType = SecurityAlertType.ThreatDetected,
+                    Severity = securityEvent.Severity,
+                    Message = $"Threat detected: {securityEvent.Description}",
+                    RelatedEventId = securityEvent.Id,
+                    Source = securityEvent.Source
+                });
+            }
+        }
+
+        private async Task HandleHighSeverityEventAsync(SecurityEvent securityEvent)
+        {
+            // Create incident for critical events
+            if (securityEvent.Severity == SecurityEventSeverity.Critical)
+            {
+                await CreateIncidentAsync(new SecurityIncidentRequest
+                {
+                    Title = $"Critical Security Event: {securityEvent.EventType}",
+                    Description = securityEvent.Description,
+                    Severity = securityEvent.Severity,
+                    CreatedBy = "system",
+                    RelatedEventIds = new List<string> { securityEvent.Id },
+                    ImpactLevel = SecurityImpactLevel.High
+                });
+            }
+
+            // Send immediate alerts
+            await TriggerSecurityAlertAsync(new SecurityAlert
+            {
+                AlertType = SecurityAlertType.HighSeverityEvent,
+                Severity = securityEvent.Severity,
+                Message = $"High severity security event: {securityEvent.Description}",
+                RelatedEventId = securityEvent.Id,
+                Source = securityEvent.Source
+            });
+        }
+
+        private double CalculateThreatScore(List<SecurityEvent> events)
+        {
+            if (!events.Any()) return 0;
+
+            var score = 0.0;
+            var totalEvents = events.Count;
+
+            foreach (var evt in events)
+            {
+                var eventScore = evt.Severity switch
+                {
+                    SecurityEventSeverity.Critical => 10.0,
+                    SecurityEventSeverity.High => 7.0,
+                    SecurityEventSeverity.Medium => 4.0,
+                    SecurityEventSeverity.Low => 1.0,
+                    _ => 0.5
+                };
+
+                score += eventScore;
+            }
+
+            // Normalize to 0-100 scale
+            return Math.Min(100, (score / totalEvents) * 10);
+        }
+
+        private async Task<List<ThreatPattern>> IdentifyThreatPatternsAsync(List<SecurityEvent> events)
+        {
+            var patterns = new List<ThreatPattern>();
+
+            // Identify brute force patterns
+            var bruteForcePattern = IdentifyBruteForcePattern(events);
+            if (bruteForcePattern != null) patterns.Add(bruteForcePattern);
+
+            // Identify DDoS patterns
+            var ddosPattern = IdentifyDDoSPattern(events);
+            if (ddosPattern != null) patterns.Add(ddosPattern);
+
+            // Identify suspicious login patterns
+            var suspiciousLoginPattern = IdentifySuspiciousLoginPattern(events);
+            if (suspiciousLoginPattern != null) patterns.Add(suspiciousLoginPattern);
+
+            return patterns;
+        }
+
+        private ThreatPattern? IdentifyBruteForcePattern(List<SecurityEvent> events)
+        {
+            var failedLogins = events
+                .Where(e => e.EventType == SecurityEventType.AuthenticationFailure)
+                .GroupBy(e => e.IpAddress)
+                .Where(g => g.Count() >= 10) // 10+ failed attempts from same IP
+                .FirstOrDefault();
+
+            if (failedLogins != null)
+            {
+                return new ThreatPattern
+                {
+                    PatternType = "BruteForce",
+                    Description = $"Brute force attack detected from {failedLogins.Key}",
+                    Confidence = 0.9,
+                    EventCount = failedLogins.Count(),
+                    Source = failedLogins.Key
+                };
+            }
+
+            return null;
+        }
+
+        private ThreatPattern? IdentifyDDoSPattern(List<SecurityEvent> events)
+        {
+            var requestEvents = events
+                .Where(e => e.EventType == SecurityEventType.SuspiciousActivity)
+                .GroupBy(e => e.Timestamp.ToString("yyyy-MM-dd HH:mm"))
+                .Where(g => g.Count() >= 100) // 100+ requests per minute
+                .FirstOrDefault();
+
+            if (requestEvents != null)
+            {
+                return new ThreatPattern
+                {
+                    PatternType = "DDoS",
+                    Description = "Potential DDoS attack detected",
+                    Confidence = 0.8,
+                    EventCount = requestEvents.Count(),
+                    Source = "Multiple"
+                };
+            }
+
+            return null;
+        }
+
+        private ThreatPattern? IdentifySuspiciousLoginPattern(List<SecurityEvent> events)
+        {
+            var loginEvents = events
+                .Where(e => e.EventType == SecurityEventType.AuthenticationSuccess)
+                .GroupBy(e => e.UserId)
+                .Where(g => g.Select(e => e.IpAddress).Distinct().Count() >= 5) // Login from 5+ different IPs
+                .FirstOrDefault();
+
+            if (loginEvents != null)
+            {
+                return new ThreatPattern
+                {
+                    PatternType = "SuspiciousLogin",
+                    Description = $"User {loginEvents.Key} logged in from multiple locations",
+                    Confidence = 0.7,
+                    EventCount = loginEvents.Count(),
+                    Source = loginEvents.Key
+                };
+            }
+
+            return null;
+        }
+
+        private List<string> GenerateSecurityRecommendations(SecurityThreatAnalysis analysis)
+        {
+            var recommendations = new List<string>();
+
+            if (analysis.ThreatScore > 70)
+            {
+                recommendations.Add("High threat level detected. Consider implementing additional security measures.");
+            }
+
+            if (analysis.EventsByType.ContainsKey("AuthenticationFailure") &&
+                analysis.EventsByType["AuthenticationFailure"] > 100)
+            {
+                recommendations.Add("High number of authentication failures. Consider implementing account lockout policies.");
+            }
+
+            if (analysis.ThreatPatterns.Any(p => p.PatternType == "BruteForce"))
+            {
+                recommendations.Add("Brute force attacks detected. Consider implementing IP blocking and rate limiting.");
+            }
+
+            if (analysis.ThreatPatterns.Any(p => p.PatternType == "DDoS"))
+            {
+                recommendations.Add("DDoS patterns detected. Consider implementing DDoS protection measures.");
+            }
+
+            return recommendations;
+        }
+
+        private SecurityIncidentPriority CalculateIncidentPriority(SecurityEventSeverity severity, SecurityImpactLevel impact)
+        {
+            return (severity, impact) switch
+            {
+                (SecurityEventSeverity.Critical, _) => SecurityIncidentPriority.Critical,
+                (SecurityEventSeverity.High, SecurityImpactLevel.High) => SecurityIncidentPriority.High,
+                (SecurityEventSeverity.High, _) => SecurityIncidentPriority.Medium,
+                (SecurityEventSeverity.Medium, SecurityImpactLevel.High) => SecurityIncidentPriority.Medium,
+                _ => SecurityIncidentPriority.Low
+            };
+        }
+
+        private async Task SendIncidentNotificationAsync(SecurityIncident incident, string action)
+        {
+            // Implementation would send notifications via email, Slack, etc.
+            _logger.LogInformation("Incident notification sent: {IncidentId} - {Action}", incident.Id, action);
+        }
+
+        private async Task SendSecurityAlertNotificationsAsync(SecurityAlert alert)
+        {
+            // Implementation would send alerts based on severity
+            _logger.LogWarning("Security alert notification sent: {AlertType} - {Severity}", alert.AlertType, alert.Severity);
+        }
+
+        private async Task<string> GetSystemHealthStatusAsync()
+        {
+            // Implementation would check system health metrics
+            return "Healthy";
+        }
+
+        private async Task<string> GetGeoLocationAsync(string ipAddress)
+        {
+            // Implementation would use geolocation service
+            return "Unknown";
+        }
+
+        private string AnalyzeUserAgent(string userAgent)
+        {
+            // Implementation would parse user agent
+            return "Unknown Device";
+        }
+
+        private async Task<string> GetThreatIntelligenceAsync(SecurityEvent securityEvent)
+        {
+            // Implementation would check threat intelligence feeds
+            return "No known threats";
+        }
+
+        private async Task CheckAuthenticationComplianceAsync(SecurityComplianceReport report, DateTime fromDate, DateTime toDate)
+        {
+            var authEvents = await GetSecurityEventsAsync(fromDate, toDate, SecurityEventType.AuthenticationFailure);
+
+            if (authEvents.Count > 1000)
+            {
+                report.Issues.Add("High number of authentication failures detected");
+                report.AuthenticationScore = 60;
+            }
+            else
+            {
+                report.AuthenticationScore = 95;
+            }
+        }
+
+        private async Task CheckDataProtectionComplianceAsync(SecurityComplianceReport report, DateTime fromDate, DateTime toDate)
+        {
+            // Check for data access violations
+            report.DataProtectionScore = 90; // Placeholder
+        }
+
+        private async Task CheckAccessControlComplianceAsync(SecurityComplianceReport report, DateTime fromDate, DateTime toDate)
+        {
+            // Check for access control violations
+            report.AccessControlScore = 85; // Placeholder
+        }
+
+        private async Task CheckAuditLoggingComplianceAsync(SecurityComplianceReport report, DateTime fromDate, DateTime toDate)
+        {
+            // Check audit logging completeness
+            report.AuditLoggingScore = 95; // Placeholder
+        }
+
+        private double CalculateComplianceScore(SecurityComplianceReport report)
+        {
+            var scores = new[] {
+                report.AuthenticationScore,
+                report.DataProtectionScore,
+                report.AccessControlScore,
+                report.AuditLoggingScore
+            };
+
+            return scores.Average();
+        }
+
+        #endregion
+    }
+
+    #region Models and Enums
+
+
+
+    public enum SecurityEventSeverity
+    {
+        Info = 0,
+        Low = 1,
+        Medium = 2,
+        High = 3,
+        Critical = 4
+    }
+
+    [FirestoreData]
+    public class SecurityIncident
+    {
+        [FirestoreProperty] public string Id { get; set; } = string.Empty;
+        [FirestoreProperty] public string Title { get; set; } = string.Empty;
+        [FirestoreProperty] public string Description { get; set; } = string.Empty;
+        [FirestoreProperty] public SecurityEventSeverity Severity { get; set; }
+        [FirestoreProperty] public SecurityIncidentStatus Status { get; set; }
+        [FirestoreProperty] public SecurityIncidentPriority Priority { get; set; }
+        [FirestoreProperty] public DateTime CreatedAt { get; set; }
+        [FirestoreProperty] public DateTime? ResolvedAt { get; set; }
+        [FirestoreProperty] public DateTime? UpdatedAt { get; set; }
+        [FirestoreProperty] public string CreatedBy { get; set; } = string.Empty;
+        [FirestoreProperty] public string AssignedTo { get; set; } = string.Empty;
+        [FirestoreProperty] public List<string> Tags { get; set; } = new();
+        [FirestoreProperty] public List<string> RelatedEvents { get; set; } = new();
+        [FirestoreProperty] public string StatusNotes { get; set; } = string.Empty;
+    }
+
+    public enum SecurityIncidentStatus
+    {
+        Open,
+        InProgress,
+        Resolved,
+        Closed,
+        Escalated
+    }
+
+    public enum SecurityIncidentPriority
+    {
+        Low,
+        Medium,
+        High,
+        Critical
+    }
+
+    public enum SecurityImpactLevel
+    {
+        Low,
+        Medium,
+        High,
+        Critical
+    }
+
+    public class SecurityIncidentRequest
+    {
+        public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public SecurityEventSeverity Severity { get; set; }
+        public SecurityImpactLevel ImpactLevel { get; set; }
+        public string CreatedBy { get; set; } = string.Empty;
+        public string AssignedTo { get; set; } = string.Empty;
+        public List<string> Tags { get; set; } = new();
+        public List<string> RelatedEventIds { get; set; } = new();
+    }
+
+    [FirestoreData]
+    public class SecurityAlert
+    {
+        [FirestoreProperty] public string Id { get; set; } = string.Empty;
+        [FirestoreProperty] public SecurityAlertType AlertType { get; set; }
+        [FirestoreProperty] public SecurityEventSeverity Severity { get; set; }
+        [FirestoreProperty] public string Message { get; set; } = string.Empty;
+        [FirestoreProperty] public string Source { get; set; } = string.Empty;
+        [FirestoreProperty] public string RelatedEventId { get; set; } = string.Empty;
+        [FirestoreProperty] public DateTime CreatedAt { get; set; }
+        [FirestoreProperty] public SecurityAlertStatus Status { get; set; }
+        [FirestoreProperty] public Dictionary<string, object> Metadata { get; set; } = new();
+    }
+
+    public enum SecurityAlertType
+    {
+        ThreatDetected,
+        HighSeverityEvent,
+        SuspiciousActivity,
+        SystemBreach,
+        ComplianceViolation,
+        PerformanceAnomaly
+    }
+
+    public enum SecurityAlertStatus
+    {
+        Active,
+        Acknowledged,
+        Resolved,
+        Dismissed
+    }
+
+    public class SecurityThreatAnalysis
+    {
+        public DateTime AnalysisDate { get; set; }
+        public TimeSpan TimeWindow { get; set; }
+        public int TotalEvents { get; set; }
+        public Dictionary<string, int> EventsByType { get; set; } = new();
+        public Dictionary<string, int> EventsBySeverity { get; set; } = new();
+        public Dictionary<string, int> TopThreatSources { get; set; } = new();
+        public double ThreatScore { get; set; }
+        public List<ThreatPattern> ThreatPatterns { get; set; } = new();
+        public List<string> Recommendations { get; set; } = new();
+    }
+
+    public class ThreatPattern
+    {
+        public string PatternType { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public double Confidence { get; set; }
+        public int EventCount { get; set; }
+        public string Source { get; set; } = string.Empty;
+    }
+
+    public class SecurityDashboardData
+    {
+        public DateTime GeneratedAt { get; set; }
+        public int EventsLast24Hours { get; set; }
+        public int HighSeverityEventsLast24Hours { get; set; }
+        public int ActiveIncidents { get; set; }
+        public int CriticalIncidents { get; set; }
+        public double ThreatScore { get; set; }
+        public List<KeyValuePair<string, int>> TopThreats { get; set; } = new();
+        public double ComplianceScore { get; set; }
+        public int ComplianceIssues { get; set; }
+        public string SystemHealth { get; set; } = string.Empty;
+    }
+
+    public class SecurityMetric
+    {
+        public DateTime Date { get; set; }
+        public string MetricType { get; set; } = string.Empty;
+        public double Value { get; set; }
+        public string Description { get; set; } = string.Empty;
+    }
+
+    public class SecurityComplianceReport
+    {
+        public DateTime GeneratedAt { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
+        public double OverallScore { get; set; }
+        public double AuthenticationScore { get; set; }
+        public double DataProtectionScore { get; set; }
+        public double AccessControlScore { get; set; }
+        public double AuditLoggingScore { get; set; }
+        public List<string> Issues { get; set; } = new();
+        public List<string> Recommendations { get; set; } = new();
+    }
+
+    #endregion
+}

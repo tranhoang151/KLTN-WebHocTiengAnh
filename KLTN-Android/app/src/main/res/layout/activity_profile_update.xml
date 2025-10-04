@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#F8FAFC"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <!-- Header -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp">
+
+            <!-- Back Icon -->
+            <ImageView
+                android:layout_width="23dp"
+                android:layout_height="20sp"
+                android:src="@mipmap/back"
+                android:contentDescription="@string/back_button" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Update Profile"
+                android:textColor="#101519"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <!-- Avatar -->
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/user"
+            android:scaleType="centerCrop"
+            android:background="@drawable/rounded_circle_bg" />
+
+        <!-- Name, Change Picture, Email -->
+        <TextView
+            android:id="@+id/tvDisplayName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ethan Carter"
+            android:textColor="#101519"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/tvChangePicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change profile picture"
+            android:textColor="#57768e"
+            android:textSize="16sp"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/tvDisplayEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ethan.carter@email.com"
+            android:textColor="#57768e"
+            android:textSize="16sp"
+            android:gravity="center" />
+
+        <!-- Name Input -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textColor="#5C708A"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editTextName"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/tl12bl12be8edf2"
+                android:hint="Enter your name"
+                android:textColor="#101519"
+                android:textSize="16sp"
+                android:padding="12dp" />
+        </LinearLayout>
+
+        <!-- Gender Spinner -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gender"
+                android:textColor="#5C708A"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinnerGender"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/tl12bl12be8edf2"
+                android:padding="12dp"
+                android:entries="@array/gender_array" />
+        </LinearLayout>
+
+        <!-- Email Input -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textColor="#5C708A"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/tl12bl12be8edf2"
+                android:hint="Enter your email"
+                android:textColor="#101519"
+                android:textSize="16sp"
+                android:padding="12dp" />
+        </LinearLayout>
+
+        <!-- Buttons -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center_vertical">
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="Cancel"
+                android:backgroundTint="#e9eef1"
+                android:textColor="#101519"
+                android:textStyle="bold"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="Save"
+                android:backgroundTint="#5C708A"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

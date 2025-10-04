@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9FAFB">
+
+    <!-- Header Section -->
+    <LinearLayout
+        android:id="@+id/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#F9FAFB"
+        android:padding="16dp">
+
+        <!-- Top Header with Back Button and Title -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_back"
+                android:contentDescription="Back button" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Manage Classes"
+                android:textColor="#101518"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium" />
+
+        </RelativeLayout>
+
+        <!-- Total Classes Count -->
+        <TextView
+            android:id="@+id/tv_total_classes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Classes: 5"
+            android:textColor="#5C748A"
+            android:textSize="14sp"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="sans-serif" />
+
+        <!-- Search Bar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/search_background"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="16dp"
+                android:src="@mipmap/search"
+                android:contentDescription="Search icon" />
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:background="@null"
+                android:hint="Search classes"
+                android:textColor="#101518"
+                android:textColorHint="#5C748A"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif"
+                android:inputType="text"
+                android:maxLines="1" />
+
+        </LinearLayout>
+
+        <!-- Filter Button -->
+
+    </LinearLayout>
+
+    <!-- Class List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_classes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header_layout"
+        android:layout_above="@id/fab_add_class"
+        android:background="#F9FAFB"
+        android:paddingTop="8dp"
+        android:clipToPadding="false" />
+
+    <!-- Floating Action Button -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_class"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:src="@drawable/ic_plus"
+        android:backgroundTint="#2196F3"
+        android:tint="#FFFFFF"
+        android:contentDescription="Add new class" />
+
+</RelativeLayout>

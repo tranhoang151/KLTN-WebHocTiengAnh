@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="24dp"
+    android:background="@drawable/rounded_background"
+    >
+
+    <ImageView
+        android:id="@+id/imgBadgeDialog"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:src="@drawable/bad1"
+        android:scaleType="fitCenter"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/tvCongratsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chúc mừng bạn!"
+        android:textColor="#FF9800"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/tvBadgeNameDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tên huy hiệu"
+        android:textColor="#0F1419"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:id="@+id/tvBadgeDescDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mô tả huy hiệu"
+        android:textColor="#56758E"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/btnOkBadgeDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:textAllCaps="false"
+        android:backgroundTint="#FF9800"
+        android:textColor="#FFFFFF"
+        android:layout_gravity="center" />
+
+</LinearLayout> 

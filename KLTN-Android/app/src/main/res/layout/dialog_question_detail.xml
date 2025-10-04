@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/white">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="24dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Chi tiết câu hỏi"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+
+    <!-- Question Content -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nội dung câu hỏi"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/tvQuestionContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="What is the capital of England?"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Question Type -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Loại câu hỏi"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/tvQuestionType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Trắc nghiệm"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Course Name -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Khóa học"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/tvCourseName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tên khóa học hoặc ID"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Options Container -->
+    <LinearLayout
+        android:id="@+id/containerOptions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Các lựa chọn"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Options will be added dynamically -->
+
+    </LinearLayout>
+
+    <!-- Correct Answer -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Đáp án đúng"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/tvCorrectAnswer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="London"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Explanation -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Giải thích"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/tvExplanation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="London là thủ đô của nước Anh từ năm 1066."
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Action Button -->
+    <Button
+        android:id="@+id/btnClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Đóng"
+        android:textSize="14sp"
+        android:background="@drawable/button_primary"
+        android:textColor="@color/white"
+        android:layout_gravity="end" />
+
+</LinearLayout> 

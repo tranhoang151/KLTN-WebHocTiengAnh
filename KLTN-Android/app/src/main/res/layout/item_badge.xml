@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="12dp"
+    android:background="@android:color/transparent">
+
+    <ImageView
+        android:id="@+id/imgBadge"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:scaleType="fitCenter"
+        android:src="@drawable/bad1" />
+
+    <TextView
+        android:id="@+id/tvBadgeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Badge Title"
+        android:textColor="#0F1419"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/tvBadgeDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Badge description goes here"
+        android:textColor="#56758E"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp" />
+
+</LinearLayout> 

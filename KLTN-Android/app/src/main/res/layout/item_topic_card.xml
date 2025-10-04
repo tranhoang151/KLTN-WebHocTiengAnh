@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:background="@drawable/card_background"
+    android:gravity="center_vertical"
+    android:layout_marginBottom="12dp">
+
+    <ImageView
+        android:id="@+id/imgTopicIcon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/animals"
+        android:contentDescription="Topic Icon" />
+
+    <TextView
+        android:id="@+id/tvTopicName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Animal"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginStart="16dp"
+        android:textColor="#0F1619" />
+    <TextView
+        android:id="@+id/tvTopicCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10 questions"
+        android:textSize="14sp"
+        android:textColor="#597C8C"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="2dp" />
+</LinearLayout> 

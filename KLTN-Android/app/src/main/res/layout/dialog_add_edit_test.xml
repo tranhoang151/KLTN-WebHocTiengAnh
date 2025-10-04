@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tiêu đề"
+        android:labelFor="@+id/etTestTitle"/>
+    <EditText
+        android:id="@+id/etTestTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tên bài test"
+        android:inputType="textCapWords"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thời lượng (phút)"
+        android:labelFor="@+id/etTestDuration"/>
+    <EditText
+        android:id="@+id/etTestDuration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ví dụ: 10"
+        android:inputType="number"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Điểm tối đa"
+        android:labelFor="@+id/etMaxScore"/>
+    <EditText
+        android:id="@+id/etMaxScore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ví dụ: 100"
+        android:inputType="number"
+        android:layout_marginBottom="16dp"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Khóa học"
+        android:textSize="16sp" />
+    <Spinner
+        android:id="@+id/spinnerCourse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/btnPickQuestions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chọn câu hỏi"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Các câu hỏi đã chọn:"
+        android:textStyle="bold"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginBottom="16dp"
+        android:background="#F5F5F5"
+        android:padding="8dp">
+        <LinearLayout
+            android:id="@+id/containerSelectedQuestions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+    </ScrollView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hủy"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lưu"/>
+    </LinearLayout>
+
+</LinearLayout> 

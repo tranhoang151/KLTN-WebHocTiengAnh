@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="12dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgCourseAvatar"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_course"
+            android:background="@drawable/rounded_background"
+            android:layout_marginEnd="12dp"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tvCourseName"
+                android:text="Tên khóa học"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tvCourseDesc"
+                android:text="Mô tả ngắn về khóa học"
+                android:textSize="14sp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnAddClass"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_plus"
+            android:contentDescription="Thêm lớp vào khóa học"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:tint="@color/primary"
+            android:layout_marginEnd="4dp"/>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView> 

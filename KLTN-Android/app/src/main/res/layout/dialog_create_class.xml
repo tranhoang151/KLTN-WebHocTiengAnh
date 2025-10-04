@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/background_primary">
+
+    <!-- Class Name -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Class Name"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_primary"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/etClassName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter class name"
+        android:inputType="text"
+        android:padding="16dp"
+        android:background="@drawable/edit_text_background"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_secondary"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Class Description -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_primary"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/etClassDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter class description"
+        android:inputType="textMultiLine"
+        android:minLines="3"
+        android:maxLines="5"
+        android:padding="16dp"
+        android:background="@drawable/edit_text_background"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_secondary"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Capacity and Teacher Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- Class Capacity -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginEnd="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Capacity"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/etClassCapacity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Max students"
+                android:inputType="number"
+                android:maxLength="2"
+                android:padding="16dp"
+                android:background="@drawable/edit_text_background"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary" />
+
+        </LinearLayout>
+
+        <!-- Teacher Name -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Teacher"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/etTeacherName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Teacher name"
+                android:inputType="textPersonName"
+                android:padding="16dp"
+                android:background="@drawable/edit_text_background"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout> 

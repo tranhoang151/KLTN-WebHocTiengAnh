@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "925982517941",
+    "project_id": "kltn-c5cf0",
+    "storage_bucket": "kltn-c5cf0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925982517941:android:7890e5e1023c38067d2cfc",
+        "android_client_info": {
+          "package_name": "com.example.kltn"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoHGW_EaLT5cdKE0SSLIY5gxryAeHSLvw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

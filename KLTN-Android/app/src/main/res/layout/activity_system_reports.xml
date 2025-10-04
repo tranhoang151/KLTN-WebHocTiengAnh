@@ -1,0 +1,783 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8FAFC">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:paddingBottom="8dp">
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="32sp"
+                android:layout_height="32sp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Back"
+                android:src="@drawable/ic_back" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="48dp"
+                android:layout_weight="1"
+                android:baselineAligned="false"
+                android:gravity="center"
+                android:text="System Reports"
+                android:textColor="#0D151B"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!-- Overview Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Overview"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#0D151B"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- First Row: Users and Teachers -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp"
+                android:weightSum="2">
+
+                <!-- Users Card -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="@drawable/card_background"
+                    android:padding="24dp"
+                    android:layout_marginEnd="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Users"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#0D151B"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1,234"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="#0D151B" />
+
+                </LinearLayout>
+
+                <!-- Teachers Card -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="@drawable/card_background"
+                    android:padding="24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Teachers"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#0D151B"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="123"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="#0D151B" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Second Row: Students and Classes -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <!-- Students Card -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="@drawable/card_background"
+                    android:padding="24dp"
+                    android:layout_marginEnd="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Students"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#0D151B"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1,111"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="#0D151B" />
+
+                </LinearLayout>
+
+                <!-- Classes Card -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="@drawable/card_background"
+                    android:padding="24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Classes"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#0D151B"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="50"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="#0D151B" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Visualizations Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Visualizations"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#0D151B"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- User Roles Chart -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_background"
+                android:padding="24dp"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="User Roles"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#0D151B"
+                    android:layout_marginBottom="16dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:minHeight="180dp">
+
+                    <!-- Teachers Bar -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="24dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Teachers"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="#4C749A"
+                            android:layout_marginEnd="16dp" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_weight="1"
+                            android:background="#E7EDF3"
+                            android:layout_marginStart="8dp" />
+
+                    </LinearLayout>
+
+                    <!-- Students Bar -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Students"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="#4C749A"
+                            android:layout_marginEnd="16dp" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_weight="1"
+                            android:background="#E7EDF3"
+                            android:layout_marginStart="8dp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Monthly Active Users Chart -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_background"
+                android:padding="24dp"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Monthly Active Users"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#0D151B"
+                    android:layout_marginBottom="16dp" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="148dp"
+                    android:src="@drawable/bieudo"
+                    android:scaleType="fitCenter"
+                    android:layout_marginBottom="16dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Daily Activity Chart -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_background"
+                android:padding="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Daily Activity"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#0D151B"
+                    android:layout_marginBottom="16dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:orientation="horizontal"
+                    android:gravity="bottom|center_vertical"
+                    android:padding="12dp">
+
+                    <!-- Monday -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="bottom|center_horizontal">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="8"
+                            android:background="@drawable/bar_chart_item"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="2dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Mon"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="#4C749A" />
+
+                    </LinearLayout>
+
+                    <!-- Tuesday -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="bottom|center_horizontal">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bar_chart_item"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="2dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tue"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="#4C749A" />
+
+                    </LinearLayout>
+
+                    <!-- Wednesday -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="bottom|center_horizontal">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="8"
+                            android:background="@drawable/bar_chart_item"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="2dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Wed"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="#4C749A" />
+
+                    </LinearLayout>
+
+                    <!-- Thursday -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="bottom|center_horizontal">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="7"
+                            android:background="@drawable/bar_chart_item"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="2dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Thu"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="#4C749A" />
+
+                    </LinearLayout>
+
+                    <!-- Friday -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="bottom|center_horizontal">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bar_chart_item"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="2dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Fri"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="#4C749A" />
+
+                    </LinearLayout>
+
+                    <!-- Saturday -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="bottom|center_horizontal">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="3"
+                            android:background="@drawable/bar_chart_item"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="2dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sat"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="#4C749A" />
+
+                    </LinearLayout>
+
+                    <!-- Sunday -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="bottom|center_horizontal">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="3"
+                            android:background="@drawable/bar_chart_item"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="2dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sun"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="#4C749A" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Detailed Stats Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Detailed Stats"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#0D151B"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- First Row: Top Classes and Average Scores -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp"
+                android:weightSum="2">
+
+                <!-- Top Classes Card -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="@drawable/card_background"
+                    android:padding="24dp"
+                    android:layout_marginEnd="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Top Classes"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#0D151B"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Class A"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="#0D151B" />
+
+                </LinearLayout>
+
+                <!-- Average Scores Card -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="@drawable/card_background"
+                    android:padding="24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Average Scores"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#0D151B"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="85%"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="#0D151B" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Second Row: Content Creation and Popular Content -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <!-- Content Creation Card -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="@drawable/card_background"
+                    android:padding="24dp"
+                    android:layout_marginEnd="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Content Creation"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#0D151B"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="150"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="#0D151B" />
+
+                </LinearLayout>
+
+                <!-- Popular Content Card -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="@drawable/card_background"
+                    android:padding="24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Popular Content"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#0D151B"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lesson 3"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="#0D151B" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Filters Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Filters"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#0D151B"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
+
+            <Spinner
+                android:id="@+id/spinnerDateRange"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:background="@drawable/edit_text_background"
+                android:padding="16dp"
+                android:minWidth="160dp" />
+
+        </LinearLayout>
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btnExport"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="12dp"
+                android:text="Export"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#0D151B"
+                android:background="@drawable/button_secondary"
+                android:backgroundTint="#E7EDF3" />
+
+            <Button
+                android:id="@+id/btnShare"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:layout_marginStart="12dp"
+                android:text="Share"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/button_primary"
+                android:backgroundTint="#1383EB" />
+
+        </LinearLayout>
+
+        <!-- Bottom Spacing -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+    </LinearLayout>
+
+</ScrollView>

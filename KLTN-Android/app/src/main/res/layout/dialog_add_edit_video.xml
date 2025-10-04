@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thêm/Sửa Video"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="12dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chọn khoá học" />
+        <Spinner
+            android:id="@+id/spinnerCourse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp" />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tiêu đề video" />
+        <EditText
+            android:id="@+id/etVideoTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhập tiêu đề video"
+            android:layout_marginBottom="8dp" />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Mô tả video" />
+        <EditText
+            android:id="@+id/etVideoDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhập mô tả video"
+            android:layout_marginBottom="8dp" />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Thời lượng (ví dụ: 2:57)" />
+        <EditText
+            android:id="@+id/etVideoDuration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhập thời lượng"
+            android:layout_marginBottom="8dp" />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Chủ đề (topic)" />
+        <EditText
+            android:id="@+id/etVideoTopic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhập chủ đề"
+            android:layout_marginBottom="8dp" />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Link thumbnail" />
+        <EditText
+            android:id="@+id/etThumbnailUrl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhập link thumbnail"
+            android:layout_marginBottom="8dp" />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Link video (YouTube)" />
+        <EditText
+            android:id="@+id/etVideoUrl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhập link video YouTube"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Huỷ" />
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lưu"
+                android:layout_marginStart="16dp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView> 

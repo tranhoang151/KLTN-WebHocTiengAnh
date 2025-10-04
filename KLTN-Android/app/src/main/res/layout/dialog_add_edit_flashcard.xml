@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <EditText
+        android:id="@+id/etFrontText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Mặt trước (front_text)" />
+
+    <EditText
+        android:id="@+id/etBackText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Mặt sau (back_text)"
+        android:layout_marginTop="12dp" />
+
+    <EditText
+        android:id="@+id/etExampleSentence"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Câu ví dụ (example_sentence)"
+        android:layout_marginTop="12dp" />
+
+    <EditText
+        android:id="@+id/etImageUrl"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Link ảnh (image_url hoặc base64)"
+        android:layout_weight="1"
+        android:layout_marginTop="12dp" />
+
+    <Button
+        android:id="@+id/btnPickImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chọn ảnh từ máy"
+        android:layout_marginTop="12dp" />
+
+    <ImageView
+        android:id="@+id/ivPreview"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_marginTop="12dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="Preview ảnh" />
+
+    <!-- Ẩn trường order, chỉ dùng cho sửa nâng cao nếu cần -->
+    <!-- <EditText
+        android:id="@+id/etOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Thứ tự (order)"
+        android:inputType="number"
+        android:layout_marginTop="12dp" /> -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:layout_marginTop="24dp">
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hủy" />
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lưu"
+            android:layout_marginStart="16dp" />
+    </LinearLayout>
+
+</LinearLayout> 

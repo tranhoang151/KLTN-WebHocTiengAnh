@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <EditText
+            android:id="@+id/etExerciseTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tiêu đề bài tập (title)" />
+
+        <Spinner
+            android:id="@+id/spinnerKind"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp" />
+
+        <Spinner
+            android:id="@+id/spinnerCourse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp" />
+
+        <Button
+            android:id="@+id/btnPickQuestions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chọn câu hỏi"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/tvSelectedQuestions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Câu hỏi đã chọn:"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp" />
+
+        <LinearLayout
+            android:id="@+id/containerSelectedQuestions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="4dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginTop="24dp">
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hủy" />
+
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lưu"
+                android:layout_marginStart="16dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView> 

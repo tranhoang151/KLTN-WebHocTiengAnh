@@ -1,0 +1,335 @@
+<resources>
+    <string name="app_name">English Learning</string>
+
+    <!-- Login Screen -->
+    <string name="login_title">Welcome to English Learning</string>
+    <string name="login_subtitle">Sign in to continue learning</string>
+    <string name="hint_email">Email address</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_login">Sign In</string>
+    <string name="btn_forgot_password">Forgot Password?</string>
+    <string name="error_invalid_email">Please enter a valid email address</string>
+    <string name="error_invalid_password">Password must be at least 6 characters</string>
+    <string name="error_login_failed">Login failed. Please check your credentials.</string>
+
+    <!-- Student Home -->
+    <string name="student_home_title">Welcome back!</string>
+    <string name="student_home_subtitle">What would you like to learn today?</string>
+    <string name="card_flashcards">Flashcards</string>
+    <string name="card_exercises">Exercises</string>
+    <string name="card_progress">My Progress</string>
+    <string name="card_videos">Video Lessons</string>
+    <string name="card_tests">Take Test</string>
+    <string name="card_badges">My Badges</string>
+    <string name="card_streak">Learning Streak</string>
+    <string name="card_profile">Profile</string>
+    <string name="card_settings">Settings</string>
+
+    <!-- Flashcard Learning -->
+    <string name="flashcard_title">Flashcard Learning</string>
+    <string name="flashcard_topic_animals">Animals</string>
+    <string name="flashcard_topic_colors">Colors</string>
+    <string name="flashcard_topic_numbers">Numbers</string>
+    <string name="flashcard_topic_fruits">Fruits</string>
+    <string name="flashcard_topic_family">Family</string>
+    <string name="flashcard_swipe_hint">Swipe to see next card</string>
+    <string name="flashcard_tap_hint">Tap to flip card</string>
+    <string name="btn_next_card">Next Card</string>
+    <string name="btn_previous_card">Previous Card</string>
+    <string name="btn_flip_card">Flip Card</string>
+
+    <!-- Exercise Screen -->
+    <string name="exercise_title">Practice Exercise</string>
+    <string name="exercise_instructions">Read the question carefully and provide your answer</string>
+    <string name="exercise_question">Question</string>
+    <string name="exercise_multiple_choice">Multiple Choice</string>
+    <string name="exercise_fill_blank">Fill in the Blank</string>
+    <string name="btn_submit_answer">Submit Answer</string>
+    <string name="btn_next_question">Next Question</string>
+    <string name="exercise_correct">Correct!</string>
+    <string name="exercise_incorrect">Try again!</string>
+    <string name="exercise_complete">Exercise completed!</string>
+
+    <!-- Test Screen -->
+    <string name="test_title">Assessment Test</string>
+    <string name="test_instructions">Read each question carefully and select the best answer.</string>
+    <string name="test_time_remaining">Time remaining: %1$s</string>
+    <string name="btn_submit_test">Submit Test</string>
+    <string name="btn_finish_test">Finish Test</string>
+    <string name="test_submit_confirm">Are you sure you want to submit your test?</string>
+    <string name="test_complete">Test completed!</string>
+
+    <!-- Video Lectures -->
+    <string name="video_lectures_title">Video Lectures</string>
+    <string name="video_title">Video Lessons</string>
+    <string name="video_search_hint">Search videos...</string>
+    <string name="video_play">Play</string>
+    <string name="video_pause">Pause</string>
+    <string name="video_duration">Duration: %1$s</string>
+    <string name="video_topic">Topic: %1$s</string>
+
+    <!-- Badges Screen -->
+    <string name="badges_title">My Achievements</string>
+    <string name="badge_first_lesson">First Lesson</string>
+    <string name="badge_week_streak">Week Warrior</string>
+    <string name="badge_perfect_score">Perfect Score</string>
+    <string name="badge_vocabulary_master">Vocabulary Master</string>
+    <string name="badge_grammar_expert">Grammar Expert</string>
+    <string name="badge_earned">Earned</string>
+    <string name="badge_locked">Locked</string>
+
+    <!-- Learning Streak -->
+    <string name="learning_streak_title">Learning Streak</string>
+    <string name="streak_title">Learning Streak</string>
+    <string name="streak_current">Current Streak: %1$d days</string>
+    <string name="streak_longest">Longest Streak: %1$d days</string>
+    <string name="streak_keep_going">Keep up the great work!</string>
+    <string name="streak_missed_day">Don\'t forget to practice today!</string>
+
+    <!-- Progress Tracking -->
+    <string name="progress_tracking_title">Progress Tracking</string>
+    <string name="progress_title">My Learning Progress</string>
+    <string name="progress_words_learned">Words Learned: %1$d</string>
+    <string name="progress_memory_percentage">Memory Score: %1$d%%</string>
+    <string name="progress_average_score">Average Score: %1$d%%</string>
+    <string name="progress_weekly">Weekly Progress</string>
+    <string name="progress_monthly">Monthly Progress</string>
+
+    <!-- Join/Leave Class -->
+    <string name="join_leave_class_title">Join or Leave Class</string>
+    <string name="class_join_title">Join a Class</string>
+    <string name="class_leave_title">Leave Class</string>
+    <string name="hint_class_code">Enter class code</string>
+    <string name="btn_join_class">Join Class</string>
+    <string name="btn_leave_class">Leave Class</string>
+    <string name="class_join_success">Successfully joined class!</string>
+    <string name="class_leave_success">Successfully left class!</string>
+    <string name="error_invalid_class_code">Invalid class code</string>
+
+    <!-- Change Password -->
+    <string name="change_password_title">Change Password</string>
+    <string name="change_password_subtitle">Update your account password</string>
+    <string name="hint_current_password">Current password</string>
+    <string name="hint_old_password">Current password</string>
+    <string name="hint_new_password">New password</string>
+    <string name="hint_confirm_password">Confirm new password</string>
+    <string name="btn_change_password">Change Password</string>
+    <string name="change_password_success">Password changed successfully!</string>
+    <string name="error_passwords_dont_match">Passwords don\'t match</string>
+    <string name="error_old_password_incorrect">Current password is incorrect</string>
+    <string name="password_change_success">Password changed successfully!</string>
+
+    <!-- Forgot Password -->
+    <string name="forgot_password_title">Reset Password</string>
+    <string name="forgot_password_subtitle">Enter your email to receive a reset link</string>
+    <string name="btn_reset_password">Reset Password</string>
+    <string name="btn_send_reset_link">Send Reset Link</string>
+    <string name="forgot_password_success">Reset link sent to your email!</string>
+    <string name="reset_link_sent">Reset link sent to your email!</string>
+
+    <!-- Profile Update -->
+    <string name="profile_update_title">Update Profile</string>
+    <string name="profile_title">My Profile</string>
+    <string name="hint_full_name">Full name</string>
+    <string name="hint_gender">Gender</string>
+    <string name="gender_male">Male</string>
+    <string name="gender_female">Female</string>
+    <string name="gender_other">Other</string>
+    <string name="btn_save_profile">Save Changes</string>
+    <string name="btn_change_avatar">Change Photo</string>
+    <string name="profile_save_success">Profile updated successfully!</string>
+
+    <!-- Teacher Dashboard -->
+    <string name="teacher_dashboard_title">Teacher Dashboard</string>
+    <string name="teacher_dashboard_subtitle">Manage your classes and students</string>
+    <string name="teacher_welcome">Welcome, %1$s</string>
+    <string name="teacher_total_classes">Total Classes: %1$d</string>
+    <string name="teacher_total_students">Total Students: %1$d</string>
+    <string name="btn_manage_students">Manage Students</string>
+    <string name="btn_assign_lesson">Assign Lesson</string>
+    <string name="btn_view_progress">View Progress</string>
+    <string name="btn_evaluate_students">Evaluate Students</string>
+
+    <!-- Manage Students -->
+    <string name="manage_students_title">Manage Students</string>
+    <string name="btn_add_student">Add Student</string>
+    <string name="btn_edit_student">Edit</string>
+    <string name="btn_remove_student">Remove</string>
+    <string name="student_name">Name</string>
+    <string name="student_email">Email</string>
+    <string name="student_progress">Progress</string>
+    <string name="remove_student_confirm">Remove %1$s from class?</string>
+
+    <!-- Assign Lesson -->
+    <string name="assign_lesson_title">Assign Lesson</string>
+    <string name="lesson_type_flashcards">Flashcards</string>
+    <string name="lesson_type_video">Video</string>
+    <string name="lesson_type_test">Test</string>
+    <string name="lesson_due_date">Due Date</string>
+    <string name="btn_assign">Assign</string>
+    <string name="lesson_assigned_success">Lesson assigned successfully!</string>
+    <string name="assign_lesson_video_url">Video URL</string>
+    <string name="assign_lesson_video_url_hint">Enter video link (URL)</string>
+
+    <!-- View Student Progress -->
+    <string name="view_student_progress_title">View Student Progress</string>
+    <string name="student_progress_title">Student Progress</string>
+    <string name="progress_overall">Overall Progress</string>
+    <string name="progress_recent_tests">Recent Test Results</string>
+    <string name="progress_activity">Recent Activity</string>
+    <string name="test_score">Score: %1$d%%</string>
+    <string name="test_date">Date: %1$s</string>
+
+    <!-- Evaluate Student -->
+    <string name="evaluate_student_title">Evaluate Student</string>
+    <string name="evaluation_score">Score (0-100)</string>
+    <string name="evaluation_feedback">Feedback</string>
+    <string name="hint_feedback">Enter your feedback here...</string>
+    <string name="btn_save_evaluation">Save Evaluation</string>
+    <string name="evaluation_saved">Evaluation saved successfully!</string>
+
+    <!-- Admin Dashboard -->
+    <string name="admin_dashboard_title">Admin Dashboard</string>
+    <string name="admin_dashboard_subtitle">Manage the learning platform</string>
+    <string name="admin_welcome">Welcome, Administrator</string>
+    <string name="admin_total_users">Total Users: %1$d</string>
+    <string name="admin_total_classes">Total Classes: %1$d</string>
+    <string name="admin_system_health">System Health: %1$s</string>
+    <string name="btn_manage_users">Manage Users</string>
+    <string name="btn_manage_roles">Manage Roles</string>
+    <string name="btn_manage_classes">Manage Classes</string>
+    <string name="btn_manage_content">Manage Content</string>
+    <string name="btn_system_reports">System Reports</string>
+
+    <!-- Manage Users -->
+    <string name="manage_users_title">Manage Users</string>
+    <string name="btn_create_user">Create User</string>
+    <string name="user_role_student">Student</string>
+    <string name="user_role_teacher">Teacher</string>
+    <string name="user_role_admin">Administrator</string>
+    <string name="user_status_active">Active</string>
+    <string name="user_status_inactive">Inactive</string>
+    <string name="btn_edit_user">Edit</string>
+    <string name="btn_delete_user">Delete</string>
+    <string name="delete_user_confirm">Delete user %1$s?</string>
+
+    <!-- Manage Roles -->
+    <string name="manage_roles_title">Manage Roles</string>
+    <string name="role_permissions">Permissions</string>
+    <string name="permission_create_users">Create Users</string>
+    <string name="permission_manage_classes">Manage Classes</string>
+    <string name="permission_view_reports">View Reports</string>
+    <string name="permission_assign_lessons">Assign Lessons</string>
+    <string name="btn_save_roles">Save Changes</string>
+
+    <!-- Manage Classes -->
+    <string name="manage_classes_title">Manage Classes</string>
+    <string name="btn_create_class">Create Class</string>
+    <string name="hint_class_name">Class name</string>
+    <string name="hint_class_description">Class description</string>
+    <string name="hint_class_capacity">Maximum students</string>
+    <string name="btn_save_class">Save Class</string>
+    <string name="class_created_success">Class created successfully!</string>
+    <string name="class_updated_success">Class updated successfully!</string>
+    <string name="delete_class_confirm">Delete class %1$s?</string>
+
+    <!-- Manage Content -->
+    <string name="manage_content_title">Manage Content</string>
+    <string name="content_flashcards">Flashcards</string>
+    <string name="content_videos">Videos</string>
+    <string name="content_tests">Tests</string>
+    <string name="btn_upload_content">Upload Content</string>
+    <string name="btn_edit_content">Edit</string>
+    <string name="btn_delete_content">Delete</string>
+    <string name="content_upload_success">Content uploaded successfully!</string>
+    <string name="delete_content_confirm">Delete this content?</string>
+
+    <!-- System Reports -->
+    <string name="system_reports_title">System Reports</string>
+    <string name="export_report">Export Report</string>
+    <string name="generate_detailed_report">Generate Detailed Report</string>
+    <string name="schedule_report">Schedule Report</string>
+    <string name="date_range">Date Range</string>
+    <string name="last_30_days">Last 30 days</string>
+    <string name="total_users">Total Users</string>
+    <string name="active_users">Active Users</string>
+    <string name="lessons_completed">Lessons Completed</string>
+    <string name="average_score">Average Score</string>
+    <string name="learning_progress">Learning Progress</string>
+    <string name="students">Students</string>
+    <string name="teachers">Teachers</string>
+    <string name="top_performing_classes">Top Performing Classes</string>
+    <string name="system_health">System Health</string>
+    <string name="server_status">Server Status</string>
+    <string name="database_status">Database Status</string>
+    <string name="storage_usage">Storage Usage</string>
+    <string name="online">Online</string>
+    <string name="healthy">Healthy</string>
+    <string name="report_total_users">Total Users</string>
+    <string name="report_active_users">Active Users</string>
+    <string name="report_class_performance">Class Performance</string>
+    <string name="report_content_usage">Content Usage</string>
+    <string name="report_system_health">System Health</string>
+    <string name="btn_export_report">Export Report</string>
+    <string name="btn_refresh_reports">Refresh</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_notifications">Notifications</string>
+    <string name="settings_sound">Sound Effects</string>
+    <string name="settings_about">About App</string>
+    <string name="btn_logout">Logout</string>
+    <string name="logout_confirm">Are you sure you want to logout?</string>
+    <string name="app_version">Version %1$s</string>
+    <string name="app_description">English Learning App for Primary School Students</string>
+
+    <!-- Common -->
+    <string name="btn_back">Back</string>
+    <string name="back_button">Back</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_ok">OK</string>
+    <string name="btn_yes">Yes</string>
+    <string name="btn_no">No</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_delete">Delete</string>
+    <string name="btn_edit">Edit</string>
+    <string name="btn_add">Add</string>
+    <string name="loading">Loading...</string>
+    <string name="error_generic">Something went wrong. Please try again.</string>
+    <string name="success">Success!</string>
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+    <string name="settings">Settings</string>
+    <string name="manage_students">Manage Students</string>
+    <string name="manage_students_sub">Manage your students</string>
+    <string name="assign_lessons">Assign Lessons</string>
+    <string name="assign_lessons_sub">Assign lessons to your students</string>
+    <string name="view_progress">View Progress</string>
+    <string name="view_progress_sub">View your students progress</string>
+    <string name="evaluate_students">Evaluate Students</string>
+    <string name="evaluate_students_sub">Evaluate your students performance</string>
+    <string name="profile">Profile</string>
+    <string name="home">Home</string>
+    <string name="classes">Classes</string>
+    <string name="select_class">Select Class</string>
+    <string name="hello">Hello, Ms. Sophia</string>
+    <string name="manage_info">You are managing 3 classes and 60 students</string>
+    <string-array name="class_options">
+        <item>Select Class</item>
+        <item>Class 1</item>
+        <item>Class 2</item>
+        <item>Class 3</item>
+    </string-array>
+    <string name="assign_lesson_lesson_type">Lesson Type</string>
+    <string name="assign_lesson_content">Content</string>
+    <string name="assign_lesson_assign_to">Assign To</string>
+    <string name="assign_lesson_due_date">Due Date</string>
+    <string name="assign_lesson_select_content">Select Content</string>
+    <string name="assign_lesson_select_students">Select Students/Classes</string>
+    <string name="assign_lesson_select_date">Select Date</string>
+    <string name="assign_lesson_assign_lesson">Assign Video</string>
+</resources>

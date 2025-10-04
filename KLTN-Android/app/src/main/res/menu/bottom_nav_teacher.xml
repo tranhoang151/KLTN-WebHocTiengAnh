@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@mipmap/home"
+        android:title="@string/home" />
+    <item
+        android:id="@+id/nav_classes"
+        android:icon="@mipmap/icon_cl"
+        android:title="@string/classes" />
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@mipmap/icon_pf"
+        android:title="@string/profile" />
+    <item
+        android:id="@+id/nav_setting"
+        android:icon="@mipmap/setting"
+        android:title="@string/settings" />
+</menu> 
