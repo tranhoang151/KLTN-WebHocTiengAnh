@@ -57,6 +57,9 @@ public class User
     [FirestoreProperty("badges")]
     public Dictionary<string, UserBadge> Badges { get; set; } = new();
 
+    [FirestoreProperty("learningHistory")]
+    public Dictionary<string, bool> LearningHistory { get; set; } = new();
+
     [FirestoreProperty("created_at")]
     public Timestamp CreatedAt { get; set; }
 

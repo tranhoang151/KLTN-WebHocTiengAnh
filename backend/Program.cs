@@ -29,9 +29,15 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp", policy =>
     {
-        var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>()
-            ?? new[] { "http://localhost:3000", "https://localhost:3000" };
-
+        // Specific origins for development (like KhoaLuan-main but with more ports)
+        var allowedOrigins = new[] {
+            "http://localhost:3000",
+            "https://localhost:3000",
+            "http://localhost:3001",
+            "https://localhost:3001",
+            "http://localhost:5000",
+            "https://localhost:5001"
+        };
         policy.WithOrigins(allowedOrigins)
               .AllowAnyHeader()
               .AllowAnyMethod()
@@ -57,13 +63,16 @@ builder.Services.AddScoped<IProgressService, ProgressService>();
 builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
 builder.Services.AddScoped<ISystemConfigService, SystemConfigService>();
 
-// Register Firestore Database (will be configured by FirebaseConfigService)
-
 // Register Firebase Configuration
 builder.Services.Configure<FirebaseConfig>(builder.Configuration.GetSection("Firebase"));
 builder.Services.AddScoped<IOptimizedFirebaseService, OptimizedFirebaseService>();
+
+// Register Firestore Database using FirebaseConfigService
 builder.Services.AddSingleton(provider =>
-    FirestoreDb.Create("kltn-c5cf0")); // Replace "your-project-id" with your Firebase project ID.
+{
+    var firebaseConfigService = provider.GetRequiredService<IFirebaseConfigService>();
+    return firebaseConfigService.GetFirestoreDb();
+});
 
 
 // Register GDPR and Privacy services
@@ -153,18 +162,28 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Security middleware
-app.UseMiddleware<SecurityHeadersMiddleware>();
-app.UseHttpsRedirection();
-app.UseMiddleware<RateLimitingMiddleware>();
-app.UseMiddleware<InputValidationMiddleware>();
+// Global exception handling must be first to catch all exceptions
 app.UseMiddleware<GlobalExceptionMiddleware>();
 
-// CORS
+// Core ASP.NET Core middleware
+app.UseHttpsRedirection();
+
+// Routing must come before CORS for endpoint routing to work
+app.UseRouting();
+
+// CORS must be placed after UseRouting and before UseAuthorization.
+// Placing it early ensures it runs before other middleware that might short-circuit the request.
 app.UseCors("AllowReactApp");
+
+// Security middleware - order matters
+app.UseMiddleware<SecurityHeadersMiddleware>();
+app.UseMiddleware<RateLimitingMiddleware>();
+app.UseMiddleware<InputValidationMiddleware>();
 
 // Custom JWT Authentication
 app.UseMiddleware<JwtAuthenticationMiddleware>();
+
+app.UseAuthorization();
 
 app.MapControllers();
 

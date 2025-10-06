@@ -24,6 +24,128 @@ public class AuthController : ControllerBase
         _logger = logger;
     }
 
+    [HttpGet("sync-data")]
+    public async Task<IActionResult> GetSyncData()
+    {
+        try
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized(new { Success = false, Message = "User not authenticated" });
+            }
+
+            var user = await _firebaseService.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound(new { Success = false, Message = "User not found" });
+            }
+
+            // Return current user data for synchronization
+            return Ok(new
+            {
+                Success = true,
+                User = MapUserToDto(user),
+                LastSyncDate = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"),
+                ServerTimestamp = DateTime.UtcNow.ToString("O"),
+                DataVersion = "1.0"
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting sync data for user {UserId}", User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            return StatusCode(500, new { Success = false, Message = "Internal server error" });
+        }
+    }
+
+    [HttpPost("sync-progress")]
+    public async Task<IActionResult> SyncProgress([FromBody] SyncProgressRequest request)
+    {
+        try
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized(new { Success = false, Message = "User not authenticated" });
+            }
+
+            // Sync learning progress data
+            var user = await _firebaseService.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound(new { Success = false, Message = "User not found" });
+            }
+
+            // Update learning history and streak data
+            if (request.LearningHistory != null)
+            {
+                // Merge learning history with existing data
+                foreach (var entry in request.LearningHistory)
+                {
+                    user.LearningHistory[entry.Key] = entry.Value;
+                }
+            }
+
+            if (request.LastLearningDate != null)
+            {
+                user.LastLearningDate = request.LastLearningDate;
+
+                // Calculate learning streak based on Android app logic
+                var today = DateTime.UtcNow.ToString("yyyy-MM-dd");
+                var lastLearning = user.LastLearningDate;
+
+                if (lastLearning != today)
+                {
+                    if (string.IsNullOrEmpty(lastLearning))
+                    {
+                        user.LearningStreakCount = 1;
+                    }
+                    else
+                    {
+                        var lastLearningDate = DateTime.Parse(lastLearning);
+                        var daysDifference = (DateTime.Parse(today) - lastLearningDate).Days;
+
+                        if (daysDifference == 1)
+                        {
+                            // Consecutive day - increment streak
+                            user.LearningStreakCount++;
+                        }
+                        else if (daysDifference > 1)
+                        {
+                            // Streak broken - reset to 1
+                            user.LearningStreakCount = 1;
+                        }
+                    }
+                }
+            }
+
+            if (request.Badges != null)
+            {
+                // Merge badges with existing data
+                foreach (var badge in request.Badges)
+                {
+                    user.Badges[badge.Key] = badge.Value;
+                }
+            }
+
+            await _firebaseService.UpdateUserAsync(user);
+
+            return Ok(new
+            {
+                Success = true,
+                Message = "Progress synchronized successfully",
+                User = MapUserToDto(user),
+                SyncedAt = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"),
+                ServerTimestamp = DateTime.UtcNow.ToString("O")
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error syncing progress for user {UserId}", User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            return StatusCode(500, new { Success = false, Message = "Internal server error" });
+        }
+    }
+
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
@@ -42,6 +164,50 @@ public class AuthController : ControllerBase
             }
 
             var userDto = MapUserToDto(result.User!);
+
+            // Update login streak and last login date (synchronized with Android app logic)
+            try
+            {
+                var user = result.User!;
+                var today = DateTime.UtcNow.ToString("yyyy-MM-dd");
+                var lastLogin = user.LastLoginDate;
+
+                // Calculate streak based on Android app logic
+                if (lastLogin != today)
+                {
+                    if (string.IsNullOrEmpty(lastLogin))
+                    {
+                        user.LearningStreakCount = 1;
+                    }
+                    else
+                    {
+                        var lastLoginDate = DateTime.Parse(lastLogin);
+                        var daysDifference = (DateTime.Parse(today) - lastLoginDate).Days;
+
+                        if (daysDifference == 1)
+                        {
+                            // Consecutive day - increment streak
+                            user.LearningStreakCount++;
+                        }
+                        else if (daysDifference > 1)
+                        {
+                            // Streak broken - reset to 1
+                            user.LearningStreakCount = 1;
+                        }
+                    }
+
+                    user.LastLoginDate = today;
+                    await _firebaseService.UpdateUserAsync(user);
+                }
+
+                // Update userDto with latest streak data
+                userDto.StreakCount = user.LearningStreakCount;
+                userDto.LastLoginDate = user.LastLoginDate;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Failed to update user streak data on login for email {Email}", request.Email);
+            }
 
             return Ok(new LoginResponse
             {
@@ -79,10 +245,11 @@ public class AuthController : ControllerBase
             var tokenHandler = new JwtSecurityTokenHandler();
             var jsonToken = tokenHandler.ReadJwtToken(request.Token);
             var userId = jsonToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var email = jsonToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
 
-            if (!string.IsNullOrEmpty(userId))
+            if (!string.IsNullOrEmpty(userId) && !string.IsNullOrEmpty(email))
             {
-                var user = await _firebaseService.GetUserByIdAsync(userId);
+                var user = await _customAuthService.GetUserByEmailAsync(email);
                 if (user != null)
                 {
                     return Ok(new ValidateTokenResponse
@@ -123,13 +290,14 @@ public class AuthController : ControllerBase
             var tokenHandler = new JwtSecurityTokenHandler();
             var jsonToken = tokenHandler.ReadJwtToken(request.RefreshToken);
             var userId = jsonToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var email = jsonToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
 
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(email))
             {
                 return Unauthorized(new { Success = false, Message = "Invalid refresh token" });
             }
 
-            var user = await _firebaseService.GetUserByIdAsync(userId);
+            var user = await _customAuthService.GetUserByEmailAsync(email);
             if (user == null)
             {
                 return NotFound(new { Success = false, Message = "User not found" });
@@ -154,12 +322,28 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("logout")]
-    public IActionResult Logout()
+    public async Task<IActionResult> Logout()
     {
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (!string.IsNullOrEmpty(userId))
         {
             _logger.LogInformation("User {UserId} logged out", userId);
+
+            // Update last login date and streak when user logs out
+            try
+            {
+                var user = await _customAuthService.GetUserByEmailAsync(User.FindFirst(ClaimTypes.Email)?.Value ?? "");
+                if (user != null)
+                {
+                    user.LastLoginDate = DateTime.UtcNow.ToString("yyyy-MM-dd");
+                    // Note: Streak calculation logic should be implemented based on Android app logic
+                    await _firebaseService.UpdateUserAsync(user);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Failed to update user login data on logout for user {UserId}", userId);
+            }
         }
         return Ok(new { message = "Logout successful" });
     }

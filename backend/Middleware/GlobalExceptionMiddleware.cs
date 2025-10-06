@@ -29,6 +29,14 @@ public class GlobalExceptionMiddleware
 
     private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
+        // Check if response has already started
+        if (context.Response.HasStarted)
+        {
+            // Response already started, cannot modify headers or write to response
+            // Log the error and return without trying to write
+            return;
+        }
+
         context.Response.ContentType = "application/json";
 
         object response = new

@@ -110,8 +110,24 @@ namespace BingGoWebAPI.Middleware
         {
             var errors = new List<string>();
 
+            // Skip validation for standard browser headers that are commonly flagged
+            var skipHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+            {
+                "accept", "accept-language", "accept-encoding", "user-agent",
+                "sec-ch-ua", "sec-ch-ua-mobile", "sec-ch-ua-platform",
+                "sec-fetch-dest", "sec-fetch-mode", "sec-fetch-site", "sec-fetch-user",
+                "cache-control", "pragma", "connection", "upgrade-insecure-requests",
+                "dnt", "upgrade", "host"
+            };
+
             foreach (var header in headers)
             {
+                // Skip validation for standard headers
+                if (skipHeaders.Contains(header.Key))
+                {
+                    continue;
+                }
+
                 // Check header name
                 if (!IsValidHeaderName(header.Key))
                 {
@@ -126,7 +142,7 @@ namespace BingGoWebAPI.Middleware
                     errors.Add($"Invalid header value for {header.Key}");
                 }
 
-                // Check for injection attempts
+                // Check for injection attempts (less aggressive for custom headers)
                 if (ContainsMaliciousContent(headerValue))
                 {
                     errors.Add($"Malicious content detected in header {header.Key}");

@@ -56,6 +56,26 @@ public class UserController : ControllerBase
         }
     }
 
+    [HttpGet("by-email/{email}")]
+    public async Task<IActionResult> GetUserByEmail(string email)
+    {
+        try
+        {
+            var user = await _firebaseService.GetUserByEmailAsync(email);
+            if (user == null)
+            {
+                return NotFound(new { message = "User not found" });
+            }
+
+            return Ok(user);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving user by email {Email}", email);
+            return StatusCode(500, new { message = "Error retrieving user", error = ex.Message });
+        }
+    }
+
     [HttpGet("{id}")]
     [Authorize(Roles = "admin")]
     public async Task<IActionResult> GetUser(string id)

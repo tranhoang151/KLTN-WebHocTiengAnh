@@ -61,3 +61,11 @@ public class RefreshTokenResponse
     public string? Token { get; set; }
     public string? RefreshToken { get; set; }
 }
+
+public class SyncProgressRequest
+{
+    public Dictionary<string, bool>? LearningHistory { get; set; }
+    public string? LastLearningDate { get; set; }
+    public int? StreakCount { get; set; }
+    public Dictionary<string, UserBadge>? Badges { get; set; }
+}

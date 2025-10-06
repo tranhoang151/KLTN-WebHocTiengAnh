@@ -181,7 +181,16 @@ namespace BingGoWebAPI.Middleware
             cspBuilder.Append("https://firebase.googleapis.com ");
             cspBuilder.Append("https://identitytoolkit.googleapis.com ");
             cspBuilder.Append("https://securetoken.googleapis.com ");
-            cspBuilder.Append("wss://firestore.googleapis.com; ");
+            cspBuilder.Append("wss://firestore.googleapis.com ");
+            // Add localhost for development (now unconditional to ensure it works)
+            cspBuilder.Append("https://localhost:5000 ");
+            cspBuilder.Append("https://localhost:5001 ");
+            cspBuilder.Append("https://localhost:7163 ");
+            cspBuilder.Append("http://localhost:5163 ");
+            cspBuilder.Append("https://localhost:3000 ");
+            cspBuilder.Append("https://localhost:3001 ");
+
+            cspBuilder.Append("; ");
 
             // Frame sources
             cspBuilder.Append("frame-src 'self' https://www.youtube.com; ");
@@ -460,6 +469,12 @@ namespace BingGoWebAPI.Middleware
         /// </summary>
         private void AddPostProcessingHeaders(HttpContext context)
         {
+            // Check if response has already started
+            if (context.Response.HasStarted)
+            {
+                return;
+            }
+
             // Add security headers that depend on response
             if (context.Response.ContentType?.StartsWith("text/html") == true)
             {

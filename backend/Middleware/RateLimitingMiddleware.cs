@@ -215,6 +215,12 @@ namespace BingGoWebAPI.Middleware
         /// </summary>
         private static void AddRateLimitHeaders(HttpContext context, SlidingWindow window, RateLimitRule rule)
         {
+            // Check if response has already started
+            if (context.Response.HasStarted)
+            {
+                return;
+            }
+
             var remaining = Math.Max(0, rule.RequestLimit - window.RequestCount);
             var resetTime = DateTimeOffset.UtcNow.Add(rule.WindowSize);
 
