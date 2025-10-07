@@ -175,6 +175,19 @@ namespace BingGoWebAPI.Services
             return user;
         }
 
+        public async Task<User> GetUserByIdAsync(string userId)
+        {
+            var docRef = _firestoreDb.Collection("users").Document(userId);
+            var snapshot = await docRef.GetSnapshotAsync();
+            if (!snapshot.Exists)
+            {
+                return null;
+            }
+            var user = snapshot.ConvertTo<User>();
+            user.Id = snapshot.Id;
+            return user;
+        }
+
         public Task<bool> ValidateTokenAsync(string token)
         {
             // This will be handled by the JWT middleware, but a basic validation can be added here if needed.

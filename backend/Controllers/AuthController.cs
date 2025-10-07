@@ -290,14 +290,13 @@ public class AuthController : ControllerBase
             var tokenHandler = new JwtSecurityTokenHandler();
             var jsonToken = tokenHandler.ReadJwtToken(request.RefreshToken);
             var userId = jsonToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-            var email = jsonToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
 
-            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(email))
+            if (string.IsNullOrEmpty(userId))
             {
                 return Unauthorized(new { Success = false, Message = "Invalid refresh token" });
             }
 
-            var user = await _customAuthService.GetUserByEmailAsync(email);
+            var user = await _customAuthService.GetUserByIdAsync(userId);
             if (user == null)
             {
                 return NotFound(new { Success = false, Message = "User not found" });

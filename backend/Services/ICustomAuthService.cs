@@ -20,5 +20,6 @@ namespace BingGoWebAPI.Services
         Task<string> GenerateRefreshTokenAsync(User user);
         Task<bool> ValidateRefreshTokenAsync(string token);
         Task<User> GetUserByEmailAsync(string email);
+        Task<User> GetUserByIdAsync(string userId);
     }
 }
