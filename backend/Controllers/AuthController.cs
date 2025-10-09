@@ -270,56 +270,53 @@ public class AuthController : ControllerBase
         }
     }
 
-    [HttpPost("refresh")]
-    public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
-    {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(request.RefreshToken))
+            [HttpPost("refresh")]
+            public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
             {
-                return BadRequest(new { Success = false, Message = "Invalid refresh token format" });
+                try
+                {
+                    if (string.IsNullOrWhiteSpace(request.RefreshToken))
+                    {
+                        return BadRequest(new { Success = false, Message = "Invalid refresh token format" });
+                    }
+    
+                    var principal = await _customAuthService.ValidateRefreshTokenAsync(request.RefreshToken);
+                    if (principal == null)
+                    {
+                        return Unauthorized(new { Success = false, Message = "Invalid or expired refresh token" });
+                    }
+    
+                    var userId = principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+    
+                    if (string.IsNullOrEmpty(userId))
+                    {
+                        // This case should not be reached if the token was generated correctly
+                        return Unauthorized(new { Success = false, Message = "Invalid refresh token: Missing user identifier" });
+                    }
+    
+                    var user = await _customAuthService.GetUserByIdAsync(userId);
+                    if (user == null)
+                    {
+                        return NotFound(new { Success = false, Message = "User not found" });
+                    }
+    
+                    var newToken = await _customAuthService.GenerateJwtTokenAsync(user);
+                    var newRefreshToken = await _customAuthService.GenerateRefreshTokenAsync(user);
+    
+                    return Ok(new RefreshTokenResponse
+                    {
+                        Success = true,
+                        Message = "Token refreshed successfully",
+                        Token = newToken,
+                        RefreshToken = newRefreshToken
+                    });
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Error refreshing token");
+                    return StatusCode(500, new { Success = false, Message = "Internal server error" });
+                }
             }
-
-            var isValidRefreshToken = await _customAuthService.ValidateRefreshTokenAsync(request.RefreshToken);
-
-            if (!isValidRefreshToken)
-            {
-                return Unauthorized(new { Success = false, Message = "Invalid or expired refresh token" });
-            }
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var jsonToken = tokenHandler.ReadJwtToken(request.RefreshToken);
-            var userId = jsonToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-
-            if (string.IsNullOrEmpty(userId))
-            {
-                return Unauthorized(new { Success = false, Message = "Invalid refresh token" });
-            }
-
-            var user = await _customAuthService.GetUserByIdAsync(userId);
-            if (user == null)
-            {
-                return NotFound(new { Success = false, Message = "User not found" });
-            }
-
-            var newToken = await _customAuthService.GenerateJwtTokenAsync(user);
-            var newRefreshToken = await _customAuthService.GenerateRefreshTokenAsync(user);
-
-            return Ok(new RefreshTokenResponse
-            {
-                Success = true,
-                Message = "Token refreshed successfully",
-                Token = newToken,
-                RefreshToken = newRefreshToken
-            });
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error refreshing token");
-            return StatusCode(500, new { Success = false, Message = "Internal server error" });
-        }
-    }
-
     [HttpPost("logout")]
     public async Task<IActionResult> Logout()
     {

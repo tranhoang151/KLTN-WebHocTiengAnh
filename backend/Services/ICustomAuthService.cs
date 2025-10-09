@@ -1,4 +1,5 @@
 using BingGoWebAPI.Models;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace BingGoWebAPI.Services
@@ -18,7 +19,7 @@ namespace BingGoWebAPI.Services
         Task<bool> ValidateTokenAsync(string token);
         Task<string> GenerateJwtTokenAsync(User user);
         Task<string> GenerateRefreshTokenAsync(User user);
-        Task<bool> ValidateRefreshTokenAsync(string token);
+        Task<ClaimsPrincipal?> ValidateRefreshTokenAsync(string token);
         Task<User> GetUserByEmailAsync(string email);
         Task<User> GetUserByIdAsync(string userId);
     }

@@ -447,8 +447,79 @@ public class FirebaseService : IFirebaseService
         }
     }
 
+    public async Task DeleteCourseAsync(string courseId)
+    {
+        try
+        {
+            var docRef = _firestore.Collection("courses").Document(courseId);
+            await docRef.DeleteAsync();
+
+            // Un-assign classes that belong to this course
+            var query = _firestore.Collection("classes").WhereEqualTo("course_id", courseId);
+            var snapshot = await query.GetSnapshotAsync();
+            var batch = _firestore.StartBatch();
+            foreach (var doc in snapshot.Documents)
+            {
+                batch.Update(doc.Reference, "course_id", null);
+            }
+            await batch.CommitAsync();
+
+            _cache.Remove($"course_{courseId}");
+            _cache.Remove("courses_all");
+
+            _logger.LogInformation("Course deleted: {CourseId}", courseId);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error deleting course: {CourseId}", courseId);
+            throw;
+        }
+    }
+
+    public async Task AssignClassesToCourseAsync(string courseId, List<string> classIds)
+    {
+        try
+        {
+            var batch = _firestore.StartBatch();
+            foreach (var classId in classIds)
+            {
+                var docRef = _firestore.Collection("classes").Document(classId);
+                batch.Update(docRef, "course_id", courseId);
+            }
+            await batch.CommitAsync();
+
+            _logger.LogInformation("Assigned classes to course {CourseId}", courseId);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error assigning classes to course: {CourseId}", courseId);
+            throw;
+        }
+    }
+
     // Placeholder implementations for other methods
-    public Task<List<Class>> GetClassesAsync() => throw new NotImplementedException();
+    public async Task<List<Class>> GetClassesAsync()
+    {
+        try
+        {
+            const string cacheKey = "classes_all";
+            if (_cache.TryGetValue(cacheKey, out List<Class>? cachedClasses))
+            {
+                return cachedClasses ?? new List<Class>();
+            }
+
+            var snapshot = await _firestore.Collection("classes").GetSnapshotAsync();
+            var classes = snapshot.Documents.Select(doc => doc.ConvertTo<Class>()).ToList();
+
+            _cache.Set(cacheKey, classes, _cacheExpiry);
+            return classes;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting all classes");
+            throw;
+        }
+    }
     public async Task<Class?> GetClassByIdAsync(string classId)
     {
         try
@@ -504,8 +575,70 @@ public class FirebaseService : IFirebaseService
             throw;
         }
     }
-    public Task<Class> CreateClassAsync(Class classEntity) => throw new NotImplementedException();
-    public Task<Class> UpdateClassAsync(string classId, Class classEntity) => throw new NotImplementedException();
+    public async Task<Class> CreateClassAsync(Class classEntity)
+    {
+        try
+        {
+            classEntity.Id = Guid.NewGuid().ToString();
+            classEntity.CreatedAt = DateTime.UtcNow.ToString("O");
+
+            var docRef = _firestore.Collection("classes").Document(classEntity.Id);
+            await docRef.SetAsync(classEntity);
+
+            // Clear cache
+            _cache.Remove("classes_all");
+
+            _logger.LogInformation("Class created with ID: {ClassId}", classEntity.Id);
+            return classEntity;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error creating class");
+            throw;
+        }
+    }
+
+    public async Task<Class> UpdateClassAsync(string classId, Class classEntity)
+    {
+        try
+        {
+            classEntity.Id = classId;
+            var docRef = _firestore.Collection("classes").Document(classId);
+            await docRef.SetAsync(classEntity, SetOptions.MergeAll);
+
+            // Clear cache
+            _cache.Remove($"class_{classId}");
+            _cache.Remove("classes_all");
+
+            _logger.LogInformation("Class updated: {ClassId}", classId);
+            return classEntity;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating class: {ClassId}", classId);
+            throw;
+        }
+    }
+
+    public async Task DeleteClassAsync(string classId)
+    {
+        try
+        {
+            var docRef = _firestore.Collection("classes").Document(classId);
+            await docRef.DeleteAsync();
+
+            // Invalidate cache
+            _cache.Remove($"class_{classId}");
+            _cache.Remove("classes_all"); // Assuming a cache key for all classes
+
+            _logger.LogInformation("Class deleted: {ClassId}", classId);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error deleting class: {ClassId}", classId);
+            throw;
+        }
+    }
     public async Task<List<FlashcardSet>> GetFlashcardSetsAsync()
     {
         try
@@ -922,11 +1055,191 @@ public class FirebaseService : IFirebaseService
         }
     }
 
-    public Task<Exercise> CreateExerciseAsync(Exercise exercise) => throw new NotImplementedException();
-    public Task<List<Question>> GetQuestionsAsync() => throw new NotImplementedException();
-    public Task<List<Question>> GetQuestionsByCourseAsync(string courseId) => throw new NotImplementedException();
-    public Task<Question> CreateQuestionAsync(Question question) => throw new NotImplementedException();
-    public Task<Question> UpdateQuestionAsync(string questionId, Question question) => throw new NotImplementedException();
+    public async Task<List<Exercise>> GetAllExercisesAsync(string? courseId = null, string? difficulty = null, string? type = null)
+    {
+        try
+        {
+            var cacheKey = $"exercises_all_course_{courseId}_difficulty_{difficulty}_type_{type}";
+            if (_cache.TryGetValue(cacheKey, out List<Exercise>? cachedExercises))
+            {
+                return cachedExercises ?? new List<Exercise>();
+            }
+
+            var query = _firestore.Collection("exercises").WhereEqualTo("is_active", true);
+
+            if (!string.IsNullOrEmpty(courseId))
+            {
+                query = query.WhereEqualTo("course_id", courseId);
+            }
+
+            if (!string.IsNullOrEmpty(difficulty))
+            {
+                query = query.WhereEqualTo("difficulty", difficulty);
+            }
+
+            if (!string.IsNullOrEmpty(type))
+            {
+                query = query.WhereEqualTo("type", type);
+            }
+
+            var snapshot = await query.GetSnapshotAsync();
+            var exercises = snapshot.Documents.Select(doc => doc.ConvertTo<Exercise>()).ToList();
+
+            _cache.Set(cacheKey, exercises, _cacheExpiry);
+            return exercises;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting all exercises");
+            throw;
+        }
+    }
+
+    public async Task<Exercise> CreateExerciseAsync(Exercise exercise)
+    {
+        try
+        {
+            exercise.Id = Guid.NewGuid().ToString();
+            exercise.CreatedAt = Timestamp.GetCurrentTimestamp();
+            exercise.IsActive = true;
+
+            var docRef = _firestore.Collection("exercises").Document(exercise.Id);
+            await docRef.SetAsync(exercise);
+
+            // Clear cache
+            _cache.Remove("exercises_all");
+
+            _logger.LogInformation("Exercise created with ID: {ExerciseId}", exercise.Id);
+            return exercise;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error creating exercise");
+            throw;
+        }
+    }
+    public async Task<List<Question>> GetQuestionsAsync()
+    {
+        try
+        {
+            const string cacheKey = "questions_all";
+            if (_cache.TryGetValue(cacheKey, out List<Question>? cachedQuestions))
+            {
+                return cachedQuestions ?? new List<Question>();
+            }
+
+            var snapshot = await _firestore.Collection("questions").GetSnapshotAsync();
+            var questions = snapshot.Documents.Select(doc => doc.ConvertTo<Question>()).ToList();
+
+            _cache.Set(cacheKey, questions, _cacheExpiry);
+            return questions;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting all questions");
+            throw;
+        }
+    }
+
+    public async Task<List<Question>> GetQuestionsByCourseAsync(string courseId)
+    {
+        try
+        {
+            var cacheKey = $"questions_course_{courseId}";
+            if (_cache.TryGetValue(cacheKey, out List<Question>? cachedQuestions))
+            {
+                return cachedQuestions ?? new List<Question>();
+            }
+
+            var query = _firestore.Collection("questions")
+                .WhereEqualTo("course_id", courseId)
+                .WhereEqualTo("is_active", true);
+
+            var snapshot = await query.GetSnapshotAsync();
+            var questions = snapshot.Documents.Select(doc => doc.ConvertTo<Question>()).ToList();
+
+            _cache.Set(cacheKey, questions, _cacheExpiry);
+            return questions;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting questions for course: {CourseId}", courseId);
+            throw;
+        }
+    }
+    public async Task<Question> CreateQuestionAsync(Question question)
+    {
+        try
+        {
+            question.Id = Guid.NewGuid().ToString();
+            question.CreatedAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+
+            var docRef = _firestore.Collection("questions").Document(question.Id);
+            await docRef.SetAsync(question);
+
+            // Clear cache
+            _cache.Remove("questions_all");
+            _cache.Remove($"questions_course_{question.CourseId}");
+
+            _logger.LogInformation("Question created with ID: {QuestionId}", question.Id);
+            return question;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error creating question");
+            throw;
+        }
+    }
+
+    public async Task<Question> UpdateQuestionAsync(string questionId, Question question)
+    {
+        try
+        {
+            question.Id = questionId;
+            var docRef = _firestore.Collection("questions").Document(questionId);
+            await docRef.SetAsync(question, SetOptions.MergeAll);
+
+            // Clear cache
+            _cache.Remove($"question_{questionId}");
+            _cache.Remove("questions_all");
+            _cache.Remove($"questions_course_{question.CourseId}");
+
+            _logger.LogInformation("Question updated: {QuestionId}", questionId);
+            return question;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating question: {QuestionId}", questionId);
+            throw;
+        }
+    }
+
+    public async Task<Question?> GetQuestionByIdAsync(string questionId)
+    {
+        try
+        {
+            return await GetDocumentAsync<Question>("questions", questionId);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting question by ID: {QuestionId}", questionId);
+            throw;
+        }
+    }
+
+    public async Task DeleteQuestionAsync(string questionId)
+    {
+        try
+        {
+            await DeleteDocumentAsync("questions", questionId);
+            _logger.LogInformation("Question deleted: {QuestionId}", questionId);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error deleting question: {QuestionId}", questionId);
+            throw;
+        }
+    }
     public Task<LearningProgress?> GetLearningProgressAsync(string userId, string courseId) => throw new NotImplementedException();
     public Task UpdateLearningProgressAsync(string userId, LearningProgress progress) => throw new NotImplementedException();
     public async Task UpdateFlashcardProgressAsync(FlashcardProgressDto progress)
@@ -1509,6 +1822,80 @@ public class FirebaseService : IFirebaseService
         }
     }
 
+    public async Task<List<Test>> GetTestsByCourseAsync(string courseId)
+    {
+        try
+        {
+            var cacheKey = $"tests_course_{courseId}";
+            if (_cache.TryGetValue(cacheKey, out List<Test>? cachedTests))
+            {
+                return cachedTests ?? new List<Test>();
+            }
+
+            var query = _firestore.Collection("tests")
+                .WhereEqualTo("course_id", courseId)
+                .WhereEqualTo("is_active", true);
+
+            var snapshot = await query.GetSnapshotAsync();
+            var tests = snapshot.Documents.Select(doc => doc.ConvertTo<Test>()).ToList();
+
+            _cache.Set(cacheKey, tests, _cacheExpiry);
+            return tests;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting tests for course: {CourseId}", courseId);
+            throw;
+        }
+    }
+
+    public async Task<Test?> GetTestByIdAsync(string testId)
+    {
+        try
+        {
+            var cacheKey = $"test_{testId}";
+            if (_cache.TryGetValue(cacheKey, out Test? cachedTest))
+            {
+                return cachedTest;
+            }
+
+            var docRef = _firestore.Collection("tests").Document(testId);
+            var snapshot = await docRef.GetSnapshotAsync();
+
+            if (!snapshot.Exists)
+            {
+                return null;
+            }
+
+            var test = snapshot.ConvertTo<Test>();
+            _cache.Set(cacheKey, test, _cacheExpiry);
+
+            return test;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting test by ID: {TestId}", testId);
+            throw;
+        }
+    }
+
+    public async Task<TestResultDto> SaveTestSubmissionAsync(TestResultDto submission)
+    {
+        try
+        {
+            var docRef = _firestore.Collection("test_submissions").Document(submission.SubmissionId);
+            await docRef.SetAsync(submission);
+
+            _logger.LogInformation("Test submission saved: {SubmissionId}", submission.SubmissionId);
+            return submission;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error saving test submission for user {UserId}", submission.UserId);
+            throw;
+        }
+    }
+
     // Analytics Methods
     public async Task<TeacherAnalyticsDto> GetTeacherAnalyticsAsync(string teacherId, string? courseId = null, string? setId = null)
     {
@@ -1872,6 +2259,40 @@ public class FirebaseService : IFirebaseService
         {
             _logger.LogError(ex, "Firebase connection test failed");
             return false;
+        }
+    }
+
+    // Evaluation Management
+    public async Task<Evaluation> SaveEvaluationAsync(Evaluation evaluation)
+    {
+        try
+        {
+            var docRef = _firestore.Collection("evaluations").Document(evaluation.Id);
+            await docRef.SetAsync(evaluation);
+            _logger.LogInformation("Evaluation saved for student {StudentId}", evaluation.StudentId);
+            return evaluation;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error saving evaluation for student {StudentId}", evaluation.StudentId);
+            throw;
+        }
+    }
+
+    public async Task<List<Evaluation>> GetEvaluationsForStudentAsync(string studentId)
+    {
+        try
+        {
+            var query = _firestore.Collection("evaluations")
+                .WhereEqualTo("StudentId", studentId)
+                .OrderByDescending("EvaluationDate");
+            var snapshot = await query.GetSnapshotAsync();
+            return snapshot.Documents.Select(doc => doc.ConvertTo<Evaluation>()).ToList();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting evaluations for student {StudentId}", studentId);
+            throw;
         }
     }
 }

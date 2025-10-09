@@ -138,35 +138,42 @@ namespace BingGoWebAPI.Services
         {
             try
             {
-                var progress = await GetUserProgressAsync(userId);
-                var streak = await GetUserStreakAsync(userId);
-                var activities = await GetUserActivitiesAsync(userId, DateTime.UtcNow.AddDays(-30));
+                var progressTask = GetUserProgressAsync(userId);
+                var streakTask = GetUserStreakAsync(userId);
+                var activitiesTask = GetUserActivitiesAsync(userId, DateTime.UtcNow.AddDays(-30));
 
-                // Calculate completed flashcard sets and exercises from activities
+                await Task.WhenAll(progressTask, streakTask, activitiesTask);
+
+                var progress = await progressTask ?? new UserProgress { UserId = userId };
+                var streak = await streakTask ?? new LearningStreak { UserId = userId };
+                var activities = await activitiesTask ?? new List<LearningActivity>();
+
+                // Safely calculate completed flashcard sets and exercises
                 var completedFlashcardSets = activities
-                    .Where(a => a.Type == "flashcard" && !string.IsNullOrEmpty(a.FlashcardSetId))
+                    .Where(a => a != null && a.Type == "flashcard" && !string.IsNullOrEmpty(a.FlashcardSetId))
                     .Select(a => a.FlashcardSetId)
                     .Distinct()
                     .Count();
 
                 var completedExercises = activities
-                    .Where(a => a.Type == "exercise" && !string.IsNullOrEmpty(a.ExerciseId))
+                    .Where(a => a != null && a.Type == "exercise" && !string.IsNullOrEmpty(a.ExerciseId))
                     .Select(a => a.ExerciseId)
                     .Distinct()
                     .Count();
 
-                // Calculate total study time in hours
-                var totalStudyTimeHours = activities.Sum(a => a.TimeSpent) / 3600.0;
+                // Safely calculate total study time in hours
+                var totalStudyTimeHours = activities.Where(a => a != null).Sum(a => a.TimeSpent) / 3600.0;
 
-                // Get recent activities (last 10)
+                // Safely get recent activities, filtering out any nulls
                 var recentActivities = activities
+                    .Where(a => a != null)
                     .OrderByDescending(a => a.Timestamp)
                     .Take(10)
                     .ToList();
 
-                // Generate performance data points from exercise activities
+                // Safely generate performance data points, filtering out null Timestamps
                 var exercisePerformance = activities
-                    .Where(a => a.Type == "exercise" && a.Score.HasValue)
+                    .Where(a => a != null && a.Type == "exercise" && a.Score.HasValue && a.Timestamp != default)
                     .GroupBy(a => a.Timestamp.Date)
                     .Select(g => new PerformanceDataPoint
                     {
@@ -223,7 +230,7 @@ namespace BingGoWebAPI.Services
                     {
                         ClassId = classItem.Id,
                         ClassName = classItem.Name,
-                        StudentCount = classItem.StudentIds.Count,
+                        StudentCount = classItem.StudentIds.Count(),
                         AverageCompletionRate = completionRates.Any() ? completionRates.Average() : 0
                     });
                 }
@@ -273,7 +280,7 @@ namespace BingGoWebAPI.Services
                         StudentId = studentId,
                         StudentName = student.FullName,
                         OverallScore = overallScore,
-                        CompletedActivities = activities.Count,
+                        CompletedActivities = activities.Count(),
                         TotalStudyTimeHours = totalStudyTimeHours
                     });
                 }
@@ -292,63 +299,13 @@ namespace BingGoWebAPI.Services
             }
         }
 
-        public async Task<List<StudentProgressSummaryDto>> GetChildrenProgressSummariesAsync(string parentId)
-        {
-            try
-            {
-                // Get parent user to access child IDs
-                var parent = await _firebaseService.GetDocumentAsync<User>("users", parentId);
-                if (parent == null || parent.ChildIds == null || !parent.ChildIds.Any())
-                {
-                    return new List<StudentProgressSummaryDto>();
-                }
-
-                var childrenSummaries = new List<StudentProgressSummaryDto>();
-
-                foreach (var childId in parent.ChildIds)
-                {
-                    // Get child information
-                    var child = await _firebaseService.GetDocumentAsync<User>("users", childId);
-                    if (child == null) continue;
-
-                    var progress = await GetUserProgressAsync(childId);
-                    var activities = await GetUserActivitiesAsync(childId, DateTime.UtcNow.AddDays(-30));
-
-                    // Calculate overall score from recent exercise activities
-                    var exerciseScores = activities
-                        .Where(a => a.Type == "exercise" && a.Score.HasValue)
-                        .Select(a => a.Score!.Value);
-                    var overallScore = exerciseScores.Any() ? exerciseScores.Average() : 0;
-
-                    // Calculate total study time in hours
-                    var totalStudyTimeHours = activities.Sum(a => a.TimeSpent) / 3600.0;
-
-                    childrenSummaries.Add(new StudentProgressSummaryDto
-                    {
-                        StudentId = childId,
-                        StudentName = child.FullName,
-                        OverallScore = overallScore,
-                        CompletedActivities = activities.Count,
-                        TotalStudyTimeHours = totalStudyTimeHours
-                    });
-                }
-
-                return childrenSummaries;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error getting children progress summaries for parent {ParentId}", parentId);
-                throw;
-            }
-        }
-
         private double CalculateCompletionRate(UserProgress progress, List<LearningActivity> activities)
         {
             // Calculate completion rate based on completed sets and total XP
             // This is a simplified calculation - in a real scenario, you might have more sophisticated logic
-            var completedSets = progress.CompletedSets?.Count ?? 0;
+            var completedSets = progress.CompletedSets?.Count() ?? 0;
             var totalXp = progress.TotalXp;
-            var recentActivityCount = activities.Count;
+            var recentActivityCount = activities.Count();
 
             // Simple heuristic: combine completed sets, XP, and recent activity
             var completionScore = (completedSets * 10) + (totalXp / 100.0) + (recentActivityCount * 2);

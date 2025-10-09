@@ -203,23 +203,43 @@ namespace BingGoWebAPI.Services
                 var usersQuery = _firebaseService.GetCollection("users");
                 var users = await _firebaseService.GetDocumentsAsync<User>(usersQuery);
 
-                var progressQuery = _firebaseService.GetCollection("user_progress");
-                var progressData = await _firebaseService.GetDocumentsAsync<UserProgress>(progressQuery);
+                var coursesQuery = _firebaseService.GetCollection("courses");
+                var courses = await _firebaseService.GetDocumentsAsync<Course>(coursesQuery);
+
+                var classesQuery = _firebaseService.GetCollection("classes");
+                var classes = await _firebaseService.GetDocumentsAsync<Class>(classesQuery);
+
+                var videosQuery = _firebaseService.GetCollection("videos");
+                var videos = await _firebaseService.GetDocumentsAsync<Video>(videosQuery);
+
+                var exercisesQuery = _firebaseService.GetCollection("exercises");
+                var exercises = await _firebaseService.GetDocumentsAsync<Exercise>(exercisesQuery);
+
+                var flashcardSetsQuery = _firebaseService.GetCollection("flashcard_sets");
+                var flashcardSets = await _firebaseService.GetDocumentsAsync<FlashcardSet>(flashcardSetsQuery);
 
                 var activitiesQuery = _firebaseService.GetCollection("learning_activities");
                 var activities = await _firebaseService.GetDocumentsAsync<LearningActivity>(activitiesQuery);
 
-                var activeUsers = users.Where(u => !string.IsNullOrEmpty(u.LastLoginDate) &&
-                    DateTime.TryParse(u.LastLoginDate, out var lastLogin) &&
-                    lastLogin > DateTime.UtcNow.AddDays(-30)).Count();
+                // Calculate activity counts by type
+                var activityCountsByType = activities
+                    .GroupBy(a => a.Type)
+                    .ToDictionary(g => g.Key, g => g.Count());
+
+                // Calculate average exercise score from activities
+                var exerciseActivities = activities.Where(a => a.Type == "exercise" && a.Score.HasValue);
+                var averageExerciseScore = exerciseActivities.Any() ? exerciseActivities.Average(a => a.Score.Value) : 0;
 
                 return new
                 {
-                    TotalUsers = users.Count,
-                    ActiveUsers = activeUsers,
-                    TotalSessions = activities.Count,
-                    AverageSessionDuration = activities.Any() ? activities.Average(a => (double)a.Duration) : 0,
-                    TotalXpEarned = progressData.Sum(p => p.TotalXp)
+                    totalUsers = users.Count,
+                    totalCourses = courses.Count,
+                    totalClasses = classes.Count,
+                    totalVideos = videos.Count,
+                    totalExercises = exercises.Count,
+                    totalFlashcardSets = flashcardSets.Count,
+                    averageExerciseScore = averageExerciseScore,
+                    activityCountsByType = activityCountsByType
                 };
             }
             catch (Exception ex)

@@ -14,17 +14,20 @@ public class Video
     [FirestoreProperty("description")]
     public string Description { get; set; } = string.Empty;
 
-    [FirestoreProperty("youtube_id")]
-    public string YoutubeId { get; set; } = string.Empty;
+    [FirestoreProperty("video_url")]
+    public string VideoUrl { get; set; } = string.Empty;
+
+    [FirestoreProperty("thumbnail_url")]
+    public string ThumbnailUrl { get; set; } = string.Empty;
+
+    [FirestoreProperty("duration")]
+    public string Duration { get; set; } = string.Empty;
 
     [FirestoreProperty("course_id")]
     public string CourseId { get; set; } = string.Empty;
 
-    [FirestoreProperty("duration")]
-    public int? Duration { get; set; }
-
-    [FirestoreProperty("thumbnail_url")]
-    public string? ThumbnailUrl { get; set; }
+    [FirestoreProperty("topic")]
+    public string Topic { get; set; } = string.Empty;
 
     [FirestoreProperty("assigned_class_ids")]
     public List<string> AssignedClassIds { get; set; } = new();

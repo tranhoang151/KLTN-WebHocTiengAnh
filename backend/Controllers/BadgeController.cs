@@ -24,15 +24,16 @@ public class BadgeController : ControllerBase
     [HttpGet("definitions")]
     public async Task<IActionResult> GetBadgeDefinitions()
     {
-        // Temporary diagnostic code to bypass the service layer
-        _logger.LogWarning("Executing temporary mock implementation for GetBadgeDefinitions.");
-        var mockBadges = new List<Badge>
+        try
         {
-            new Badge { Id = "mock1", Name = "Mock Badge 1", Description = "This is a test badge." },
-            new Badge { Id = "mock2", Name = "Mock Badge 2", Description = "This is another test badge." }
-        };
-        await Task.Delay(10); // Simulate async operation
-        return Ok(mockBadges);
+            var badges = await _badgeService.GetBadgeDefinitionsAsync();
+            return Ok(badges);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving badge definitions.");
+            return StatusCode(500, new { message = "Error retrieving badge definitions", error = ex.Message });
+        }
     }
 
     [HttpGet("user/{userId}")]

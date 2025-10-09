@@ -370,3 +370,40 @@ public class SystemHealthDto
     public long UptimeSeconds { get; set; }
     public DateTime LastCheck { get; set; }
 }
+
+// Test Submission DTOs
+public class SubmissionAnswerDto
+{
+    public string QuestionId { get; set; } = string.Empty;
+    public string Answer { get; set; } = string.Empty;
+}
+
+public class TestSubmissionDto
+{
+    public string TestId { get; set; } = string.Empty;
+    public List<SubmissionAnswerDto> Answers { get; set; } = new();
+}
+
+public class TestResultDto
+{
+    public string SubmissionId { get; set; } = string.Empty;
+    public string TestId { get; set; } = string.Empty;
+    public string UserId { get; set; } = string.Empty;
+    public double Score { get; set; }
+    public int TotalQuestions { get; set; }
+    public int CorrectAnswers { get; set; }
+    public DateTime SubmittedAt { get; set; }
+    public List<QuestionResult> QuestionResults { get; set; } = new();
+}
+
+// Evaluation DTO
+public class EvaluationDto
+{
+    public string StudentId { get; set; } = string.Empty;
+    public float OverallRating { get; set; }
+    public string Comments { get; set; } = string.Empty;
+    public int Score { get; set; }
+    public float RatingParticipation { get; set; }
+    public float RatingUnderstanding { get; set; }
+    public float RatingProgress { get; set; }
+}

@@ -38,6 +38,8 @@ public interface IFirebaseService
     Task<Course?> GetCourseByIdAsync(string courseId);
     Task<Course> CreateCourseAsync(Course course);
     Task<Course> UpdateCourseAsync(string courseId, Course course);
+    Task DeleteCourseAsync(string courseId);
+    Task AssignClassesToCourseAsync(string courseId, List<string> classIds);
 
     // Class Management
     Task<List<Class>> GetClassesAsync();
@@ -45,6 +47,7 @@ public interface IFirebaseService
     Task<List<Class>> GetClassesByTeacherAsync(string teacherId);
     Task<Class> CreateClassAsync(Class classEntity);
     Task<Class> UpdateClassAsync(string classId, Class classEntity);
+    Task DeleteClassAsync(string classId);
 
     // Flashcard Management
     Task<List<FlashcardSet>> GetFlashcardSetsAsync();
@@ -62,6 +65,7 @@ public interface IFirebaseService
     Task AssignFlashcardSetAsync(string setId, List<string> classIds);
 
     // Exercise Management
+    Task<List<Exercise>> GetAllExercisesAsync(string? courseId = null, string? difficulty = null, string? type = null);
     Task<List<Exercise>> GetExercisesByCourseAsync(string courseId);
     Task<Exercise?> GetExerciseByIdAsync(string exerciseId);
     Task<Exercise> CreateExerciseAsync(Exercise exercise);
@@ -71,6 +75,8 @@ public interface IFirebaseService
     Task<List<Question>> GetQuestionsByCourseAsync(string courseId);
     Task<Question> CreateQuestionAsync(Question question);
     Task<Question> UpdateQuestionAsync(string questionId, Question question);
+    Task<Question?> GetQuestionByIdAsync(string questionId);
+    Task DeleteQuestionAsync(string questionId);
 
     // Progress Tracking
     Task<LearningProgress?> GetLearningProgressAsync(string userId, string courseId);
@@ -98,7 +104,14 @@ public interface IFirebaseService
     Task<Badge?> GetBadgeByConditionKeyAsync(string conditionKey);
 
     // Test Management
+    Task<Test?> GetTestByIdAsync(string testId);
+    Task<List<Test>> GetTestsByCourseAsync(string courseId);
+    Task<TestResultDto> SaveTestSubmissionAsync(TestResultDto submission);
     Task<ExerciseResult> ProcessExerciseSubmissionAsync(ExerciseSubmissionDto submission);
+
+    // Evaluation Management
+    Task<Evaluation> SaveEvaluationAsync(Evaluation evaluation);
+    Task<List<Evaluation>> GetEvaluationsForStudentAsync(string studentId);
 
     // Analytics
     Task<TeacherAnalyticsDto> GetTeacherAnalyticsAsync(string teacherId, string? courseId = null, string? setId = null);

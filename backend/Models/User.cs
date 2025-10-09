@@ -18,7 +18,7 @@ public class User
     public string Password { get; set; } = string.Empty;
 
     [FirestoreProperty("role")]
-    public string Role { get; set; } = string.Empty; // student, teacher, admin, parent
+    public string Role { get; set; } = string.Empty; // student, teacher, admin
 
     [FirestoreProperty("gender")]
     public string Gender { get; set; } = string.Empty;
@@ -51,8 +51,6 @@ public class User
     [FirestoreProperty("class_ids")]
     public List<string> ClassIds { get; set; } = new();
 
-    [FirestoreProperty("child_ids")]
-    public List<string> ChildIds { get; set; } = new();
 
     [FirestoreProperty("badges")]
     public Dictionary<string, UserBadge> Badges { get; set; } = new();

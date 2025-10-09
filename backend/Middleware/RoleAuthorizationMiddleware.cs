@@ -99,6 +99,7 @@ public class RoleAuthorizationMiddleware
                 "/api/exercises",
                 "/api/tests",
                 "/api/videos",
+                "/api/analytics",
                 "/api/users/profile"
             },
             ["admin"] = new[]
@@ -115,6 +116,7 @@ public class RoleAuthorizationMiddleware
                 "/api/reports",
                 "/api/system",
                 "/api/progress",
+                "/api/analytics",
                 "/api/badges"
             },
             ["parent"] = new[]
