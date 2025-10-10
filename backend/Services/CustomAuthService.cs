@@ -55,12 +55,11 @@ namespace BingGoWebAPI.Services
                 return new AuthResult { Success = false, Error = "Invalid password" };
             }
 
-            // Password hashing disabled to maintain original backup.json structure
-            // if (needsPasswordUpdate)
-            // {
-            //     user.Password = _passwordHashingService.HashPassword(password);
-            //     await _firestoreDb.Collection("users").Document(user.Id).SetAsync(user, SetOptions.MergeAll);
-            // }
+            if (needsPasswordUpdate)
+            {
+                user.Password = _passwordHashingService.HashPassword(password);
+                await _firestoreDb.Collection("users").Document(user.Id).SetAsync(user, SetOptions.MergeAll);
+            }
 
             var token = await GenerateJwtTokenAsync(user);
             var refreshToken = await GenerateRefreshTokenAsync(user);
@@ -130,7 +129,7 @@ namespace BingGoWebAPI.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public Task<ClaimsPrincipal?> ValidateRefreshTokenAsync(string token)
+        public Task<bool> ValidateRefreshTokenAsync(string token)
         {
             var jwtSettings = _configuration.GetSection("Security:JWT");
             var secretKey = jwtSettings["Secret"];
@@ -139,7 +138,7 @@ namespace BingGoWebAPI.Services
 
             try
             {
-                var principal = tokenHandler.ValidateToken(token, new TokenValidationParameters
+                tokenHandler.ValidateToken(token, new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = key,
@@ -154,16 +153,11 @@ namespace BingGoWebAPI.Services
                 var jwtToken = (JwtSecurityToken)validatedToken;
                 var tokenType = jwtToken.Claims.FirstOrDefault(x => x.Type == "type")?.Value;
 
-                if (tokenType == "refresh")
-                {
-                    return Task.FromResult<ClaimsPrincipal?>(principal);
-                }
-
-                return Task.FromResult<ClaimsPrincipal?>(null);
+                return Task.FromResult(tokenType == "refresh");
             }
             catch
             {
-                return Task.FromResult<ClaimsPrincipal?>(null);
+                return Task.FromResult(false);
             }
         }
 

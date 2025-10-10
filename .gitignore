@@ -88,6 +88,13 @@ Thumbs.db
 *.key
 *.crt
 
+# Firebase service account keys
+*firebase-adminsdk*.json
+
+# Other secrets
+secrets/
+*.secret
+
 # Upload directories (if they contain user-generated content)
 uploads/
 wwwroot/uploads/

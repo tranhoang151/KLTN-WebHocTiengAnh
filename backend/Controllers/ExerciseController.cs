@@ -55,36 +55,6 @@ public class ExerciseController : ControllerBase
         }
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetAllExercises([FromQuery] string? courseId = null, [FromQuery] string? difficulty = null, [FromQuery] string? type = null)
-    {
-        try
-        {
-            var exercises = await _firebaseService.GetAllExercisesAsync(courseId, difficulty, type);
-            return Ok(exercises);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error retrieving all exercises");
-            return StatusCode(500, new { message = "Error retrieving exercises", error = ex.Message });
-        }
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> CreateExercise([FromBody] Exercise exercise)
-    {
-        try
-        {
-            var createdExercise = await _firebaseService.CreateExerciseAsync(exercise);
-            return CreatedAtAction(nameof(GetExercise), new { exerciseId = createdExercise.Id }, createdExercise);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error creating exercise");
-            return StatusCode(500, new { message = "Error creating exercise", error = ex.Message });
-        }
-    }
-
     [HttpPost("submit")]
     public async Task<IActionResult> SubmitExercise([FromBody] ExerciseSubmissionDto submission)
     {

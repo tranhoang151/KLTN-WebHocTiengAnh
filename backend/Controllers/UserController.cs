@@ -21,7 +21,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = "admin,teacher")]
+    [Authorize(Roles = "admin")]
     public async Task<IActionResult> GetAllUsers([FromQuery] string? role = null, [FromQuery] string? search = null, [FromQuery] bool? isActive = null)
     {
         try
@@ -249,7 +249,43 @@ public class UserController : ControllerBase
     [Authorize(Roles = "admin")]
     public IActionResult GetAvailableRoles()
     {
-        var roles = new[] { "student", "teacher", "admin" };
+        var roles = new[] { "student", "teacher", "admin", "parent" };
         return Ok(roles);
+    }
+
+    [HttpPost("{parentId}/link-child/{childId}")]
+    [Authorize(Roles = "admin")]
+    public async Task<IActionResult> LinkChildToParent(string parentId, string childId)
+    {
+        try
+        {
+            var parentUser = await _firebaseService.GetUserByIdAsync(parentId);
+            if (parentUser == null || parentUser.Role != "parent")
+            {
+                return NotFound(new { message = "Parent user not found or is not a parent role." });
+            }
+
+            var childUser = await _firebaseService.GetUserByIdAsync(childId);
+            if (childUser == null || childUser.Role != "student")
+            {
+                return NotFound(new { message = "Child user not found or is not a student role." });
+            }
+
+            if (parentUser.ChildIds.Contains(childId))
+            {
+                return Conflict(new { message = "Child already linked to this parent." });
+            }
+
+            parentUser.ChildIds.Add(childId);
+            await _firebaseService.UpdateUserAsync(parentUser);
+
+            _logger.LogInformation("Child {ChildId} linked to parent {ParentId}", childId, parentId);
+            return Ok(new { message = "Child linked successfully." });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error linking child {ChildId} to parent {ParentId}", childId, parentId);
+            return StatusCode(500, new { message = "Error linking child to parent", error = ex.Message });
+        }
     }
 }

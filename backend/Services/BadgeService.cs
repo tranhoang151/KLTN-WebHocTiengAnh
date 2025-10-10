@@ -93,19 +93,66 @@ public class BadgeService : IBadgeService
         }
     }
 
-    public async Task<List<Badge>> GetBadgeDefinitionsAsync()
+    public Task<List<Badge>> GetBadgeDefinitionsAsync()
     {
-        try
+        // Return predefined badge definitions based on requirements
+        return Task.FromResult(new List<Badge>
         {
-            // Fetch badge definitions from Firestore
-            var badges = await _firebaseService.GetCollectionAsync<Badge>("badges");
-            return badges.Where(b => b.IsActive).ToList();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error getting badge definitions from Firestore.");
-            throw;
-        }
+            new Badge
+            {
+                Id = "badge1",
+                Name = "Chăm chỉ đăng nhập",
+                Description = "Đăng nhập 3 ngày liên tiếp",
+                ImageUrl = "https://i.postimg.cc/Gm7BStxm/Depth-5-Frame-0.png",
+                ConditionKey = "login_streak_3",
+                IsActive = true
+            },
+            new Badge
+            {
+                Id = "badge2",
+                Name = "Chuyên gia Flashcard",
+                Description = "Học xong 1 bộ flashcard",
+                ImageUrl = "https://i.postimg.cc/VNqxkrZY/Depth-6-Frame-0.png",
+                ConditionKey = "flashcard_complete",
+                IsActive = true
+            },
+            new Badge
+            {
+                Id = "badge3",
+                Name = "Siêng năng làm bài tập",
+                Description = "Hoàn thành 1 bài tập",
+                ImageUrl = "https://i.postimg.cc/0jQFntkQ/Depth-6-Frame-0-1.png",
+                ConditionKey = "exercise_complete",
+                IsActive = true
+            },
+            new Badge
+            {
+                Id = "badge4",
+                Name = "Thi cử tích cực",
+                Description = "Hoàn thành 2 bài kiểm tra",
+                ImageUrl = "https://i.postimg.cc/nzdwXv4t/Depth-6-Frame-0-2.png",
+                ConditionKey = "test_complete_2",
+                IsActive = true
+            },
+            new Badge
+            {
+                Id = "badge5",
+                Name = "Học qua video",
+                Description = "Xem hoàn thành 1 video",
+                ImageUrl = "https://i.postimg.cc/rw6ZRyrz/Depth-6-Frame-0-3.png",
+                ConditionKey = "video_watch",
+                IsActive = true
+            },
+            new Badge
+            {
+                Id = "badge6",
+                Name = "Streak học tập 3 ngày",
+                Description = "Duy trì streak học tập 3 ngày",
+                ImageUrl = "https://i.postimg.cc/vTgXDC8W/Depth-6-Frame-0-4.png",
+                ConditionKey = "learning_streak_3",
+                IsActive = true
+            }
+        });
     }
 
     public async Task AwardBadgeAsync(string userId, string badgeId)

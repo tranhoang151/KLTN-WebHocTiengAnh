@@ -14,8 +14,8 @@ public class Test
     [FirestoreProperty("course_id")]
     public string CourseId { get; set; } = string.Empty;
 
-    [FirestoreProperty("questions")]
-    public List<Question> Questions { get; set; } = new();
+    [FirestoreProperty("question_ids")]
+    public List<string> QuestionIds { get; set; } = new();
 
     [FirestoreProperty("time_limit")]
     public int? TimeLimit { get; set; }

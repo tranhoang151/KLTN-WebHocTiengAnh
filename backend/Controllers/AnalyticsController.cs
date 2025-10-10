@@ -6,7 +6,7 @@ namespace BingGoWebAPI.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize(Roles = "admin,teacher")] // Only Admins and Teachers can see analytics
+[Authorize(Roles = "Admin,Teacher")] // Only Admins and Teachers can see analytics
 public class AnalyticsController : ControllerBase
 {
     private readonly IAnalyticsService _analyticsService;

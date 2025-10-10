@@ -16,5 +16,6 @@ namespace BingGoWebAPI.Services
         Task<StudentDashboardDto> GetStudentDashboardDataAsync(string userId);
         Task<List<TeacherClassSummaryDto>> GetTeacherClassSummariesAsync(string teacherId);
         Task<ClassProgressDto> GetClassProgressAsync(string classId);
+        Task<List<StudentProgressSummaryDto>> GetChildrenProgressSummariesAsync(string parentId);
     }
 }
