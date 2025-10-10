@@ -1,0 +1,181 @@
+/* Skip Links Styles */
+
+.skip-links {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10001;
+}
+
+.skip-links-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.skip-links-item {
+  margin: 0;
+  padding: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--spacing-sm);
+  background: var(--primary-blue);
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-md);
+  text-decoration: none;
+  border-radius: var(--border-radius-sm);
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  white-space: nowrap;
+  transition: top var(--animation-normal) ease;
+  box-shadow: var(--shadow-medium);
+  border: 2px solid transparent;
+}
+
+.skip-link:focus {
+  top: var(--spacing-sm);
+  outline: 3px solid var(--primary-orange);
+  outline-offset: 2px;
+}
+
+.skip-link:hover {
+  background: #3a7bc8;
+  text-decoration: underline;
+}
+
+.skip-link:active {
+  background: #2c5aa0;
+  transform: translateY(1px);
+}
+
+/* Multiple skip links positioning */
+.skip-links-item:nth-child(1) .skip-link:focus {
+  top: var(--spacing-sm);
+}
+
+.skip-links-item:nth-child(2) .skip-link:focus {
+  top: calc(var(--spacing-sm) + 40px);
+}
+
+.skip-links-item:nth-child(3) .skip-link:focus {
+  top: calc(var(--spacing-sm) + 80px);
+}
+
+.skip-links-item:nth-child(4) .skip-link:focus {
+  top: calc(var(--spacing-sm) + 120px);
+}
+
+.skip-links-item:nth-child(5) .skip-link:focus {
+  top: calc(var(--spacing-sm) + 160px);
+}
+
+/* High contrast mode */
+.high-contrast .skip-link {
+  background: black;
+  color: white;
+  border-color: white;
+}
+
+.high-contrast .skip-link:hover {
+  background: white;
+  color: black;
+  border-color: black;
+}
+
+.high-contrast .skip-link:focus {
+  outline-color: yellow;
+  outline-width: 4px;
+}
+
+/* Large touch targets mode */
+.large-touch-targets .skip-link {
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--font-size-md);
+  min-height: var(--touch-target-comfortable);
+  display: flex;
+  align-items: center;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .skip-link {
+    left: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
+  }
+
+  .skip-links-item:nth-child(2) .skip-link:focus {
+    top: calc(var(--spacing-sm) + 35px);
+  }
+
+  .skip-links-item:nth-child(3) .skip-link:focus {
+    top: calc(var(--spacing-sm) + 70px);
+  }
+
+  .skip-links-item:nth-child(4) .skip-link:focus {
+    top: calc(var(--spacing-sm) + 105px);
+  }
+
+  .skip-links-item:nth-child(5) .skip-link:focus {
+    top: calc(var(--spacing-sm) + 140px);
+  }
+}
+
+/* Screen reader mode enhancements */
+.screen-reader-mode .skip-link {
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--font-size-md);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .skip-link {
+    transition: none;
+  }
+
+  .skip-link:active {
+    transform: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .skip-links {
+    display: none;
+  }
+}
+
+/* Focus management */
+.keyboard-user .skip-link:focus {
+  outline: 4px solid var(--primary-orange);
+  outline-offset: 4px;
+}
+
+/* Animation for better visibility */
+@keyframes skip-link-appear {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.skip-link:focus {
+  animation: skip-link-appear 0.3s ease-out;
+}
+
+/* Ensure skip links are always on top */
+.skip-links * {
+  z-index: 10001;
+}

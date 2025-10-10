@@ -1,0 +1,123 @@
+.course-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.course-form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.course-form-header h2 {
+    color: var(--primary-color, #4f46e5);
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.course-form-header p {
+    color: var(--text-secondary, #6b7280);
+    font-size: 0.9rem;
+}
+
+.course-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: var(--text-primary, #1f2937);
+    font-size: 0.9rem;
+}
+
+.course-textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid var(--border-color, #e5e7eb);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 100px;
+    transition: border-color 0.2s ease;
+}
+
+.course-textarea:focus {
+    outline: none;
+    border-color: var(--primary-color, #4f46e5);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.course-textarea.error {
+    border-color: var(--error-color, #ef4444);
+}
+
+.course-textarea:disabled {
+    background-color: var(--bg-disabled, #f9fafb);
+    cursor: not-allowed;
+}
+
+.course-select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid var(--border-color, #e5e7eb);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    background-color: white;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.course-select:focus {
+    outline: none;
+    border-color: var(--primary-color, #4f46e5);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.course-select.error {
+    border-color: var(--error-color, #ef4444);
+}
+
+.course-select:disabled {
+    background-color: var(--bg-disabled, #f9fafb);
+    cursor: not-allowed;
+}
+
+.error-message {
+    color: var(--error-color, #ef4444);
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color, #e5e7eb);
+}
+
+@media (max-width: 640px) {
+    .course-form-container {
+        padding: 1rem;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .form-actions button {
+        width: 100%;
+    }
+}

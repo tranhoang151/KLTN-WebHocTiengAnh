@@ -1,0 +1,80 @@
+/* Additional styles specific to ChildFriendlyButton component */
+
+.btn-icon-emoji {
+  font-size: 1.2em;
+  line-height: 1;
+}
+
+/* Button sound effect simulation with visual feedback */
+.btn-child:active {
+  animation: button-press 0.1s ease-out;
+}
+
+@keyframes button-press {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(0.95);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Special effects for different button variants */
+.btn-success:hover {
+  box-shadow: 0 8px 24px rgba(126, 211, 33, 0.4);
+}
+
+.btn-warning:hover {
+  box-shadow: 0 8px 24px rgba(245, 166, 35, 0.4);
+}
+
+.btn-danger:hover {
+  box-shadow: 0 8px 24px rgba(208, 2, 27, 0.4);
+}
+
+.btn-playful:hover {
+  animation: playful-wiggle 0.5s ease-in-out;
+}
+
+@keyframes playful-wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg) translateY(-2px);
+  }
+
+  25% {
+    transform: rotate(-1deg) translateY(-2px);
+  }
+
+  75% {
+    transform: rotate(1deg) translateY(-2px);
+  }
+}
+
+/* Loading state specific styles */
+.btn-child[aria-busy='true'] {
+  cursor: wait;
+  opacity: 0.8;
+}
+
+.loading-child {
+  font-size: 0.9em;
+}
+
+/* Disabled state */
+.btn-child:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: var(--shadow-soft) !important;
+}
+
+.btn-child:disabled:hover {
+  transform: none !important;
+  box-shadow: var(--shadow-soft) !important;
+}

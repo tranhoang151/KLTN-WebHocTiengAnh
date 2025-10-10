@@ -1,0 +1,605 @@
+/* Firebase Performance Monitor Styles */
+
+.firebase-monitor-toggle {
+  position: fixed;
+  z-index: 9999;
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+  transition: all 0.3s ease;
+}
+
+.firebase-monitor-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.4);
+}
+
+.firebase-monitor-toggle:active {
+  transform: scale(0.95);
+}
+
+/* Position variants */
+.firebase-monitor-top-right {
+  top: 20px;
+  right: 80px;
+}
+
+.firebase-monitor-top-left {
+  top: 20px;
+  left: 80px;
+}
+
+.firebase-monitor-bottom-right {
+  bottom: 20px;
+  right: 80px;
+}
+
+.firebase-monitor-bottom-left {
+  bottom: 20px;
+  left: 20px;
+}
+
+/* Panel positioning */
+.firebase-monitor-panel.firebase-monitor-top-right {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+}
+
+.firebase-monitor-panel.firebase-monitor-top-left {
+  position: fixed;
+  top: 80px;
+  left: 20px;
+}
+
+.firebase-monitor-panel.firebase-monitor-bottom-right {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+}
+
+.firebase-monitor-panel.firebase-monitor-bottom-left {
+  position: fixed;
+  bottom: 80px;
+  left: 20px;
+}
+
+.firebase-monitor-panel {
+  width: 450px;
+  max-height: 650px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 107, 53, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(255, 107, 53, 0.15);
+  z-index: 9998;
+  font-family:
+    'SF Pro Display',
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  overflow: hidden;
+}
+
+.firebase-monitor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  color: white;
+}
+
+.firebase-monitor-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.connection-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+.status-indicator {
+  font-size: 8px;
+}
+
+.firebase-monitor-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.firebase-monitor-close:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.firebase-monitor-tabs {
+  display: flex;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.firebase-monitor-tabs .tab {
+  flex: 1;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6c757d;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 2px solid transparent;
+}
+
+.firebase-monitor-tabs .tab:hover {
+  background-color: #e9ecef;
+  color: #495057;
+}
+
+.firebase-monitor-tabs .tab.active {
+  color: #ff6b35;
+  border-bottom-color: #ff6b35;
+  background-color: white;
+}
+
+.firebase-monitor-content {
+  padding: 20px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+/* Metrics Tab */
+.metrics-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.metric-card {
+  background: linear-gradient(135deg, #fff5f2 0%, #fff 100%);
+  border: 1px solid #ffe4de;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.1);
+}
+
+.metric-label {
+  font-size: 12px;
+  color: #6c757d;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.metric-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ff6b35;
+  margin-bottom: 4px;
+}
+
+.metric-unit {
+  font-size: 10px;
+  color: #adb5bd;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.performance-chart {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.performance-chart h4 {
+  margin: 0 0 16px 0;
+  font-size: 14px;
+  color: #495057;
+}
+
+.chart-placeholder {
+  display: flex;
+  align-items: end;
+  gap: 8px;
+  height: 100px;
+}
+
+.chart-bar {
+  flex: 1;
+  background: linear-gradient(to top, #ff6b35, #f7931e);
+  border-radius: 4px 4px 0 0;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  padding: 8px 4px;
+  color: white;
+  font-size: 10px;
+  font-weight: 500;
+  min-height: 20px;
+}
+
+/* Cache Tab */
+.cache-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cache-stats {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.stat-row:last-child {
+  margin-bottom: 0;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.stat-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #212529;
+}
+
+.cache-entries h4 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: #495057;
+}
+
+.entries-list {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.cache-entry {
+  background: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+
+.entry-key {
+  font-family: 'SF Mono', Monaco, monospace;
+  font-size: 12px;
+  color: #495057;
+  margin-bottom: 6px;
+  word-break: break-all;
+}
+
+.entry-details {
+  display: flex;
+  gap: 12px;
+  font-size: 11px;
+  color: #6c757d;
+}
+
+.entry-size {
+  color: #28a745;
+  font-weight: 500;
+}
+
+.entry-ttl {
+  color: #ffc107;
+  font-weight: 500;
+}
+
+.entry-hits {
+  color: #17a2b8;
+  font-weight: 500;
+}
+
+.cache-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 8px 16px;
+  border: 1px solid #ff6b35;
+  border-radius: 6px;
+  background: white;
+  color: #ff6b35;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+  background: #ff6b35;
+  color: white;
+}
+
+/* Queries Tab */
+.queries-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.query-filters {
+  display: flex;
+  gap: 4px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  padding: 4px;
+}
+
+.filter-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: #6c757d;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  background: #e9ecef;
+  color: #495057;
+}
+
+.filter-btn.active {
+  background: #ff6b35;
+  color: white;
+}
+
+.query-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6c757d;
+}
+
+.empty-state div:first-child {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.query-item {
+  background: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 8px;
+  transition: transform 0.2s ease;
+}
+
+.query-item:hover {
+  transform: translateX(4px);
+  border-color: #ff6b35;
+}
+
+.query-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.query-type {
+  background: #e9ecef;
+  color: #495057;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.query-collection {
+  font-family: 'SF Mono', Monaco, monospace;
+  font-size: 12px;
+  color: #6c757d;
+}
+
+.query-source {
+  margin-left: auto;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.query-source.cached {
+  background: #d4edda;
+  color: #155724;
+}
+
+.query-source.network {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.query-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: #6c757d;
+}
+
+.query-duration {
+  font-weight: 600;
+  color: #ff6b35;
+}
+
+.query-time {
+  font-family: 'SF Mono', Monaco, monospace;
+}
+
+/* Loading state */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  color: #6c757d;
+}
+
+.loading-spinner {
+  font-size: 24px;
+  margin-bottom: 12px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Scrollbar styling */
+.firebase-monitor-content::-webkit-scrollbar,
+.entries-list::-webkit-scrollbar,
+.query-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.firebase-monitor-content::-webkit-scrollbar-track,
+.entries-list::-webkit-scrollbar-track,
+.query-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.firebase-monitor-content::-webkit-scrollbar-thumb,
+.entries-list::-webkit-scrollbar-thumb,
+.query-list::-webkit-scrollbar-thumb {
+  background: #ff6b35;
+  border-radius: 3px;
+}
+
+.firebase-monitor-content::-webkit-scrollbar-thumb:hover,
+.entries-list::-webkit-scrollbar-thumb:hover,
+.query-list::-webkit-scrollbar-thumb:hover {
+  background: #e55a2b;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .firebase-monitor-panel {
+    width: calc(100vw - 40px);
+    max-width: 450px;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .query-header {
+    flex-wrap: wrap;
+  }
+
+  .query-source {
+    margin-left: 0;
+    margin-top: 4px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .firebase-monitor-panel {
+    background: rgba(30, 30, 30, 0.95);
+    border-color: rgba(255, 107, 53, 0.3);
+  }
+
+  .firebase-monitor-tabs {
+    background-color: #2d2d2d;
+    border-bottom-color: #404040;
+  }
+
+  .firebase-monitor-tabs .tab {
+    color: #a0a0a0;
+  }
+
+  .firebase-monitor-tabs .tab:hover {
+    background-color: #404040;
+    color: #e0e0e0;
+  }
+
+  .firebase-monitor-tabs .tab.active {
+    background-color: #1e1e1e;
+    color: #ff6b35;
+  }
+
+  .metric-card,
+  .cache-stats,
+  .performance-chart,
+  .cache-entry,
+  .query-item {
+    background-color: #2d2d2d;
+    border-color: #404040;
+  }
+
+  .metric-label,
+  .stat-label,
+  .entry-details,
+  .query-details {
+    color: #a0a0a0;
+  }
+
+  .stat-value,
+  .entry-key,
+  .query-collection {
+    color: #e0e0e0;
+  }
+}

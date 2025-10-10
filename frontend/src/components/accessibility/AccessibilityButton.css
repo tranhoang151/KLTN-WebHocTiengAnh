@@ -1,0 +1,240 @@
+/* Accessibility Button Styles */
+
+.accessibility-button {
+  position: fixed;
+  z-index: 9999;
+  background: var(--primary-blue);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
+  cursor: pointer;
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  box-shadow: var(--shadow-medium);
+  transition: all var(--animation-normal) ease;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  min-height: var(--touch-target-comfortable);
+  min-width: var(--touch-target-comfortable);
+}
+
+.accessibility-button:hover {
+  background: #3a7bc8;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-large);
+}
+
+.accessibility-button:focus {
+  outline: 3px solid var(--primary-orange);
+  outline-offset: 2px;
+}
+
+.accessibility-button:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-medium);
+}
+
+/* Position variants */
+.position-bottom-right {
+  bottom: var(--spacing-lg);
+  right: var(--spacing-lg);
+}
+
+.position-bottom-left {
+  bottom: var(--spacing-lg);
+  left: var(--spacing-lg);
+}
+
+.position-top-right {
+  top: var(--spacing-lg);
+  right: var(--spacing-lg);
+}
+
+.position-top-left {
+  top: var(--spacing-lg);
+  left: var(--spacing-lg);
+}
+
+/* Icon and text */
+.accessibility-icon {
+  font-size: 1.2em;
+  line-height: 1;
+}
+
+.accessibility-text {
+  white-space: nowrap;
+}
+
+/* Responsive behavior */
+@media (max-width: 768px) {
+  .accessibility-button {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-xs);
+  }
+
+  .position-bottom-right,
+  .position-bottom-left {
+    bottom: var(--spacing-md);
+  }
+
+  .position-bottom-right,
+  .position-top-right {
+    right: var(--spacing-md);
+  }
+
+  .position-bottom-left,
+  .position-top-left {
+    left: var(--spacing-md);
+  }
+
+  .position-top-right,
+  .position-top-left {
+    top: var(--spacing-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .accessibility-button {
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-round);
+    min-width: var(--touch-target-large);
+    min-height: var(--touch-target-large);
+  }
+
+  .accessibility-text {
+    display: none;
+  }
+
+  .accessibility-icon {
+    font-size: 1.5em;
+  }
+
+  .position-bottom-right,
+  .position-bottom-left {
+    bottom: var(--spacing-sm);
+  }
+
+  .position-bottom-right,
+  .position-top-right {
+    right: var(--spacing-sm);
+  }
+
+  .position-bottom-left,
+  .position-top-left {
+    left: var(--spacing-sm);
+  }
+
+  .position-top-right,
+  .position-top-left {
+    top: var(--spacing-sm);
+  }
+}
+
+/* High contrast mode */
+.high-contrast .accessibility-button {
+  background: black;
+  color: white;
+  border: 2px solid white;
+}
+
+.high-contrast .accessibility-button:hover {
+  background: white;
+  color: black;
+  border-color: black;
+}
+
+/* Large touch targets mode */
+.large-touch-targets .accessibility-button {
+  min-width: var(--touch-target-large);
+  min-height: var(--touch-target-large);
+  padding: var(--spacing-lg) var(--spacing-xl);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .accessibility-button {
+    transition: none;
+  }
+
+  .accessibility-button:hover {
+    transform: none;
+  }
+
+  .accessibility-button:active {
+    transform: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .accessibility-button {
+    display: none;
+  }
+}
+
+/* Focus management for keyboard users */
+.keyboard-user .accessibility-button:focus {
+  outline: 4px solid var(--primary-orange);
+  outline-offset: 4px;
+}
+
+/* Screen reader enhancements */
+.screen-reader-mode .accessibility-button {
+  padding: var(--spacing-lg) var(--spacing-xl);
+}
+
+.screen-reader-mode .accessibility-text {
+  display: inline;
+}
+
+/* Animation for attention */
+@keyframes accessibility-pulse {
+  0%,
+  100% {
+    box-shadow: var(--shadow-medium);
+  }
+
+  50% {
+    box-shadow:
+      var(--shadow-large),
+      0 0 0 4px rgba(74, 144, 226, 0.3);
+  }
+}
+
+.accessibility-button.pulse {
+  animation: accessibility-pulse 2s ease-in-out infinite;
+}
+
+/* Tooltip enhancement */
+.accessibility-button::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--animation-normal) ease;
+  z-index: 10001;
+}
+
+.accessibility-button:hover::after,
+.accessibility-button:focus::after {
+  opacity: 1;
+}
+
+/* Hide tooltip on mobile */
+@media (max-width: 768px) {
+  .accessibility-button::after {
+    display: none;
+  }
+}

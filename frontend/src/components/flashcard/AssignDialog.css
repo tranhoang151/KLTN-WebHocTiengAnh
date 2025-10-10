@@ -1,0 +1,105 @@
+.assign-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.assign-dialog {
+  background: white;
+  border-radius: 12px;
+  padding: 0;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e1e8ed;
+}
+
+.dialog-header h2 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 22px;
+}
+
+.dialog-subheader {
+  padding: 16px 24px;
+  background: #f8f9fa;
+}
+
+.dialog-subheader p {
+  margin: 0;
+  color: #5d6d7e;
+}
+
+.dialog-content {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.class-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.class-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #e1e8ed;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.class-item:hover {
+  background: #f8f9fa;
+}
+
+.class-item input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+}
+
+.class-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.class-name {
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.class-description {
+  font-size: 13px;
+  color: #7f8c8d;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 20px 24px;
+  border-top: 1px solid #e1e8ed;
+  background: #f8f9fa;
+}

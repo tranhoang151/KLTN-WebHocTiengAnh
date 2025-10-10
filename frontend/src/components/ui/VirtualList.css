@@ -1,0 +1,330 @@
+/* Virtual List Styles */
+
+.virtual-list {
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: var(--border-radius-md);
+  background: white;
+  box-shadow: var(--shadow-soft);
+}
+
+.virtual-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.virtual-list::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.virtual-list::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.virtual-list::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
+}
+
+/* Virtual List Items */
+.virtual-list-item {
+  border-bottom: 1px solid #f1f5f9;
+  transition: background-color 0.2s ease;
+}
+
+.virtual-list-item:hover {
+  background-color: #f8fafc;
+}
+
+.virtual-list-item:last-child {
+  border-bottom: none;
+}
+
+/* Loading State */
+.virtual-list-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: var(--spacing-md);
+  color: #6b7280;
+  font-family: var(--font-family-primary);
+  font-weight: 600;
+}
+
+.loading-spinner {
+  display: flex;
+  gap: 4px;
+}
+
+.loading-spinner .spinner-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary-blue);
+  animation: spinner-bounce 1.4s ease-in-out infinite both;
+}
+
+.loading-spinner .spinner-dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.loading-spinner .spinner-dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+.loading-spinner .spinner-dot:nth-child(3) {
+  animation-delay: 0s;
+}
+
+@keyframes spinner-bounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+
+  40% {
+    transform: scale(1);
+  }
+}
+
+/* Empty State */
+.virtual-list-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: var(--spacing-md);
+  color: #6b7280;
+  font-family: var(--font-family-primary);
+  font-weight: 600;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 3em;
+  opacity: 0.5;
+}
+
+/* Error State */
+.virtual-list-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: var(--spacing-sm);
+  color: var(--primary-red);
+  font-family: var(--font-family-primary);
+  font-weight: 600;
+  text-align: center;
+  padding: var(--spacing-lg);
+}
+
+.error-icon {
+  font-size: 2.5em;
+}
+
+.error-message {
+  font-size: var(--font-size-sm);
+  color: #6b7280;
+  font-weight: 400;
+  max-width: 300px;
+  line-height: 1.4;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4px;
+  height: 100%;
+  background: rgba(203, 213, 224, 0.3);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.scroll-thumb {
+  position: absolute;
+  right: 0;
+  width: 100%;
+  background: var(--primary-blue);
+  border-radius: 2px;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.virtual-list:hover .scroll-thumb {
+  opacity: 1;
+}
+
+/* Scroll to Top Button */
+.scroll-to-top {
+  position: absolute;
+  bottom: var(--spacing-md);
+  right: var(--spacing-md);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--primary-blue);
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-medium);
+  transition: all var(--animation-normal) ease;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+}
+
+.scroll-to-top:hover {
+  background: #3a7bc8;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-large);
+}
+
+.scroll-to-top:focus {
+  outline: 3px solid var(--primary-orange);
+  outline-offset: 2px;
+}
+
+.scroll-to-top:active {
+  transform: translateY(0);
+}
+
+/* Performance Optimizations */
+.virtual-list {
+  /* Enable hardware acceleration */
+  transform: translateZ(0);
+  will-change: scroll-position;
+}
+
+.virtual-list-item {
+  /* Optimize repaints */
+  contain: layout style paint;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .virtual-list::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scroll-to-top {
+    width: 44px;
+    height: 44px;
+    bottom: var(--spacing-sm);
+    right: var(--spacing-sm);
+  }
+
+  .scroll-indicator {
+    width: 3px;
+  }
+}
+
+@media (max-width: 480px) {
+  .virtual-list-loading,
+  .virtual-list-empty,
+  .virtual-list-error {
+    padding: var(--spacing-md);
+  }
+
+  .empty-icon {
+    font-size: 2em;
+  }
+
+  .error-icon {
+    font-size: 2em;
+  }
+
+  .scroll-to-top {
+    width: 40px;
+    height: 40px;
+    font-size: 1em;
+  }
+}
+
+/* High Contrast Mode */
+.high-contrast .virtual-list {
+  border: 2px solid black;
+}
+
+.high-contrast .virtual-list-item {
+  border-bottom-color: black;
+}
+
+.high-contrast .virtual-list-item:hover {
+  background-color: #f0f0f0;
+}
+
+.high-contrast .scroll-thumb {
+  background: black;
+}
+
+.high-contrast .scroll-to-top {
+  background: black;
+  color: white;
+  border: 2px solid white;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .virtual-list-item {
+    transition: none;
+  }
+
+  .scroll-to-top {
+    transition: none;
+  }
+
+  .scroll-to-top:hover {
+    transform: none;
+  }
+
+  .scroll-thumb {
+    transition: none;
+  }
+
+  .loading-spinner .spinner-dot {
+    animation: none;
+  }
+}
+
+/* Focus Management */
+.virtual-list:focus {
+  outline: 3px solid var(--primary-orange);
+  outline-offset: 2px;
+}
+
+.virtual-list-item:focus-within {
+  background-color: rgba(74, 144, 226, 0.1);
+  outline: 2px solid var(--primary-blue);
+  outline-offset: -2px;
+}
+
+/* Print Styles */
+@media print {
+  .virtual-list {
+    height: auto !important;
+    overflow: visible !important;
+    box-shadow: none;
+    border: 1px solid black;
+  }
+
+  .scroll-indicator,
+  .scroll-to-top {
+    display: none;
+  }
+
+  .virtual-list-item {
+    page-break-inside: avoid;
+  }
+}

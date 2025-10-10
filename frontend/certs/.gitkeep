@@ -1,0 +1,2 @@
+# This file keeps the certs directory in git
+# SSL certificates will be generated here for local development

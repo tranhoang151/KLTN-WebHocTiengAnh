@@ -1,0 +1,437 @@
+.teacher-evaluation-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.evaluation-form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.evaluation-form-header h2 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.student-assignment-info {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.student-assignment-info p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+.student-assignment-info strong {
+    color: var(--text-primary);
+}
+
+/* Submission Info */
+.submission-info {
+    background: var(--surface-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border: 2px solid var(--border-color);
+}
+
+.submission-info h4 {
+    color: var(--primary-color);
+    margin: 0 0 1rem 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.submission-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.stat-label {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.stat-value {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.stat-value.status-submitted {
+    color: var(--success-color);
+}
+
+.stat-value.status-in_progress {
+    color: var(--warning-color);
+}
+
+.stat-value.status-not_started {
+    color: var(--text-secondary);
+}
+
+.stat-value.status-late {
+    color: var(--error-color);
+}
+
+/* Form Sections */
+.evaluation-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.form-section {
+    background: var(--surface-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 2px solid var(--border-color);
+}
+
+.form-section h3 {
+    color: var(--primary-color);
+    margin: 0 0 1rem 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.section-description {
+    color: var(--text-secondary);
+    margin: 0 0 1.5rem 0;
+    font-style: italic;
+}
+
+/* Rating System */
+.rating-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.rating-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.rating-group label {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.rating-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.rating-slider {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: var(--border-color);
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.rating-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.rating-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.rating-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rating-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.rating-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.overall-rating {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 1rem;
+    background: white;
+    border-radius: 12px;
+    border: 2px solid var(--primary-color);
+}
+
+.overall-rating label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+}
+
+.overall-rating-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.overall-rating-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.overall-rating-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Form Groups */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.evaluation-textarea {
+    padding: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 100px;
+    transition: all 0.2s ease;
+}
+
+.evaluation-textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--primary-color-light);
+}
+
+.evaluation-textarea.error {
+    border-color: var(--error-color);
+}
+
+/* List Input Groups */
+.list-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.input-with-button {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-end;
+}
+
+.input-with-button>div {
+    flex: 1;
+}
+
+.list-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.list-item:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.list-item-text {
+    flex: 1;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+
+.remove-btn {
+    color: var(--error-color);
+    border-color: var(--error-color);
+    min-width: auto;
+    padding: 0.25rem 0.5rem;
+}
+
+.remove-btn:hover {
+    background: var(--error-color);
+    color: white;
+}
+
+/* Error Messages */
+.error-message {
+    color: var(--error-color);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--border-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .teacher-evaluation-form-container {
+        padding: 1rem;
+    }
+
+    .student-assignment-info {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+
+    .submission-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .rating-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .input-with-button {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+@media (max-width: 480px) {
+    .evaluation-form-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .form-section {
+        padding: 1rem;
+    }
+
+    .overall-rating-value {
+        font-size: 2rem;
+    }
+}
+
+/* Animation */
+.form-section {
+    animation: slideInUp 0.3s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Focus indicators for accessibility */
+.rating-slider:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+.list-item:focus-within {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Disabled state */
+.evaluation-textarea:disabled {
+    background: var(--disabled-bg);
+    color: var(--disabled-text);
+    cursor: not-allowed;
+}
+
+.rating-slider:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .form-section {
+        border-width: 3px;
+    }
+
+    .rating-slider::-webkit-slider-thumb {
+        border-width: 3px;
+    }
+
+    .list-item {
+        border-width: 2px;
+    }
+}

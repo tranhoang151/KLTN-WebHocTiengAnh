@@ -1,0 +1,161 @@
+/* ChildFriendlyInput specific styles */
+
+.input-container {
+  margin-bottom: var(--spacing-lg);
+}
+
+.input-label {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-sm);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.label-icon {
+  font-size: 1.2em;
+  line-height: 1;
+}
+
+.required-indicator {
+  color: var(--primary-red);
+  font-weight: 700;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-child {
+  position: relative;
+  z-index: 1;
+}
+
+.input-focused {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.2);
+  transform: scale(1.02);
+}
+
+.input-error {
+  border-color: var(--primary-red);
+  background-color: #ffebee;
+}
+
+.input-error:focus {
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 4px rgba(208, 2, 27, 0.2);
+}
+
+.input-success {
+  border-color: var(--primary-green);
+  background-color: var(--bg-soft-green);
+}
+
+.input-success:focus {
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 4px rgba(126, 211, 33, 0.2);
+}
+
+.input-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #f5f5f5;
+}
+
+/* Focus sparkle animation */
+.input-focus-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.focus-sparkle {
+  position: absolute;
+  font-size: 12px;
+  animation: sparkle-float 2s ease-in-out infinite;
+  opacity: 0.7;
+}
+
+.sparkle-1 {
+  top: 10%;
+  left: 20%;
+  animation-delay: 0s;
+}
+
+.sparkle-2 {
+  top: 20%;
+  right: 15%;
+  animation-delay: 0.5s;
+}
+
+.sparkle-3 {
+  bottom: 15%;
+  left: 80%;
+  animation-delay: 1s;
+}
+
+@keyframes sparkle-float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(180deg);
+    opacity: 1;
+  }
+}
+
+/* Character count */
+.character-count {
+  text-align: right;
+  margin-top: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  color: #666;
+}
+
+.count-warning {
+  color: var(--primary-orange);
+  font-weight: 600;
+}
+
+/* Message styles */
+.message-child {
+  margin-top: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+}
+
+/* Container focus state */
+.container-focused .input-label {
+  color: var(--primary-blue);
+  transform: scale(1.05);
+  transition: all var(--animation-normal) ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .input-child {
+    font-size: var(--font-size-lg);
+    padding: var(--spacing-lg) var(--spacing-xl);
+  }
+
+  .input-label {
+    font-size: var(--font-size-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .focus-sparkle {
+    display: none;
+    /* Hide sparkles on very small screens for performance */
+  }
+}

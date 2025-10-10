@@ -1,0 +1,281 @@
+.assignment-form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.assignment-form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.assignment-form-header h2 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.assignment-form-header p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+.assignment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.form-section {
+    background: var(--surface-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 2px solid var(--border-color);
+}
+
+.form-section h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-section h3::before {
+    content: '📝';
+    font-size: 1.2rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+}
+
+.assignment-select,
+.assignment-input,
+.assignment-textarea {
+    padding: 0.75rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    background: white;
+}
+
+.assignment-select:focus,
+.assignment-input:focus,
+.assignment-textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--primary-color-light);
+}
+
+.assignment-select.error,
+.assignment-input.error,
+.assignment-textarea.error {
+    border-color: var(--error-color);
+}
+
+.assignment-textarea {
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
+}
+
+.error-message {
+    color: var(--error-color);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Checkbox Groups */
+.checkbox-group,
+.content-selection,
+.student-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 0.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background: white;
+}
+
+.checkbox-item,
+.content-item,
+.student-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.checkbox-item:hover,
+.content-item:hover,
+.student-item:hover {
+    background: var(--primary-color-light);
+    border-color: var(--primary-color);
+}
+
+.checkbox-item input[type="checkbox"],
+.content-item input[type="checkbox"],
+.student-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.content-info,
+.student-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.content-title,
+.student-name {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.content-description,
+.student-email {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* Student Selection Header */
+.student-selection-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+/* Loading States */
+.assignment-form-loading,
+.loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    gap: 1rem;
+}
+
+.loading-content {
+    padding: 1rem;
+    background: var(--surface-color);
+    border-radius: 8px;
+    border: 2px dashed var(--border-color);
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 2px solid var(--border-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .assignment-form-container {
+        padding: 1rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .checkbox-group,
+    .content-selection,
+    .student-list {
+        max-height: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .assignment-form-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .form-section {
+        padding: 1rem;
+    }
+
+    .checkbox-item,
+    .content-item,
+    .student-item {
+        padding: 0.5rem;
+    }
+}
+
+/* Animation for form sections */
+.form-section {
+    animation: slideInUp 0.3s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Focus indicators for accessibility */
+.checkbox-item:focus-within,
+.content-item:focus-within,
+.student-item:focus-within {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Disabled state */
+.assignment-select:disabled,
+.assignment-input:disabled,
+.assignment-textarea:disabled {
+    background: var(--disabled-bg);
+    color: var(--disabled-text);
+    cursor: not-allowed;
+}
+
+.checkbox-item input[type="checkbox"]:disabled,
+.content-item input[type="checkbox"]:disabled,
+.student-item input[type="checkbox"]:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}

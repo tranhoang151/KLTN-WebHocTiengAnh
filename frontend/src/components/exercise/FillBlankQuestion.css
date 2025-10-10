@@ -1,0 +1,59 @@
+.fb-question {
+  padding: 1.5rem;
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+
+.question-text {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  line-height: 2.5rem; /* Adjust line height to accommodate input */
+}
+
+.fill-blank-input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  font-size: 1.1rem;
+  margin: 0 0.25rem;
+  width: 150px; /* Adjust width as needed */
+  text-align: center;
+}
+
+.fill-blank-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.fill-blank-input:disabled {
+  background-color: #f8f9fa;
+  cursor: not-allowed;
+}
+
+.feedback {
+  margin-top: 1rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 4px;
+}
+
+.correct-feedback {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.incorrect-feedback {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.submitted-feedback {
+  text-align: left;
+}
+
+.submitted-correct-answer {
+  font-weight: bold;
+  color: #28a745;
+  margin-left: 0.5rem;
+}

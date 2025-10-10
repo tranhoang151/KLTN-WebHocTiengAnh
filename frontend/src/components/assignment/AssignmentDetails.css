@@ -1,0 +1,460 @@
+.assignment-details-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.assignment-details-loading,
+.assignment-details-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    gap: 20px;
+}
+
+.assignment-details-header {
+    margin-bottom: 30px;
+}
+
+.header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.assignment-info h1 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-size: 2rem;
+}
+
+.assignment-description {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.assignment-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.meta-item .label {
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.meta-item .value {
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.assignment-instructions {
+    background: var(--background-light);
+    padding: 20px;
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.assignment-instructions h3 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.assignment-instructions p {
+    line-height: 1.6;
+    color: var(--text-primary);
+}
+
+.assignment-details-tabs {
+    display: flex;
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 30px;
+}
+
+.tab-button {
+    background: none;
+    border: none;
+    padding: 15px 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.tab-button:hover {
+    color: var(--primary-color);
+    background: var(--background-light);
+}
+
+.tab-button.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+.assignment-details-content {
+    min-height: 400px;
+}
+
+/* Overview Tab */
+.overview-tab {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.stat-card {
+    text-align: center;
+    padding: 25px;
+}
+
+.stat-card h3 {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.content-preview {
+    padding: 25px;
+}
+
+.content-preview h3 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.content-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.content-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: var(--background-light);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.content-type {
+    background: var(--primary-color);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.content-id {
+    color: var(--text-secondary);
+    font-family: monospace;
+}
+
+/* Submissions Tab */
+.submissions-tab {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.submissions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.submission-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    gap: 20px;
+}
+
+.student-info h4 {
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.student-email {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.submission-status {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-badge.success {
+    background: var(--success-color);
+    color: white;
+}
+
+.status-badge.primary {
+    background: var(--primary-color);
+    color: white;
+}
+
+.status-badge.warning {
+    background: var(--warning-color);
+    color: white;
+}
+
+.status-badge.secondary {
+    background: var(--text-secondary);
+    color: white;
+}
+
+.submission-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+.submission-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Evaluations Tab */
+.evaluations-tab {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.evaluations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.evaluation-card {
+    padding: 25px;
+}
+
+.evaluation-details {
+    margin-top: 15px;
+}
+
+.rating-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.rating-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: var(--background-light);
+    border-radius: 8px;
+}
+
+.rating {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.evaluation-comments,
+.evaluation-strengths,
+.evaluation-improvements {
+    margin-bottom: 15px;
+}
+
+.evaluation-comments h5,
+.evaluation-strengths h5,
+.evaluation-improvements h5 {
+    color: var(--primary-color);
+    margin-bottom: 8px;
+}
+
+.evaluation-comments p {
+    background: var(--background-light);
+    padding: 15px;
+    border-radius: 8px;
+    line-height: 1.6;
+}
+
+.evaluation-strengths ul,
+.evaluation-improvements ul {
+    list-style: none;
+    padding: 0;
+}
+
+.evaluation-strengths li,
+.evaluation-improvements li {
+    background: var(--background-light);
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.evaluation-date {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-align: right;
+    margin-top: 15px;
+}
+
+.no-evaluation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 30px;
+    text-align: center;
+}
+
+.no-evaluation p {
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* Evaluation Modal */
+.evaluation-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    position: relative;
+    background: white;
+    border-radius: 16px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .assignment-details-container {
+        padding: 15px;
+    }
+
+    .header-actions {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+
+    .assignment-info h1 {
+        font-size: 1.5rem;
+    }
+
+    .assignment-meta {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .submission-card {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+
+    .submission-details {
+        grid-template-columns: 1fr;
+    }
+
+    .rating-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .assignment-details-tabs {
+        overflow-x: auto;
+    }
+
+    .tab-button {
+        white-space: nowrap;
+        min-width: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-value {
+        font-size: 2rem;
+    }
+
+    .modal-content {
+        width: 95%;
+        margin: 10px;
+    }
+}

@@ -1,0 +1,77 @@
+.exercise-result {
+  padding: 2rem;
+  text-align: center;
+}
+
+.score-summary {
+  margin-bottom: 2rem;
+}
+
+.score {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #28a745;
+}
+
+.answer-review {
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.review-item {
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.review-item.correct {
+  background-color: #d4edda;
+}
+
+.review-item.incorrect {
+  background-color: #f8d7da;
+}
+
+.result-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.retry-btn,
+.exit-btn {
+  padding: 0.5rem 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.retry-btn {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.exit-btn {
+  background-color: #6c757d;
+  color: white;
+  border-color: #6c757d;
+}
+
+.explanation {
+  margin-top: 0.5rem;
+  font-style: italic;
+  color: #555;
+  background-color: #f0f0f0;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.retry-incorrect-btn {
+  padding: 0.5rem 1.5rem;
+  border: 1px solid #ffc107;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #ffc107;
+  color: #212529;
+}
