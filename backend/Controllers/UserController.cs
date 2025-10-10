@@ -12,11 +12,13 @@ namespace BingGoWebAPI.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IFirebaseService _firebaseService;
+    private readonly IPasswordHashingService _passwordHashingService;
     private readonly ILogger<UserController> _logger;
 
-    public UserController(IFirebaseService firebaseService, ILogger<UserController> logger)
+    public UserController(IFirebaseService firebaseService, IPasswordHashingService passwordHashingService, ILogger<UserController> logger)
     {
         _firebaseService = firebaseService;
+        _passwordHashingService = passwordHashingService;
         _logger = logger;
     }
 
@@ -120,8 +122,10 @@ public class UserController : ControllerBase
                 Id = Guid.NewGuid().ToString(),
                 FullName = createUserDto.FullName,
                 Email = createUserDto.Email,
+                Password = createUserDto.Password,
                 Role = createUserDto.Role,
                 Gender = createUserDto.Gender ?? "",
+                AvatarBase64 = createUserDto.AvatarBase64,
                 IsActive = true,
                 CreatedAt = Timestamp.GetCurrentTimestamp(),
                 LastLoginDate = "",
@@ -175,11 +179,17 @@ public class UserController : ControllerBase
             if (!string.IsNullOrEmpty(updateUserDto.FullName))
                 existingUser.FullName = updateUserDto.FullName;
 
+            if (!string.IsNullOrEmpty(updateUserDto.Password))
+                existingUser.Password = updateUserDto.Password;
+
             if (!string.IsNullOrEmpty(updateUserDto.Role))
                 existingUser.Role = updateUserDto.Role;
 
             if (!string.IsNullOrEmpty(updateUserDto.Gender))
                 existingUser.Gender = updateUserDto.Gender;
+
+            if (updateUserDto.AvatarBase64 != null)
+                existingUser.AvatarBase64 = updateUserDto.AvatarBase64;
 
             if (updateUserDto.ClassIds != null)
                 existingUser.ClassIds = updateUserDto.ClassIds;
@@ -253,39 +263,4 @@ public class UserController : ControllerBase
         return Ok(roles);
     }
 
-    [HttpPost("{parentId}/link-child/{childId}")]
-    [Authorize(Roles = "admin")]
-    public async Task<IActionResult> LinkChildToParent(string parentId, string childId)
-    {
-        try
-        {
-            var parentUser = await _firebaseService.GetUserByIdAsync(parentId);
-            if (parentUser == null || parentUser.Role != "parent")
-            {
-                return NotFound(new { message = "Parent user not found or is not a parent role." });
-            }
-
-            var childUser = await _firebaseService.GetUserByIdAsync(childId);
-            if (childUser == null || childUser.Role != "student")
-            {
-                return NotFound(new { message = "Child user not found or is not a student role." });
-            }
-
-            if (parentUser.ChildIds.Contains(childId))
-            {
-                return Conflict(new { message = "Child already linked to this parent." });
-            }
-
-            parentUser.ChildIds.Add(childId);
-            await _firebaseService.UpdateUserAsync(parentUser);
-
-            _logger.LogInformation("Child {ChildId} linked to parent {ParentId}", childId, parentId);
-            return Ok(new { message = "Child linked successfully." });
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error linking child {ChildId} to parent {ParentId}", childId, parentId);
-            return StatusCode(500, new { message = "Error linking child to parent", error = ex.Message });
-        }
-    }
 }

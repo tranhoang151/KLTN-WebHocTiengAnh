@@ -115,8 +115,10 @@ public class CreateUserDto
 {
     public string FullName { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
     public string Role { get; set; } = string.Empty;
     public string? Gender { get; set; }
+    public string? AvatarBase64 { get; set; }
     public List<string>? ClassIds { get; set; }
 }
 
@@ -124,8 +126,10 @@ public class UpdateUserDto
 {
     public string? FullName { get; set; }
     public string? Email { get; set; }
+    public string? Password { get; set; }
     public string? Role { get; set; }
     public string? Gender { get; set; }
+    public string? AvatarBase64 { get; set; }
     public List<string>? ClassIds { get; set; }
 }
 
@@ -236,6 +240,26 @@ public class VideoWatchDto
     public string VideoId { get; set; } = string.Empty;
     public bool Completed { get; set; }
     public int WatchTime { get; set; }
+}
+
+public class TestSubmissionDto
+{
+    public string UserId { get; set; } = string.Empty;
+    public string TestId { get; set; } = string.Empty;
+    public Dictionary<string, string> Answers { get; set; } = new();
+    public int TimeSpent { get; set; }
+}
+
+public class TestResult
+{
+    public string TestId { get; set; } = string.Empty;
+    public string UserId { get; set; } = string.Empty;
+    public double Score { get; set; }
+    public int TotalQuestions { get; set; }
+    public int CorrectAnswers { get; set; }
+    public bool Passed { get; set; }
+    public Dictionary<string, string> Answers { get; set; } = new();
+    public DateTime SubmittedAt { get; set; }
 }
 
 // Teacher Analytics DTOs
@@ -369,4 +393,94 @@ public class SystemHealthDto
     public int ActiveUsers { get; set; }
     public long UptimeSeconds { get; set; }
     public DateTime LastCheck { get; set; }
+}
+
+// Question Management DTOs
+public class CreateQuestionDto
+{
+    public string Content { get; set; } = string.Empty;
+    public string Type { get; set; } = string.Empty; // multiple_choice, fill_blank
+    public List<string> Options { get; set; } = new();
+    public string CorrectAnswer { get; set; } = string.Empty;
+    public string? Explanation { get; set; }
+    public string Difficulty { get; set; } = string.Empty;
+    public string CourseId { get; set; } = string.Empty;
+    public List<string> Tags { get; set; } = new();
+}
+
+public class UpdateQuestionDto
+{
+    public string? Content { get; set; }
+    public string? Type { get; set; }
+    public List<string>? Options { get; set; }
+    public string? CorrectAnswer { get; set; }
+    public string? Explanation { get; set; }
+    public string? Difficulty { get; set; }
+    public string? CourseId { get; set; }
+    public List<string>? Tags { get; set; }
+    public bool? IsActive { get; set; }
+}
+
+// Evaluation DTOs
+public class CreateEvaluationDto
+{
+    public string StudentId { get; set; } = string.Empty;
+    public string TeacherId { get; set; } = string.Empty;
+    public string? ClassId { get; set; }
+    public double RatingParticipation { get; set; }
+    public double RatingUnderstanding { get; set; }
+    public double RatingProgress { get; set; }
+    public int Score { get; set; }
+    public string Comments { get; set; } = string.Empty;
+    public List<string> Strengths { get; set; } = new();
+    public List<string> AreasForImprovement { get; set; } = new();
+    public List<string> Recommendations { get; set; } = new();
+}
+
+public class UpdateEvaluationDto
+{
+    public double? RatingParticipation { get; set; }
+    public double? RatingUnderstanding { get; set; }
+    public double? RatingProgress { get; set; }
+    public int? Score { get; set; }
+    public string? Comments { get; set; }
+    public List<string>? Strengths { get; set; }
+    public List<string>? AreasForImprovement { get; set; }
+    public List<string>? Recommendations { get; set; }
+}
+
+public class EvaluationSummaryDto
+{
+    public string EvaluationId { get; set; } = string.Empty;
+    public string StudentId { get; set; } = string.Empty;
+    public string StudentName { get; set; } = string.Empty;
+    public string TeacherId { get; set; } = string.Empty;
+    public string TeacherName { get; set; } = string.Empty;
+    public string? ClassId { get; set; }
+    public string? ClassName { get; set; }
+    public double OverallRating { get; set; }
+    public int Score { get; set; }
+    public string EvaluationDate { get; set; } = string.Empty;
+    public string Comments { get; set; } = string.Empty;
+}
+
+public class EvaluationAnalyticsDto
+{
+    public int TotalEvaluations { get; set; }
+    public double AverageOverallRating { get; set; }
+    public double AverageParticipation { get; set; }
+    public double AverageUnderstanding { get; set; }
+    public double AverageProgress { get; set; }
+    public int AverageScore { get; set; }
+    public List<string> CommonStrengths { get; set; } = new();
+    public List<string> CommonAreasForImprovement { get; set; } = new();
+    public Dictionary<string, int> RatingDistribution { get; set; } = new();
+    public List<EvaluationTrendDto> TrendData { get; set; } = new();
+}
+
+public class EvaluationTrendDto
+{
+    public string Date { get; set; } = string.Empty;
+    public double AverageRating { get; set; }
+    public int EvaluationCount { get; set; }
 }

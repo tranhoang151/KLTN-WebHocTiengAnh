@@ -108,6 +108,11 @@ namespace BingGoWebAPI.Services
             var issuer = jwtSettings["Issuer"];
             var audience = jwtSettings["Audience"];
 
+            if (string.IsNullOrEmpty(secretKey))
+            {
+                throw new InvalidOperationException("JWT Secret not configured for refresh token generation");
+            }
+
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -115,18 +120,24 @@ namespace BingGoWebAPI.Services
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("type", "refresh") // Differentiate refresh token
+                new Claim("type", "refresh"), // Differentiate refresh token
+                new Claim("user_id", user.Id) // Additional claim for debugging
             };
+
+            Console.WriteLine($"Generating refresh token for user: {user.Id}, Email: {user.Email}");
 
             var token = new JwtSecurityToken(
                 issuer: issuer,
                 audience: audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddDays(Convert.ToDouble(jwtSettings["RefreshTokenExpirationDays"])),
+                expires: DateTime.UtcNow.AddDays(Convert.ToDouble(jwtSettings["RefreshTokenExpirationDays"] ?? "7")),
                 signingCredentials: creds
             );
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+            Console.WriteLine($"Generated refresh token: {tokenString.Substring(0, 50)}...");
+
+            return tokenString;
         }
 
         public Task<bool> ValidateRefreshTokenAsync(string token)
@@ -138,6 +149,16 @@ namespace BingGoWebAPI.Services
 
             try
             {
+                // First, let's try to read the token without validation to see its contents
+                var jwtToken = tokenHandler.ReadJwtToken(token);
+                var tokenType = jwtToken.Claims.FirstOrDefault(x => x.Type == "type")?.Value;
+                var expiration = jwtToken.Claims.FirstOrDefault(x => x.Type == "exp")?.Value;
+                var issuer = jwtToken.Claims.FirstOrDefault(x => x.Type == "iss")?.Value;
+                var audience = jwtToken.Claims.FirstOrDefault(x => x.Type == "aud")?.Value;
+
+                Console.WriteLine($"Token details - Type: {tokenType}, Exp: {expiration}, Issuer: {issuer}, Audience: {audience}");
+                Console.WriteLine($"Expected - Issuer: {jwtSettings["Issuer"]}, Audience: {jwtSettings["Audience"]}");
+
                 tokenHandler.ValidateToken(token, new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
@@ -147,16 +168,22 @@ namespace BingGoWebAPI.Services
                     ValidateAudience = true,
                     ValidAudience = jwtSettings["Audience"],
                     ValidateLifetime = true,
-                    ClockSkew = TimeSpan.Zero
+                    ClockSkew = TimeSpan.FromMinutes(1) // Allow 1 minute clock skew for refresh tokens
                 }, out SecurityToken validatedToken);
 
-                var jwtToken = (JwtSecurityToken)validatedToken;
-                var tokenType = jwtToken.Claims.FirstOrDefault(x => x.Type == "type")?.Value;
+                var validatedJwtToken = (JwtSecurityToken)validatedToken;
+                var validatedTokenType = validatedJwtToken.Claims.FirstOrDefault(x => x.Type == "type")?.Value;
 
-                return Task.FromResult(tokenType == "refresh");
+                Console.WriteLine($"Token validation successful - Type: {validatedTokenType}");
+
+                // Also check if it's a refresh token by looking at the JTI claim pattern or other indicators
+                return Task.FromResult(validatedTokenType == "refresh");
             }
-            catch
+            catch (Exception ex)
             {
+                // Log the specific validation error for debugging
+                Console.WriteLine($"Refresh token validation failed: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
                 return Task.FromResult(false);
             }
         }

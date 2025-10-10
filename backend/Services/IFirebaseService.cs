@@ -35,16 +35,28 @@ public interface IFirebaseService
 
     // Course Management
     Task<List<Course>> GetCoursesAsync();
+    Task<List<Course>> GetAllCoursesAsync();
     Task<Course?> GetCourseByIdAsync(string courseId);
     Task<Course> CreateCourseAsync(Course course);
     Task<Course> UpdateCourseAsync(string courseId, Course course);
+    Task DeleteCourseAsync(string courseId);
+    Task AssignClassesToCourseAsync(string courseId, List<string> classIds);
+    Task<List<Class>> GetCourseClassesAsync(string courseId);
+    Task<AnalyticsSummaryDto> GetCourseStatisticsAsync(string courseId);
 
     // Class Management
     Task<List<Class>> GetClassesAsync();
+    Task<List<Class>> GetAllClassesAsync();
     Task<Class?> GetClassByIdAsync(string classId);
     Task<List<Class>> GetClassesByTeacherAsync(string teacherId);
     Task<Class> CreateClassAsync(Class classEntity);
     Task<Class> UpdateClassAsync(string classId, Class classEntity);
+    Task DeleteClassAsync(string classId);
+    Task AssignTeacherToClassAsync(string classId, string teacherId);
+    Task AssignStudentsToClassAsync(string classId, List<string> studentIds);
+    Task RemoveStudentFromClassAsync(string classId, string studentId);
+    Task<List<User>> GetClassStudentsAsync(string classId);
+    Task<ClassAnalyticsDto> GetClassStatisticsAsync(string classId);
 
     // Flashcard Management
     Task<List<FlashcardSet>> GetFlashcardSetsAsync();
@@ -65,6 +77,9 @@ public interface IFirebaseService
     Task<List<Exercise>> GetExercisesByCourseAsync(string courseId);
     Task<Exercise?> GetExerciseByIdAsync(string exerciseId);
     Task<Exercise> CreateExerciseAsync(Exercise exercise);
+    Task<Exercise> UpdateExerciseAsync(string exerciseId, Exercise exercise);
+    Task DeleteExerciseAsync(string exerciseId);
+    Task<Exercise> DuplicateExerciseAsync(string exerciseId);
 
     // Question Management
     Task<List<Question>> GetQuestionsAsync();
@@ -98,6 +113,17 @@ public interface IFirebaseService
     Task<Badge?> GetBadgeByConditionKeyAsync(string conditionKey);
 
     // Test Management
+    Task<List<Test>> GetAllTestsAsync();
+    Task<Test?> GetTestByIdAsync(string testId);
+    Task<List<Test>> GetTestsByCourseAsync(string courseId);
+    Task<Test> CreateTestAsync(Test test);
+    Task<Test> UpdateTestAsync(string testId, Test test);
+    Task DeleteTestAsync(string testId);
+    Task PublishTestAsync(string testId);
+    Task<Test> DuplicateTestAsync(string testId);
+    Task<TestResult> ProcessTestSubmissionAsync(TestSubmissionDto submission);
+    Task<TestResult> SubmitTestAsync(string testId, TestSubmissionDto submission);
+    Task<AnalyticsSummaryDto> GetTestStatisticsAsync(string testId);
     Task<ExerciseResult> ProcessExerciseSubmissionAsync(ExerciseSubmissionDto submission);
 
     // Analytics
@@ -121,4 +147,15 @@ public interface IFirebaseService
     Task CreateSystemBackupAsync(SystemBackup backup);
     Task<List<SystemBackup>> GetSystemBackupsAsync();
     Task<bool> TestConnectionAsync();
+
+    // Evaluation Management
+    Task<List<Evaluation>> GetStudentEvaluationsAsync(string studentId, string? classId = null);
+    Task<List<Evaluation>> GetTeacherEvaluationsAsync(string teacherId, string? classId = null);
+    Task<List<Evaluation>> GetClassEvaluationsAsync(string classId);
+    Task<Evaluation?> GetEvaluationByIdAsync(string evaluationId);
+    Task<Evaluation> CreateEvaluationAsync(Evaluation evaluation);
+    Task<Evaluation?> UpdateEvaluationAsync(string evaluationId, Evaluation evaluation);
+    Task DeleteEvaluationAsync(string evaluationId);
+    Task<EvaluationAnalyticsDto> GetStudentEvaluationAnalyticsAsync(string studentId);
+    Task<EvaluationAnalyticsDto> GetTeacherEvaluationAnalyticsAsync(string teacherId);
 }

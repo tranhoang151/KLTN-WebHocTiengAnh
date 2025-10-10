@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using JwtRegisteredClaimNames = System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames;
 
 namespace BingGoWebAPI.Middleware
 {
@@ -37,7 +38,19 @@ namespace BingGoWebAPI.Middleware
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var jwtSettings = _configuration.GetSection("Security:JWT");
-                var key = Encoding.ASCII.GetBytes(jwtSettings["Secret"] ?? throw new InvalidOperationException("JWT Secret not configured"));
+                var secretKey = jwtSettings["Secret"];
+
+                Console.WriteLine($"JWT Middleware - Secret length: {secretKey?.Length ?? 0}");
+                Console.WriteLine($"JWT Middleware - Issuer: {jwtSettings["Issuer"]}");
+                Console.WriteLine($"JWT Middleware - Audience: {jwtSettings["Audience"]}");
+
+                if (string.IsNullOrEmpty(secretKey))
+                {
+                    _logger.LogError("JWT Secret not configured in middleware");
+                    return;
+                }
+
+                var key = Encoding.UTF8.GetBytes(secretKey);
 
                 tokenHandler.ValidateToken(token, new TokenValidationParameters
                 {
@@ -52,17 +65,26 @@ namespace BingGoWebAPI.Middleware
                 }, out SecurityToken validatedToken);
 
                 var jwtToken = (JwtSecurityToken)validatedToken;
-                
-                // Create claims principal
-                var claimsIdentity = new ClaimsIdentity(jwtToken.Claims, "jwt");
+
+                // Create claims principal with proper authentication type for ASP.NET Core
+                var claimsIdentity = new ClaimsIdentity(jwtToken.Claims, "jwt", JwtRegisteredClaimNames.Sub, ClaimTypes.Role);
                 context.User = new ClaimsPrincipal(claimsIdentity);
 
-                // For logging and custom access, you can still use HttpContext.Items if needed
+                // Also store in Items for backward compatibility
                 context.Items["UserId"] = jwtToken.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub)?.Value;
+                context.Items["User"] = context.User;
+
+                _logger.LogInformation("JWT token validated successfully for user: {UserId} with role: {Role}",
+                    jwtToken.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub)?.Value,
+                    jwtToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value ?? "No role");
+
+                _logger.LogInformation("JWT token validated successfully for user: {UserId}",
+                    jwtToken.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub)?.Value);
             }
             catch (Exception ex)
             {
-                _logger.LogWarning(ex, "JWT validation failed.");
+                _logger.LogWarning(ex, "JWT validation failed in middleware.");
+                Console.WriteLine($"JWT Middleware validation failed: {ex.Message}");
                 // Do not attach user to context if validation fails
             }
         }

@@ -68,21 +68,4 @@ public class ProgressController : ControllerBase
         }
     }
 
-    [HttpGet("parent/{parentId}/children-summaries")]
-    [Authorize(Roles = "parent")] // Only parents can view their children's summaries
-    public async Task<IActionResult> GetChildrenProgressSummaries(string parentId)
-    {
-        try
-        {
-            // Ensure the requesting user is the parentId or an admin
-            // For simplicity, assuming parentId from token will be used in real app
-            var summaries = await _progressService.GetChildrenProgressSummariesAsync(parentId);
-            return Ok(summaries);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Failed to get children progress summaries for parent {ParentId}", parentId);
-            return StatusCode(500, "An error occurred while fetching children progress summaries.");
-        }
-    }
 }

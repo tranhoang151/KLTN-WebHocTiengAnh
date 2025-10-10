@@ -29,6 +29,27 @@ public class Test
     [FirestoreProperty("created_at")]
     public Timestamp CreatedAt { get; set; }
 
+    [FirestoreProperty("updated_at")]
+    public Timestamp UpdatedAt { get; set; }
+
+    [FirestoreProperty("type")]
+    public string Type { get; set; } = string.Empty;
+
+    [FirestoreProperty("is_published")]
+    public bool IsPublished { get; set; } = false;
+
+    [FirestoreProperty("total_points")]
+    public int TotalPoints { get; set; }
+
+    [FirestoreProperty("passing_score")]
+    public int PassingScore { get; set; }
+
+    [FirestoreProperty("start_date")]
+    public Timestamp? StartDate { get; set; }
+
+    [FirestoreProperty("end_date")]
+    public Timestamp? EndDate { get; set; }
+
     [FirestoreProperty("is_active")]
     public bool IsActive { get; set; } = true;
 }

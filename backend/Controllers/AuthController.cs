@@ -13,15 +13,18 @@ public class AuthController : ControllerBase
     private readonly ICustomAuthService _customAuthService;
     private readonly IFirebaseService _firebaseService;
     private readonly ILogger<AuthController> _logger;
+    private readonly IConfiguration _configuration;
 
     public AuthController(
         ICustomAuthService customAuthService,
         IFirebaseService firebaseService,
-        ILogger<AuthController> logger)
+        ILogger<AuthController> logger,
+        IConfiguration configuration)
     {
         _customAuthService = customAuthService;
         _firebaseService = firebaseService;
         _logger = logger;
+        _configuration = configuration;
     }
 
     [HttpGet("sync-data")]
@@ -29,7 +32,7 @@ public class AuthController : ControllerBase
     {
         try
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userId = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userId))
             {
                 return Unauthorized(new { Success = false, Message = "User not authenticated" });
@@ -53,7 +56,7 @@ public class AuthController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error getting sync data for user {UserId}", User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            _logger.LogError(ex, "Error getting sync data for user {UserId}", User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             return StatusCode(500, new { Success = false, Message = "Internal server error" });
         }
     }
@@ -63,7 +66,7 @@ public class AuthController : ControllerBase
     {
         try
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var userId = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userId))
             {
                 return Unauthorized(new { Success = false, Message = "User not authenticated" });
@@ -141,7 +144,7 @@ public class AuthController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error syncing progress for user {UserId}", User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            _logger.LogError(ex, "Error syncing progress for user {UserId}", User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             return StatusCode(500, new { Success = false, Message = "Internal server error" });
         }
     }
@@ -244,8 +247,8 @@ public class AuthController : ControllerBase
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var jsonToken = tokenHandler.ReadJwtToken(request.Token);
-            var userId = jsonToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-            var email = jsonToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+            var userId = jsonToken.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub)?.Value;
+            var email = jsonToken.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Email)?.Value;
 
             if (!string.IsNullOrEmpty(userId) && !string.IsNullOrEmpty(email))
             {
@@ -280,30 +283,104 @@ public class AuthController : ControllerBase
                 return BadRequest(new { Success = false, Message = "Invalid refresh token format" });
             }
 
+            // First validate the refresh token
             var isValidRefreshToken = await _customAuthService.ValidateRefreshTokenAsync(request.RefreshToken);
 
             if (!isValidRefreshToken)
             {
+                _logger.LogWarning("Refresh token validation failed for token: {Token}", request.RefreshToken.Substring(0, 20) + "...");
+
+                // Let's also try to decode the token to see what's in it for debugging
+                try
+                {
+                    var debugTokenHandler = new JwtSecurityTokenHandler();
+                    var jwtToken = debugTokenHandler.ReadJwtToken(request.RefreshToken);
+                    var tokenType = jwtToken.Claims.FirstOrDefault(x => x.Type == "type")?.Value;
+                    var expiration = jwtToken.Claims.FirstOrDefault(x => x.Type == "exp")?.Value;
+                    var issuer = jwtToken.Claims.FirstOrDefault(x => x.Type == "iss")?.Value;
+                    var audience = jwtToken.Claims.FirstOrDefault(x => x.Type == "aud")?.Value;
+
+                    _logger.LogWarning("Token details - Type: {TokenType}, Exp: {Expiration}, Issuer: {Issuer}, Audience: {Audience}", tokenType, expiration, issuer, audience);
+
+                    // Check JWT configuration
+                    var jwtSettings = _configuration.GetSection("Security:JWT");
+                    _logger.LogWarning("JWT Config - Issuer: {Issuer}, Audience: {Audience}", jwtSettings["Issuer"], jwtSettings["Audience"]);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex, "Failed to decode refresh token for debugging");
+                }
+
                 return Unauthorized(new { Success = false, Message = "Invalid or expired refresh token" });
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var jsonToken = tokenHandler.ReadJwtToken(request.RefreshToken);
-            var userId = jsonToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            JwtSecurityToken jsonToken;
 
+            try
+            {
+                jsonToken = tokenHandler.ReadJwtToken(request.RefreshToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Failed to parse refresh token");
+                return Unauthorized(new { Success = false, Message = "Invalid refresh token format" });
+            }
+
+            var userId = jsonToken.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub)?.Value;
             if (string.IsNullOrEmpty(userId))
             {
-                return Unauthorized(new { Success = false, Message = "Invalid refresh token" });
+                _logger.LogWarning("No user ID found in refresh token using Sub claim");
+                // Try alternative claim types for debugging
+                var nameIdentifierClaim = jsonToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+                var subjectClaim = jsonToken.Claims.FirstOrDefault(x => x.Type == "sub")?.Value;
+                var userIdClaim = jsonToken.Claims.FirstOrDefault(x => x.Type == "user_id")?.Value;
+
+                _logger.LogWarning("Available claims in refresh token:");
+                foreach (var claim in jsonToken.Claims)
+                {
+                    _logger.LogWarning("  Claim Type: {Type}, Value: {Value}", claim.Type, claim.Value);
+                }
+
+                _logger.LogWarning("JWT Configuration check:");
+                var jwtSettings = _configuration.GetSection("Security:JWT");
+                _logger.LogWarning("  Secret configured: {HasSecret}", !string.IsNullOrEmpty(jwtSettings["Secret"]));
+                _logger.LogWarning("  Issuer: {Issuer}", jwtSettings["Issuer"]);
+                _logger.LogWarning("  Audience: {Audience}", jwtSettings["Audience"]);
+
+                // Also check if the old JWT section exists
+                var oldJwtSettings = _configuration.GetSection("JWT");
+                if (oldJwtSettings.Exists())
+                {
+                    _logger.LogWarning("WARNING: Old JWT configuration section found!");
+                    _logger.LogWarning("  Old Secret configured: {HasSecret}", !string.IsNullOrEmpty(oldJwtSettings["Secret"]));
+                    _logger.LogWarning("  Old Issuer: {Issuer}", oldJwtSettings["Issuer"]);
+                    _logger.LogWarning("  Old Audience: {Audience}", oldJwtSettings["Audience"]);
+                }
+
+                _logger.LogWarning("Alternative claims - NameIdentifier: {NameIdentifier}, Subject: {Subject}, UserId: {UserId}",
+                    nameIdentifierClaim, subjectClaim, userIdClaim);
+
+                // Try to use any of the alternative claims if available
+                userId = userIdClaim ?? subjectClaim ?? nameIdentifierClaim;
+
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return Unauthorized(new { Success = false, Message = "Invalid refresh token - no user identifier found" });
+                }
             }
 
             var user = await _customAuthService.GetUserByIdAsync(userId);
             if (user == null)
             {
+                _logger.LogWarning("User not found for ID: {UserId}", userId);
                 return NotFound(new { Success = false, Message = "User not found" });
             }
 
             var newToken = await _customAuthService.GenerateJwtTokenAsync(user);
             var newRefreshToken = await _customAuthService.GenerateRefreshTokenAsync(user);
+
+            _logger.LogInformation("Token refreshed successfully for user: {UserId}", userId);
 
             return Ok(new RefreshTokenResponse
             {
@@ -323,7 +400,7 @@ public class AuthController : ControllerBase
     [HttpPost("logout")]
     public async Task<IActionResult> Logout()
     {
-        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var userId = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (!string.IsNullOrEmpty(userId))
         {
             _logger.LogInformation("User {UserId} logged out", userId);
@@ -331,7 +408,7 @@ public class AuthController : ControllerBase
             // Update last login date and streak when user logs out
             try
             {
-                var user = await _customAuthService.GetUserByEmailAsync(User.FindFirst(ClaimTypes.Email)?.Value ?? "");
+                var user = await _customAuthService.GetUserByIdAsync(userId);
                 if (user != null)
                 {
                     user.LastLoginDate = DateTime.UtcNow.ToString("yyyy-MM-dd");
@@ -347,6 +424,104 @@ public class AuthController : ControllerBase
         return Ok(new { message = "Logout successful" });
     }
 
+    [HttpGet("test-config")]
+    public IActionResult TestJwtConfiguration()
+    {
+        try
+        {
+            var jwtSettings = _configuration.GetSection("Security:JWT");
+            var secretKey = jwtSettings["Secret"];
+            var issuer = jwtSettings["Issuer"];
+            var audience = jwtSettings["Audience"];
+            var expirationMinutes = jwtSettings["ExpirationMinutes"];
+            var refreshTokenExpirationDays = jwtSettings["RefreshTokenExpirationDays"];
+
+            _logger.LogInformation("JWT Configuration Test - Secret: {SecretLength}, Issuer: {Issuer}, Audience: {Audience}",
+                secretKey?.Length ?? 0, issuer, audience);
+
+            return Ok(new
+            {
+                Success = true,
+                Configuration = new
+                {
+                    SecretKeyLength = secretKey?.Length ?? 0,
+                    Issuer = issuer,
+                    Audience = audience,
+                    ExpirationMinutes = expirationMinutes,
+                    RefreshTokenExpirationDays = refreshTokenExpirationDays,
+                    SecretKeyPreview = string.IsNullOrEmpty(secretKey) ? "NULL" : secretKey.Substring(0, Math.Min(10, secretKey.Length)) + "..."
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error testing JWT configuration");
+            return StatusCode(500, new { Success = false, Message = "Configuration error", Error = ex.Message });
+        }
+    }
+
+    [HttpPost("debug-refresh")]
+    public async Task<IActionResult> DebugRefreshToken([FromBody] RefreshTokenRequest request)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(request.RefreshToken))
+            {
+                return BadRequest(new { Success = false, Message = "Invalid refresh token format" });
+            }
+
+            // Try to decode the token without validation
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var jwtToken = tokenHandler.ReadJwtToken(request.RefreshToken);
+
+            var tokenDetails = new
+            {
+                Subject = jwtToken.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value,
+                TokenType = jwtToken.Claims.FirstOrDefault(x => x.Type == "type")?.Value,
+                Expiration = jwtToken.Claims.FirstOrDefault(x => x.Type == "exp")?.Value,
+                Issuer = jwtToken.Claims.FirstOrDefault(x => x.Type == "iss")?.Value,
+                Audience = jwtToken.Claims.FirstOrDefault(x => x.Type == "aud")?.Value,
+                Jti = jwtToken.Claims.FirstOrDefault(x => x.Type == "jti")?.Value,
+                ValidFrom = jwtToken.ValidFrom,
+                ValidTo = jwtToken.ValidTo
+            };
+
+            _logger.LogInformation("Refresh token debug - Details: {@TokenDetails}", tokenDetails);
+
+            // Check JWT configuration
+            var jwtSettings = _configuration.GetSection("Security:JWT");
+            var configDetails = new
+            {
+                SecretLength = jwtSettings["Secret"]?.Length ?? 0,
+                Issuer = jwtSettings["Issuer"],
+                Audience = jwtSettings["Audience"],
+                ExpirationMinutes = jwtSettings["ExpirationMinutes"],
+                RefreshTokenExpirationDays = jwtSettings["RefreshTokenExpirationDays"]
+            };
+
+            _logger.LogInformation("JWT config debug - Details: {@ConfigDetails}", configDetails);
+
+            // Try validation
+            var isValid = await _customAuthService.ValidateRefreshTokenAsync(request.RefreshToken);
+
+            return Ok(new
+            {
+                Success = true,
+                TokenDetails = tokenDetails,
+                ConfigurationDetails = configDetails,
+                IsValid = isValid,
+                CurrentTime = DateTime.UtcNow,
+                TokenExpirationTime = jwtToken.ValidTo,
+                TimeUntilExpiration = jwtToken.ValidTo - DateTime.UtcNow
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error debugging refresh token");
+            return StatusCode(500, new { Success = false, Message = "Debug error", Error = ex.Message });
+        }
+    }
+
     private static UserDto MapUserToDto(User user)
     {
         return new UserDto
@@ -357,6 +532,7 @@ public class AuthController : ControllerBase
             Role = user.Role,
             Gender = user.Gender,
             AvatarUrl = user.AvatarUrl,
+            AvatarBase64 = user.AvatarBase64,
             StreakCount = user.LearningStreakCount,
             LastLoginDate = user.LastLoginDate,
             ClassIds = user.ClassIds,

@@ -41,6 +41,7 @@ public class UserDto
     public string Role { get; set; } = string.Empty;
     public string Gender { get; set; } = string.Empty;
     public string? AvatarUrl { get; set; }
+    public string? AvatarBase64 { get; set; }
     public int StreakCount { get; set; }
     public string? LastLoginDate { get; set; }
     public List<string> ClassIds { get; set; } = new();

@@ -51,9 +51,6 @@ public class User
     [FirestoreProperty("class_ids")]
     public List<string> ClassIds { get; set; } = new();
 
-    [FirestoreProperty("child_ids")]
-    public List<string> ChildIds { get; set; } = new();
-
     [FirestoreProperty("badges")]
     public Dictionary<string, UserBadge> Badges { get; set; } = new();
 

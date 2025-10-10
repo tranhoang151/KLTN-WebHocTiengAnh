@@ -55,6 +55,115 @@ public class ExerciseController : ControllerBase
         }
     }
 
+    [HttpPost]
+    [Authorize(Roles = "admin,teacher")]
+    public async Task<IActionResult> CreateExercise([FromBody] Exercise exercise)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Validate exercise data
+            if (exercise.TotalPoints <= 0)
+            {
+                return BadRequest(new { message = "Total points must be greater than 0" });
+            }
+
+            exercise.Id = Guid.NewGuid().ToString();
+            exercise.CreatedAt = Google.Cloud.Firestore.Timestamp.GetCurrentTimestamp();
+            exercise.UpdatedAt = Google.Cloud.Firestore.Timestamp.GetCurrentTimestamp();
+            exercise.IsActive = true;
+
+            var createdExercise = await _firebaseService.CreateExerciseAsync(exercise);
+
+            _logger.LogInformation("Exercise created: {ExerciseId}", createdExercise.Id);
+            return CreatedAtAction(nameof(GetExercise), new { exerciseId = createdExercise.Id }, createdExercise);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error creating exercise");
+            return StatusCode(500, new { message = "Error creating exercise", error = ex.Message });
+        }
+    }
+
+    [HttpPut("{exerciseId}")]
+    [Authorize(Roles = "admin,teacher")]
+    public async Task<IActionResult> UpdateExercise(string exerciseId, [FromBody] Exercise exercise)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Validate exercise data
+            if (exercise.TotalPoints <= 0)
+            {
+                return BadRequest(new { message = "Total points must be greater than 0" });
+            }
+
+            exercise.UpdatedAt = Google.Cloud.Firestore.Timestamp.GetCurrentTimestamp();
+
+            var updatedExercise = await _firebaseService.UpdateExerciseAsync(exerciseId, exercise);
+            if (updatedExercise == null)
+            {
+                return NotFound(new { message = "Exercise not found" });
+            }
+
+            _logger.LogInformation("Exercise updated: {ExerciseId}", exerciseId);
+            return Ok(updatedExercise);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating exercise {ExerciseId}", exerciseId);
+            return StatusCode(500, new { message = "Error updating exercise", error = ex.Message });
+        }
+    }
+
+    [HttpDelete("{exerciseId}")]
+    [Authorize(Roles = "admin,teacher")]
+    public async Task<IActionResult> DeleteExercise(string exerciseId)
+    {
+        try
+        {
+            await _firebaseService.DeleteExerciseAsync(exerciseId);
+
+            _logger.LogInformation("Exercise deleted: {ExerciseId}", exerciseId);
+            return Ok(new { message = "Exercise deleted successfully" });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error deleting exercise {ExerciseId}", exerciseId);
+            return StatusCode(500, new { message = "Error deleting exercise", error = ex.Message });
+        }
+    }
+
+    [HttpPost("{exerciseId}/duplicate")]
+    [Authorize(Roles = "admin,teacher")]
+    public async Task<IActionResult> DuplicateExercise(string exerciseId)
+    {
+        try
+        {
+            var duplicatedExercise = await _firebaseService.DuplicateExerciseAsync(exerciseId);
+
+            _logger.LogInformation("Exercise duplicated: {OriginalExerciseId} -> {NewExerciseId}", exerciseId, duplicatedExercise.Id);
+            return CreatedAtAction(nameof(GetExercise), new { exerciseId = duplicatedExercise.Id }, duplicatedExercise);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error duplicating exercise {ExerciseId}", exerciseId);
+            return StatusCode(500, new { message = "Error duplicating exercise", error = ex.Message });
+        }
+    }
+
     [HttpPost("submit")]
     public async Task<IActionResult> SubmitExercise([FromBody] ExerciseSubmissionDto submission)
     {

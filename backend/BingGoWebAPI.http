@@ -4,3 +4,128 @@ GET {{BingGoWebAPI_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+# ========================================
+# EVALUATION API ENDPOINTS
+# ========================================
+
+# Get all evaluations for a teacher
+GET {{BingGoWebAPI_HostAddress}}/api/evaluations/teacher/teacher-id-here
+Accept: application/json
+Authorization: Bearer your-jwt-token-here
+
+###
+
+# Get all evaluations for a student
+GET {{BingGoWebAPI_HostAddress}}/api/evaluations/student/student-id-here
+Accept: application/json
+Authorization: Bearer your-jwt-token-here
+
+###
+
+# Get evaluations for a specific class
+GET {{BingGoWebAPI_HostAddress}}/api/evaluations/class/class-id-here
+Accept: application/json
+Authorization: Bearer your-jwt-token-here
+
+###
+
+# Get a specific evaluation by ID
+GET {{BingGoWebAPI_HostAddress}}/api/evaluations/evaluation-id-here
+Accept: application/json
+Authorization: Bearer your-jwt-token-here
+
+###
+
+# Create a new evaluation
+POST {{BingGoWebAPI_HostAddress}}/api/evaluations
+Accept: application/json
+Authorization: Bearer your-jwt-token-here
+Content-Type: application/json
+
+{
+  "studentId": "student-id-here",
+  "teacherId": "teacher-id-here",
+  "classId": "class-id-here",
+  "ratingParticipation": 4,
+  "ratingUnderstanding": 4,
+  "ratingProgress": 3,
+  "score": 85,
+  "comments": "Student shows good understanding and participation in class activities.",
+  "strengths": [
+    "Active participation in discussions",
+    "Good understanding of concepts",
+    "Helpful to other students"
+  ],
+  "areasForImprovement": [
+    "Could improve on homework completion",
+    "Needs to work on time management"
+  ],
+  "recommendations": [
+    "Continue encouraging peer collaboration",
+    "Provide additional practice exercises"
+  ]
+}
+
+###
+
+# Update an existing evaluation
+PUT {{BingGoWebAPI_HostAddress}}/api/evaluations/evaluation-id-here
+Accept: application/json
+Authorization: Bearer your-jwt-token-here
+Content-Type: application/json
+
+{
+  "ratingParticipation": 5,
+  "ratingUnderstanding": 4,
+  "ratingProgress": 4,
+  "score": 90,
+  "comments": "Updated evaluation comments",
+  "strengths": [
+    "Excellent participation",
+    "Strong understanding"
+  ],
+  "areasForImprovement": [
+    "Minor improvements needed"
+  ],
+  "recommendations": [
+    "Continue current approach"
+  ]
+}
+
+###
+
+# Delete an evaluation
+DELETE {{BingGoWebAPI_HostAddress}}/api/evaluations/evaluation-id-here
+Accept: application/json
+Authorization: Bearer your-jwt-token-here
+
+###
+
+# Get evaluation summaries for a teacher
+GET {{BingGoWebAPI_HostAddress}}/api/evaluations/summaries/teacher/teacher-id-here
+Accept: application/json
+Authorization: Bearer your-jwt-token-here
+
+###
+
+# Get evaluation analytics for a teacher
+GET {{BingGoWebAPI_HostAddress}}/api/evaluations/analytics/teacher/teacher-id-here
+Accept: application/json
+Authorization: Bearer your-jwt-token-here
+
+###
+
+# Get evaluation analytics for a class
+GET {{BingGoWebAPI_HostAddress}}/api/evaluations/analytics/class/class-id-here
+Accept: application/json
+Authorization: Bearer your-jwt-token-here
+
+###
+
+# Get students who need evaluation for a teacher
+GET {{BingGoWebAPI_HostAddress}}/api/evaluations/students/needing-evaluation/teacher-id-here
+Accept: application/json
+Authorization: Bearer your-jwt-token-here
+
+###

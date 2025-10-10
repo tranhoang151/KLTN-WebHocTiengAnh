@@ -1,0 +1,4291 @@
+{
+  "badges": [
+    {
+      "id": "badge1",
+      "earned": false,
+      "name": "Chăm chỉ đăng nhập",
+      "description": "Đăng nhập 3 ngày liên tiếp",
+      "imageUrl": "https://i.postimg.cc/Gm7BStxm/Depth-5-Frame-0.png"
+    },
+    {
+      "id": "badge2",
+      "earned": false,
+      "name": "Chuyên gia Flashcard",
+      "description": "Học xong 1 bộ flashcard",
+      "imageUrl": "https://i.postimg.cc/VNqxkrZY/Depth-6-Frame-0.png"
+    },
+    {
+      "id": "badge3",
+      "earned": false,
+      "name": "Siêng năng làm bài tập",
+      "description": "Hoàn thành 1 bài tập",
+      "imageUrl": "https://i.postimg.cc/0jQFntkQ/Depth-6-Frame-0-1.png"
+    },
+    {
+      "id": "badge4",
+      "earned": false,
+      "name": "Thi cử tích cực",
+      "description": "Tham gia 2 bài kiểm tra",
+      "imageUrl": "https://i.postimg.cc/nzdwXv4t/Depth-6-Frame-0-2.png"
+    },
+    {
+      "id": "badge5",
+      "earned": false,
+      "name": "Học qua video",
+      "description": "Xem 1 video bài giảng",
+      "imageUrl": "https://i.postimg.cc/rw6ZRyrz/Depth-6-Frame-0-3.png"
+    },
+    {
+      "id": "badge6",
+      "earned": false,
+      "name": "Streak học tập 3 ngày",
+      "description": "Học tập liên tục 3 ngày",
+      "imageUrl": "https://i.postimg.cc/vTgXDC8W/Depth-6-Frame-0-4.png"
+    }
+  ],
+  "classes": [
+    {
+      "id": "8zL2hufpiUjaDXaArbgx",
+      "description": "Lớp Starter English 2 cho trẻ 6-7 tuổi",
+      "capacity": 10,
+      "name": "SE2",
+      "created_at": "2025-07-18",
+      "teacher_id": "U002",
+      "course_id": "LABTsID1zvPRsVjPjhLd",
+      "student_ids": [
+        "yl8VK0hK39X1F2Bv4P07",
+        "U100"
+      ]
+    },
+    {
+      "id": "HiXPBrKVcc5oZ5evkWXt",
+      "name": "JE2",
+      "description": "Lớp Junior English 2 cho trẻ 8-9 tuổi",
+      "capacity": 10,
+      "created_at": "2025-07-18",
+      "course_id": null
+    },
+    {
+      "id": "M2U43wpHLmLGKsh2UWNz",
+      "name": "SM1",
+      "description": "Lớp Smart English 1 cho trẻ 9-10 tuổi",
+      "capacity": 10,
+      "created_at": "2025-07-18",
+      "course_id": "WgRFeWZ6Sipili34yEuX"
+    },
+    {
+      "id": "Q6AAiVF8Pp3crSz5Qfrr",
+      "name": "JE1",
+      "description": "Lớp Junior English 1 cho trẻ 8-9 tuổi",
+      "capacity": 10,
+      "created_at": "2025-07-18",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "teacher_id": "TOATdRymyiG2ZXS5Yd6N",
+      "student_ids": [
+        "RURXLeF9CkGaVauALNbW"
+      ]
+    },
+    {
+      "id": "QkEYnnBGrqTPCsStUTqY",
+      "name": "SM2",
+      "description": "Lớp Smart English 2 cho trẻ 9-10 tuổi",
+      "created_at": "2025-07-18",
+      "course_id": null
+    },
+    {
+      "id": "tkAUdYSOJNApsrxQz999",
+      "name": "SE1",
+      "description": "Lớp Starter English 1 cho trẻ 6-7 tuổi",
+      "course_id": "LABTsID1zvPRsVjPjhLd",
+      "capacity": 10,
+      "created_at": "2025-07-18",
+      "teacher_id": "U002",
+      "student_ids": [
+        "yl8VK0hK39X1F2Bv4P07",
+        "U004",
+        "uGHwsrznOSIf1oHGvtll",
+        "U001",
+        "ieuVb5calOJDNjNJ7ctW"
+      ]
+    }
+  ],
+  "courses": [
+    {
+      "id": "1Tj7Zug9y2PtKCj3mR1X",
+      "created_at": {
+        "_seconds": 1752779053,
+        "_nanoseconds": 685000000
+      },
+      "image_url": "aa",
+      "name": "Junior English",
+      "description": "Khóa học tiếng Anh nâng cao cho trẻ 8-9 tuổi"
+    },
+    {
+      "id": "LABTsID1zvPRsVjPjhLd",
+      "name": "Starter English",
+      "created_at": {
+        "_seconds": 1752779053,
+        "_nanoseconds": 682000000
+      },
+      "description": "Khóa học tiếng Anh cơ bản cho trẻ 6-7 tuổi",
+      "image_url": "aa"
+    },
+    {
+      "id": "WgRFeWZ6Sipili34yEuX",
+      "name": "Smart English",
+      "created_at": {
+        "_seconds": 1752779053,
+        "_nanoseconds": 685000000
+      },
+      "description": "Khóa học tiếng Anh cho trẻ 9-10 tuổi",
+      "image_url": "aa"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "2FcGgsAHfVXiZNQtaQCw",
+      "course_id": "LABTsID1zvPRsVjPjhLd",
+      "questions": [
+        {
+          "question_text": "What do you eat for breakfast?",
+          "options": [
+            "Bread",
+            "Water",
+            "Book",
+            "Car"
+          ],
+          "correct_answer": 0,
+          "id": "food_mc_1"
+        },
+        {
+          "question_text": "What fruit is yellow?",
+          "options": [
+            "Banana",
+            "Apple",
+            "Orange",
+            "Grape"
+          ],
+          "correct_answer": 0,
+          "id": "food_mc_2"
+        },
+        {
+          "question_text": "What do you drink when you are thirsty?",
+          "options": [
+            "Water",
+            "Book",
+            "Car",
+            "House"
+          ],
+          "correct_answer": 0,
+          "id": "food_mc_3"
+        },
+        {
+          "question_text": "What fruit is red?",
+          "options": [
+            "Apple",
+            "Banana",
+            "Orange",
+            "Grape"
+          ],
+          "correct_answer": 0,
+          "id": "food_mc_4"
+        },
+        {
+          "question_text": "What do you eat with a spoon?",
+          "options": [
+            "Soup",
+            "Book",
+            "Car",
+            "House"
+          ],
+          "correct_answer": 0,
+          "id": "food_mc_5"
+        }
+      ],
+      "title": "Trải nghiệm về đồ ăn",
+      "type": "multiple_choice"
+    },
+    {
+      "id": "CQjm6Mv4ixottHnkhLir",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "questions": [
+        {
+          "question_text": "test",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d"
+          ],
+          "correct_answer": 0,
+          "id": "gGuH9q8PRAQb8knsLwQu"
+        }
+      ],
+      "title": "Fruits",
+      "type": "multiple_choice"
+    },
+    {
+      "id": "F8lfadeAiC2aA7G50WTG",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "questions": [
+        {
+          "question_text": "What fruit is orange and has the same name as its color?",
+          "options": [
+            "Apple",
+            "Banana",
+            "Pear",
+            "Orange"
+          ],
+          "correct_answer": 3,
+          "id": "68nYfaqhcfQqlASAvNlD"
+        },
+        {
+          "question_text": "What fruit is sweet and has a crown on top?",
+          "options": [
+            "Orange",
+            "Banana",
+            "Pineapple",
+            "Kiwi"
+          ],
+          "correct_answer": 2,
+          "id": "9YRQ61Q5t09hujKxDSNs"
+        },
+        {
+          "question_text": "What color is a banana?",
+          "options": [
+            "Red",
+            "Blue",
+            "Yellow",
+            "Purple"
+          ],
+          "correct_answer": 2,
+          "id": "JTlQ1O2Kes9wzuHdi6Vq"
+        },
+        {
+          "question_text": "What fruit is big, green outside, and red inside?",
+          "options": [
+            "Pineapple",
+            "Orange",
+            "Watermelon",
+            "Mango"
+          ],
+          "correct_answer": 2,
+          "id": "N9aqdLGPTtygPwyLDRZ5"
+        },
+        {
+          "question_text": "Which fruit is small and blue?",
+          "options": [
+            "Watermelon",
+            "Blueberry",
+            "Peach",
+            "Apple"
+          ],
+          "correct_answer": 1,
+          "id": "QyM9ufX15fA1TKWQDKP4"
+        },
+        {
+          "question_text": "Which one is NOT a fruit?",
+          "options": [
+            "Mango",
+            "Banana",
+            "Strawberry",
+            "Carrot"
+          ],
+          "correct_answer": 3,
+          "id": "UL8x3mrtukXmVhhy8JOV"
+        }
+      ],
+      "title": "Fruits",
+      "type": "multiple_choice"
+    },
+    {
+      "id": "RQmbJGuFaYrRBQ4rZ2uL",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "questions": [
+        {
+          "question_text": "Rain falls from the ____. ",
+          "correct_answer": "sky",
+          "id": "0TCs9iOWgKfnPSPZ6rW2"
+        },
+        {
+          "question_text": "The process by which plants make food is called ____.",
+          "correct_answer": "photosynthesis",
+          "id": "0pTT0AxW9h0iQNeQbqSM"
+        },
+        {
+          "question_text": "What do you use to brush your teeth?",
+          "options": [
+            "Spoon",
+            "Toothbrush",
+            "Comb",
+            "Fork"
+          ],
+          "correct_answer": 1,
+          "id": "18VW5f6F3q0ep4ESZxmw"
+        },
+        {
+          "question_text": "The process by which plants make food is called ____.",
+          "correct_answer": "photosynthesis",
+          "id": "1EQggFrrkBfYspS1qq6g"
+        },
+        {
+          "question_text": "I eat ________ for breakfast. They are small and purple or green.",
+          "options": [],
+          "correct_answer": -1,
+          "id": "1U8rdoHMndIH5KYVoijb"
+        },
+        {
+          "question_text": "A magnet attracts ____.",
+          "correct_answer": "iron",
+          "id": "1cKZFbb9LYrJ8rGZ9nZI"
+        },
+        {
+          "question_text": "The sun rises in the ____.",
+          "correct_answer": "east",
+          "id": "2LognibE4V9pcgXCjnsm"
+        },
+        {
+          "question_text": "A magnet attracts ____.",
+          "correct_answer": "iron",
+          "id": "2b1VtDPK73AQVwHj32Lz"
+        },
+        {
+          "question_text": "We wash our hands with ____.",
+          "correct_answer": "soap",
+          "id": "3h5D3xhZIoom1KlX5rJv"
+        },
+        {
+          "question_text": "test",
+          "options": [
+            "anh",
+            "em",
+            "trong",
+            "nha"
+          ],
+          "correct_answer": 1,
+          "id": "5elOeJtOqiGDgWWYsQWl"
+        }
+      ],
+      "title": "Revision 01",
+      "type": "multiple_choice"
+    },
+    {
+      "id": "fill1",
+      "type": "fill_blank",
+      "title": "Colors",
+      "course_id": "LABTsID1zvPRsVjPjhLd",
+      "questions": [
+        {
+          "question_text": "The sky is _____ on a clear day.",
+          "correct_answer": "blue",
+          "id": "colors_fb_1"
+        },
+        {
+          "question_text": "Grass is _____.",
+          "correct_answer": "green",
+          "id": "colors_fb_2"
+        },
+        {
+          "question_text": "The sun is _____.",
+          "correct_answer": "yellow",
+          "id": "colors_fb_3"
+        },
+        {
+          "question_text": "Blood is _____.",
+          "correct_answer": "red",
+          "id": "colors_fb_4"
+        },
+        {
+          "question_text": "Snow is _____.",
+          "correct_answer": "white",
+          "id": "colors_fb_5"
+        }
+      ]
+    },
+    {
+      "id": "fill2",
+      "type": "fill_blank",
+      "title": "Numbers",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "questions": [
+        {
+          "question_text": "You have _____ fingers on one hand.",
+          "answer": null,
+          "correct_answer": "five",
+          "id": "numbers_fb_1",
+          "type": null
+        },
+        {
+          "question_text": "There are _____ days in a week.",
+          "answer": null,
+          "correct_answer": "seven",
+          "id": "numbers_fb_2",
+          "type": null
+        },
+        {
+          "question_text": "You have _____ eyes.",
+          "answer": null,
+          "correct_answer": "two",
+          "id": "numbers_fb_3",
+          "type": null
+        },
+        {
+          "question_text": "A cat has _____ legs.",
+          "answer": null,
+          "correct_answer": "four",
+          "id": "numbers_fb_4",
+          "type": null
+        },
+        {
+          "question_text": "There are _____ months in a year.",
+          "answer": null,
+          "correct_answer": "twelve",
+          "id": "numbers_fb_5",
+          "type": null
+        }
+      ]
+    },
+    {
+      "id": "fill3",
+      "type": "fill_blank",
+      "title": "Animals",
+      "course_id": "LABTsID1zvPRsVjPjhLd",
+      "questions": [
+        {
+          "question_text": "A _____ says 'meow'.",
+          "correct_answer": "cat",
+          "id": "animals_fb_1"
+        },
+        {
+          "question_text": "A _____ says 'woof'.",
+          "correct_answer": "dog",
+          "id": "animals_fb_2"
+        },
+        {
+          "question_text": "A _____ can fly.",
+          "correct_answer": "bird",
+          "id": "animals_fb_3"
+        },
+        {
+          "question_text": "A _____ lives in water.",
+          "correct_answer": "fish",
+          "id": "animals_fb_4"
+        },
+        {
+          "question_text": "A _____ has four legs.",
+          "correct_answer": "dog",
+          "id": "animals_fb_5"
+        },
+        {
+          "question_text": "The ___ barks.",
+          "correct_answer": "Dog"
+        },
+        {
+          "question_text": "The ___ gives us milk.",
+          "correct_answer": "Cow"
+        },
+        {
+          "question_text": "The ___ is the king of the jungle.",
+          "correct_answer": "Lion"
+        },
+        {
+          "question_text": "The ___ says 'meow'.",
+          "correct_answer": "Cat"
+        },
+        {
+          "question_text": "The ___ has a long trunk.",
+          "correct_answer": "Elephant"
+        }
+      ]
+    },
+    {
+      "id": "multi1",
+      "title": "Trắc nghiệm về màu sắc",
+      "type": "multiple_choice",
+      "course_id": "LABTsID1zvPRsVjPjhLd",
+      "questions": [
+        {
+          "question_text": "What color is the sky on a clear day?",
+          "options": [
+            "Blue",
+            "Red",
+            "Green",
+            "Yellow"
+          ],
+          "correct_answer": 0,
+          "id": "colors_mc_1"
+        },
+        {
+          "question_text": "What color is grass?",
+          "options": [
+            "Green",
+            "Blue",
+            "Red",
+            "Yellow"
+          ],
+          "correct_answer": 0,
+          "id": "colors_mc_2"
+        },
+        {
+          "question_text": "What color is the sun?",
+          "options": [
+            "Yellow",
+            "Blue",
+            "Green",
+            "Red"
+          ],
+          "correct_answer": 0,
+          "id": "colors_mc_3"
+        },
+        {
+          "question_text": "What color is blood?",
+          "options": [
+            "Red",
+            "Blue",
+            "Green",
+            "Yellow"
+          ],
+          "correct_answer": 0,
+          "id": "colors_mc_4"
+        },
+        {
+          "question_text": "What color is snow?",
+          "options": [
+            "White",
+            "Blue",
+            "Green",
+            "Yellow"
+          ],
+          "correct_answer": 0,
+          "id": "colors_mc_5"
+        }
+      ]
+    },
+    {
+      "id": "multi2",
+      "title": "Trắc nghiệm về số đếm",
+      "type": "multiple_choice",
+      "course_id": "LABTsID1zvPRsVjPjhLd",
+      "questions": [
+        {
+          "question_text": "How many fingers do you have on one hand?",
+          "options": [
+            "5",
+            "4",
+            "6",
+            "3"
+          ],
+          "correct_answer": 0,
+          "id": "numbers_mc_1"
+        },
+        {
+          "question_text": "How many days are in a week?",
+          "options": [
+            "7",
+            "6",
+            "8",
+            "5"
+          ],
+          "correct_answer": 0,
+          "id": "numbers_mc_2"
+        },
+        {
+          "question_text": "How many eyes do you have?",
+          "options": [
+            "2",
+            "1",
+            "3",
+            "4"
+          ],
+          "correct_answer": 0,
+          "id": "numbers_mc_3"
+        },
+        {
+          "question_text": "How many legs does a cat have?",
+          "options": [
+            "4",
+            "2",
+            "6",
+            "3"
+          ],
+          "correct_answer": 0,
+          "id": "numbers_mc_4"
+        },
+        {
+          "question_text": "How many months are in a year?",
+          "options": [
+            "12",
+            "10",
+            "11",
+            "13"
+          ],
+          "correct_answer": 0,
+          "id": "numbers_mc_5"
+        }
+      ]
+    },
+    {
+      "id": "multi3",
+      "title": "Trắc nghiệm về con vật",
+      "type": "multiple_choice",
+      "course_id": "LABTsID1zvPRsVjPjhLd",
+      "questions": [
+        {
+          "question_text": "What animal says 'meow'?",
+          "options": [
+            "Cat",
+            "Dog",
+            "Bird",
+            "Fish"
+          ],
+          "correct_answer": 0,
+          "id": "animals_mc_1"
+        },
+        {
+          "question_text": "What animal says 'woof'?",
+          "options": [
+            "Dog",
+            "Cat",
+            "Bird",
+            "Fish"
+          ],
+          "correct_answer": 0,
+          "id": "animals_mc_2"
+        },
+        {
+          "question_text": "What animal can fly?",
+          "options": [
+            "Bird",
+            "Cat",
+            "Dog",
+            "Fish"
+          ],
+          "correct_answer": 0,
+          "id": "animals_mc_3"
+        },
+        {
+          "question_text": "What animal lives in water?",
+          "options": [
+            "Fish",
+            "Cat",
+            "Dog",
+            "Bird"
+          ],
+          "correct_answer": 0,
+          "id": "animals_mc_4"
+        },
+        {
+          "question_text": "What animal has four legs?",
+          "options": [
+            "Dog",
+            "Bird",
+            "Fish",
+            "Snake"
+          ],
+          "correct_answer": 0,
+          "id": "animals_mc_5"
+        }
+      ]
+    },
+    {
+      "id": "v1cYgAEnc6ZT2NvAcOsV",
+      "course_id": "LABTsID1zvPRsVjPjhLd",
+      "questions": [
+        {
+          "question_text": "You eat _____ for breakfast.",
+          "correct_answer": "bread",
+          "id": "food_fb_1"
+        },
+        {
+          "question_text": "A _____ is yellow.",
+          "correct_answer": "banana",
+          "id": "food_fb_2"
+        },
+        {
+          "question_text": "You drink _____ when you are thirsty.",
+          "correct_answer": "water",
+          "id": "food_fb_3"
+        },
+        {
+          "question_text": "An _____ is red.",
+          "correct_answer": "apple",
+          "id": "food_fb_4"
+        },
+        {
+          "question_text": "You eat _____ with a spoon.",
+          "correct_answer": "soup",
+          "id": "food_fb_5"
+        }
+      ],
+      "title": "Foods",
+      "type": "fill_blank"
+    },
+    {
+      "id": "v68KMjS4tKEsjUQQa0qH",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "questions": [
+        {
+          "question_text": "I eat ________ for breakfast. They are small and purple or green.",
+          "correct_answer": "grapes",
+          "id": "1U8rdoHMndIH5KYVoijb"
+        },
+        {
+          "question_text": "A monkey likes to eat a________",
+          "correct_answer": "banana",
+          "id": "KEI7iqs0fopNARQxIcWd"
+        },
+        {
+          "question_text": "The ________ is big, green outside, and red inside.",
+          "correct_answer": "watermelon",
+          "id": "daePZtCancWiQBSwEpRe"
+        },
+        {
+          "question_text": "An ________ is red, round, and sweet.",
+          "correct_answer": "apple",
+          "id": "luNT57DDpf0ugLdML4sQ"
+        },
+        {
+          "question_text": "A ________ is yellow and sour.",
+          "correct_answer": "lemon",
+          "id": "yy2IAOU47A21pwKDDpRX"
+        }
+      ],
+      "title": "Fruits",
+      "type": "fill_blank"
+    }
+  ],
+  "flashcard_sets": [
+    {
+      "id": "WjQLN8xuWrwbRu9BHeO0",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "description": "Learn about fruits",
+      "created_at": {
+        "_seconds": 1753461645,
+        "_nanoseconds": 590000000
+      },
+      "set_id": "fruits",
+      "title": "Fruits",
+      "created_by": "admin"
+    },
+    {
+      "id": "XwauExYZSzgKiTTa2mcZ",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "description": "Learning about school things",
+      "created_at": {
+        "_seconds": 1753461092,
+        "_nanoseconds": 807000000
+      },
+      "set_id": "shool_things",
+      "title": "Shool Things",
+      "created_by": "admin"
+    },
+    {
+      "id": "animals",
+      "assigned_class_ids": [
+        "class_1"
+      ],
+      "created_at": {
+        "_seconds": 1752515804,
+        "_nanoseconds": 16000000
+      },
+      "set_id": "animals",
+      "created_by": "teacher_123",
+      "assigned_user_ids": [],
+      "course_id": "LABTsID1zvPRsVjPjhLd",
+      "title": "Animals",
+      "description": "Learn basic animals"
+    },
+    {
+      "id": "colors",
+      "assigned_class_ids": [
+        "class_1"
+      ],
+      "description": "Learn basic colors",
+      "created_at": {
+        "_seconds": 1752515803,
+        "_nanoseconds": 987000000
+      },
+      "set_id": "colors",
+      "title": "Colors",
+      "created_by": "teacher_123",
+      "assigned_user_ids": [],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "numbers",
+      "assigned_class_ids": [
+        "class_1"
+      ],
+      "description": "Learn basic numbers",
+      "created_at": {
+        "_seconds": 1752515804,
+        "_nanoseconds": 19000000
+      },
+      "set_id": "numbers",
+      "title": "Numbers",
+      "created_by": "teacher_123",
+      "assigned_user_ids": [],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "uFLthmkMtQjU3Bf6x39a",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "description": "Learn about my house",
+      "created_at": {
+        "_seconds": 1753462228,
+        "_nanoseconds": 632000000
+      },
+      "set_id": "my_house",
+      "title": "My House",
+      "created_by": "admin"
+    }
+  ],
+  "questions": [
+    {
+      "id": "nature_fb_4",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000053,
+      "createdBy": "admin",
+      "correctAnswer": "sky",
+      "explanation": "Rain falls from the sky.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "Rain falls from the ____. ",
+      "tags": [
+        "nature",
+        "weather"
+      ]
+    },
+    {
+      "id": "science_fb_5",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000014,
+      "createdBy": "admin",
+      "correctAnswer": "photosynthesis",
+      "explanation": "Plants make food by photosynthesis.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "The process by which plants make food is called ____.",
+      "tags": [
+        "science",
+        "plants"
+      ]
+    },
+    {
+      "id": "dailylife_mc_1",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000020,
+      "createdBy": "admin",
+      "options": [
+        "Spoon",
+        "Toothbrush",
+        "Comb",
+        "Fork"
+      ],
+      "correctAnswer": 1,
+      "explanation": "We use a toothbrush.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "What do you use to brush your teeth?",
+      "tags": [
+        "dailylife",
+        "hygiene"
+      ]
+    },
+    {
+      "id": "science_fb_5",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000014,
+      "createdBy": "admin",
+      "correctAnswer": "photosynthesis",
+      "explanation": "Plants make food by photosynthesis.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "The process by which plants make food is called ____.",
+      "tags": [
+        "science",
+        "plants"
+      ]
+    },
+    {
+      "id": null,
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "is_active": false,
+      "correct_answer": "grapes",
+      "options": [],
+      "created_at": 0,
+      "explanation": "",
+      "type": "fill_blank",
+      "created_by": "admin",
+      "content": "I eat ________ for breakfast. They are small and purple or green.",
+      "tags": [
+        "fruits"
+      ]
+    },
+    {
+      "id": "science_fb_4",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000013,
+      "createdBy": "admin",
+      "correctAnswer": "iron",
+      "explanation": "Magnets attract iron.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "A magnet attracts ____.",
+      "tags": [
+        "science",
+        "magnet"
+      ]
+    },
+    {
+      "id": "nature_fb_1",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000050,
+      "createdBy": "admin",
+      "correctAnswer": "east",
+      "explanation": "The sun rises in the east.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "The sun rises in the ____.",
+      "tags": [
+        "nature",
+        "sun"
+      ]
+    },
+    {
+      "id": "science_fb_4",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000013,
+      "createdBy": "admin",
+      "correctAnswer": "iron",
+      "explanation": "Magnets attract iron.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "A magnet attracts ____.",
+      "tags": [
+        "science",
+        "magnet"
+      ]
+    },
+    {
+      "id": "dailylife_fb_3",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000032,
+      "createdBy": "admin",
+      "correctAnswer": "soap",
+      "explanation": "We wash our hands with soap.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "We wash our hands with ____.",
+      "tags": [
+        "dailylife",
+        "hygiene"
+      ]
+    },
+    {
+      "id": null,
+      "difficulty": "medium",
+      "course_id": "WgRFeWZ6Sipili34yEuX",
+      "is_active": false,
+      "correct_answer": "em",
+      "options": [
+        "anh",
+        "em",
+        "trong",
+        "nha"
+      ],
+      "created_at": 0,
+      "explanation": "test",
+      "type": "multiple_choice",
+      "created_by": "admin",
+      "content": "test",
+      "tags": [
+        "test"
+      ]
+    },
+    {
+      "id": null,
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "is_active": false,
+      "correct_answer": "Orange",
+      "options": [
+        "Apple",
+        "Banana",
+        "Pear",
+        "Orange"
+      ],
+      "created_at": 0,
+      "explanation": "",
+      "type": "multiple_choice",
+      "created_by": "admin",
+      "content": "What fruit is orange and has the same name as its color?",
+      "tags": [
+        "fruits"
+      ]
+    },
+    {
+      "id": "science_fb_2",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000011,
+      "createdBy": "admin",
+      "correctAnswer": "eyes",
+      "explanation": "We see with eyes.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "We see with our ____.",
+      "tags": [
+        "science",
+        "body"
+      ]
+    },
+    {
+      "id": "science_mc_4",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000003,
+      "createdBy": "admin",
+      "options": [
+        "Water",
+        "Ice",
+        "Steam",
+        "Fog"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Ice is a solid.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Which is a solid?",
+      "tags": [
+        "science",
+        "states"
+      ]
+    },
+    {
+      "id": "nature_fb_2",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000051,
+      "createdBy": "admin",
+      "correctAnswer": "water",
+      "explanation": "Plants need water.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "Plants need ____ to grow.",
+      "tags": [
+        "nature",
+        "plants"
+      ]
+    },
+    {
+      "id": "dailylife_fb_3",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000032,
+      "createdBy": "admin",
+      "correctAnswer": "soap",
+      "explanation": "We wash our hands with soap.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "We wash our hands with ____.",
+      "tags": [
+        "dailylife",
+        "hygiene"
+      ]
+    },
+    {
+      "id": "dailylife_mc_3",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000022,
+      "createdBy": "admin",
+      "options": [
+        "Table",
+        "Chair",
+        "Bed",
+        "Sofa"
+      ],
+      "correctAnswer": 2,
+      "explanation": "We sleep in a bed.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Where do you sleep?",
+      "tags": [
+        "dailylife",
+        "home"
+      ]
+    },
+    {
+      "id": "dailylife_fb_2",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000031,
+      "createdBy": "admin",
+      "correctAnswer": "bus",
+      "explanation": "We go to school by bus.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "We go to school by ____.",
+      "tags": [
+        "dailylife",
+        "transport"
+      ]
+    },
+    {
+      "id": null,
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "is_active": false,
+      "correct_answer": "Pineapple",
+      "options": [
+        "Orange",
+        "Banana",
+        "Pineapple",
+        "Kiwi"
+      ],
+      "created_at": 0,
+      "explanation": "",
+      "type": "multiple_choice",
+      "created_by": "admin",
+      "content": "What fruit is sweet and has a crown on top?",
+      "tags": [
+        "fruits"
+      ]
+    },
+    {
+      "id": "nature_mc_2",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000041,
+      "createdBy": "admin",
+      "options": [
+        "Spring",
+        "Summer",
+        "Autumn",
+        "Winter"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Winter is the coldest season.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Which season is the coldest?",
+      "tags": [
+        "nature",
+        "seasons"
+      ]
+    },
+    {
+      "id": null,
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "is_active": false,
+      "correct_answer": "nan",
+      "options": [
+        "tứ",
+        "mã",
+        "nan",
+        "truy"
+      ],
+      "created_at": 0,
+      "explanation": "xjdjxj",
+      "type": "multiple_choice",
+      "created_by": "admin",
+      "content": "djjnd",
+      "tags": [
+        "test"
+      ]
+    },
+    {
+      "id": "nature_mc_1",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000040,
+      "createdBy": "admin",
+      "options": [
+        "Green",
+        "Blue",
+        "Red",
+        "Yellow"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The sky is blue.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "What is the color of the sky on a clear day?",
+      "tags": [
+        "nature",
+        "sky"
+      ]
+    },
+    {
+      "id": "dailylife_fb_4",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000033,
+      "createdBy": "admin",
+      "correctAnswer": "rains",
+      "explanation": "We use an umbrella when it rains.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "We use an umbrella when it ____.",
+      "tags": [
+        "dailylife",
+        "weather"
+      ]
+    },
+    {
+      "id": "science_mc_1",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000000,
+      "createdBy": "admin",
+      "options": [
+        "Mars",
+        "Venus",
+        "Earth",
+        "Jupiter"
+      ],
+      "correctAnswer": 2,
+      "explanation": "We live on Earth.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "What planet do we live on?",
+      "tags": [
+        "science",
+        "planet"
+      ]
+    },
+    {
+      "id": "nature_fb_5",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000054,
+      "createdBy": "admin",
+      "correctAnswer": "white",
+      "explanation": "Snow is white.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "Snow is ____ in color.",
+      "tags": [
+        "nature",
+        "weather"
+      ]
+    },
+    {
+      "id": "nature_mc_1",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000040,
+      "createdBy": "admin",
+      "options": [
+        "Green",
+        "Blue",
+        "Red",
+        "Yellow"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The sky is blue.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "What is the color of the sky on a clear day?",
+      "tags": [
+        "nature",
+        "sky"
+      ]
+    },
+    {
+      "id": "science_fb_1",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000010,
+      "createdBy": "admin",
+      "correctAnswer": "star",
+      "explanation": "The sun is a star.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "The sun is a ____ (star/planet).",
+      "tags": [
+        "science",
+        "sun"
+      ]
+    },
+    {
+      "id": "dailylife_fb_2",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000031,
+      "createdBy": "admin",
+      "correctAnswer": "bus",
+      "explanation": "We go to school by bus.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "We go to school by ____.",
+      "tags": [
+        "dailylife",
+        "transport"
+      ]
+    },
+    {
+      "id": "dailylife_mc_4",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000023,
+      "createdBy": "admin",
+      "options": [
+        "Pen",
+        "Scissors",
+        "Ruler",
+        "Eraser"
+      ],
+      "correctAnswer": 1,
+      "explanation": "We use scissors to cut paper.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Which is used for cutting paper?",
+      "tags": [
+        "dailylife",
+        "tools"
+      ]
+    },
+    {
+      "id": "nature_fb_5",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000054,
+      "createdBy": "admin",
+      "correctAnswer": "white",
+      "explanation": "Snow is white.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "Snow is ____ in color.",
+      "tags": [
+        "nature",
+        "weather"
+      ]
+    },
+    {
+      "id": "dailylife_fb_3",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000032,
+      "createdBy": "admin",
+      "correctAnswer": "soap",
+      "explanation": "We wash our hands with soap.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "We wash our hands with ____.",
+      "tags": [
+        "dailylife",
+        "hygiene"
+      ]
+    },
+    {
+      "id": "nature_fb_3",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000052,
+      "createdBy": "admin",
+      "correctAnswer": "green",
+      "explanation": "Grass is green.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "The color of grass is ____. ",
+      "tags": [
+        "nature",
+        "plants"
+      ]
+    },
+    {
+      "id": "nature_fb_4",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000053,
+      "createdBy": "admin",
+      "correctAnswer": "sky",
+      "explanation": "Rain falls from the sky.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "Rain falls from the ____. ",
+      "tags": [
+        "nature",
+        "weather"
+      ]
+    },
+    {
+      "id": "dailylife_mc_5",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000024,
+      "createdBy": "admin",
+      "options": [
+        "Pencil",
+        "Plate",
+        "Cup",
+        "Spoon"
+      ],
+      "correctAnswer": 0,
+      "explanation": "We use a pencil to write.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "What do you use to write?",
+      "tags": [
+        "dailylife",
+        "tools"
+      ]
+    },
+    {
+      "id": "science_fb_4",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000013,
+      "createdBy": "admin",
+      "correctAnswer": "iron",
+      "explanation": "Magnets attract iron.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "A magnet attracts ____.",
+      "tags": [
+        "science",
+        "magnet"
+      ]
+    },
+    {
+      "id": null,
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "is_active": false,
+      "correct_answer": "Yellow",
+      "options": [
+        "Red",
+        "Blue",
+        "Yellow",
+        "Purple"
+      ],
+      "created_at": 0,
+      "explanation": "",
+      "type": "multiple_choice",
+      "created_by": "admin",
+      "content": "What color is a banana?",
+      "tags": [
+        "fruits"
+      ]
+    },
+    {
+      "id": "science_mc_4",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000003,
+      "createdBy": "admin",
+      "options": [
+        "Water",
+        "Ice",
+        "Steam",
+        "Fog"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Ice is a solid.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Which is a solid?",
+      "tags": [
+        "science",
+        "states"
+      ]
+    },
+    {
+      "id": "dailylife_mc_2",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000021,
+      "createdBy": "admin",
+      "options": [
+        "Hat",
+        "Shoes",
+        "Gloves",
+        "Scarf"
+      ],
+      "correctAnswer": 1,
+      "explanation": "We wear shoes on our feet.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "What do you wear on your feet?",
+      "tags": [
+        "dailylife",
+        "clothes"
+      ]
+    },
+    {
+      "id": null,
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "is_active": false,
+      "correct_answer": "banana",
+      "options": [],
+      "created_at": 0,
+      "explanation": "",
+      "type": "fill_blank",
+      "created_by": "admin",
+      "content": "A monkey likes to eat a________",
+      "tags": [
+        "fruits"
+      ]
+    },
+    {
+      "id": "nature_fb_5",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000054,
+      "createdBy": "admin",
+      "correctAnswer": "white",
+      "explanation": "Snow is white.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "Snow is ____ in color.",
+      "tags": [
+        "nature",
+        "weather"
+      ]
+    },
+    {
+      "id": null,
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "is_active": false,
+      "correct_answer": "Watermelon",
+      "options": [
+        "Pineapple",
+        "Orange",
+        "Watermelon",
+        "Mango"
+      ],
+      "created_at": 0,
+      "explanation": "",
+      "type": "multiple_choice",
+      "created_by": "admin",
+      "content": "What fruit is big, green outside, and red inside?",
+      "tags": [
+        "fruits"
+      ]
+    },
+    {
+      "id": "science_mc_2",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000001,
+      "createdBy": "admin",
+      "options": [
+        "Heart",
+        "Lungs",
+        "Stomach",
+        "Brain"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Lungs help us breathe.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Which organ helps us breathe?",
+      "tags": [
+        "science",
+        "body"
+      ]
+    },
+    {
+      "id": "nature_mc_2",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000041,
+      "createdBy": "admin",
+      "options": [
+        "Spring",
+        "Summer",
+        "Autumn",
+        "Winter"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Winter is the coldest season.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Which season is the coldest?",
+      "tags": [
+        "nature",
+        "seasons"
+      ]
+    },
+    {
+      "id": "science_mc_5",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000004,
+      "createdBy": "admin",
+      "options": [
+        "Cat",
+        "Dog",
+        "Chicken",
+        "Cow"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Chickens lay eggs.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Which animal lays eggs?",
+      "tags": [
+        "science",
+        "animals"
+      ]
+    },
+    {
+      "id": "science_mc_3",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000002,
+      "createdBy": "admin",
+      "options": [
+        "Sunlight",
+        "Moonlight",
+        "Salt",
+        "Sugar"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Plants need sunlight.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "What do plants need to make food?",
+      "tags": [
+        "science",
+        "plants"
+      ]
+    },
+    {
+      "id": "nature_fb_1",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000050,
+      "createdBy": "admin",
+      "correctAnswer": "east",
+      "explanation": "The sun rises in the east.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "The sun rises in the ____.",
+      "tags": [
+        "nature",
+        "sun"
+      ]
+    },
+    {
+      "id": "science_mc_2",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000001,
+      "createdBy": "admin",
+      "options": [
+        "Heart",
+        "Lungs",
+        "Stomach",
+        "Brain"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Lungs help us breathe.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Which organ helps us breathe?",
+      "tags": [
+        "science",
+        "body"
+      ]
+    },
+    {
+      "id": "nature_mc_3",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000042,
+      "createdBy": "admin",
+      "options": [
+        "Grass",
+        "Flower",
+        "Tree",
+        "Bush"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Trees are the tallest plants.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Which is the tallest plant?",
+      "tags": [
+        "nature",
+        "plants"
+      ]
+    },
+    {
+      "id": "science_mc_5",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000004,
+      "createdBy": "admin",
+      "options": [
+        "Cat",
+        "Dog",
+        "Chicken",
+        "Cow"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Chickens lay eggs.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Which animal lays eggs?",
+      "tags": [
+        "science",
+        "animals"
+      ]
+    },
+    {
+      "id": "science_fb_1",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000010,
+      "createdBy": "admin",
+      "correctAnswer": "star",
+      "explanation": "The sun is a star.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "The sun is a ____ (star/planet).",
+      "tags": [
+        "science",
+        "sun"
+      ]
+    },
+    {
+      "id": "dailylife_mc_5",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000024,
+      "createdBy": "admin",
+      "options": [
+        "Pencil",
+        "Plate",
+        "Cup",
+        "Spoon"
+      ],
+      "correctAnswer": 0,
+      "explanation": "We use a pencil to write.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "What do you use to write?",
+      "tags": [
+        "dailylife",
+        "tools"
+      ]
+    },
+    {
+      "id": "nature_mc_5",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000044,
+      "createdBy": "admin",
+      "options": [
+        "Moon",
+        "Star",
+        "Sun",
+        "Cloud"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The Sun gives us light.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Which object gives us light during the day?",
+      "tags": [
+        "nature",
+        "light"
+      ]
+    },
+    {
+      "id": null,
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "is_active": false,
+      "correct_answer": "Blueberry",
+      "options": [
+        "Watermelon",
+        "Blueberry",
+        "Peach",
+        "Apple"
+      ],
+      "created_at": 0,
+      "explanation": "",
+      "type": "multiple_choice",
+      "created_by": "admin",
+      "content": "Which fruit is small and blue?",
+      "tags": [
+        "fruits"
+      ]
+    },
+    {
+      "id": "dailylife_mc_2",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000021,
+      "createdBy": "admin",
+      "options": [
+        "Hat",
+        "Shoes",
+        "Gloves",
+        "Scarf"
+      ],
+      "correctAnswer": 1,
+      "explanation": "We wear shoes on our feet.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "What do you wear on your feet?",
+      "tags": [
+        "dailylife",
+        "clothes"
+      ]
+    },
+    {
+      "id": "science_mc_4",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000003,
+      "createdBy": "admin",
+      "options": [
+        "Water",
+        "Ice",
+        "Steam",
+        "Fog"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Ice is a solid.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Which is a solid?",
+      "tags": [
+        "science",
+        "states"
+      ]
+    },
+    {
+      "id": "nature_mc_3",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000042,
+      "createdBy": "admin",
+      "options": [
+        "Grass",
+        "Flower",
+        "Tree",
+        "Bush"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Trees are the tallest plants.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Which is the tallest plant?",
+      "tags": [
+        "nature",
+        "plants"
+      ]
+    },
+    {
+      "id": "dailylife_fb_4",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000033,
+      "createdBy": "admin",
+      "correctAnswer": "rains",
+      "explanation": "We use an umbrella when it rains.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "We use an umbrella when it ____.",
+      "tags": [
+        "dailylife",
+        "weather"
+      ]
+    },
+    {
+      "id": "dailylife_mc_3",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000022,
+      "createdBy": "admin",
+      "options": [
+        "Table",
+        "Chair",
+        "Bed",
+        "Sofa"
+      ],
+      "correctAnswer": 2,
+      "explanation": "We sleep in a bed.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Where do you sleep?",
+      "tags": [
+        "dailylife",
+        "home"
+      ]
+    },
+    {
+      "id": "science_mc_5",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000004,
+      "createdBy": "admin",
+      "options": [
+        "Cat",
+        "Dog",
+        "Chicken",
+        "Cow"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Chickens lay eggs.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Which animal lays eggs?",
+      "tags": [
+        "science",
+        "animals"
+      ]
+    },
+    {
+      "id": "dailylife_fb_1",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000030,
+      "createdBy": "admin",
+      "correctAnswer": "breakfast",
+      "explanation": "We eat breakfast in the morning.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "We eat ____ in the morning.",
+      "tags": [
+        "dailylife",
+        "meal"
+      ]
+    },
+    {
+      "id": null,
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "is_active": false,
+      "correct_answer": "Carrot",
+      "options": [
+        "Mango",
+        "Banana",
+        "Strawberry",
+        "Carrot"
+      ],
+      "created_at": 0,
+      "explanation": "",
+      "type": "multiple_choice",
+      "created_by": "admin",
+      "content": "Which one is NOT a fruit?",
+      "tags": [
+        "fruits"
+      ]
+    },
+    {
+      "id": "dailylife_mc_4",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000023,
+      "createdBy": "admin",
+      "options": [
+        "Pen",
+        "Scissors",
+        "Ruler",
+        "Eraser"
+      ],
+      "correctAnswer": 1,
+      "explanation": "We use scissors to cut paper.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Which is used for cutting paper?",
+      "tags": [
+        "dailylife",
+        "tools"
+      ]
+    },
+    {
+      "id": "nature_fb_1",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000050,
+      "createdBy": "admin",
+      "correctAnswer": "east",
+      "explanation": "The sun rises in the east.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "The sun rises in the ____.",
+      "tags": [
+        "nature",
+        "sun"
+      ]
+    },
+    {
+      "id": "nature_mc_5",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000044,
+      "createdBy": "admin",
+      "options": [
+        "Moon",
+        "Star",
+        "Sun",
+        "Cloud"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The Sun gives us light.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Which object gives us light during the day?",
+      "tags": [
+        "nature",
+        "light"
+      ]
+    },
+    {
+      "id": "nature_mc_1",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000040,
+      "createdBy": "admin",
+      "options": [
+        "Green",
+        "Blue",
+        "Red",
+        "Yellow"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The sky is blue.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "What is the color of the sky on a clear day?",
+      "tags": [
+        "nature",
+        "sky"
+      ]
+    },
+    {
+      "id": "dailylife_fb_1",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000030,
+      "createdBy": "admin",
+      "correctAnswer": "breakfast",
+      "explanation": "We eat breakfast in the morning.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "We eat ____ in the morning.",
+      "tags": [
+        "dailylife",
+        "meal"
+      ]
+    },
+    {
+      "id": "dailylife_mc_4",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000023,
+      "createdBy": "admin",
+      "options": [
+        "Pen",
+        "Scissors",
+        "Ruler",
+        "Eraser"
+      ],
+      "correctAnswer": 1,
+      "explanation": "We use scissors to cut paper.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Which is used for cutting paper?",
+      "tags": [
+        "dailylife",
+        "tools"
+      ]
+    },
+    {
+      "id": "science_fb_1",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000010,
+      "createdBy": "admin",
+      "correctAnswer": "star",
+      "explanation": "The sun is a star.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "The sun is a ____ (star/planet).",
+      "tags": [
+        "science",
+        "sun"
+      ]
+    },
+    {
+      "id": "dailylife_fb_5",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000034,
+      "createdBy": "admin",
+      "correctAnswer": "fridge",
+      "explanation": "We keep food in the fridge.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "We keep food cold in the ____.",
+      "tags": [
+        "dailylife",
+        "home"
+      ]
+    },
+    {
+      "id": "nature_fb_2",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000051,
+      "createdBy": "admin",
+      "correctAnswer": "water",
+      "explanation": "Plants need water.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "Plants need ____ to grow.",
+      "tags": [
+        "nature",
+        "plants"
+      ]
+    },
+    {
+      "id": "animals_fb_1",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [],
+      "type": "fill_blank",
+      "isActive": true,
+      "tags": [
+        "animals",
+        "sounds"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd",
+      "difficulty": "easy",
+      "correctAnswer": "cat",
+      "explanation": "A cat says 'meow'.",
+      "content": "A _____ says 'meow'."
+    },
+    {
+      "id": "animals_fb_2",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [],
+      "type": "fill_blank",
+      "correctAnswer": "dog",
+      "explanation": "A dog says 'woof'.",
+      "isActive": true,
+      "content": "A _____ says 'woof'.",
+      "tags": [
+        "animals",
+        "sounds"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "animals_fb_3",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [],
+      "type": "fill_blank",
+      "correctAnswer": "bird",
+      "explanation": "A bird can fly.",
+      "isActive": true,
+      "content": "A _____ can fly.",
+      "tags": [
+        "animals",
+        "abilities"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "animals_fb_4",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [],
+      "type": "fill_blank",
+      "correctAnswer": "fish",
+      "explanation": "A fish lives in water.",
+      "isActive": true,
+      "content": "A _____ lives in water.",
+      "tags": [
+        "animals",
+        "habitat"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "animals_fb_5",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [],
+      "type": "fill_blank",
+      "correctAnswer": "dog",
+      "explanation": "A dog has four legs.",
+      "isActive": true,
+      "content": "A _____ has four legs.",
+      "tags": [
+        "animals",
+        "body"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "animals_mc_1",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [
+        "Cat",
+        "Dog",
+        "Bird",
+        "Fish"
+      ],
+      "type": "multiple_choice",
+      "correctAnswer": "Cat",
+      "explanation": "Cats say 'meow'.",
+      "isActive": true,
+      "content": "What animal says 'meow'?",
+      "tags": [
+        "animals",
+        "sounds"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "animals_mc_2",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [
+        "Dog",
+        "Cat",
+        "Bird",
+        "Fish"
+      ],
+      "type": "multiple_choice",
+      "correctAnswer": "Dog",
+      "explanation": "Dogs say 'woof'.",
+      "isActive": true,
+      "content": "What animal says 'woof'?",
+      "tags": [
+        "animals",
+        "sounds"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "animals_mc_3",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [
+        "Bird",
+        "Cat",
+        "Dog",
+        "Fish"
+      ],
+      "type": "multiple_choice",
+      "correctAnswer": "Bird",
+      "explanation": "Birds can fly.",
+      "isActive": true,
+      "content": "What animal can fly?",
+      "tags": [
+        "animals",
+        "abilities"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "animals_mc_4",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [
+        "Fish",
+        "Cat",
+        "Dog",
+        "Bird"
+      ],
+      "type": "multiple_choice",
+      "correctAnswer": "Fish",
+      "explanation": "Fish live in water.",
+      "isActive": true,
+      "content": "What animal lives in water?",
+      "tags": [
+        "animals",
+        "habitat"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "animals_mc_5",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [
+        "Dog",
+        "Bird",
+        "Fish",
+        "Snake"
+      ],
+      "type": "multiple_choice",
+      "correctAnswer": "Dog",
+      "explanation": "Dogs have four legs.",
+      "isActive": true,
+      "content": "What animal has four legs?",
+      "tags": [
+        "animals",
+        "body"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "dailylife_fb_1",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000030,
+      "createdBy": "admin",
+      "correctAnswer": "breakfast",
+      "explanation": "We eat breakfast in the morning.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "We eat ____ in the morning.",
+      "tags": [
+        "dailylife",
+        "meal"
+      ]
+    },
+    {
+      "id": "science_fb_5",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000014,
+      "createdBy": "admin",
+      "correctAnswer": "photosynthesis",
+      "explanation": "Plants make food by photosynthesis.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "The process by which plants make food is called ____.",
+      "tags": [
+        "science",
+        "plants"
+      ]
+    },
+    {
+      "id": "nature_mc_2",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000041,
+      "createdBy": "admin",
+      "options": [
+        "Spring",
+        "Summer",
+        "Autumn",
+        "Winter"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Winter is the coldest season.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Which season is the coldest?",
+      "tags": [
+        "nature",
+        "seasons"
+      ]
+    },
+    {
+      "id": "dailylife_fb_2",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000031,
+      "createdBy": "admin",
+      "correctAnswer": "bus",
+      "explanation": "We go to school by bus.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "We go to school by ____.",
+      "tags": [
+        "dailylife",
+        "transport"
+      ]
+    },
+    {
+      "id": "colors_fb_1",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [],
+      "type": "fill_blank",
+      "correctAnswer": "blue",
+      "explanation": "The sky is blue on a clear day.",
+      "isActive": true,
+      "content": "The sky is _____ on a clear day.",
+      "tags": [
+        "colors",
+        "nature"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "colors_fb_2",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [],
+      "type": "fill_blank",
+      "correctAnswer": "green",
+      "explanation": "Grass is green.",
+      "isActive": true,
+      "content": "Grass is _____.",
+      "tags": [
+        "colors",
+        "nature"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "colors_fb_3",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [],
+      "type": "fill_blank",
+      "correctAnswer": "yellow",
+      "explanation": "The sun is yellow.",
+      "isActive": true,
+      "content": "The sun is _____.",
+      "tags": [
+        "colors",
+        "nature"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "colors_fb_4",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [],
+      "type": "fill_blank",
+      "correctAnswer": "red",
+      "explanation": "Blood is red.",
+      "isActive": true,
+      "content": "Blood is _____.",
+      "tags": [
+        "colors",
+        "body"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "colors_fb_5",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [],
+      "type": "fill_blank",
+      "correctAnswer": "white",
+      "explanation": "Snow is white.",
+      "isActive": true,
+      "content": "Snow is _____.",
+      "tags": [
+        "colors",
+        "weather"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "colors_mc_1",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [
+        "Blue",
+        "Red",
+        "Green",
+        "Yellow"
+      ],
+      "type": "multiple_choice",
+      "correctAnswer": "Blue",
+      "explanation": "The sky is blue on a clear day.",
+      "isActive": true,
+      "content": "What color is the sky on a clear day?",
+      "tags": [
+        "colors",
+        "nature"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "colors_mc_2",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [
+        "Green",
+        "Blue",
+        "Red",
+        "Yellow"
+      ],
+      "type": "multiple_choice",
+      "correctAnswer": "Green",
+      "explanation": "Grass is green.",
+      "isActive": true,
+      "content": "What color is grass?",
+      "tags": [
+        "colors",
+        "nature"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "colors_mc_3",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [
+        "Yellow",
+        "Blue",
+        "Green",
+        "Red"
+      ],
+      "type": "multiple_choice",
+      "correctAnswer": "Yellow",
+      "explanation": "The sun is yellow.",
+      "isActive": true,
+      "content": "What color is the sun?",
+      "tags": [
+        "colors",
+        "nature"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "colors_mc_4",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [
+        "Red",
+        "Blue",
+        "Green",
+        "Yellow"
+      ],
+      "type": "multiple_choice",
+      "correctAnswer": "Red",
+      "explanation": "Blood is red.",
+      "isActive": true,
+      "content": "What color is blood?",
+      "tags": [
+        "colors",
+        "body"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "colors_mc_5",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [
+        "White",
+        "Blue",
+        "Green",
+        "Yellow"
+      ],
+      "type": "multiple_choice",
+      "correctAnswer": "White",
+      "explanation": "Snow is white.",
+      "isActive": true,
+      "content": "What color is snow?",
+      "tags": [
+        "colors",
+        "weather"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": null,
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "is_active": false,
+      "correct_answer": "watermelon",
+      "options": [],
+      "created_at": 0,
+      "explanation": "",
+      "type": "fill_blank",
+      "created_by": "admin",
+      "content": "The ________ is big, green outside, and red inside.",
+      "tags": [
+        "fruits"
+      ]
+    },
+    {
+      "id": "nature_mc_4",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000043,
+      "createdBy": "admin",
+      "options": [
+        "Mountain",
+        "River",
+        "Lake",
+        "Rain"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Mountain is not a direct source of water.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Which is not a source of water?",
+      "tags": [
+        "nature",
+        "water"
+      ]
+    },
+    {
+      "id": "nature_mc_4",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000043,
+      "createdBy": "admin",
+      "options": [
+        "Mountain",
+        "River",
+        "Lake",
+        "Rain"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Mountain is not a direct source of water.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Which is not a source of water?",
+      "tags": [
+        "nature",
+        "water"
+      ]
+    },
+    {
+      "id": null,
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "is_active": false,
+      "correct_answer": "test",
+      "options": [],
+      "created_at": 0,
+      "explanation": "abjcbcc",
+      "type": "fill_blank",
+      "created_by": "admin",
+      "content": "test aaaa",
+      "tags": [
+        "Test"
+      ],
+      "correctAnswer": "test"
+    },
+    {
+      "id": "food_fb_1",
+      "difficulty": "easy",
+      "createdAt": 1752924619389,
+      "createdBy": "admin",
+      "options": [],
+      "type": "fill_blank",
+      "correctAnswer": "bread",
+      "explanation": "You eat bread for breakfast.",
+      "isActive": true,
+      "content": "You eat _____ for breakfast.",
+      "tags": [
+        "food",
+        "meals"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "food_fb_2",
+      "difficulty": "easy",
+      "createdAt": 1752924619389,
+      "createdBy": "admin",
+      "options": [],
+      "type": "fill_blank",
+      "correctAnswer": "banana",
+      "explanation": "A banana is yellow.",
+      "isActive": true,
+      "content": "A _____ is yellow.",
+      "tags": [
+        "food",
+        "fruits"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "food_fb_3",
+      "difficulty": "easy",
+      "createdAt": 1752924619389,
+      "createdBy": "admin",
+      "options": [],
+      "type": "fill_blank",
+      "correctAnswer": "water",
+      "explanation": "You drink water when you are thirsty.",
+      "isActive": true,
+      "content": "You drink _____ when you are thirsty.",
+      "tags": [
+        "food",
+        "drinks"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "food_fb_4",
+      "difficulty": "easy",
+      "createdAt": 1752924619389,
+      "createdBy": "admin",
+      "options": [],
+      "type": "fill_blank",
+      "correctAnswer": "apple",
+      "explanation": "An apple is red.",
+      "isActive": true,
+      "content": "An _____ is red.",
+      "tags": [
+        "food",
+        "fruits"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "food_fb_5",
+      "difficulty": "easy",
+      "createdAt": 1752924619389,
+      "createdBy": "admin",
+      "options": [],
+      "type": "fill_blank",
+      "correctAnswer": "soup",
+      "explanation": "You eat soup with a spoon.",
+      "isActive": true,
+      "content": "You eat _____ with a spoon.",
+      "tags": [
+        "food",
+        "utensils"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "food_mc_1",
+      "difficulty": "easy",
+      "createdAt": 1752924619389,
+      "createdBy": "admin",
+      "options": [
+        "Bread",
+        "Water",
+        "Book",
+        "Car"
+      ],
+      "type": "multiple_choice",
+      "correctAnswer": "Bread",
+      "explanation": "You eat bread for breakfast.",
+      "isActive": true,
+      "content": "What do you eat for breakfast?",
+      "tags": [
+        "food",
+        "meals"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "food_mc_2",
+      "difficulty": "easy",
+      "createdAt": 1752924619389,
+      "createdBy": "admin",
+      "options": [
+        "Banana",
+        "Apple",
+        "Orange",
+        "Grape"
+      ],
+      "type": "multiple_choice",
+      "correctAnswer": "Banana",
+      "explanation": "A banana is yellow.",
+      "isActive": true,
+      "content": "What fruit is yellow?",
+      "tags": [
+        "food",
+        "fruits"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "food_mc_3",
+      "difficulty": "easy",
+      "createdAt": 1752924619389,
+      "createdBy": "admin",
+      "options": [
+        "Water",
+        "Book",
+        "Car",
+        "House"
+      ],
+      "type": "multiple_choice",
+      "correctAnswer": "Water",
+      "explanation": "You drink water when you are thirsty.",
+      "isActive": true,
+      "content": "What do you drink when you are thirsty?",
+      "tags": [
+        "food",
+        "drinks"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "food_mc_4",
+      "difficulty": "easy",
+      "createdAt": 1752924619389,
+      "createdBy": "admin",
+      "options": [
+        "Apple",
+        "Banana",
+        "Orange",
+        "Grape"
+      ],
+      "type": "multiple_choice",
+      "correctAnswer": "Apple",
+      "explanation": "An apple is red.",
+      "isActive": true,
+      "content": "What fruit is red?",
+      "tags": [
+        "food",
+        "fruits"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "food_mc_5",
+      "difficulty": "easy",
+      "createdAt": 1752924619389,
+      "createdBy": "admin",
+      "options": [
+        "Soup",
+        "Book",
+        "Car",
+        "House"
+      ],
+      "type": "multiple_choice",
+      "correctAnswer": "Soup",
+      "explanation": "You eat soup with a spoon.",
+      "isActive": true,
+      "content": "What do you eat with a spoon?",
+      "tags": [
+        "food",
+        "utensils"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "dailylife_fb_5",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000034,
+      "createdBy": "admin",
+      "correctAnswer": "fridge",
+      "explanation": "We keep food in the fridge.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "We keep food cold in the ____.",
+      "tags": [
+        "dailylife",
+        "home"
+      ]
+    },
+    {
+      "id": null,
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "is_active": false,
+      "correct_answer": "a",
+      "options": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "created_at": 0,
+      "explanation": "",
+      "type": "multiple_choice",
+      "created_by": "admin",
+      "content": "test",
+      "tags": [
+        "fruits"
+      ]
+    },
+    {
+      "id": "dailylife_mc_5",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000024,
+      "createdBy": "admin",
+      "options": [
+        "Pencil",
+        "Plate",
+        "Cup",
+        "Spoon"
+      ],
+      "correctAnswer": 0,
+      "explanation": "We use a pencil to write.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "What do you use to write?",
+      "tags": [
+        "dailylife",
+        "tools"
+      ]
+    },
+    {
+      "id": "nature_fb_3",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000052,
+      "createdBy": "admin",
+      "correctAnswer": "green",
+      "explanation": "Grass is green.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "The color of grass is ____. ",
+      "tags": [
+        "nature",
+        "plants"
+      ]
+    },
+    {
+      "id": "science_fb_3",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000012,
+      "createdBy": "admin",
+      "correctAnswer": "100",
+      "explanation": "Water boils at 100°C.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "Water boils at ____ degrees Celsius.",
+      "tags": [
+        "science",
+        "water"
+      ]
+    },
+    {
+      "id": "nature_mc_5",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000044,
+      "createdBy": "admin",
+      "options": [
+        "Moon",
+        "Star",
+        "Sun",
+        "Cloud"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The Sun gives us light.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Which object gives us light during the day?",
+      "tags": [
+        "nature",
+        "light"
+      ]
+    },
+    {
+      "id": "science_mc_3",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000002,
+      "createdBy": "admin",
+      "options": [
+        "Sunlight",
+        "Moonlight",
+        "Salt",
+        "Sugar"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Plants need sunlight.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "What do plants need to make food?",
+      "tags": [
+        "science",
+        "plants"
+      ]
+    },
+    {
+      "id": null,
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "is_active": false,
+      "correct_answer": "apple",
+      "options": [],
+      "created_at": 0,
+      "explanation": "",
+      "type": "fill_blank",
+      "created_by": "admin",
+      "content": "An ________ is red, round, and sweet.",
+      "tags": [
+        "fruits"
+      ]
+    },
+    {
+      "id": "science_fb_3",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000012,
+      "createdBy": "admin",
+      "correctAnswer": "100",
+      "explanation": "Water boils at 100°C.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "Water boils at ____ degrees Celsius.",
+      "tags": [
+        "science",
+        "water"
+      ]
+    },
+    {
+      "id": "nature_mc_4",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000043,
+      "createdBy": "admin",
+      "options": [
+        "Mountain",
+        "River",
+        "Lake",
+        "Rain"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Mountain is not a direct source of water.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Which is not a source of water?",
+      "tags": [
+        "nature",
+        "water"
+      ]
+    },
+    {
+      "id": "numbers_fb_1",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [],
+      "type": "fill_blank",
+      "correctAnswer": "five",
+      "explanation": "You have five fingers on one hand.",
+      "isActive": true,
+      "content": "You have _____ fingers on one hand.",
+      "tags": [
+        "numbers",
+        "body"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "numbers_fb_2",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [],
+      "type": "fill_blank",
+      "correctAnswer": "seven",
+      "explanation": "There are seven days in a week.",
+      "isActive": true,
+      "content": "There are _____ days in a week.",
+      "tags": [
+        "numbers",
+        "time"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "numbers_fb_3",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [],
+      "type": "fill_blank",
+      "correctAnswer": "two",
+      "explanation": "You have two eyes.",
+      "isActive": true,
+      "content": "You have _____ eyes.",
+      "tags": [
+        "numbers",
+        "body"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "numbers_fb_4",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [],
+      "type": "fill_blank",
+      "correctAnswer": "four",
+      "explanation": "A cat has four legs.",
+      "isActive": true,
+      "content": "A cat has _____ legs.",
+      "tags": [
+        "numbers",
+        "animals"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "numbers_fb_5",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [],
+      "type": "fill_blank",
+      "correctAnswer": "twelve",
+      "explanation": "There are twelve months in a year.",
+      "isActive": true,
+      "content": "There are _____ months in a year.",
+      "tags": [
+        "numbers",
+        "time"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "numbers_mc_1",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [
+        "5",
+        "4",
+        "6",
+        "3"
+      ],
+      "type": "multiple_choice",
+      "correctAnswer": "5",
+      "explanation": "You have 5 fingers on one hand.",
+      "isActive": true,
+      "content": "How many fingers do you have on one hand?",
+      "tags": [
+        "numbers",
+        "body"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "numbers_mc_2",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [
+        "7",
+        "6",
+        "8",
+        "5"
+      ],
+      "type": "multiple_choice",
+      "correctAnswer": "7",
+      "explanation": "There are 7 days in a week.",
+      "isActive": true,
+      "content": "How many days are in a week?",
+      "tags": [
+        "numbers",
+        "time"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "numbers_mc_3",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [
+        "2",
+        "1",
+        "3",
+        "4"
+      ],
+      "type": "multiple_choice",
+      "correctAnswer": "2",
+      "explanation": "You have 2 eyes.",
+      "isActive": true,
+      "content": "How many eyes do you have?",
+      "tags": [
+        "numbers",
+        "body"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "numbers_mc_4",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [
+        "4",
+        "2",
+        "6",
+        "3"
+      ],
+      "type": "multiple_choice",
+      "correctAnswer": "4",
+      "explanation": "A cat has 4 legs.",
+      "isActive": true,
+      "content": "How many legs does a cat have?",
+      "tags": [
+        "numbers",
+        "animals"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "numbers_mc_5",
+      "difficulty": "easy",
+      "createdAt": 1752924619388,
+      "createdBy": "admin",
+      "options": [
+        "12",
+        "10",
+        "11",
+        "13"
+      ],
+      "type": "multiple_choice",
+      "correctAnswer": "12",
+      "explanation": "There are 12 months in a year.",
+      "isActive": true,
+      "content": "How many months are in a year?",
+      "tags": [
+        "numbers",
+        "time"
+      ],
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "dailylife_mc_1",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000020,
+      "createdBy": "admin",
+      "options": [
+        "Spoon",
+        "Toothbrush",
+        "Comb",
+        "Fork"
+      ],
+      "correctAnswer": 1,
+      "explanation": "We use a toothbrush.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "What do you use to brush your teeth?",
+      "tags": [
+        "dailylife",
+        "hygiene"
+      ]
+    },
+    {
+      "id": "science_fb_2",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000011,
+      "createdBy": "admin",
+      "correctAnswer": "eyes",
+      "explanation": "We see with eyes.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "We see with our ____.",
+      "tags": [
+        "science",
+        "body"
+      ]
+    },
+    {
+      "id": "nature_mc_3",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000042,
+      "createdBy": "admin",
+      "options": [
+        "Grass",
+        "Flower",
+        "Tree",
+        "Bush"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Trees are the tallest plants.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Which is the tallest plant?",
+      "tags": [
+        "nature",
+        "plants"
+      ]
+    },
+    {
+      "id": "science_mc_2",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000001,
+      "createdBy": "admin",
+      "options": [
+        "Heart",
+        "Lungs",
+        "Stomach",
+        "Brain"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Lungs help us breathe.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Which organ helps us breathe?",
+      "tags": [
+        "science",
+        "body"
+      ]
+    },
+    {
+      "id": "dailylife_fb_5",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000034,
+      "createdBy": "admin",
+      "correctAnswer": "fridge",
+      "explanation": "We keep food in the fridge.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "We keep food cold in the ____.",
+      "tags": [
+        "dailylife",
+        "home"
+      ]
+    },
+    {
+      "id": "science_mc_1",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000000,
+      "createdBy": "admin",
+      "options": [
+        "Mars",
+        "Venus",
+        "Earth",
+        "Jupiter"
+      ],
+      "correctAnswer": 2,
+      "explanation": "We live on Earth.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "What planet do we live on?",
+      "tags": [
+        "science",
+        "planet"
+      ]
+    },
+    {
+      "id": "nature_fb_3",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000052,
+      "createdBy": "admin",
+      "correctAnswer": "green",
+      "explanation": "Grass is green.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "The color of grass is ____. ",
+      "tags": [
+        "nature",
+        "plants"
+      ]
+    },
+    {
+      "id": "science_mc_3",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000002,
+      "createdBy": "admin",
+      "options": [
+        "Sunlight",
+        "Moonlight",
+        "Salt",
+        "Sugar"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Plants need sunlight.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "What do plants need to make food?",
+      "tags": [
+        "science",
+        "plants"
+      ]
+    },
+    {
+      "id": "science_mc_1",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000000,
+      "createdBy": "admin",
+      "options": [
+        "Mars",
+        "Venus",
+        "Earth",
+        "Jupiter"
+      ],
+      "correctAnswer": 2,
+      "explanation": "We live on Earth.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "What planet do we live on?",
+      "tags": [
+        "science",
+        "planet"
+      ]
+    },
+    {
+      "id": "dailylife_mc_3",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000022,
+      "createdBy": "admin",
+      "options": [
+        "Table",
+        "Chair",
+        "Bed",
+        "Sofa"
+      ],
+      "correctAnswer": 2,
+      "explanation": "We sleep in a bed.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "Where do you sleep?",
+      "tags": [
+        "dailylife",
+        "home"
+      ]
+    },
+    {
+      "id": "nature_fb_2",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000051,
+      "createdBy": "admin",
+      "correctAnswer": "water",
+      "explanation": "Plants need water.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "Plants need ____ to grow.",
+      "tags": [
+        "nature",
+        "plants"
+      ]
+    },
+    {
+      "id": "nature_fb_4",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000053,
+      "createdBy": "admin",
+      "correctAnswer": "sky",
+      "explanation": "Rain falls from the sky.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "Rain falls from the ____. ",
+      "tags": [
+        "nature",
+        "weather"
+      ]
+    },
+    {
+      "id": "science_fb_2",
+      "difficulty": "medium",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000011,
+      "createdBy": "admin",
+      "correctAnswer": "eyes",
+      "explanation": "We see with eyes.",
+      "isActive": true,
+      "type": "fill_blank",
+      "content": "We see with our ____.",
+      "tags": [
+        "science",
+        "body"
+      ]
+    },
+    {
+      "id": null,
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "is_active": false,
+      "correct_answer": "lemon",
+      "options": [],
+      "created_at": 0,
+      "explanation": "",
+      "type": "fill_blank",
+      "created_by": "admin",
+      "content": "A ________ is yellow and sour.",
+      "tags": [
+        "fruits"
+      ]
+    },
+    {
+      "id": "dailylife_mc_1",
+      "difficulty": "easy",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "createdAt": 1759290000020,
+      "createdBy": "admin",
+      "options": [
+        "Spoon",
+        "Toothbrush",
+        "Comb",
+        "Fork"
+      ],
+      "correctAnswer": 1,
+      "explanation": "We use a toothbrush.",
+      "isActive": true,
+      "type": "multiple_choice",
+      "content": "What do you use to brush your teeth?",
+      "tags": [
+        "dailylife",
+        "hygiene"
+      ]
+    }
+  ],
+  "tests": [
+    {
+      "id": "E6WLEixAATSY8Wr3rv4s",
+      "duration": 10,
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "questions": [
+        {
+          "question_text": "What fruit is orange and has the same name as its color?",
+          "correct_answer": "Orange",
+          "options": [
+            "Apple",
+            "Banana",
+            "Pear",
+            "Orange"
+          ],
+          "id": "68nYfaqhcfQqlASAvNlD",
+          "type": "multiple_choice"
+        },
+        {
+          "question_text": "What fruit is big, green outside, and red inside?",
+          "correct_answer": "Watermelon",
+          "options": [
+            "Pineapple",
+            "Orange",
+            "Watermelon",
+            "Mango"
+          ],
+          "id": "N9aqdLGPTtygPwyLDRZ5",
+          "type": "multiple_choice"
+        },
+        {
+          "question_text": "Which one is NOT a fruit?",
+          "correct_answer": "Carrot",
+          "options": [
+            "Mango",
+            "Banana",
+            "Strawberry",
+            "Carrot"
+          ],
+          "id": "UL8x3mrtukXmVhhy8JOV",
+          "type": "multiple_choice"
+        },
+        {
+          "question_text": "What color is a banana?",
+          "correct_answer": "Yellow",
+          "options": [
+            "Red",
+            "Blue",
+            "Yellow",
+            "Purple"
+          ],
+          "id": "JTlQ1O2Kes9wzuHdi6Vq",
+          "type": "multiple_choice"
+        },
+        {
+          "question_text": "Which fruit is small and blue?",
+          "correct_answer": "Blueberry",
+          "options": [
+            "Watermelon",
+            "Blueberry",
+            "Peach",
+            "Apple"
+          ],
+          "id": "QyM9ufX15fA1TKWQDKP4",
+          "type": "multiple_choice"
+        },
+        {
+          "question_text": "I eat ________ for breakfast. They are small and purple or green.",
+          "correct_answer": "grapes",
+          "id": "1U8rdoHMndIH5KYVoijb",
+          "type": "fill_blank"
+        },
+        {
+          "question_text": "A monkey likes to eat a________",
+          "correct_answer": "banana",
+          "id": "KEI7iqs0fopNARQxIcWd",
+          "type": "fill_blank"
+        },
+        {
+          "question_text": "The ________ is big, green outside, and red inside.",
+          "correct_answer": "watermelon",
+          "id": "daePZtCancWiQBSwEpRe",
+          "type": "fill_blank"
+        },
+        {
+          "question_text": "An ________ is red, round, and sweet.",
+          "correct_answer": "apple",
+          "id": "luNT57DDpf0ugLdML4sQ",
+          "type": "fill_blank"
+        },
+        {
+          "question_text": "A ________ is yellow and sour.",
+          "correct_answer": "lemon",
+          "id": "yy2IAOU47A21pwKDDpRX",
+          "type": "fill_blank"
+        }
+      ],
+      "title": "Fruits test",
+      "maxScore": 10
+    },
+    {
+      "id": "USE1e2zpqCEewxEYfChR",
+      "duration": 10,
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "questions": [
+        {
+          "question_text": "Rain falls from the ____. ",
+          "correct_answer": "sky",
+          "id": "0TCs9iOWgKfnPSPZ6rW2",
+          "type": "fill_blank"
+        },
+        {
+          "question_text": "What do you use to brush your teeth?",
+          "correct_answer": "Toothbrush",
+          "options": [
+            "Spoon",
+            "Toothbrush",
+            "Comb",
+            "Fork"
+          ],
+          "id": "18VW5f6F3q0ep4ESZxmw",
+          "type": "multiple_choice"
+        },
+        {
+          "question_text": "The process by which plants make food is called ____.",
+          "correct_answer": "photosynthesis",
+          "id": "0pTT0AxW9h0iQNeQbqSM",
+          "type": "fill_blank"
+        },
+        {
+          "question_text": "The process by which plants make food is called ____.",
+          "correct_answer": "photosynthesis",
+          "id": "1EQggFrrkBfYspS1qq6g",
+          "type": "fill_blank"
+        }
+      ],
+      "title": "Test Test",
+      "maxScore": 10
+    },
+    {
+      "id": "test1",
+      "duration": 10,
+      "course_id": "LABTsID1zvPRsVjPjhLd",
+      "questions": [
+        {
+          "question_text": "A _____ is yellow.",
+          "correct_answer": "banana",
+          "type": "fill_blank"
+        },
+        {
+          "question_text": "What color is grass?",
+          "correct_answer": "Green",
+          "options": [
+            "Green",
+            "Blue",
+            "Red",
+            "Yellow"
+          ],
+          "type": "multiple_choice"
+        },
+        {
+          "question_text": "What color is the sun?",
+          "correct_answer": "Yellow",
+          "options": [
+            "Yellow",
+            "Blue",
+            "Green",
+            "Red"
+          ],
+          "type": "multiple_choice"
+        },
+        {
+          "question_text": "What color is snow?",
+          "correct_answer": "White",
+          "options": [
+            "White",
+            "Blue",
+            "Green",
+            "Yellow"
+          ],
+          "type": "multiple_choice"
+        },
+        {
+          "question_text": "An _____ is red.",
+          "correct_answer": "apple",
+          "type": "fill_blank"
+        }
+      ],
+      "title": "Test về màu sắc",
+      "maxScore": 10
+    },
+    {
+      "id": "test2",
+      "duration": 10,
+      "course_id": "LABTsID1zvPRsVjPjhLd",
+      "questions": [
+        {
+          "question_text": "You have _____ fingers on one hand.",
+          "correct_answer": "five",
+          "id": "numbers_fb_1",
+          "type": "fill_blank"
+        },
+        {
+          "question_text": "There are _____ days in a week.",
+          "correct_answer": "seven",
+          "id": "numbers_fb_2",
+          "type": "fill_blank"
+        },
+        {
+          "question_text": "You have _____ eyes.",
+          "correct_answer": "two",
+          "id": "numbers_fb_3",
+          "type": "fill_blank"
+        },
+        {
+          "question_text": "A cat has _____ legs.",
+          "correct_answer": "four",
+          "id": "numbers_fb_4",
+          "type": "fill_blank"
+        },
+        {
+          "question_text": "There are _____ months in a year.",
+          "correct_answer": "twelve",
+          "id": "numbers_fb_5",
+          "type": "fill_blank"
+        },
+        {
+          "question_text": "How many fingers do you have on one hand?",
+          "correct_answer": "5",
+          "options": [
+            "5",
+            "4",
+            "6",
+            "3"
+          ],
+          "id": "numbers_mc_1",
+          "type": "multiple_choice"
+        },
+        {
+          "question_text": "How many days are in a week?",
+          "correct_answer": "7",
+          "options": [
+            "7",
+            "6",
+            "8",
+            "5"
+          ],
+          "id": "numbers_mc_2",
+          "type": "multiple_choice"
+        },
+        {
+          "question_text": "How many eyes do you have?",
+          "correct_answer": "2",
+          "options": [
+            "2",
+            "1",
+            "3",
+            "4"
+          ],
+          "id": "numbers_mc_3",
+          "type": "multiple_choice"
+        },
+        {
+          "question_text": "How many legs does a cat have?",
+          "correct_answer": "4",
+          "options": [
+            "4",
+            "2",
+            "6",
+            "3"
+          ],
+          "id": "numbers_mc_4",
+          "type": "multiple_choice"
+        },
+        {
+          "question_text": "How many months are in a year?",
+          "correct_answer": "12",
+          "options": [
+            "12",
+            "10",
+            "11",
+            "13"
+          ],
+          "id": "numbers_mc_5",
+          "type": "multiple_choice"
+        }
+      ],
+      "title": "Test về số đếm",
+      "maxScore": 10
+    },
+    {
+      "id": "test3",
+      "duration": 10,
+      "course_id": "LABTsID1zvPRsVjPjhLd",
+      "questions": [
+        {
+          "question_text": "A _____ says 'meow'.",
+          "correct_answer": "cat",
+          "id": "animals_fb_1",
+          "type": "fill_blank"
+        },
+        {
+          "question_text": "A _____ says 'woof'.",
+          "correct_answer": "dog",
+          "id": "animals_fb_2",
+          "type": "fill_blank"
+        },
+        {
+          "question_text": "A _____ can fly.",
+          "correct_answer": "bird",
+          "id": "animals_fb_3",
+          "type": "fill_blank"
+        },
+        {
+          "question_text": "A _____ lives in water.",
+          "correct_answer": "fish",
+          "id": "animals_fb_4",
+          "type": "fill_blank"
+        },
+        {
+          "question_text": "A _____ has four legs.",
+          "correct_answer": "dog",
+          "id": "animals_fb_5",
+          "type": "fill_blank"
+        },
+        {
+          "question_text": "What animal says 'meow'?",
+          "correct_answer": "Cat",
+          "options": [
+            "Cat",
+            "Dog",
+            "Bird",
+            "Fish"
+          ],
+          "id": "animals_mc_1",
+          "type": "multiple_choice"
+        },
+        {
+          "question_text": "What animal says 'woof'?",
+          "correct_answer": "Dog",
+          "options": [
+            "Dog",
+            "Cat",
+            "Bird",
+            "Fish"
+          ],
+          "id": "animals_mc_2",
+          "type": "multiple_choice"
+        },
+        {
+          "question_text": "What animal can fly?",
+          "correct_answer": "Bird",
+          "options": [
+            "Bird",
+            "Cat",
+            "Dog",
+            "Fish"
+          ],
+          "id": "animals_mc_3",
+          "type": "multiple_choice"
+        },
+        {
+          "question_text": "What animal lives in water?",
+          "correct_answer": "Fish",
+          "options": [
+            "Fish",
+            "Cat",
+            "Dog",
+            "Bird"
+          ],
+          "id": "animals_mc_4",
+          "type": "multiple_choice"
+        },
+        {
+          "question_text": "What animal has four legs?",
+          "correct_answer": "Dog",
+          "options": [
+            "Dog",
+            "Bird",
+            "Fish",
+            "Snake"
+          ],
+          "id": "animals_mc_5",
+          "type": "multiple_choice"
+        }
+      ],
+      "title": "Test về con vật",
+      "maxScore": 10
+    }
+  ],
+  "users": [
+    {
+      "id": "RURXLeF9CkGaVauALNbW",
+      "password": "123456",
+      "full_name": "Nguyen Tuan Viet",
+      "role": "student",
+      "gender": "Nam",
+      "user_id": "RURXLeF9CkGaVauALNbW",
+      "avatar_base64": "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\nVCAkAcvWpRpwBjFdpXHasjoP/9k=\n",
+      "email": "tuanviet@gmail.com",
+      "class_ids": [
+        "Q6AAiVF8Pp3crSz5Qfrr"
+      ],
+      "learning_streak_count": 1,
+      "last_learning_date": "2025-07-26",
+      "learningHistory": {
+        "2025-07-26": true
+      },
+      "last_login_date": "2025-08-08",
+      "streak_count": 4
+    },
+    {
+      "id": "TOATdRymyiG2ZXS5Yd6N",
+      "role": "teacher",
+      "gender": "Nữ",
+      "user_id": "TOATdRymyiG2ZXS5Yd6N",
+      "streak_count": 1,
+      "full_name": "Lê Khánh Chi",
+      "email": "khanhchi@gmail.com",
+      "class_ids": [
+        "Q6AAiVF8Pp3crSz5Qfrr",
+        "tkAUdYSOJNApsrxQz999"
+      ],
+      "password": "$2a$12$7BOHZcUTc.oTqCxLuEYD5ufNE/b4dDqMv/XFrKb5a7Hc.EwF/cSam",
+      "is_active": true,
+      "login_streak_count": 0,
+      "avatar_url": null,
+      "avatar_base64": null,
+      "created_at": {
+        "_seconds": 0,
+        "_nanoseconds": 0
+      },
+      "last_learning_date": "",
+      "child_ids": [],
+      "learning_streak_count": 1,
+      "last_login_date": "2025-10-08"
+    },
+    {
+      "id": "U001",
+      "role": "student",
+      "user_id": "U001",
+      "email": "usera@example.com",
+      "password": "1234567",
+      "avatar_url": "https://img.freepik.com/premium-vector/person-with-blue-shirt-that-says-name-person_1029948-7040.jpg?semt=ais_hybrid&w=740",
+      "full_name": "Tran Thanh Phuong",
+      "gender": "Female",
+      "class_ids": [
+        "tkAUdYSOJNApsrxQz999"
+      ],
+      "streak_count": 2,
+      "last_login_date": "2025-10-05",
+      "learning_streak_count": 2,
+      "last_learning_date": "2025-10-05",
+      "learningHistory": {
+        "2025-10-05": true,
+        "2025-10-04": true,
+        "2025-09-07": true
+      }
+    },
+    {
+      "id": "U002",
+      "password": "654321",
+      "role": "teacher",
+      "avatar_url": "https://example.com/avatarB.jpg",
+      "user_id": "U002",
+      "email": "teacherb@example.com",
+      "full_name": "Tran Thi Trang",
+      "class_ids": [
+        "tkAUdYSOJNApsrxQz999",
+        "8zL2hufpiUjaDXaArbgx"
+      ],
+      "gender": "Female",
+      "avatar_base64": "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\nMGuw8Y/KV+4NMUB//9k=\n",
+      "streak_count": 1,
+      "last_login_date": "2025-10-04"
+    },
+    {
+      "id": "U003",
+      "full_name": "Le Van C",
+      "role": "admin",
+      "avatar_url": "https://example.com/avatarC.jpg",
+      "gender": "male",
+      "user_id": "U003",
+      "email": "adminc@example.com",
+      "streak_count": 2,
+      "class_ids": [],
+      "is_active": true,
+      "login_streak_count": 0,
+      "avatar_base64": null,
+      "created_at": {
+        "_seconds": 0,
+        "_nanoseconds": 0
+      },
+      "last_learning_date": "",
+      "child_ids": [],
+      "learning_streak_count": 3,
+      "last_login_date": "2025-10-09",
+      "password": "admin123"
+    },
+    {
+      "id": "U004",
+      "full_name": "Nguyen Van Tuan",
+      "role": "student",
+      "avatar_url": "https://img.freepik.com/premium-vector/person-with-blue-shirt-that-says-name-person_1029498-7040.jpg?w=740",
+      "user_id": "U004",
+      "email": "userb@example.com",
+      "gender": "Nam",
+      "streak_count": 1,
+      "class_ids": [
+        "tkAUdYSOJNApsrxQz999"
+      ],
+      "avatar_base64": "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\nq2UtaQQC7hgYC0kB/9k=\n",
+      "last_learning_date": "2025-09-11",
+      "learningHistory": {
+        "2025-09-11": true,
+        "2025-07-25": true,
+        "2025-07-17": true
+      },
+      "password": "$2a$12$EPCoMaOx3.b7I1bN7IkvDOwPaoOhXXiyDFq7ikMMrBy2aX6JVDjj2",
+      "is_active": true,
+      "login_streak_count": 0,
+      "created_at": {
+        "_seconds": 0,
+        "_nanoseconds": 0
+      },
+      "child_ids": [],
+      "learning_streak_count": 2,
+      "last_login_date": "2025-10-06"
+    },
+    {
+      "id": "U100",
+      "full_name": "Nguyen Van Student",
+      "role": "student",
+      "avatar_url": "https://example.com/avatarStudent.jpg",
+      "user_id": "U100",
+      "email": "student100@example.com",
+      "class_ids": [
+        "8zL2hufpiUjaDXaArbgx"
+      ],
+      "learning_streak_count": 1,
+      "gender": "Nam",
+      "avatar_base64": "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\n",
+      "last_learning_date": "2025-08-08",
+      "learningHistory": {
+        "2025-07-22": true,
+        "2025-08-02": true,
+        "2025-07-15": true,
+        "2025-07-26": true,
+        "2025-07-16": false,
+        "2025-07-27": true,
+        "2025-07-24": true,
+        "2025-07-25": true,
+        "2025-07-14": true,
+        "2024-06-05": false,
+        "2024-06-04": true,
+        "2025-07-30": true,
+        "2024-06-03": true,
+        "2024-06-07": true,
+        "2024-06-06": true,
+        "2025-07-19": true,
+        "2025-07-17": true,
+        "2025-07-28": true,
+        "2025-07-18": true,
+        "2025-08-08": true
+      },
+      "streak_count": 1,
+      "password": "$2a$12$eC.6VTBuspDHOLF/rfSwpOASyT8xEzqRAQXy033KP2ahaWNvRsAb6",
+      "is_active": true,
+      "login_streak_count": 0,
+      "created_at": {
+        "_seconds": 0,
+        "_nanoseconds": 0
+      },
+      "child_ids": [],
+      "last_login_date": "2025-10-08"
+    },
+    {
+      "id": "ieuVb5calOJDNjNJ7ctW",
+      "role": "student",
+      "gender": "Nữ",
+      "user_id": "ieuVb5calOJDNjNJ7ctW",
+      "avatar_base64": "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\n",
+      "email": "linh@gmail.com",
+      "streak_count": 1,
+      "class_ids": [
+        "tkAUdYSOJNApsrxQz999"
+      ],
+      "learning_streak_count": 1,
+      "password": "123456",
+      "full_name": "Nguyen Van Linh",
+      "last_login_date": "2025-08-07",
+      "last_learning_date": "2025-08-07",
+      "learningHistory": {
+        "2025-08-01": true,
+        "2025-08-07": true
+      }
+    },
+    {
+      "id": "uGHwsrznOSIf1oHGvtll",
+      "password": "123456",
+      "full_name": "phuong",
+      "role": "student",
+      "gender": "Nam",
+      "user_id": "uGHwsrznOSIf1oHGvtll",
+      "avatar_base64": "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\n",
+      "email": "phuong@gmail.com",
+      "last_login_date": "2025-08-08",
+      "streak_count": 1,
+      "class_ids": [
+        "tkAUdYSOJNApsrxQz999"
+      ],
+      "learning_streak_count": 1,
+      "last_learning_date": "2025-08-08",
+      "learningHistory": {
+        "2025-08-08": true
+      }
+    },
+    {
+      "id": "yl8VK0hK39X1F2Bv4P07",
+      "password": "123456",
+      "full_name": "Nguyen Van Huynh",
+      "role": "student",
+      "gender": "Nam",
+      "user_id": "yl8VK0hK39X1F2Bv4P07",
+      "avatar_base64": "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\n",
+      "email": "huynh@gmail.com",
+      "streak_count": 1,
+      "learning_streak_count": 1,
+      "last_learning_date": "2025-08-06",
+      "learningHistory": {
+        "2025-08-06": true
+      },
+      "class_ids": [
+        "tkAUdYSOJNApsrxQz999",
+        "8zL2hufpiUjaDXaArbgx"
+      ],
+      "last_login_date": "2025-10-05"
+    }
+  ],
+  "video_lectures": [
+    {
+      "id": "AjsfKgo0WMKdceHCsT3F",
+      "duration": "5:04",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "video_url": "https://www.youtube.com/watch?v=ptk68qC1woI&list=RDptk68qC1woI&start_radio=1",
+      "description": "A song about alphabets",
+      "topic": "alphabet",
+      "title": "Phonics song",
+      "thumbnail_url": "https://upload.wikimedia.org/wikipedia/commons/5/56/ABC_%282013%29_Dark_Grey.svg"
+    },
+    {
+      "id": "MslZRnenDVTA3XRZTt57",
+      "teacher_id": "teacher_002",
+      "description": "Learn about colors",
+      "topic": "Colors",
+      "title": "Lesson 3: Colors",
+      "video_url": "https://www.youtube.com/watch?v=qhOTU8_1Af4",
+      "duration": "2:57",
+      "thumbnail_url": "https://img.youtube.com/vi/qhOTU8_1Af4/0.jpg",
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "R7vm0mMyPzagUhUsrpDm",
+      "teacher_id": "teacher_001",
+      "description": "Learn to count from 1 to 10",
+      "topic": "Counting",
+      "title": "Lesson 2: Counting",
+      "video_url": "https://www.youtube.com/watch?v=NZSt4JEtSkI",
+      "duration": "2:56",
+      "thumbnail_url": "https://img.youtube.com/vi/NZSt4JEtSkI/0.jpg",
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    },
+    {
+      "id": "iAivx7At2UgPho2Yryha",
+      "duration": "5:04",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "video_url": "https://www.youtube.com/watch?v=ptk68qC1woI&list=RDptk68qC1woI&start_radio=1",
+      "description": "Alphabet",
+      "topic": "Alphabet",
+      "title": "Phonics song",
+      "thumbnail_url": "https://www.youtube.com/watch?v=ptk68qC1woI&list=RDptk68qC1woI&start_radio=1"
+    },
+    {
+      "id": "lGW5VqgaLIzfwzc43KEw",
+      "duration": "5:00",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "video_url": "https://www.youtube.com/watch?v=xDih5SwFs_c&list=RDxDih5SwFs_c&start_radio=1",
+      "description": "A",
+      "topic": "A",
+      "title": "A",
+      "thumbnail_url": "https://vi.wikipedia.org/wiki/T%E1%BA%ADp_tin:Carassius_wild_golden_fish_2013_G1.jpg"
+    },
+    {
+      "id": "oFtxbnn8feCodcffbmlw",
+      "duration": "2:45",
+      "description": "test thử cou",
+      "topic": "test",
+      "title": "Test",
+      "video_url": "https://www.youtube.com/watch?v=qD1pnquN_DM",
+      "thumbnail_url": "https://img.youtube.com/vi/qD1pnquN_DM/0.jpg",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X"
+    },
+    {
+      "id": "prkTZvzDkjq8Tsvn0NkW",
+      "duration": "5:36",
+      "course_id": "1Tj7Zug9y2PtKCj3mR1X",
+      "video_url": "https://www.youtube.com/watch?v=KRqg3RJFWPo",
+      "description": "hoc tap chu de trai cay",
+      "topic": "Fruits",
+      "title": "Fruits learn",
+      "thumbnail_url": "https://www.youtube.com/watch?v=KRqg3RJFWPo"
+    },
+    {
+      "id": "s99iVxBHfx6eL3bO5JFR",
+      "teacher_id": "teacher_001",
+      "description": "Introduction to the alphabet",
+      "topic": "Alphabet",
+      "title": "Lesson 1: The Alphabet",
+      "duration": "2:56",
+      "video_url": "https://www.youtube.com/watch?v=ccEpTTZW34g",
+      "thumbnail_url": "https://img.youtube.com/vi/ccEpTTZW34g/hqdefault.jpg",
+      "course_id": "LABTsID1zvPRsVjPjhLd"
+    }
+  ]
+}

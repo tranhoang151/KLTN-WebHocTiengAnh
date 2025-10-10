@@ -32,6 +32,12 @@ public class Exercise
     [FirestoreProperty("created_at")]
     public Timestamp CreatedAt { get; set; }
 
+    [FirestoreProperty("updated_at")]
+    public Timestamp UpdatedAt { get; set; }
+
+    [FirestoreProperty("total_points")]
+    public int TotalPoints { get; set; }
+
     [FirestoreProperty("is_active")]
     public bool IsActive { get; set; } = true;
 }

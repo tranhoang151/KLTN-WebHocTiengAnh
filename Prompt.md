@@ -1,3 +1,12 @@
+sau khi kiểm tra lại các API trên swagger thì tôi thấy các chức năng CRUD của 2 nhóm chức năng Manage Courses và Manage Classes ở @/backend  có vẻ chưa được đúng lắm so với các chức năng tương ứng của app android @/KLTN-Android . bạn có thể kiểm tra lại các phần này để biết liệu backend đã chuyển đổi đúng và đủ các chức năng từ app android chưa được không ?
+
+dự án hiện tại tôi là chuyển đổi app android KLTN-Android thành 1 web application sử dụng firestore database của dự án đó backup.json . tôi muốn dự án phải bám sát theo những dữ liệu đã có trong database, không thêm những những chức năng mà database không có dữ liệu.bạn có thể xem lại phần backend backend và front end frontend của dự án và app android để xem liệu backend và frontend đã chuyển đổi đúng và đủ tất cả các chức năng của app android chưa được không ? có bị thừa hay thiếu chức năng nào không ?
+
+bạn có thể so sánh các chức năng CRUD của từng đối tượng (Users, Classes, Courses, Questions, Flashcards, Exercises, Tests, Video) và mối quan hệ về chức năng của từng đối tượng trong app android @/KLTN-Android với phần backend của dự án hiện tại @/backend để xem liệu dự án hiện tại đã chuyển đổi đúng và đủ tất cả các chức năng CRUD của từng đối tượng từ app android ? (ví dụ:  ở app android, khi thêm 1 user mới thì tôi thấy các textbox và drop down list để thêm thông tin: full name, email, password, gender, role(chỉ được chọn giữa student hoặc teacher). còn ở POST/api/User, tôi lại thấy các phần để thêm thông tin: fullname, email, role, gender, classIds; rõ ràng là chưa tương thích về chức năng Create và Update Users) 
+
+
+vậy bây giờ bạn có thể update @/frontend theo @/backend sau chỉnh sửa và để frontend có thể tương ứng với các chức năng CRUD của từng đối tượng trong app android @/KLTN-Android
+
   ┌──────────────────────┬──────────────┬───────────────┬─────────────────────────────────────────────────────────────────────────────┐
   │ Chức năng (Từ App... │ Trạng thá... │ Trạng thái... │ Ghi chú                                                                     │
   ├──────────────────────┼──────────────┼───────────────┼─────────────────────────────────────────────────────────────────────────────┤

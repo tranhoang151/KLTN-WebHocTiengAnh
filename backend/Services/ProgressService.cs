@@ -292,55 +292,6 @@ namespace BingGoWebAPI.Services
             }
         }
 
-        public async Task<List<StudentProgressSummaryDto>> GetChildrenProgressSummariesAsync(string parentId)
-        {
-            try
-            {
-                // Get parent user to access child IDs
-                var parent = await _firebaseService.GetDocumentAsync<User>("users", parentId);
-                if (parent == null || parent.ChildIds == null || !parent.ChildIds.Any())
-                {
-                    return new List<StudentProgressSummaryDto>();
-                }
-
-                var childrenSummaries = new List<StudentProgressSummaryDto>();
-
-                foreach (var childId in parent.ChildIds)
-                {
-                    // Get child information
-                    var child = await _firebaseService.GetDocumentAsync<User>("users", childId);
-                    if (child == null) continue;
-
-                    var progress = await GetUserProgressAsync(childId);
-                    var activities = await GetUserActivitiesAsync(childId, DateTime.UtcNow.AddDays(-30));
-
-                    // Calculate overall score from recent exercise activities
-                    var exerciseScores = activities
-                        .Where(a => a.Type == "exercise" && a.Score.HasValue)
-                        .Select(a => a.Score!.Value);
-                    var overallScore = exerciseScores.Any() ? exerciseScores.Average() : 0;
-
-                    // Calculate total study time in hours
-                    var totalStudyTimeHours = activities.Sum(a => a.TimeSpent) / 3600.0;
-
-                    childrenSummaries.Add(new StudentProgressSummaryDto
-                    {
-                        StudentId = childId,
-                        StudentName = child.FullName,
-                        OverallScore = overallScore,
-                        CompletedActivities = activities.Count,
-                        TotalStudyTimeHours = totalStudyTimeHours
-                    });
-                }
-
-                return childrenSummaries;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error getting children progress summaries for parent {ParentId}", parentId);
-                throw;
-            }
-        }
 
         private double CalculateCompletionRate(UserProgress progress, List<LearningActivity> activities)
         {

@@ -6,6 +6,9 @@ using BingGoWebAPI.Authentication;
 using BingGoWebAPI.Middleware;
 using BingGoWebAPI.Models;
 using Google.Cloud.Firestore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +25,43 @@ builder.Logging.AddDebug();
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+// Configure Swagger with JWT Bearer authentication
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "BingGo Web API",
+        Version = "v1",
+        Description = "BingGo Learning Management System API"
+    });
+
+    // Add JWT Bearer authentication to Swagger
+    options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Description = "Enter 'Bearer' followed by a space and your JWT token."
+    });
+
+    options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
 
 // Configure CORS with security considerations
 builder.Services.AddCors(options =>
@@ -45,6 +84,35 @@ builder.Services.AddCors(options =>
               .SetPreflightMaxAge(TimeSpan.FromMinutes(10)); // Cache preflight requests
     });
 });
+
+// Configure JWT Authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    var jwtSettings = builder.Configuration.GetSection("Security:JWT");
+    var secretKey = jwtSettings["Secret"];
+    if (string.IsNullOrEmpty(secretKey))
+    {
+        throw new InvalidOperationException("JWT Secret not configured.");
+    }
+
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+        ValidateIssuer = true,
+        ValidIssuer = jwtSettings["Issuer"],
+        ValidateAudience = true,
+        ValidAudience = jwtSettings["Audience"],
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero
+    };
+});
+
 
 // Add security services (basic configuration)
 // Note: Custom security middleware will be configured in the pipeline
@@ -159,14 +227,28 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "BingGo Web API v1");
+        options.RoutePrefix = "swagger"; // Serve Swagger UI at /swagger
+        options.EnableTryItOutByDefault();
+        options.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);
+        options.DisplayRequestDuration();
+
+        // Configure OAuth for JWT Bearer tokens
+        options.OAuthClientId("swagger-ui");
+        options.OAuthClientSecret("swagger-ui-secret");
+        options.OAuthRealm("swagger-ui-realm");
+        options.OAuthAppName("BingGo Web API");
+        options.OAuthUseBasicAuthenticationWithAccessCodeGrant();
+    });
 }
 
 // Global exception handling must be first to catch all exceptions
 app.UseMiddleware<GlobalExceptionMiddleware>();
 
 // Core ASP.NET Core middleware
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection(); // Commented out for development
 
 // Routing must come before CORS for endpoint routing to work
 app.UseRouting();
@@ -180,9 +262,9 @@ app.UseMiddleware<SecurityHeadersMiddleware>();
 app.UseMiddleware<RateLimitingMiddleware>();
 app.UseMiddleware<InputValidationMiddleware>();
 
-// Custom JWT Authentication
-app.UseMiddleware<JwtAuthenticationMiddleware>();
-
+// Add the authentication middleware to the pipeline.
+// It must come before UseAuthorization.
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
