@@ -7,6 +7,10 @@ import SystemConfigManagement from '../admin/SystemConfigManagement';
 import VideoManagementPage from '../../pages/admin/videos/VideoManagementPage';
 import AnalyticsPage from '../../pages/admin/AnalyticsPage';
 import { ContentManagement } from '../content';
+import CourseList from '../course/CourseList';
+import ClassManagement from '../class/ClassManagement';
+import ExerciseList from '../exercise/ExerciseList';
+import QuestionManagement from '../question/QuestionManagement';
 
 const AdminDashboardHome: React.FC = () => {
   const { hasPermission } = usePermissions();
@@ -430,6 +434,10 @@ export const AdminDashboard: React.FC = () => {
       <Routes>
         <Route path="/" element={<AdminDashboardHome />} />
         <Route path="/users" element={<UserManagement />} />
+        <Route path="/courses" element={<CourseList />} />
+        <Route path="/classes" element={<ClassManagement />} />
+        <Route path="/exercises" element={<ExerciseList />} />
+        <Route path="/questions" element={<QuestionManagement />} />
         <Route path="/content" element={<ContentManagement />} />
         <Route path="/system-config" element={<SystemConfigManagement />} />
         <Route path="/videos" element={<VideoManagementPage />} />

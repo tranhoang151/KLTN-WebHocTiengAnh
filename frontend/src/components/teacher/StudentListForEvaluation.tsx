@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { User, Class, EvaluationSummaryDto } from '../../types';
 import { classService } from '../../services/classService';
-import { evaluationService } from '../../services/evaluationService';
+import { EvaluationService } from '../../services/evaluationService';
 import ChildFriendlyCard from '../ui/ChildFriendlyCard';
 import ChildFriendlyButton from '../ui/ChildFriendlyButton';
 import OptimizedImage from '../ui/OptimizedImage';
@@ -60,7 +60,7 @@ export const StudentListForEvaluation: React.FC<StudentListForEvaluationProps> =
             setStudents(studentsData);
 
             // Load existing evaluations for context
-            const evaluationsData = await evaluationService.getTeacherEvaluations(teacherId, selectedClass);
+            const evaluationsData = await EvaluationService.getEvaluationsByClass(selectedClass);
             // Convert Evaluation[] to EvaluationSummaryDto[] for display
             const summaryData: EvaluationSummaryDto[] = evaluationsData.map(e => ({
                 evaluationId: e.id,

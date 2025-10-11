@@ -11,10 +11,10 @@ import UserForm from './UserForm';
 import UserSearch from './UserSearch';
 import { useAuth } from '../../contexts/AuthContext';
 
-interface UserManagementProps {}
+interface UserManagementProps { }
 
 const UserManagement: React.FC<UserManagementProps> = () => {
-  const { user: currentUser } = useAuth();
+  const { user: currentUser, getAuthToken } = useAuth();
   const [users, setUsers] = useState<User[]>([]);
   // No longer need filteredUsers, as filtering is done by the backend
   const [loading, setLoading] = useState(true);
@@ -24,15 +24,16 @@ const UserManagement: React.FC<UserManagementProps> = () => {
   const [filters, setFilters] = useState<UserFilters>({});
 
   const loadUsers = useCallback(async () => {
-    if (!currentUser?.token) {
-      setError('Authentication token not found.');
-      setLoading(false);
-      return;
-    }
     try {
+      const token = await getAuthToken();
+      if (!token) {
+        setError('Authentication token not found.');
+        setLoading(false);
+        return;
+      }
       setLoading(true);
       setError(null);
-      const userData = await userService.getAllUsers(currentUser.token, filters);
+      const userData = await userService.getAllUsers(token, filters);
       setUsers(userData);
     } catch (err) {
       setError('Failed to load users. Please try again.');
@@ -40,7 +41,7 @@ const UserManagement: React.FC<UserManagementProps> = () => {
     } finally {
       setLoading(false);
     }
-  }, [currentUser, filters]);
+  }, [getAuthToken, filters]);
 
   useEffect(() => {
     loadUsers();
@@ -49,9 +50,10 @@ const UserManagement: React.FC<UserManagementProps> = () => {
   const handleCreateUser = async (
     userData: CreateUserRequest | UpdateUserRequest
   ) => {
-    if (!currentUser?.token) return;
     try {
-      await userService.createUser(userData as CreateUserRequest, currentUser.token);
+      const token = await getAuthToken();
+      if (!token) return;
+      await userService.createUser(userData as CreateUserRequest);
       await loadUsers();
       setShowCreateForm(false);
       setError(null);
@@ -65,9 +67,10 @@ const UserManagement: React.FC<UserManagementProps> = () => {
     id: string,
     userData: CreateUserRequest | UpdateUserRequest
   ) => {
-    if (!currentUser?.token) return;
     try {
-      await userService.updateUser(id, userData as UpdateUserRequest, currentUser.token);
+      const token = await getAuthToken();
+      if (!token) return;
+      await userService.updateUser(id, userData as UpdateUserRequest);
       await loadUsers();
       setEditingUser(null);
       setError(null);
@@ -78,14 +81,14 @@ const UserManagement: React.FC<UserManagementProps> = () => {
   };
 
   const handleToggleUserStatus = async (user: User) => {
-    if (!currentUser?.token) return;
     try {
+      const token = await getAuthToken();
+      if (!token) return;
       await userService.updateUserStatus(
         user.id,
         {
           isActive: !user.is_active,
-        },
-        currentUser.token
+        }
       );
       await loadUsers();
       setError(null);
@@ -95,17 +98,18 @@ const UserManagement: React.FC<UserManagementProps> = () => {
   };
 
   const handleDeleteUser = async (user: User) => {
-    if (!currentUser?.token) return;
-    if (
-      !window.confirm(
-        `Are you sure you want to delete user "${user.full_name}"? This action cannot be undone.`
-      )
-    ) {
-      return;
-    }
-
     try {
-      await userService.deleteUser(user.id, currentUser.token);
+      const token = await getAuthToken();
+      if (!token) return;
+      if (
+        !window.confirm(
+          `Are you sure you want to delete user "${user.full_name}"? This action cannot be undone.`
+        )
+      ) {
+        return;
+      }
+
+      await userService.deleteUser(user.id);
       await loadUsers();
       setError(null);
     } catch (err: any) {
@@ -122,9 +126,9 @@ const UserManagement: React.FC<UserManagementProps> = () => {
     setEditingUser(null);
   };
 
-  const handleFiltersChange = (newFilters: UserFilters) => {
+  const handleFiltersChange = useCallback((newFilters: UserFilters) => {
     setFilters(newFilters);
-  };
+  }, []);
 
   if (loading) {
     return (

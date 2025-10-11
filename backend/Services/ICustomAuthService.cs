@@ -21,5 +21,8 @@ namespace BingGoWebAPI.Services
         Task<bool> ValidateRefreshTokenAsync(string token);
         Task<User> GetUserByEmailAsync(string email);
         Task<User> GetUserByIdAsync(string userId);
+        Task UpdateUserAsync(User user);
+        bool VerifyPassword(string password, string storedPassword);
+        string HashPassword(string password);
     }
 }

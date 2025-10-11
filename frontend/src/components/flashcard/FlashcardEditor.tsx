@@ -31,7 +31,7 @@ const FlashcardEditor: React.FC<FlashcardEditorProps> = ({
     try {
       setLoading(true);
       setError(null);
-      const cards = await flashcardService.getFlashcardsBySet(flashcardSet.id);
+      const cards = await flashcardService.getFlashcardsBySetId(flashcardSet.id);
       // Sort by order
       cards.sort((a, b) => a.order - b.order);
       setFlashcards(cards);
@@ -201,22 +201,22 @@ const FlashcardEditor: React.FC<FlashcardEditorProps> = ({
               <div className="card-content">
                 <div className="card-front">
                   <div className="card-text">
-                    <strong>Front:</strong> {card.front_text}
+                    <strong>Front:</strong> {card.frontText}
                   </div>
-                  {card.image_url && (
+                  {card.imageUrl && (
                     <div className="card-image">
-                      <img src={card.image_url} alt="Flashcard" />
+                      <img src={card.imageUrl} alt="Flashcard" />
                     </div>
                   )}
                 </div>
 
                 <div className="card-back">
                   <div className="card-text">
-                    <strong>Back:</strong> {card.back_text}
+                    <strong>Back:</strong> {card.backText}
                   </div>
-                  {card.example_sentence && (
+                  {card.exampleSentence && (
                     <div className="card-example">
-                      <strong>Example:</strong> {card.example_sentence}
+                      <strong>Example:</strong> {card.exampleSentence}
                     </div>
                   )}
                 </div>

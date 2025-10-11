@@ -27,17 +27,17 @@ const FlashcardForm: React.FC<FlashcardFormProps> = ({
   onCancel,
 }) => {
   const [formData, setFormData] = useState<FormData>({
-    frontText: editingCard?.front_text || '',
-    backText: editingCard?.back_text || '',
-    exampleSentence: editingCard?.example_sentence || '',
+    frontText: editingCard?.frontText || '',
+    backText: editingCard?.backText || '',
+    exampleSentence: editingCard?.exampleSentence || '',
     imageFile: null,
-    imageUrl: editingCard?.image_url || '',
+    imageUrl: editingCard?.imageUrl || '',
     order: editingCard?.order || nextOrder,
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(
-    editingCard?.image_url || null
+    editingCard?.imageUrl || null
   );
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -161,7 +161,7 @@ const FlashcardForm: React.FC<FlashcardFormProps> = ({
       if (editingCard) {
         await flashcardService.updateFlashcard(editingCard.id, cardData);
       } else {
-        await flashcardService.createFlashcard(flashcardSetId, cardData);
+        await flashcardService.createFlashcard(cardData);
       }
 
       onSave();

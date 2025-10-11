@@ -50,39 +50,31 @@ const FlashcardProgressStats: React.FC<FlashcardProgressStatsProps> = ({
       const detailedProgress = await flashcardService.getDetailedProgress(
         user.id,
         setId
-      );
+      ) || {
+        completionPercentage: 0,
+        learnedCardIds: [],
+        timeSpent: 0,
+        totalSessions: 0,
+        totalCardsStudied: 0,
+        averageScore: 0,
+        bestScore: 0,
+        lastStudied: new Date(),
+        streakCount: 0,
+        masteredCards: [],
+        needsReviewCards: []
+      };
 
-      if (detailedProgress.progress) {
-        const stats: ProgressStats = {
-          totalCards,
-          learnedCards: detailedProgress.progress.learnedCardIds.length,
-          completionPercentage: detailedProgress.progress.completionPercentage,
-          timeSpent: detailedProgress.stats.totalStudyTime,
-          lastStudied: detailedProgress.history?.sessions.length
-            ? new Date(
-                detailedProgress.history.sessions[
-                  detailedProgress.history.sessions.length - 1
-                ].endTime
-              )
-            : undefined,
-          studySessions: detailedProgress.history?.totalSessions || 0,
-          averageTimePerCard: detailedProgress.stats.averageTimePerCard,
-          streak: detailedProgress.stats.studyStreak,
-        };
-        setStats(stats);
-      } else {
-        // No progress yet
-        const stats: ProgressStats = {
-          totalCards,
-          learnedCards: 0,
-          completionPercentage: 0,
-          timeSpent: 0,
-          studySessions: 0,
-          averageTimePerCard: 0,
-          streak: 0,
-        };
-        setStats(stats);
-      }
+      const stats: ProgressStats = {
+        totalCards,
+        learnedCards: detailedProgress.learnedCardIds.length,
+        completionPercentage: detailedProgress.completionPercentage,
+        timeSpent: detailedProgress.timeSpent,
+        lastStudied: detailedProgress.lastStudied,
+        studySessions: detailedProgress.totalSessions,
+        averageTimePerCard: detailedProgress.averageScore,
+        streak: detailedProgress.streakCount,
+      };
+      setStats(stats);
     } catch (err: any) {
       setError(err.message || 'Failed to load progress statistics');
     } finally {

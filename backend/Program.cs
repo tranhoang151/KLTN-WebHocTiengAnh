@@ -111,6 +111,17 @@ builder.Services.AddAuthentication(options =>
         ValidateLifetime = true,
         ClockSkew = TimeSpan.Zero
     };
+    options.Events = new JwtBearerEvents
+    {
+        OnChallenge = context =>
+        {
+            context.HandleResponse();
+            context.Response.StatusCode = 401;
+            context.Response.ContentType = "application/json";
+            var result = System.Text.Json.JsonSerializer.Serialize(new { message = "Unauthorized: Invalid or expired token" });
+            return context.Response.WriteAsync(result);
+        }
+    };
 });
 
 
@@ -125,7 +136,7 @@ builder.Services.AddSingleton<IFirebaseConfigService, FirebaseConfigService>();
 builder.Services.AddSingleton<IFirebaseAuthService, FirebaseAuthService>();
 builder.Services.AddSingleton<IFirebaseStorageService, FirebaseStorageService>();
 builder.Services.AddSingleton<IFirebaseService, FirebaseService>();
-builder.Services.AddSingleton<IPasswordHashingService, PasswordHashingService>();
+// Removed password hashing service - using plain text passwords
 builder.Services.AddScoped<IBadgeService, BadgeService>();
 builder.Services.AddScoped<IProgressService, ProgressService>();
 builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
@@ -265,6 +276,7 @@ app.UseMiddleware<InputValidationMiddleware>();
 // Add the authentication middleware to the pipeline.
 // It must come before UseAuthorization.
 app.UseAuthentication();
+app.UseMiddleware<ApiAuthenticationMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();

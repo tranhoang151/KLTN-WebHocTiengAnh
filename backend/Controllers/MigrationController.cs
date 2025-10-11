@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using BingGoWebAPI.Services;
-using BingGoWebAPI.Exceptions;
 
 namespace BingGoWebAPI.Controllers
 {
@@ -8,136 +7,78 @@ namespace BingGoWebAPI.Controllers
     [Route("api/[controller]")]
     public class MigrationController : ControllerBase
     {
-        private readonly IDataMigrationService _migrationService;
+        private readonly DataMigrationService _migrationService;
         private readonly ILogger<MigrationController> _logger;
 
-        public MigrationController(IDataMigrationService migrationService, ILogger<MigrationController> logger)
+        public MigrationController(DataMigrationService migrationService, ILogger<MigrationController> logger)
         {
             _migrationService = migrationService;
             _logger = logger;
         }
 
-        [HttpPost("migrate")]
-        public async Task<IActionResult> MigrateData([FromQuery] string backupFile = "backup.json")
+        [HttpPost("migrate-from-backup")]
+        public async Task<IActionResult> MigrateFromBackup([FromBody] MigrationRequest request)
         {
             try
             {
-                var backupPath = Path.Combine(Directory.GetCurrentDirectory(), backupFile);
-
-                _logger.LogInformation($"Starting migration from {backupPath}");
-
-                var result = await _migrationService.MigrateDataFromBackupAsync(backupPath);
-
-                if (result.Success)
+                if (string.IsNullOrEmpty(request.BackupFilePath))
                 {
-                    var summary = await _migrationService.GetMigrationSummaryAsync();
-                    return Ok(new
-                    {
-                        success = true,
-                        message = result.Message,
-                        processedRecords = result.ProcessedRecords,
-                        summary = summary
-                    });
+                    return BadRequest("Backup file path is required");
+                }
+
+                _logger.LogInformation($"Starting migration from {request.BackupFilePath}");
+
+                var success = await _migrationService.MigrateFromBackupJson(request.BackupFilePath);
+
+                if (success)
+                {
+                    _logger.LogInformation("Migration completed successfully");
+                    return Ok(new { message = "Migration completed successfully" });
                 }
                 else
                 {
-                    return BadRequest(new
-                    {
-                        success = false,
-                        message = result.Message,
-                        errors = result.Errors,
-                        processedRecords = result.ProcessedRecords
-                    });
+                    _logger.LogError("Migration failed");
+                    return StatusCode(500, new { message = "Migration failed" });
                 }
-            }
-            catch (DataMigrationException ex)
-            {
-                _logger.LogError(ex, "Data migration error: {Message}", ex.Message);
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Data migration failed",
-                    error = ex.Message,
-                    processedRecords = ex.ProcessedRecords
-                });
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error during migration");
-                return StatusCode(500, new
-                {
-                    success = false,
-                    message = "Internal server error during migration",
-                    error = ex.Message
-                });
+                return StatusCode(500, new { message = "Internal server error during migration", error = ex.Message });
             }
         }
 
-        [HttpPost("validate")]
-        public async Task<IActionResult> ValidateData()
+        [HttpPost("migrate-from-default-backup")]
+        public async Task<IActionResult> MigrateFromDefaultBackup()
         {
             try
             {
-                var isValid = await _migrationService.ValidateDataIntegrityAsync();
-                var summary = await _migrationService.GetMigrationSummaryAsync();
+                var backupFilePath = Path.Combine(Directory.GetCurrentDirectory(), "WebConversion", "backup.json");
+                _logger.LogInformation($"Starting migration from default path: {backupFilePath}");
 
-                return Ok(new
+                var success = await _migrationService.MigrateFromBackupJson(backupFilePath);
+
+                if (success)
                 {
-                    valid = isValid,
-                    summary = summary,
-                    message = isValid ? "Data integrity validation passed" : "Data integrity validation failed"
-                });
-            }
-            catch (DataMigrationException ex)
-            {
-                _logger.LogError(ex, "Data migration error during validation: {Message}", ex.Message);
-                return BadRequest(new
+                    _logger.LogInformation("Migration completed successfully");
+                    return Ok(new { message = "Migration completed successfully" });
+                }
+                else
                 {
-                    valid = false,
-                    message = "Data validation failed",
-                    error = ex.Message,
-                    processedRecords = ex.ProcessedRecords
-                });
+                    _logger.LogError("Migration failed");
+                    return StatusCode(500, new { message = "Migration failed" });
+                }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error during validation");
-                return StatusCode(500, new
-                {
-                    valid = false,
-                    message = "Internal server error during validation",
-                    error = ex.Message
-                });
+                _logger.LogError(ex, "Error during migration");
+                return StatusCode(500, new { message = "Internal server error during migration", error = ex.Message });
             }
         }
+    }
 
-        [HttpGet("summary")]
-        public async Task<IActionResult> GetMigrationSummary()
-        {
-            try
-            {
-                var summary = await _migrationService.GetMigrationSummaryAsync();
-                return Ok(summary);
-            }
-            catch (DataMigrationException ex)
-            {
-                _logger.LogError(ex, "Data migration error getting summary: {Message}", ex.Message);
-                return BadRequest(new
-                {
-                    message = "Failed to get migration summary",
-                    error = ex.Message,
-                    processedRecords = ex.ProcessedRecords
-                });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error getting migration summary");
-                return StatusCode(500, new
-                {
-                    message = "Internal server error getting summary",
-                    error = ex.Message
-                });
-            }
-        }
+    public class MigrationRequest
+    {
+        public string BackupFilePath { get; set; } = string.Empty;
     }
 }

@@ -34,7 +34,13 @@ const StudentStreakCalendar: React.FC<StudentStreakCalendarProps> = ({
     try {
       setLoading(true);
       setError(null);
-      const data = await flashcardService.getStreakData(user.id);
+      const data = await flashcardService.getStreakData(user.id) || {
+        currentStreak: 0,
+        longestStreak: 0,
+        lastActivityDate: new Date(),
+        streakHistory: {},
+        streakCalendar: {}
+      };
       setStreakData(data);
     } catch (err: any) {
       setError(err.message || 'Failed to load streak data');
@@ -352,11 +358,9 @@ const StudentStreakCalendar: React.FC<StudentStreakCalendarProps> = ({
             {calendarDays.map((day, index) => (
               <div
                 key={index}
-                className={`calendar-day ${
-                  !day.isCurrentMonth ? 'other-month' : ''
-                } ${day.isToday ? 'today' : ''} ${
-                  day.hasActivity ? 'has-activity' : ''
-                } ${day.isFuture ? 'future' : ''}`}
+                className={`calendar-day ${!day.isCurrentMonth ? 'other-month' : ''
+                  } ${day.isToday ? 'today' : ''} ${day.hasActivity ? 'has-activity' : ''
+                  } ${day.isFuture ? 'future' : ''}`}
                 title={
                   day.hasActivity
                     ? `Learning activity on ${day.date.toLocaleDateString()}`

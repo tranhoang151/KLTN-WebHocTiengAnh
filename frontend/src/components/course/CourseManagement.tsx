@@ -34,7 +34,7 @@ const CourseManagement: React.FC = () => {
         setError(null);
     };
 
-    const handleSubmitCourse = async (courseData: Omit<Course, 'id' | 'created_at'>) => {
+    const handleSubmitCourse = async (courseData: Omit<Course, 'id'>) => {
         try {
             setLoading(true);
             setError(null);

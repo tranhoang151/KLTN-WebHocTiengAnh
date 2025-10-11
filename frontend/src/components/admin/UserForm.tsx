@@ -20,7 +20,7 @@ const UserForm: React.FC<UserFormProps> = ({
   onCancel,
   isEditing,
 }) => {
-  const { user: currentUser } = useAuth(); // Get authenticated user
+  const { getAuthToken } = useAuth(); // Get authenticated user
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -34,20 +34,26 @@ const UserForm: React.FC<UserFormProps> = ({
 
   useEffect(() => {
     const loadRoles = async () => {
-      if (currentUser?.token) {
-        try {
-          const roles = await userService.getAvailableRoles(currentUser.token);
+      try {
+        const token = await getAuthToken();
+        if (token) {
+          const roles = await userService.getAvailableRoles();
           setAvailableRoles(roles);
-        } catch (error) {
-          console.error('Error loading roles:', error);
-          // Fallback roles if API fails
+        } else {
+          // Fallback roles if no token
           setAvailableRoles(['student', 'teacher', 'admin', 'parent']);
         }
+      } catch (error) {
+        console.error('Error loading roles:', error);
+        // Fallback roles if API fails
+        setAvailableRoles(['student', 'teacher', 'admin', 'parent']);
       }
     };
 
     loadRoles();
+  }, [getAuthToken]);
 
+  useEffect(() => {
     if (user && isEditing) {
       setFormData({
         fullName: user.full_name,
@@ -57,7 +63,7 @@ const UserForm: React.FC<UserFormProps> = ({
         classIds: user.class_ids || [],
       });
     }
-  }, [user, isEditing, currentUser]);
+  }, [user, isEditing]);
 
 
 
@@ -146,9 +152,8 @@ const UserForm: React.FC<UserFormProps> = ({
               name="fullName"
               value={formData.fullName}
               onChange={handleInputChange}
-              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                errors.fullName ? 'border-red-300' : 'border-gray-300'
-              }`}
+              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.fullName ? 'border-red-300' : 'border-gray-300'
+                }`}
               placeholder="Enter full name"
             />
             {errors.fullName && (
@@ -170,9 +175,8 @@ const UserForm: React.FC<UserFormProps> = ({
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                errors.email ? 'border-red-300' : 'border-gray-300'
-              }`}
+              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.email ? 'border-red-300' : 'border-gray-300'
+                }`}
               placeholder="Enter email address"
             />
             {errors.email && (
@@ -193,9 +197,8 @@ const UserForm: React.FC<UserFormProps> = ({
               name="role"
               value={formData.role}
               onChange={handleInputChange}
-              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                errors.role ? 'border-red-300' : 'border-gray-300'
-              }`}
+              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.role ? 'border-red-300' : 'border-gray-300'
+                }`}
             >
               {availableRoles.map((role) => (
                 <option key={role} value={role}>

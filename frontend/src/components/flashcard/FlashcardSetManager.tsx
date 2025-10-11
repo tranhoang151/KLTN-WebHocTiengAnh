@@ -219,22 +219,22 @@ const FlashcardSetManager: React.FC<FlashcardSetManagerProps> = ({
               <div className="set-meta">
                 <div className="meta-item">
                   <span className="meta-label">Course:</span>
-                  <span className="meta-value">{set.course_id}</span>
+                  <span className="meta-value">{set.courseId}</span>
                 </div>
                 <div className="meta-item">
                   <span className="meta-label">Created:</span>
                   <span className="meta-value">
                     {new Date(
-                      set.created_at?.seconds * 1000 || Date.now()
+                      set.createdAt?.getTime?.() || Date.now()
                     ).toLocaleDateString()}
                   </span>
                 </div>
                 <div className="meta-item">
                   <span className="meta-label">Status:</span>
                   <span
-                    className={`status ${set.is_active ? 'active' : 'inactive'}`}
+                    className={`status ${set.isActive ? 'active' : 'inactive'}`}
                   >
-                    {set.is_active ? 'Active' : 'Inactive'}
+                    {set.isActive ? 'Active' : 'Inactive'}
                   </span>
                 </div>
               </div>

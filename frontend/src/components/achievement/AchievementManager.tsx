@@ -20,14 +20,29 @@ const AchievementManager: React.FC<AchievementManagerProps> = ({
   const [showHistory, setShowHistory] = useState(false);
   const [badgeDefinitions, setBadgeDefinitions] = useState<Badge[]>([]);
 
-  // Load badge definitions
+  // Load badge definitions with caching
   useEffect(() => {
     const loadBadgeDefinitions = async () => {
       try {
+        // Check if we already have badge definitions cached
+        const cachedDefinitions = sessionStorage.getItem('badgeDefinitions');
+        if (cachedDefinitions) {
+          setBadgeDefinitions(JSON.parse(cachedDefinitions));
+          return;
+        }
+
         const definitions = await badgeService.getBadgeDefinitions();
         setBadgeDefinitions(definitions);
+
+        // Cache for 1 hour
+        sessionStorage.setItem('badgeDefinitions', JSON.stringify(definitions));
       } catch (error) {
         console.error('Error loading badge definitions:', error);
+        // Try to use cached definitions if available
+        const cachedDefinitions = sessionStorage.getItem('badgeDefinitions');
+        if (cachedDefinitions) {
+          setBadgeDefinitions(JSON.parse(cachedDefinitions));
+        }
       }
     };
 
@@ -127,12 +142,12 @@ const AchievementManager: React.FC<AchievementManagerProps> = ({
     checkForNotifications();
   }, [checkForNotifications]);
 
-  // Check for notifications on mount and periodically
+  // Check for notifications on mount and periodically (less frequently)
   useEffect(() => {
     checkForNotifications();
 
-    // Check every 30 seconds for new achievements
-    const interval = setInterval(checkForNotifications, 30000);
+    // Check every 2 minutes for new achievements (reduced frequency)
+    const interval = setInterval(checkForNotifications, 120000);
 
     return () => clearInterval(interval);
   }, [checkForNotifications]);

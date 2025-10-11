@@ -43,8 +43,8 @@ const FlashcardSetForm: React.FC<FlashcardSetFormProps> = ({
       setFormData({
         title: editingSet.title,
         description: editingSet.description,
-        courseId: editingSet.course_id,
-        assignedClassIds: editingSet.assigned_class_ids || [],
+        courseId: editingSet.courseId,
+        assignedClassIds: editingSet.assignedClassIds || [],
       });
     }
     loadCourses();

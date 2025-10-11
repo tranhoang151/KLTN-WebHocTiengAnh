@@ -50,9 +50,11 @@ class ApiService {
           }
         }
 
-        // If still unauthorized, redirect to login
-        window.location.href = '/login';
-        throw new Error('Authentication required');
+        // If still unauthorized, return error instead of redirecting
+        return {
+          success: false,
+          error: 'Authentication required. Please login again.',
+        };
       }
 
       const data = await response.json();

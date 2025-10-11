@@ -68,7 +68,7 @@ const ParentProgressInterface: React.FC = () => {
             try {
               const badgeResponse = await flashcardService.getUserBadges(
                 child.studentId
-              );
+              ) || [];
               badges = badgeResponse || [];
             } catch (badgeError) {
               console.warn(
@@ -88,7 +88,7 @@ const ParentProgressInterface: React.FC = () => {
               const streakResponse = await flashcardService.getStreakData(
                 child.studentId
               );
-              streakData = streakResponse || streakData;
+              streakData = streakResponse || { currentStreak: 0, longestStreak: 0, streakCalendar: {} };
             } catch (streakError) {
               console.warn(
                 'Could not load streak data for child:',

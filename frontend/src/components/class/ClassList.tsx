@@ -62,7 +62,7 @@ const ClassList: React.FC<ClassListProps> = ({
         try {
             setDeletingId(classId);
             await classService.deleteClass(classId);
-            setClasses(prev => prev.filter(cls => cls.id !== classId));
+            setClasses(prev => prev.filter(cls => (cls as any).Id !== classId && cls.id !== classId));
             onDeleteClass?.(classId);
         } catch (err: any) {
             setError(err.message || 'Failed to delete class');
@@ -135,43 +135,43 @@ const ClassList: React.FC<ClassListProps> = ({
             ) : (
                 <div className="class-grid">
                     {classes.map((classData) => (
-                        <ChildFriendlyCard key={classData.id} className="class-card">
+                        <ChildFriendlyCard key={(classData as any).Id || classData.id} className="class-card">
                             <div className="class-header">
                                 <div className="class-title-section">
-                                    <h3 className="class-title">{classData.name}</h3>
+                                    <h3 className="class-title">{(classData as any).Name || classData.name}</h3>
                                     <div className="class-status">
-                                        <span className={`status-badge ${classData.is_active ? 'active' : 'inactive'}`}>
-                                            {classData.is_active ? 'Active' : 'Inactive'}
+                                        <span className={`status-badge ${(classData as any).IsActive ?? classData.is_active ? 'active' : 'inactive'}`}>
+                                            {(classData as any).IsActive ?? classData.is_active ? 'Active' : 'Inactive'}
                                         </span>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="class-content">
-                                <p className="class-description">{classData.description}</p>
+                                <p className="class-description">{(classData as any).Description || classData.description}</p>
 
                                 <div className="class-details">
                                     <div className="detail-item">
                                         <span className="detail-label">📚 Course:</span>
-                                        <span className="detail-value">{getCourseName(classData.course_id)}</span>
+                                        <span className="detail-value">{getCourseName((classData as any).CourseId || classData.course_id)}</span>
                                     </div>
 
                                     <div className="detail-item">
                                         <span className="detail-label">👨‍🏫 Teacher:</span>
-                                        <span className="detail-value">{getTeacherName(classData.teacher_id)}</span>
+                                        <span className="detail-value">{getTeacherName((classData as any).TeacherId || classData.teacher_id)}</span>
                                     </div>
 
                                     <div className="detail-item">
                                         <span className="detail-label">👥 Students:</span>
                                         <span className="detail-value">
-                                            {classData.student_ids.length}/{classData.capacity}
+                                            {((classData as any).StudentIds || classData.student_ids || []).length}/{classData.capacity}
                                         </span>
                                     </div>
 
                                     <div className="detail-item">
                                         <span className="detail-label">📅 Created:</span>
                                         <span className="detail-value">
-                                            {new Date(classData.created_at).toLocaleDateString()}
+                                            {new Date((classData as any).CreatedAt || classData.created_at).toLocaleDateString()}
                                         </span>
                                     </div>
                                 </div>
@@ -179,13 +179,13 @@ const ClassList: React.FC<ClassListProps> = ({
                                 <div className="capacity-bar">
                                     <div className="capacity-label">
                                         <span>Capacity</span>
-                                        <span>{classData.student_ids.length}/{classData.capacity}</span>
+                                        <span>{((classData as any).StudentIds || classData.student_ids || []).length}/{classData.capacity}</span>
                                     </div>
                                     <div className="capacity-progress">
                                         <div
                                             className="capacity-fill"
                                             style={{
-                                                width: `${(classData.student_ids.length / classData.capacity) * 100}%`
+                                                width: `${Math.min(((((classData as any).StudentIds || classData.student_ids || []).length) / classData.capacity) * 100, 100)}%`
                                             }}
                                         />
                                     </div>
@@ -204,9 +204,9 @@ const ClassList: React.FC<ClassListProps> = ({
                                         {onDeleteClass && (
                                             <ChildFriendlyButton
                                                 variant="danger"
-                                                onClick={() => handleDeleteClass(classData.id)}
-                                                loading={deletingId === classData.id}
-                                                disabled={deletingId === classData.id}
+                                                onClick={() => handleDeleteClass((classData as any).Id || classData.id)}
+                                                loading={deletingId === (classData as any).Id || deletingId === classData.id}
+                                                disabled={deletingId === (classData as any).Id || deletingId === classData.id}
                                             >
                                                 Delete
                                             </ChildFriendlyButton>

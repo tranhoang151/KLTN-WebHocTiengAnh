@@ -331,7 +331,7 @@ namespace BingGoWebAPI.Controllers
         /// Admin endpoint to validate data retention policies
         /// </summary>
         [HttpGet("admin/validate-retention")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult> ValidateDataRetention()
         {
             try
@@ -353,7 +353,7 @@ namespace BingGoWebAPI.Controllers
         /// Admin endpoint to get GDPR compliance report
         /// </summary>
         [HttpGet("admin/compliance-report")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<GDPRComplianceReport>> GetComplianceReport([FromQuery] DateTime? fromDate, [FromQuery] DateTime? toDate)
         {
             try

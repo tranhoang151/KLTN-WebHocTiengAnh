@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { UserFilters } from '../../services/userService';
 import { userService } from '../../services/userService';
+import { useAuth } from '../../contexts/AuthContext';
 
 interface UserSearchProps {
   filters: UserFilters;
@@ -15,6 +16,7 @@ const UserSearch: React.FC<UserSearchProps> = ({
   totalUsers,
   filteredUsers,
 }) => {
+  const { getAuthToken } = useAuth();
   const [searchTerm, setSearchTerm] = useState(filters.search || '');
   const [selectedRole, setSelectedRole] = useState(filters.role || '');
   const [selectedStatus, setSelectedStatus] = useState(
@@ -34,16 +36,23 @@ const UserSearch: React.FC<UserSearchProps> = ({
         role: selectedRole || undefined,
         isActive: selectedStatus === '' ? undefined : selectedStatus === 'true',
       };
-      onFiltersChange(newFilters);
+      if (JSON.stringify(newFilters) !== JSON.stringify(filters)) {
+        onFiltersChange(newFilters);
+      }
     }, 300);
 
     return () => clearTimeout(timeoutId);
-  }, [searchTerm, selectedRole, selectedStatus, onFiltersChange]);
+  }, [searchTerm, selectedRole, selectedStatus, onFiltersChange, filters]);
 
   const loadAvailableRoles = async () => {
     try {
-      const roles = await userService.getAvailableRoles();
-      setAvailableRoles(roles);
+      const token = await getAuthToken();
+      if (token) {
+        const roles = await userService.getAvailableRoles();
+        setAvailableRoles(roles);
+      } else {
+        setAvailableRoles(['student', 'teacher', 'admin', 'parent']);
+      }
     } catch (error) {
       console.error('Error loading roles:', error);
       setAvailableRoles(['student', 'teacher', 'admin', 'parent']);

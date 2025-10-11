@@ -42,7 +42,7 @@ const FlashcardProgressTracker: React.FC<FlashcardProgressTrackerProps> = ({
         id: card.id,
         index,
         status,
-        frontText: card.front_text,
+        frontText: card.frontText,
       };
     });
 

@@ -15,13 +15,11 @@ namespace BingGoWebAPI.Services
     public class CustomAuthService : ICustomAuthService
     {
         private readonly FirestoreDb _firestoreDb;
-        private readonly IPasswordHashingService _passwordHashingService;
         private readonly IConfiguration _configuration;
 
-        public CustomAuthService(FirestoreDb firestoreDb, IPasswordHashingService passwordHashingService, IConfiguration configuration)
+        public CustomAuthService(FirestoreDb firestoreDb, IConfiguration configuration)
         {
             _firestoreDb = firestoreDb;
-            _passwordHashingService = passwordHashingService;
             _configuration = configuration;
         }
 
@@ -33,32 +31,12 @@ namespace BingGoWebAPI.Services
                 return new AuthResult { Success = false, Error = "User not found" };
             }
 
-            bool isValidPassword;
-            bool needsPasswordUpdate = false;
-
-            if (_passwordHashingService.IsPasswordHashed(user.Password))
-            {
-                isValidPassword = _passwordHashingService.VerifyPassword(password, user.Password);
-            }
-            else
-            {
-                // Legacy plain text comparison
-                isValidPassword = password == user.Password;
-                if (isValidPassword)
-                {
-                    needsPasswordUpdate = true;
-                }
-            }
+            // Plain text password comparison (no hashing)
+            bool isValidPassword = password == user.Password;
 
             if (!isValidPassword)
             {
                 return new AuthResult { Success = false, Error = "Invalid password" };
-            }
-
-            if (needsPasswordUpdate)
-            {
-                user.Password = _passwordHashingService.HashPassword(password);
-                await _firestoreDb.Collection("users").Document(user.Id).SetAsync(user, SetOptions.MergeAll);
             }
 
             var token = await GenerateJwtTokenAsync(user);
@@ -86,7 +64,7 @@ namespace BingGoWebAPI.Services
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("role", user.Role),
+                new Claim(ClaimTypes.Role, user.Role),
                 new Claim("full_name", user.FullName)
             };
 
@@ -219,6 +197,23 @@ namespace BingGoWebAPI.Services
         {
             // This will be handled by the JWT middleware, but a basic validation can be added here if needed.
             return Task.FromResult(true);
+        }
+
+        public async Task UpdateUserAsync(User user)
+        {
+            await _firestoreDb.Collection("users").Document(user.Id).SetAsync(user, SetOptions.MergeAll);
+        }
+
+        public bool VerifyPassword(string password, string storedPassword)
+        {
+            // Plain text password comparison (no hashing)
+            return password == storedPassword;
+        }
+
+        public string HashPassword(string password)
+        {
+            // Return password as-is (no hashing)
+            return password;
         }
     }
 }

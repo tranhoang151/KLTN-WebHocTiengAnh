@@ -82,19 +82,19 @@ const FlashcardLearningFlow: React.FC<FlashcardLearningFlowProps> = ({
           <div className="completion-stats">
             <div className="stat-item">
               <div className="stat-value">
-                {completedProgress.completionPercentage}%
+                {completedProgress.completionPercentage || 0}%
               </div>
               <div className="stat-label">Completion</div>
             </div>
             <div className="stat-item">
               <div className="stat-value">
-                {completedProgress.learnedCardIds.length}
+                {completedProgress.learnedCardIds?.length || 0}
               </div>
               <div className="stat-label">Cards Learned</div>
             </div>
             <div className="stat-item">
               <div className="stat-value">
-                {Math.floor(completedProgress.timeSpent / 60)}m
+                {Math.floor((completedProgress.timeSpent || 0) / 60)}m
               </div>
               <div className="stat-label">Time Spent</div>
             </div>

@@ -12,13 +12,11 @@ namespace BingGoWebAPI.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IFirebaseService _firebaseService;
-    private readonly IPasswordHashingService _passwordHashingService;
     private readonly ILogger<UserController> _logger;
 
-    public UserController(IFirebaseService firebaseService, IPasswordHashingService passwordHashingService, ILogger<UserController> logger)
+    public UserController(IFirebaseService firebaseService, ILogger<UserController> logger)
     {
         _firebaseService = firebaseService;
-        _passwordHashingService = passwordHashingService;
         _logger = logger;
     }
 

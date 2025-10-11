@@ -3,6 +3,10 @@ import { Course } from '../types';
 import { profileService } from './profileService';
 import { classService } from './classService';
 
+interface CourseFilters {
+    search?: string;
+}
+
 class CourseService {
     async getAllCourses(filters?: CourseFilters): Promise<Course[]> {
         const params = new URLSearchParams();
@@ -77,7 +81,7 @@ class CourseService {
 
     async getEnrolledCourses(token: string): Promise<Course[]> {
         try {
-            const profile = await profileService.getProfile(token);
+            const profile = await profileService.getProfile();
             if (!profile || !profile.classIds || profile.classIds.length === 0) {
                 return [];
             }
@@ -91,7 +95,7 @@ class CourseService {
                 return [];
             }
 
-            const coursePromises = courseIds.map(courseId => this.getCourseById(courseId));
+            const coursePromises = courseIds.map(courseId => this.getCourseById(courseId as string));
             const courses = await Promise.all(coursePromises);
 
             return courses.filter(course => course !== null) as Course[];

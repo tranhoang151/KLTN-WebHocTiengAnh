@@ -6,17 +6,21 @@ import { Course } from '../../types';
 import { useAuth } from '../../contexts/AuthContext';
 
 const StudentCourseList: React.FC = () => {
-  const { token } = useAuth();
+  const { getAuthToken } = useAuth();
+
+  const getToken = async () => {
+    return await getAuthToken();
+  };
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchCourses = async () => {
-      if (!token) return;
       try {
         setLoading(true);
-        const enrolledCourses = await courseService.getEnrolledCourses(token);
+        const token = await getToken();
+        const enrolledCourses = await courseService.getEnrolledCourses(token || '');
         setCourses(enrolledCourses);
       } catch (err: any) {
         setError(err.message || 'Failed to load your courses.');
@@ -26,7 +30,7 @@ const StudentCourseList: React.FC = () => {
     };
 
     fetchCourses();
-  }, [token]);
+  }, []);
 
   if (loading) {
     return <div className="text-center p-4">Loading your courses...</div>;

@@ -13,7 +13,7 @@ namespace BingGoWebAPI.Controllers
     /// </summary>
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "admin")]
     public class SecurityController : ControllerBase
     {
         private readonly ISecurityMonitoringService _securityMonitoring;

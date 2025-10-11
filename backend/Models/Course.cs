@@ -18,7 +18,7 @@ public class Course
     public string ImageUrl { get; set; } = string.Empty;
 
     [FirestoreProperty("created_at")]
-    public Timestamp CreatedAt { get; set; }
+    public Timestamp CreatedAt { get; set; } = Timestamp.GetCurrentTimestamp();
 
     [FirestoreProperty("target_age_group")]
     public string? TargetAgeGroup { get; set; }

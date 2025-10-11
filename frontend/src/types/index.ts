@@ -40,7 +40,7 @@ export interface Course {
   name: string;
   description: string;
   image_url: string;
-  created_at: any; // Firebase Timestamp
+  created_at?: any; // Firebase Timestamp - optional since server provides default
   target_age_group: string;
 }
 

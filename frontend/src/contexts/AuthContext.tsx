@@ -4,6 +4,7 @@ import React, {
   useState,
   useEffect,
   ReactNode,
+  useCallback,
 } from 'react';
 import { User as FirebaseUser } from 'firebase/auth';
 import { User } from '../types';
@@ -91,9 +92,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
-  const getAuthToken = async (): Promise<string | null> => {
+  const getAuthToken = useCallback(async (): Promise<string | null> => {
     return await authService.getCurrentUserToken();
-  };
+  }, []);
 
   const updateUser = (newUser: Partial<User>) => {
     setUser(prevUser => {

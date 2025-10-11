@@ -1,0 +1,388 @@
+import React, { useState, useEffect, useCallback } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { testService } from '../../services/testService';
+import { TestQuestion, TestSession } from '../../types/test';
+import { Clock, ChevronLeft, ChevronRight, Flag, CheckCircle } from 'lucide-react';
+import './TestTakingPage.css';
+
+interface TestQuestion {
+    id: string;
+    question: string;
+    options: string[];
+    correctAnswer: number;
+    type: 'multiple_choice' | 'fill_blank';
+    points: number;
+}
+
+interface TestSession {
+    id: string;
+    testId: string;
+    startTime: Date;
+    endTime?: Date;
+    answers: { [questionId: string]: number };
+    flaggedQuestions: string[];
+    timeRemaining: number; // in seconds
+}
+
+const TestTakingPage: React.FC = () => {
+    const { testId } = useParams<{ testId: string }>();
+    const navigate = useNavigate();
+    const [questions, setQuestions] = useState<TestQuestion[]>([]);
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+    const [session, setSession] = useState<TestSession | null>(null);
+    const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [timeWarning, setTimeWarning] = useState(false);
+    const [showSubmitModal, setShowSubmitModal] = useState(false);
+
+    // Timer effect
+    useEffect(() => {
+        if (!session) return;
+
+        const timer = setInterval(() => {
+            setSession(prev => {
+                if (!prev) return prev;
+
+                const newTimeRemaining = prev.timeRemaining - 1;
+
+                // Show warning when 5 minutes left
+                if (newTimeRemaining === 300) {
+                    setTimeWarning(true);
+                    message.warning('5 minutes remaining!');
+                }
+
+                // Auto-submit when time runs out
+                if (newTimeRemaining <= 0) {
+                    handleSubmitTest();
+                    return { ...prev, timeRemaining: 0, endTime: new Date() };
+                }
+
+                return { ...prev, timeRemaining: newTimeRemaining };
+            });
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, [session]);
+
+    useEffect(() => {
+        loadTestQuestions();
+        initializeSession();
+    }, [testId]);
+
+    const loadTestQuestions = async () => {
+        try {
+            // TODO: Replace with actual API call
+            // const response = await testService.getTestQuestions(testId);
+            // setQuestions(response.data);
+
+            // Mock data for now
+            const mockQuestions: TestQuestion[] = [
+                {
+                    id: 'q1',
+                    question: 'What color is the sky on a clear day?',
+                    options: ['Blue', 'Red', 'Green', 'Yellow'],
+                    correctAnswer: 0,
+                    type: 'multiple_choice',
+                    points: 10
+                },
+                {
+                    id: 'q2',
+                    question: 'How many fingers do you have on one hand?',
+                    options: ['3', '4', '5', '6'],
+                    correctAnswer: 2,
+                    type: 'multiple_choice',
+                    points: 10
+                },
+                {
+                    id: 'q3',
+                    question: 'What do you use to brush your teeth?',
+                    options: ['Spoon', 'Toothbrush', 'Comb', 'Fork'],
+                    correctAnswer: 1,
+                    type: 'multiple_choice',
+                    points: 10
+                },
+                {
+                    id: 'q4',
+                    question: 'The sun rises in the ____.',
+                    options: ['west', 'east', 'north', 'south'],
+                    correctAnswer: 1,
+                    type: 'multiple_choice',
+                    points: 10
+                },
+                {
+                    id: 'q5',
+                    question: 'How many days are in a week?',
+                    options: ['5', '6', '7', '8'],
+                    correctAnswer: 2,
+                    type: 'multiple_choice',
+                    points: 10
+                }
+            ];
+            setQuestions(mockQuestions);
+            setLoading(false);
+        } catch (error) {
+            message.error('Failed to load test questions');
+            setLoading(false);
+        }
+    };
+
+    const initializeSession = () => {
+        if (!testId) return;
+
+        const newSession: TestSession = {
+            id: `session_${Date.now()}`,
+            testId,
+            startTime: new Date(),
+            answers: {},
+            flaggedQuestions: [],
+            timeRemaining: 15 * 60 // 15 minutes in seconds
+        };
+        setSession(newSession);
+    };
+
+    const handleAnswerSelect = (answerIndex: number) => {
+        setSelectedAnswer(answerIndex);
+
+        if (session) {
+            setSession({
+                ...session,
+                answers: {
+                    ...session.answers,
+                    [questions[currentQuestionIndex].id]: answerIndex
+                }
+            });
+        }
+    };
+
+    const handleNextQuestion = () => {
+        if (currentQuestionIndex < questions.length - 1) {
+            setCurrentQuestionIndex(currentQuestionIndex + 1);
+            setSelectedAnswer(session?.answers[questions[currentQuestionIndex + 1].id] || null);
+        }
+    };
+
+    const handlePreviousQuestion = () => {
+        if (currentQuestionIndex > 0) {
+            setCurrentQuestionIndex(currentQuestionIndex - 1);
+            setSelectedAnswer(session?.answers[questions[currentQuestionIndex - 1].id] || null);
+        }
+    };
+
+    const handleFlagQuestion = () => {
+        if (!session) return;
+
+        const questionId = questions[currentQuestionIndex].id;
+        const isFlagged = session.flaggedQuestions.includes(questionId);
+
+        setSession({
+            ...session,
+            flaggedQuestions: isFlagged
+                ? session.flaggedQuestions.filter(id => id !== questionId)
+                : [...session.flaggedQuestions, questionId]
+        });
+
+        message.info(isFlagged ? 'Question unflagged' : 'Question flagged for review');
+    };
+
+    const handleSubmitTest = useCallback(async () => {
+        if (!session) return;
+
+        try {
+            const endTime = new Date();
+            const finalSession = { ...session, endTime };
+
+            // TODO: Submit test results to backend
+            // await testService.submitTestResults(finalSession);
+
+            // Navigate to results page
+            navigate(`/student/test/${testId}/results`, {
+                state: { session: finalSession, questions }
+            });
+        } catch (error) {
+            message.error('Failed to submit test');
+        }
+    }, [session, questions, testId, navigate]);
+
+    const formatTime = (seconds: number) => {
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+    };
+
+    const getAnsweredCount = () => {
+        return Object.keys(session?.answers || {}).length;
+    };
+
+    const getProgressPercentage = () => {
+        return (getAnsweredCount() / questions.length) * 100;
+    };
+
+    if (loading) {
+        return (
+            <div className="test-taking-container">
+                <div className="loading-container">
+                    <Text>Loading test questions...</Text>
+                </div>
+            </div>
+        );
+    }
+
+    if (questions.length === 0) {
+        return (
+            <div className="test-taking-container">
+                <Alert
+                    message="No Questions Available"
+                    description="This test has no questions."
+                    type="error"
+                    showIcon
+                />
+            </div>
+        );
+    }
+
+    const currentQuestion = questions[currentQuestionIndex];
+    const isLastQuestion = currentQuestionIndex === questions.length - 1;
+    const isFirstQuestion = currentQuestionIndex === 0;
+    const isFlagged = session?.flaggedQuestions.includes(currentQuestion.id);
+
+    return (
+        <div className="test-taking-container">
+            {/* Timer and progress header */}
+            <Card className="test-header">
+                <div className="test-info">
+                    <div className="timer-section">
+                        <ClockCircleOutlined className={timeWarning ? 'warning' : ''} />
+                        <Text className={`timer ${timeWarning ? 'warning' : ''}`}>
+                            {formatTime(session?.timeRemaining || 0)}
+                        </Text>
+                    </div>
+                    <div className="progress-section">
+                        <Text>Question {currentQuestionIndex + 1} of {questions.length}</Text>
+                        <Progress
+                            percent={getProgressPercentage()}
+                            showInfo={false}
+                            size="small"
+                            strokeColor="#52c41a"
+                        />
+                    </div>
+                </div>
+            </Card>
+
+            {/* Question card */}
+            <Card className="question-card">
+                <div className="question-header">
+                    <div className="question-info">
+                        <Title level={4}>Question {currentQuestionIndex + 1}</Title>
+                        <Text type="secondary">{currentQuestion.points} points</Text>
+                    </div>
+                    <Button
+                        type={isFlagged ? "primary" : "default"}
+                        icon={<FlagOutlined />}
+                        onClick={handleFlagQuestion}
+                        size="small"
+                    >
+                        {isFlagged ? 'Flagged' : 'Flag'}
+                    </Button>
+                </div>
+
+                <div className="question-content">
+                    <Text className="question-text">{currentQuestion.question}</Text>
+
+                    <Radio.Group
+                        className="answer-options"
+                        value={selectedAnswer}
+                        onChange={(e) => handleAnswerSelect(e.target.value)}
+                    >
+                        <Space direction="vertical" size="middle">
+                            {currentQuestion.options.map((option, index) => (
+                                <Radio key={index} value={index} className="answer-option">
+                                    {option}
+                                </Radio>
+                            ))}
+                        </Space>
+                    </Radio.Group>
+                </div>
+            </Card>
+
+            {/* Navigation */}
+            <Card className="navigation-card">
+                <div className="question-navigation">
+                    <Button
+                        icon={<LeftOutlined />}
+                        onClick={handlePreviousQuestion}
+                        disabled={isFirstQuestion}
+                        size="large"
+                    >
+                        Previous
+                    </Button>
+
+                    <div className="question-indicators">
+                        {questions.map((_, index) => {
+                            const isAnswered = session?.answers[questions[index].id] !== undefined;
+                            const isCurrent = index === currentQuestionIndex;
+                            const isFlaggedQ = session?.flaggedQuestions.includes(questions[index].id);
+
+                            return (
+                                <div
+                                    key={index}
+                                    className={`question-indicator ${isCurrent ? 'current' : ''} ${isAnswered ? 'answered' : ''} ${isFlaggedQ ? 'flagged' : ''}`}
+                                    onClick={() => setCurrentQuestionIndex(index)}
+                                >
+                                    {index + 1}
+                                </div>
+                            );
+                        })}
+                    </div>
+
+                    <Button
+                        icon={<RightOutlined />}
+                        onClick={handleNextQuestion}
+                        disabled={isLastQuestion}
+                        size="large"
+                    >
+                        Next
+                    </Button>
+                </div>
+
+                <div className="test-actions">
+                    <Button
+                        type="primary"
+                        size="large"
+                        onClick={() => setShowSubmitModal(true)}
+                        className="submit-test-btn"
+                    >
+                        Submit Test
+                    </Button>
+                </div>
+            </Card>
+
+            {/* Submit confirmation modal */}
+            <Modal
+                title="Submit Test"
+                open={showSubmitModal}
+                onOk={handleSubmitTest}
+                onCancel={() => setShowSubmitModal(false)}
+                okText="Submit Test"
+                cancelText="Continue Test"
+                okType="primary"
+            >
+                <div className="submit-confirmation">
+                    <Alert
+                        message="Are you sure you want to submit?"
+                        description={
+                            <div>
+                                <p>You have answered {getAnsweredCount()} out of {questions.length} questions.</p>
+                                <p>Time remaining: {formatTime(session?.timeRemaining || 0)}</p>
+                                <p>You cannot make changes after submission.</p>
+                            </div>
+                        }
+                        type="warning"
+                        showIcon
+                    />
+                </div>
+            </Modal>
+        </div>
+    );
+};
+
+export default TestTakingPage;

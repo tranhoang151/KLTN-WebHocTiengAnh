@@ -33,7 +33,7 @@ const AssignDialog: React.FC<AssignDialogProps> = ({
         setError(null);
         const teacherClasses = await classService.getClassesForTeacher();
         setClasses(teacherClasses);
-        setSelectedClassIds(new Set(flashcardSet.assigned_class_ids || []));
+        setSelectedClassIds(new Set(flashcardSet.assignedClassIds || []));
       } catch (err: any) {
         setError(err.message || 'Failed to load classes.');
       } finally {

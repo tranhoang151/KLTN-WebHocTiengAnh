@@ -1,0 +1,232 @@
+.test-start-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.test-details-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    margin-bottom: 20px;
+    padding: 30px;
+}
+
+.test-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.test-header h2 {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.test-meta {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.1rem;
+}
+
+.difficulty-tag {
+    display: inline-block;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    margin-top: 15px;
+    font-size: 1rem;
+}
+
+.test-description,
+.test-instructions,
+.test-rules {
+    margin: 25px 0;
+}
+
+.test-description h4,
+.test-instructions h4,
+.test-rules h4 {
+    color: #34495e;
+    margin-bottom: 15px;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.instructions-box {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 15px;
+}
+
+.instructions-box h5 {
+    color: #495057;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.preparation-tips {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+}
+
+.preparation-tips h4 {
+    color: #34495e;
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.tip-item {
+    background: #f8f9fa;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border-left: 3px solid #28a745;
+    font-size: 0.95rem;
+    color: #495057;
+}
+
+.test-actions {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.back-button {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-right: 15px;
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+}
+
+.start-test-btn {
+    background: linear-gradient(135deg, #52c41a 0%, #73d13d 100%);
+    color: white;
+    border: none;
+    font-size: 1.1rem;
+    padding: 15px 40px;
+    border-radius: 25px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(82, 196, 26, 0.3);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.start-test-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(82, 196, 26, 0.4);
+}
+
+.loading-container,
+.error-container {
+    text-align: center;
+    padding: 60px 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.error-container h3 {
+    color: #dc3545;
+    margin-bottom: 15px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .test-start-container {
+        padding: 15px;
+    }
+
+    .test-details-card {
+        margin-bottom: 15px;
+        padding: 20px;
+    }
+
+    .test-header {
+        margin-bottom: 20px;
+    }
+
+    .test-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .test-meta {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .meta-item {
+        font-size: 1rem;
+        justify-content: center;
+    }
+
+    .test-actions {
+        margin-top: 20px;
+    }
+
+    .back-button,
+    .start-test-btn {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    .tips-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .test-start-container {
+        padding: 10px;
+    }
+
+    .test-details-card {
+        padding: 15px;
+    }
+
+    .test-header h2 {
+        font-size: 1.3rem;
+    }
+}

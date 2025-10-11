@@ -41,7 +41,13 @@ const StreakStatistics: React.FC<StreakStatisticsProps> = ({
     try {
       setLoading(true);
       setError(null);
-      const data = await flashcardService.getStreakData(targetUserId);
+      const data = await flashcardService.getStreakData(targetUserId) || {
+        currentStreak: 0,
+        longestStreak: 0,
+        lastActivityDate: new Date(),
+        streakHistory: {},
+        streakCalendar: {}
+      };
       setStreakData(data);
     } catch (err: any) {
       setError(err.message || 'Failed to load streak data');
@@ -339,8 +345,8 @@ const StreakStatistics: React.FC<StreakStatisticsProps> = ({
             <span className="stat-value">
               {streakData.longestStreak > 0
                 ? Math.round(
-                    (streakData.currentStreak / streakData.longestStreak) * 100
-                  )
+                  (streakData.currentStreak / streakData.longestStreak) * 100
+                )
                 : 0}
               %
             </span>
@@ -350,9 +356,9 @@ const StreakStatistics: React.FC<StreakStatisticsProps> = ({
             <span className="stat-value">
               {stats?.activeDays && stats.activeDays > 0
                 ? Math.min(
-                    100,
-                    Math.round((stats.averageWeeklyActivity / 7) * 100)
-                  )
+                  100,
+                  Math.round((stats.averageWeeklyActivity / 7) * 100)
+                )
                 : 0}
               %
             </span>

@@ -1,0 +1,328 @@
+.test-taking-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.test-header {
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.test-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.timer-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.timer {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1890ff;
+    font-family: 'Courier New', monospace;
+}
+
+.timer.warning {
+    color: #ff4d4f;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.progress-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-width: 200px;
+}
+
+.question-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    margin-bottom: 20px;
+}
+
+.question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.question-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.question-content {
+    margin-top: 20px;
+}
+
+.question-text {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    display: block;
+    color: #2c3e50;
+}
+
+.answer-options {
+    width: 100%;
+}
+
+.answer-option {
+    display: block;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: 2px solid #e9ecef;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.answer-option:hover {
+    border-color: #1890ff;
+    background-color: #f0f8ff;
+}
+
+.answer-option .ant-radio-wrapper {
+    font-size: 1rem;
+}
+
+.navigation-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.question-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.question-indicators {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    max-width: 400px;
+}
+
+.question-indicator {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border: 2px solid #e9ecef;
+    background: white;
+    color: #666;
+}
+
+.question-indicator:hover {
+    border-color: #1890ff;
+    color: #1890ff;
+}
+
+.question-indicator.current {
+    border-color: #1890ff;
+    background: #1890ff;
+    color: white;
+}
+
+.question-indicator.answered {
+    background: #52c41a;
+    border-color: #52c41a;
+    color: white;
+}
+
+.question-indicator.flagged {
+    border-color: #ff4d4f;
+    background: #fff1f0;
+    color: #ff4d4f;
+}
+
+.test-actions {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid #e9ecef;
+}
+
+.submit-test-btn {
+    background: linear-gradient(135deg, #ff4d4f 0%, #ff7875 100%);
+    border: none;
+    font-size: 1.1rem;
+    padding: 0 40px;
+    height: 50px;
+    border-radius: 25px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(255, 77, 79, 0.3);
+    transition: all 0.3s ease;
+}
+
+.submit-test-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 77, 79, 0.4);
+}
+
+.loading-container {
+    text-align: center;
+    padding: 60px 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.submit-confirmation {
+    padding: 20px 0;
+}
+
+.submit-confirmation .ant-alert {
+    border-radius: 10px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .test-taking-container {
+        padding: 15px;
+    }
+
+    .test-info {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .question-navigation {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .question-indicators {
+        max-width: 100%;
+        justify-content: center;
+    }
+
+    .question-indicator {
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem;
+    }
+
+    .question-text {
+        font-size: 1.1rem;
+    }
+
+    .answer-option {
+        padding: 12px 15px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .test-taking-container {
+        padding: 10px;
+    }
+
+    .timer {
+        font-size: 1.3rem;
+    }
+
+    .question-indicators {
+        gap: 5px;
+    }
+
+    .question-indicator {
+        width: 28px;
+        height: 28px;
+        font-size: 0.8rem;
+    }
+
+    .submit-test-btn {
+        width: 100%;
+        margin-top: 15px;
+    }
+}
+
+/* Animation for question transitions */
+.question-card {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Timer warning animation */
+.timer.warning {
+    animation: pulse 1s infinite;
+}
+
+/* Hover effects */
+.question-indicator:hover {
+    transform: scale(1.1);
+}
+
+.question-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+/* Focus states for accessibility */
+.question-indicator:focus,
+.answer-option:focus {
+    outline: 2px solid #1890ff;
+    outline-offset: 2px;
+}
+
+.submit-test-btn:focus {
+    outline: 2px solid #ff4d4f;
+    outline-offset: 2px;
+}

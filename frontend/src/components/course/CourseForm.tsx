@@ -7,7 +7,7 @@ import './CourseForm.css';
 
 interface CourseFormProps {
     course?: Course | null;
-    onSubmit: (courseData: Omit<Course, 'id' | 'created_at'>) => Promise<void>;
+    onSubmit: (courseData: Omit<Course, 'id'>) => Promise<void>;
     onCancel: () => void;
     loading?: boolean;
 }

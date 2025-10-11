@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useUserRole } from '../hooks/usePermissions';
-import { profileService, UpdateProfileData } from '../services/profileService';
+import { profileService, UserProfile, UpdateProfileData } from '../services/profileService';
 import AvatarUpload from './profile/AvatarUpload';
 import ChangePassword from './profile/ChangePassword';
 
 export const Profile: React.FC = () => {
-  const { user, loading: authLoading, updateUser } = useAuth();
+  const { user, loading: authLoading, updateUser, getAuthToken } = useAuth();
   const { displayName, color } = useUserRole();
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -20,6 +20,7 @@ export const Profile: React.FC = () => {
   const [formData, setFormData] = useState({
     fullName: '',
     gender: '',
+    email: '',
   });
 
   useEffect(() => {
@@ -27,6 +28,7 @@ export const Profile: React.FC = () => {
       setFormData({
         fullName: user.full_name || '',
         gender: user.gender || '',
+        email: user.email || '',
       });
     }
   }, [user]);
@@ -52,8 +54,10 @@ export const Profile: React.FC = () => {
       const updateData: UpdateProfileData = {
         fullName: formData.fullName.trim(),
         gender: formData.gender,
+        email: formData.email,
       };
 
+      const token = await getAuthToken();
       const result = await profileService.updateProfile(updateData);
 
       if ((result as any).profile) {
@@ -112,21 +116,19 @@ export const Profile: React.FC = () => {
             <nav className="flex space-x-8" aria-label="Tabs">
               <button
                 onClick={() => setActiveTab('profile')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === 'profile'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'profile'
+                  ? 'border-blue-500 text-blue-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  }`}
               >
                 Profile Information
               </button>
               <button
                 onClick={() => setActiveTab('password')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === 'password'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${activeTab === 'password'
+                  ? 'border-blue-500 text-blue-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  }`}
               >
                 Change Password
               </button>
@@ -162,11 +164,10 @@ export const Profile: React.FC = () => {
               {/* Message */}
               {message && (
                 <div
-                  className={`mb-6 p-4 rounded-md ${
-                    message.type === 'success'
-                      ? 'bg-green-50 border border-green-200 text-green-700'
-                      : 'bg-red-50 border border-red-200 text-red-700'
-                  }`}
+                  className={`mb-6 p-4 rounded-md ${message.type === 'success'
+                    ? 'bg-green-50 border border-green-200 text-green-700'
+                    : 'bg-red-50 border border-red-200 text-red-700'
+                    }`}
                 >
                   <div className="flex">
                     <div className="flex-shrink-0">

@@ -7,7 +7,11 @@ interface ChangePasswordProps {
 }
 
 const ChangePassword: React.FC<ChangePasswordProps> = ({ onMessage }) => {
-  const { token } = useAuth();
+  const { getAuthToken } = useAuth();
+
+  const getToken = async () => {
+    return await getAuthToken();
+  };
   const [formData, setFormData] = useState<ChangePasswordData>({
     currentPassword: '',
     newPassword: '',
@@ -30,19 +34,15 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onMessage }) => {
     }
 
     if (formData.newPassword.length < 6) {
-        onMessage({ type: 'error', text: 'New password must be at least 6 characters long.' });
-        return;
-    }
-
-    if (!token) {
-        onMessage({ type: 'error', text: 'Authentication error. Please log in again.' });
-        return;
+      onMessage({ type: 'error', text: 'New password must be at least 6 characters long.' });
+      return;
     }
 
     setSaving(true);
 
     try {
-      const result = await profileService.changePassword(formData, token);
+      const token = await getToken();
+      const result = await profileService.changePassword(formData);
       onMessage({ type: 'success', text: (result as any).message || 'Password changed successfully!' });
       // Clear form on success
       setFormData({
@@ -59,7 +59,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onMessage }) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-        <h3 className="text-lg font-medium text-gray-900">Change Your Password</h3>
+      <h3 className="text-lg font-medium text-gray-900">Change Your Password</h3>
       {/* Current Password */}
       <div>
         <label

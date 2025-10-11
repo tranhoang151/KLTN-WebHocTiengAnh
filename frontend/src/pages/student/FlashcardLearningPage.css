@@ -1,0 +1,326 @@
+.flashcard-learning-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.session-header {
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.session-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.progress-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-width: 200px;
+}
+
+.session-stats {
+    text-align: center;
+}
+
+.flashcard-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 40px 0;
+}
+
+.flashcard {
+    width: 400px;
+    height: 250px;
+    perspective: 1000px;
+    margin-bottom: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.flashcard:hover {
+    transform: translateY(-5px);
+}
+
+.flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.flashcard.flipped .flashcard-inner {
+    transform: rotateY(180deg);
+}
+
+.flashcard-front,
+.flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.flashcard-front {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    color: #2c3e50;
+    border: 2px solid #e9ecef;
+}
+
+.flashcard-back {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    transform: rotateY(180deg);
+}
+
+.card-content {
+    width: 100%;
+}
+
+.card-text {
+    font-size: 1.4rem;
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.card-text.answer {
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.tap-hint {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    font-style: italic;
+}
+
+.difficulty {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    font-weight: 400;
+}
+
+.card-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    margin-top: 20px;
+}
+
+.session-controls {
+    margin-top: 30px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.no-cards-card {
+    text-align: center;
+    padding: 60px 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .flashcard-learning-container {
+        padding: 15px;
+    }
+
+    .flashcard {
+        width: 300px;
+        height: 200px;
+    }
+
+    .card-text {
+        font-size: 1.1rem;
+    }
+
+    .card-text.answer {
+        font-size: 1.2rem;
+    }
+
+    .card-navigation {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .session-info {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .progress-info {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .flashcard {
+        width: 280px;
+        height: 180px;
+    }
+
+    .card-text {
+        font-size: 1rem;
+    }
+
+    .card-text.answer {
+        font-size: 1.1rem;
+    }
+}
+
+/* Animation for card flip */
+@keyframes cardFlip {
+    0% {
+        transform: rotateY(0deg);
+    }
+
+    100% {
+        transform: rotateY(180deg);
+    }
+}
+
+.flashcard.flipped {
+    animation: cardFlip 0.8s ease-in-out;
+}
+
+/* Loading spinner styling */
+.flashcard-learning-container .ant-spin-nested-loading {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+}
+
+/* Button hover effects */
+.card-navigation .ant-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.session-controls .ant-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Progress bar styling */
+.session-header .ant-progress-bg {
+    background: linear-gradient(90deg, #52c41a, #73d13d);
+}
+
+/* Score circle styling */
+.session-stats .ant-progress-circle {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+/* Custom button styles */
+.nav-button {
+    background: #1890ff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.nav-button:hover:not(:disabled) {
+    background: #40a9ff;
+    transform: translateY(-2px);
+}
+
+.nav-button:disabled {
+    background: #d9d9d9;
+    cursor: not-allowed;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.action-button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.know-button {
+    background: #52c41a;
+    color: white;
+}
+
+.know-button:hover {
+    background: #73d13d;
+    transform: translateY(-2px);
+}
+
+.review-button {
+    background: #ff4d4f;
+    color: white;
+}
+
+.review-button:hover {
+    background: #ff7875;
+    transform: translateY(-2px);
+}
+
+.control-button {
+    background: #1890ff;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin: 0 10px;
+    transition: all 0.3s ease;
+}
+
+.control-button:hover {
+    background: #40a9ff;
+    transform: translateY(-2px);
+}
+
+.control-button.primary {
+    background: #52c41a;
+}
+
+.control-button.primary:hover {
+    background: #73d13d;
+}

@@ -12,6 +12,10 @@ import VideoProgressPage from '../../pages/student/VideoProgressPage';
 import ProgressDashboardPage from '../../pages/student/ProgressDashboardPage';
 import StreakPage from '../../pages/student/StreakPage';
 import CourseDetailPage from '../../pages/learning/CourseDetailPage';
+import FlashcardLearningPage from '../../pages/student/FlashcardLearningPage';
+import TestStartPage from '../../pages/student/TestStartPage';
+import TestTakingPage from '../../pages/student/TestTakingPage';
+import TestResultPage from '../../pages/student/TestResultPage';
 
 const StudentDashboardHome: React.FC = () => {
   const { hasPermission } = usePermissions();
@@ -34,14 +38,14 @@ const StudentDashboardHome: React.FC = () => {
             icon="📚"
             color="blue"
             interactive
-            onClick={() => (window.location.href = '/student/flashcards')}
+            onClick={() => (window.location.href = '/student/flashcards/animals/learn')}
           >
             <p style={{ margin: 0, fontSize: 'var(--font-size-md)' }}>
               Learn new vocabulary with fun, interactive flashcards!
             </p>
             <div style={{ marginTop: 'var(--spacing-md)' }}>
               <Link
-                to="/student/flashcards"
+                to="/student/flashcards/animals/learn"
                 style={{
                   color: 'var(--primary-blue)',
                   textDecoration: 'none',
@@ -315,7 +319,13 @@ const StudentDashboard: React.FC = () => {
             />
           }
         />
+        <Route path="/flashcards/:setId/learn" element={<FlashcardLearningPage />} />
         <Route path="/exercises/*" element={<ExerciseFlow />} />
+        <Route path="/tests" element={<div>Test List Page - Coming Soon</div>} />
+        <Route path="/tests/:testId/start" element={<TestStartPage />} />
+        <Route path="/tests/:testId/take" element={<TestTakingPage />} />
+        <Route path="/tests/:testId/results" element={<TestResultPage />} />
+        <Route path="/flashcards/:setId/learn" element={<FlashcardLearningPage />} />
         <Route path="/videos" element={<VideoLecturesPage />} />
         <Route path="/videos/progress" element={<VideoProgressPage />} />
         <Route path="/videos/:videoId" element={<VideoDetailPage />} />
