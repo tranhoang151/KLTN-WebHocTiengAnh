@@ -5,7 +5,7 @@ namespace BingGoWebAPI.Models;
 [FirestoreData]
 public class Class
 {
-    [FirestoreProperty("id")]
+    [FirestoreDocumentId]
     public string Id { get; set; } = string.Empty;
 
     [FirestoreProperty("name")]

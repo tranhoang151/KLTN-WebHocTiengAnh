@@ -24,84 +24,84 @@ class QuestionService {
         }
 
         const queryString = params.toString();
-        const endpoint = queryString ? `/questions?${queryString}` : '/questions';
+        const endpoint = queryString ? `/Question?${queryString}` : '/Question';
 
         const response = await apiService.get<Question[]>(endpoint);
         if (!response.success) {
-            throw new Error(response.error || 'Failed to fetch questions');
+            throw new Error(response.error || 'Failed to fetch Questions');
         }
         return response.data || [];
     }
 
-    async getQuestionById(questionId: string): Promise<Question | null> {
-        const response = await apiService.get<Question>(`/questions/${questionId}`);
+    async getQuestionById(QuestionId: string): Promise<Question | null> {
+        const response = await apiService.get<Question>(`/Question/${QuestionId}`);
         if (!response.success) {
-            throw new Error(response.error || 'Failed to fetch question');
+            throw new Error(response.error || 'Failed to fetch Question');
         }
         return response.data || null;
     }
 
     async getQuestionsByCourse(courseId: string): Promise<Question[]> {
-        const response = await apiService.get<Question[]>(`/questions/course/${courseId}`);
+        const response = await apiService.get<Question[]>(`/Question/course/${courseId}`);
         if (!response.success) {
-            throw new Error(response.error || 'Failed to fetch questions by course');
+            throw new Error(response.error || 'Failed to fetch Questions by course');
         }
         return response.data || [];
     }
 
-    async createQuestion(questionData: Omit<Question, 'id' | 'created_at'>): Promise<Question> {
-        const response = await apiService.post<Question>('/questions', questionData);
+    async createQuestion(QuestionData: Omit<Question, 'id' | 'created_at'>): Promise<Question> {
+        const response = await apiService.post<Question>('/Question', QuestionData);
         if (!response.success) {
-            throw new Error(response.error || 'Failed to create question');
+            throw new Error(response.error || 'Failed to create Question');
         }
         return response.data!;
     }
 
-    async updateQuestion(questionId: string, questionData: Partial<Question>): Promise<Question> {
-        const response = await apiService.put<Question>(`/questions/${questionId}`, questionData);
+    async updateQuestion(QuestionId: string, QuestionData: Partial<Question>): Promise<Question> {
+        const response = await apiService.put<Question>(`/Question/${QuestionId}`, QuestionData);
         if (!response.success) {
-            throw new Error(response.error || 'Failed to update question');
+            throw new Error(response.error || 'Failed to update Question');
         }
         return response.data!;
     }
 
-    async deleteQuestion(questionId: string): Promise<void> {
-        const response = await apiService.delete(`/questions/${questionId}`);
+    async deleteQuestion(QuestionId: string): Promise<void> {
+        const response = await apiService.delete(`/Question/${QuestionId}`);
         if (!response.success) {
-            throw new Error(response.error || 'Failed to delete question');
+            throw new Error(response.error || 'Failed to delete Question');
         }
     }
 
-    async duplicateQuestion(questionId: string): Promise<Question> {
-        const response = await apiService.post<Question>(`/questions/${questionId}/duplicate`);
+    async duplicateQuestion(QuestionId: string): Promise<Question> {
+        const response = await apiService.post<Question>(`/Question/${QuestionId}/duplicate`);
         if (!response.success) {
-            throw new Error(response.error || 'Failed to duplicate question');
+            throw new Error(response.error || 'Failed to duplicate Question');
         }
         return response.data!;
     }
 
-    async bulkUpdateQuestions(questionIds: string[], updates: Partial<Question>): Promise<void> {
-        const response = await apiService.put('/questions/bulk', {
-            questionIds,
+    async bulkUpdateQuestions(QuestionIds: string[], updates: Partial<Question>): Promise<void> {
+        const response = await apiService.put('/Question/bulk', {
+            QuestionIds,
             updates
         });
         if (!response.success) {
-            throw new Error(response.error || 'Failed to bulk update questions');
+            throw new Error(response.error || 'Failed to bulk update Questions');
         }
     }
 
-    async bulkDeleteQuestions(questionIds: string[]): Promise<void> {
-        const response = await apiService.post('/questions/bulk-delete', {
-            questionIds
+    async bulkDeleteQuestions(QuestionIds: string[]): Promise<void> {
+        const response = await apiService.post('/Question/bulk-delete', {
+            QuestionIds
         });
         if (!response.success) {
-            throw new Error(response.error || 'Failed to bulk delete questions');
+            throw new Error(response.error || 'Failed to bulk delete Questions');
         }
     }
 
     async getAvailableTags(courseId?: string): Promise<string[]> {
         const params = courseId ? `?courseId=${courseId}` : '';
-        const response = await apiService.get<string[]>(`/questions/tags${params}`);
+        const response = await apiService.get<string[]>(`/Question/tags${params}`);
         if (!response.success) {
             throw new Error(response.error || 'Failed to fetch available tags');
         }
@@ -115,9 +115,9 @@ class QuestionService {
         byStatus: Record<string, number>;
     }> {
         const params = courseId ? `?courseId=${courseId}` : '';
-        const response = await apiService.get(`/questions/statistics${params}`);
+        const response = await apiService.get(`/Question/statistics${params}`);
         if (!response.success) {
-            throw new Error(response.error || 'Failed to fetch question statistics');
+            throw new Error(response.error || 'Failed to fetch Question statistics');
         }
         const defaultStats = {
             total: 0,

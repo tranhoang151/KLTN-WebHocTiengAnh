@@ -1247,8 +1247,7 @@ public class FirebaseService : IFirebaseService
             }
 
             var query = _firestore.Collection("exercises")
-                .WhereEqualTo("course_id", courseId)
-                .WhereEqualTo("is_active", true);
+                .WhereEqualTo("course_id", courseId);
 
             var snapshot = await query.GetSnapshotAsync();
             var exercises = snapshot.Documents.Select(doc => doc.ConvertTo<Exercise>()).ToList();
@@ -1393,7 +1392,7 @@ public class FirebaseService : IFirebaseService
                     CourseId = q.CourseId,
                     Tags = q.Tags,
                     CreatedBy = q.CreatedBy,
-                    CreatedAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+                    CreatedAt = Timestamp.FromDateTime(DateTime.UtcNow),
                     IsActive = q.IsActive
                 }).ToList(),
                 TimeLimit = originalExercise.TimeLimit,
@@ -1445,12 +1444,21 @@ public class FirebaseService : IFirebaseService
                 return cachedQuestions ?? new List<Question>();
             }
 
-            var query = _firestore.Collection("questions")
+            var questionsQuery = _firestore.Collection("questions")
                 .WhereEqualTo("course_id", courseId)
                 .WhereEqualTo("is_active", true);
+            var questionsSnapshot = await questionsQuery.GetSnapshotAsync();
+            var questions = questionsSnapshot.Documents.Select(doc => doc.ConvertTo<Question>()).ToList();
 
-            var snapshot = await query.GetSnapshotAsync();
-            var questions = snapshot.Documents.Select(doc => doc.ConvertTo<Question>()).ToList();
+            var exercisesQuery = _firestore.Collection("exercises")
+                .WhereEqualTo("course_id", courseId);
+            var exercisesSnapshot = await exercisesQuery.GetSnapshotAsync();
+            var exercises = exercisesSnapshot.Documents.Select(doc => doc.ConvertTo<Exercise>()).ToList();
+
+            foreach (var exercise in exercises)
+            {
+                questions.AddRange(exercise.Questions);
+            }
 
             _cache.Set(cacheKey, questions, _cacheExpiry);
             return questions;
@@ -2081,7 +2089,7 @@ public class FirebaseService : IFirebaseService
                 var question = exercise.Questions.FirstOrDefault(q => q.Id == answerDto.QuestionId);
                 if (question == null) continue;
 
-                bool isCorrect = string.Equals(answerDto.Answer, question.CorrectAnswer, StringComparison.OrdinalIgnoreCase);
+                bool isCorrect = string.Equals(answerDto.Answer, question.CorrectAnswer.ToString(), StringComparison.OrdinalIgnoreCase);
                 if (isCorrect)
                 {
                     result.CorrectAnswers++;
@@ -2091,7 +2099,7 @@ public class FirebaseService : IFirebaseService
                 {
                     QuestionId = question.Id,
                     UserAnswer = answerDto.Answer,
-                    CorrectAnswer = question.CorrectAnswer,
+                    CorrectAnswer = question.CorrectAnswer.ToString(),
                     IsCorrect = isCorrect,
                     Explanation = question.Explanation
                 });
@@ -2549,10 +2557,8 @@ public class FirebaseService : IFirebaseService
                 return cachedTests ?? new List<Test>();
             }
 
-            var query = _firestore.Collection("tests")
-                .WhereEqualTo("course_id", courseId)
-                .WhereEqualTo("is_active", true);
-
+                    var query = _firestore.Collection("tests")
+                        .WhereEqualTo("course_id", courseId);
             var snapshot = await query.GetSnapshotAsync();
             var tests = snapshot.Documents.Select(doc => doc.ConvertTo<Test>()).ToList();
 
@@ -2735,7 +2741,7 @@ public class FirebaseService : IFirebaseService
             foreach (var question in questions)
             {
                 var userAnswer = submission.Answers.ContainsKey(question.Id) ? submission.Answers[question.Id] : "";
-                var isCorrect = string.Equals(userAnswer, question.CorrectAnswer, StringComparison.OrdinalIgnoreCase);
+                var isCorrect = string.Equals(userAnswer, question.CorrectAnswer.ToString(), StringComparison.OrdinalIgnoreCase);
 
                 if (isCorrect)
                 {

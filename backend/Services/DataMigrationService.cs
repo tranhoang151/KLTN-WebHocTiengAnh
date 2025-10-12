@@ -161,7 +161,7 @@ namespace BingGoWebAPI.Services
                     CourseId = exerciseData.CourseId,
                     Tags = new List<string>(),
                     CreatedBy = "admin",
-                    CreatedAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+                    CreatedAt = Timestamp.FromDateTime(DateTime.UtcNow),
                     IsActive = true
                 }).ToList();
 
@@ -176,7 +176,7 @@ namespace BingGoWebAPI.Services
                     CreatedBy = "admin",
                     CreatedAt = Timestamp.FromDateTime(DateTime.UtcNow),
                     UpdatedAt = Timestamp.FromDateTime(DateTime.UtcNow),
-                    TotalPoints = questions.Count * 10, // Default points
+                    TotalPoints = questions.Count() * 10, // Default points
                     IsActive = true
                 };
                 await collection.Document(exerciseData.Id).SetAsync(exerciseModel);
@@ -316,7 +316,7 @@ namespace BingGoWebAPI.Services
                     CourseId = questionData.CourseId,
                     Tags = questionData.Tags ?? new List<string>(),
                     CreatedBy = questionData.CreatedBy,
-                    CreatedAt = questionData.CreatedAt,
+                    CreatedAt = Timestamp.FromDateTime(DateTimeOffset.FromUnixTimeMilliseconds(questionData.CreatedAt).UtcDateTime),
                     IsActive = questionData.IsActive
                 };
                 await collection.Document(questionModel.Id).SetAsync(questionModel);

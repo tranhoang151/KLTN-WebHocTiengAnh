@@ -113,7 +113,7 @@ public class QuestionController : ControllerBase
                 CourseId = createQuestionDto.CourseId,
                 Tags = createQuestionDto.Tags,
                 CreatedBy = User.Identity?.Name ?? "system",
-                CreatedAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+                CreatedAt = Timestamp.FromDateTime(DateTime.UtcNow),
                 IsActive = true
             };
 

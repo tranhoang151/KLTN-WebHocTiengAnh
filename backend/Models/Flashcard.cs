@@ -5,7 +5,7 @@ namespace BingGoWebAPI.Models;
 [FirestoreData]
 public class FlashcardSet
 {
-    [FirestoreProperty("id")]
+    [FirestoreDocumentId]
     public string Id { get; set; } = string.Empty;
 
     [FirestoreProperty("title")]
@@ -36,7 +36,7 @@ public class FlashcardSet
 [FirestoreData]
 public class Flashcard
 {
-    [FirestoreProperty("id")]
+    [FirestoreDocumentId]
     public string Id { get; set; } = string.Empty;
 
     [FirestoreProperty("flashcard_set_id")]

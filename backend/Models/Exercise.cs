@@ -5,7 +5,7 @@ namespace BingGoWebAPI.Models;
 [FirestoreData]
 public class Exercise
 {
-    [FirestoreProperty("id")]
+    [FirestoreDocumentId]
     public string Id { get; set; } = string.Empty;
 
     [FirestoreProperty("title")]
@@ -45,7 +45,7 @@ public class Exercise
 [FirestoreData]
 public class Question
 {
-    [FirestoreProperty("id")]
+    [FirestoreDocumentId]
     public string Id { get; set; } = string.Empty;
 
     [FirestoreProperty("content")]
@@ -58,7 +58,7 @@ public class Question
     public List<string> Options { get; set; } = new();
 
     [FirestoreProperty("correct_answer")]
-    public string CorrectAnswer { get; set; } = string.Empty;
+    public object CorrectAnswer { get; set; } = string.Empty;
 
     [FirestoreProperty("explanation")]
     public string? Explanation { get; set; }
@@ -75,8 +75,30 @@ public class Question
     [FirestoreProperty("created_by")]
     public string CreatedBy { get; set; } = string.Empty;
 
+    private Timestamp _createdAt;
+
     [FirestoreProperty("created_at")]
-    public long CreatedAt { get; set; }
+    public object CreatedAtTimestamp
+    {
+        get => _createdAt;
+        set
+        {
+            if (value is long longValue)
+            {
+                _createdAt = Timestamp.FromDateTime(DateTimeOffset.FromUnixTimeMilliseconds(longValue).UtcDateTime);
+            }
+            else if (value is Timestamp timestampValue)
+            {
+                _createdAt = timestampValue;
+            }
+        }
+    }
+
+    public Timestamp CreatedAt
+    {
+        get => _createdAt;
+        set => _createdAt = value;
+    }
 
     [FirestoreProperty("is_active")]
     public bool IsActive { get; set; } = true;
