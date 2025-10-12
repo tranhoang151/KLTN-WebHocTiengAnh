@@ -461,6 +461,78 @@ namespace BingGoWebAPI.Services
                 return false;
             }
         }
+
+        public async Task<bool> SeedSampleFlashcardsAsync()
+        {
+            try
+            {
+                _logger.LogInformation("Starting sample flashcards seeding");
+
+                // Sample animal flashcards for the "animals" set
+                var sampleFlashcards = new List<Flashcard>
+                {
+                    new Flashcard
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        FlashcardSetId = "animals",
+                        FrontText = "What animal says 'meow'?",
+                        BackText = "Cat",
+                        ExampleSentence = "The cat says 'meow' when it's hungry.",
+                        Order = 1
+                    },
+                    new Flashcard
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        FlashcardSetId = "animals",
+                        FrontText = "What animal says 'woof'?",
+                        BackText = "Dog",
+                        ExampleSentence = "The dog says 'woof' when it sees a stranger.",
+                        Order = 2
+                    },
+                    new Flashcard
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        FlashcardSetId = "animals",
+                        FrontText = "What animal can fly?",
+                        BackText = "Bird",
+                        ExampleSentence = "The bird can fly high in the sky.",
+                        Order = 3
+                    },
+                    new Flashcard
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        FlashcardSetId = "animals",
+                        FrontText = "What animal lives in water?",
+                        BackText = "Fish",
+                        ExampleSentence = "The fish lives in water and swims.",
+                        Order = 4
+                    },
+                    new Flashcard
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        FlashcardSetId = "animals",
+                        FrontText = "What animal has four legs?",
+                        BackText = "Dog",
+                        ExampleSentence = "The dog has four legs and runs fast.",
+                        Order = 5
+                    }
+                };
+
+                var collection = _firestoreDb.Collection("flashcards");
+                foreach (var flashcard in sampleFlashcards)
+                {
+                    await collection.Document(flashcard.Id).SetAsync(flashcard);
+                }
+
+                _logger.LogInformation($"Seeded {sampleFlashcards.Count} sample flashcards for animals set");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error seeding sample flashcards");
+                return false;
+            }
+        }
     }
 
     // Data classes for deserializing backup.json

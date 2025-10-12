@@ -914,13 +914,20 @@ public class FirebaseService : IFirebaseService
             var snapshot = await query.GetSnapshotAsync();
             var cards = snapshot.Documents.Select(doc => doc.ConvertTo<Flashcard>()).ToList();
 
+            // Ensure we always return a list, even if empty
+            if (cards == null)
+            {
+                cards = new List<Flashcard>();
+            }
+
             _cache.Set(cacheKey, cards, _cacheExpiry);
             return cards;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error getting flashcards for set: {SetId}", setId);
-            throw;
+            // Return empty list instead of throwing exception
+            return new List<Flashcard>();
         }
     }
 
@@ -1206,6 +1213,29 @@ public class FirebaseService : IFirebaseService
             throw;
         }
     }
+    public async Task<List<Exercise>> GetAllExercisesAsync()
+    {
+        try
+        {
+            const string cacheKey = "exercises_all";
+            if (_cache.TryGetValue(cacheKey, out List<Exercise>? cachedExercises))
+            {
+                return cachedExercises ?? new List<Exercise>();
+            }
+
+            var snapshot = await _firestore.Collection("exercises").GetSnapshotAsync();
+            var exercises = snapshot.Documents.Select(doc => doc.ConvertTo<Exercise>()).ToList();
+
+            _cache.Set(cacheKey, exercises, _cacheExpiry);
+            return exercises;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting all exercises");
+            throw;
+        }
+    }
+
     public async Task<List<Exercise>> GetExercisesByCourseAsync(string courseId)
     {
         try

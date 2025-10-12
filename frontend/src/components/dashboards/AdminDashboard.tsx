@@ -11,6 +11,7 @@ import CourseList from '../course/CourseList';
 import ClassManagement from '../class/ClassManagement';
 import ExerciseList from '../exercise/ExerciseList';
 import QuestionManagement from '../question/QuestionManagement';
+import FlashcardManagement from '../flashcard/FlashcardManagement';
 
 const AdminDashboardHome: React.FC = () => {
   const { hasPermission } = usePermissions();
@@ -438,6 +439,7 @@ export const AdminDashboard: React.FC = () => {
         <Route path="/classes" element={<ClassManagement />} />
         <Route path="/exercises" element={<ExerciseList />} />
         <Route path="/questions" element={<QuestionManagement />} />
+        <Route path="/flashcards" element={<FlashcardManagement />} />
         <Route path="/content" element={<ContentManagement />} />
         <Route path="/system-config" element={<SystemConfigManagement />} />
         <Route path="/videos" element={<VideoManagementPage />} />

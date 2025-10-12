@@ -41,8 +41,14 @@ export class FlashcardService {
   // Flashcard Set operations
   async getFlashcardSets(courseId?: string): Promise<FlashcardSet[]> {
     try {
-      const response = await apiService.get<FlashcardSet[]>('/flashcard-sets');
-      return response.data;
+      const response = await apiService.get<FlashcardSet[]>('/flashcard/sets');
+      if (response.success && response.data) {
+        return response.data;
+      } else {
+        console.error('Error fetching flashcard sets:', response.error);
+        // Return mock data for now
+        return this.getMockFlashcardSets();
+      }
     } catch (error) {
       console.error('Error fetching flashcard sets:', error);
       // Return mock data for now
@@ -52,8 +58,13 @@ export class FlashcardService {
 
   async getFlashcardSetById(setId: string): Promise<FlashcardSet | null> {
     try {
-      const response = await apiService.get<FlashcardSet>(`/flashcard-sets/${setId}`);
-      return response.data;
+      const response = await apiService.get<FlashcardSet>(`/flashcard/set/${setId}`);
+      if (response.success && response.data) {
+        return response.data;
+      } else {
+        console.error('Error fetching flashcard set:', response.error);
+        return null;
+      }
     } catch (error) {
       console.error('Error fetching flashcard set:', error);
       return null;
@@ -62,8 +73,12 @@ export class FlashcardService {
 
   async createFlashcardSet(setData: Partial<FlashcardSet>): Promise<FlashcardSet> {
     try {
-      const response = await apiService.post<FlashcardSet>('/flashcard-sets', setData);
-      return response.data;
+      const response = await apiService.post<FlashcardSet>('/flashcard/set', setData);
+      if (response.success && response.data) {
+        return response.data;
+      } else {
+        throw new Error(response.error || 'Failed to create flashcard set');
+      }
     } catch (error) {
       console.error('Error creating flashcard set:', error);
       throw error;
@@ -72,8 +87,12 @@ export class FlashcardService {
 
   async updateFlashcardSet(setId: string, setData: Partial<FlashcardSet>): Promise<FlashcardSet> {
     try {
-      const response = await apiService.put<FlashcardSet>(`/flashcard-sets/${setId}`, setData);
-      return response.data;
+      const response = await apiService.put<FlashcardSet>(`/flashcard/set/${setId}`, setData);
+      if (response.success && response.data) {
+        return response.data;
+      } else {
+        throw new Error(response.error || 'Failed to update flashcard set');
+      }
     } catch (error) {
       console.error('Error updating flashcard set:', error);
       throw error;
@@ -82,7 +101,10 @@ export class FlashcardService {
 
   async deleteFlashcardSet(setId: string): Promise<void> {
     try {
-      await apiService.delete(`/flashcard-sets/${setId}`);
+      const response = await apiService.delete(`/flashcard/set/${setId}`);
+      if (!response.success) {
+        throw new Error(response.error || 'Failed to delete flashcard set');
+      }
     } catch (error) {
       console.error('Error deleting flashcard set:', error);
       throw error;
@@ -92,8 +114,14 @@ export class FlashcardService {
   // Flashcard operations
   async getFlashcardsBySetId(setId: string): Promise<Flashcard[]> {
     try {
-      const response = await apiService.get<Flashcard[]>(`/flashcards?setId=${setId}`);
-      return response.data;
+      const response = await apiService.get<Flashcard[]>(`/flashcard/set/${setId}/cards`);
+      if (response.success && response.data) {
+        return response.data;
+      } else {
+        console.error('Error fetching flashcards:', response.error);
+        // Return mock data for now
+        return this.getMockFlashcards(setId);
+      }
     } catch (error) {
       console.error('Error fetching flashcards:', error);
       // Return mock data for now
@@ -101,10 +129,14 @@ export class FlashcardService {
     }
   }
 
-  async createFlashcard(cardData: Partial<Flashcard>): Promise<Flashcard> {
+  async createFlashcard(setId: string, cardData: Partial<Flashcard>): Promise<Flashcard> {
     try {
-      const response = await apiService.post<Flashcard>('/flashcards', cardData);
-      return response.data;
+      const response = await apiService.post<Flashcard>(`/flashcard/set/${setId}/card`, cardData);
+      if (response.success && response.data) {
+        return response.data;
+      } else {
+        throw new Error(response.error || 'Failed to create flashcard');
+      }
     } catch (error) {
       console.error('Error creating flashcard:', error);
       throw error;
@@ -113,8 +145,12 @@ export class FlashcardService {
 
   async updateFlashcard(cardId: string, cardData: Partial<Flashcard>): Promise<Flashcard> {
     try {
-      const response = await apiService.put<Flashcard>(`/flashcards/${cardId}`, cardData);
-      return response.data;
+      const response = await apiService.put<Flashcard>(`/flashcard/card/${cardId}`, cardData);
+      if (response.success && response.data) {
+        return response.data;
+      } else {
+        throw new Error(response.error || 'Failed to update flashcard');
+      }
     } catch (error) {
       console.error('Error updating flashcard:', error);
       throw error;
@@ -123,7 +159,10 @@ export class FlashcardService {
 
   async deleteFlashcard(cardId: string): Promise<void> {
     try {
-      await apiService.delete(`/flashcards/${cardId}`);
+      const response = await apiService.delete(`/flashcard/card/${cardId}`);
+      if (!response.success) {
+        throw new Error(response.error || 'Failed to delete flashcard');
+      }
     } catch (error) {
       console.error('Error deleting flashcard:', error);
       throw error;
@@ -134,7 +173,13 @@ export class FlashcardService {
   async startSession(setId: string): Promise<FlashcardSession> {
     try {
       const response = await apiService.post<FlashcardSession>('/flashcard-sessions/start', { setId });
-      return response.data;
+      if (response.success && response.data) {
+        return response.data;
+      } else {
+        console.error('Error starting session:', response.error);
+        // Return mock session for now
+        return this.createMockSession(setId);
+      }
     } catch (error) {
       console.error('Error starting session:', error);
       // Return mock session for now
@@ -144,7 +189,10 @@ export class FlashcardService {
 
   async saveSessionResponse(sessionId: string, response: FlashcardResponse): Promise<void> {
     try {
-      await apiService.post(`/flashcard-sessions/${sessionId}/response`, response);
+      const apiResponse = await apiService.post(`/flashcard-sessions/${sessionId}/response`, response);
+      if (!apiResponse.success) {
+        throw new Error(apiResponse.error || 'Failed to save session response');
+      }
     } catch (error) {
       console.error('Error saving session response:', error);
       throw error;
@@ -154,7 +202,11 @@ export class FlashcardService {
   async endSession(sessionId: string): Promise<FlashcardSession> {
     try {
       const response = await apiService.post<FlashcardSession>(`/flashcard-sessions/${sessionId}/end`);
-      return response.data;
+      if (response.success && response.data) {
+        return response.data;
+      } else {
+        throw new Error(response.error || 'Failed to end session');
+      }
     } catch (error) {
       console.error('Error ending session:', error);
       throw error;
@@ -164,7 +216,11 @@ export class FlashcardService {
   async getSessionProgress(sessionId: string): Promise<FlashcardSession> {
     try {
       const response = await apiService.get<FlashcardSession>(`/flashcard-sessions/${sessionId}`);
-      return response.data;
+      if (response.success && response.data) {
+        return response.data;
+      } else {
+        throw new Error(response.error || 'Failed to get session progress');
+      }
     } catch (error) {
       console.error('Error fetching session progress:', error);
       throw error;
@@ -174,8 +230,13 @@ export class FlashcardService {
   // Progress and statistics
   async getUserProgress(userId: string): Promise<FlashcardProgress[]> {
     try {
-      const response = await apiService.get<FlashcardProgress[]>(`/flashcard-progress/${userId}`);
-      return response.data;
+      const response = await apiService.get<FlashcardProgress[]>(`/flashcard/progress/${userId}`);
+      if (response.success && response.data) {
+        return response.data;
+      } else {
+        console.error('Error fetching user progress:', response.error);
+        return [];
+      }
     } catch (error) {
       console.error('Error fetching user progress:', error);
       return [];
@@ -184,8 +245,14 @@ export class FlashcardService {
 
   async getFlashcardStatistics(setId: string): Promise<FlashcardStatistics> {
     try {
-      const response = await apiService.get<FlashcardStatistics>(`/flashcard-statistics/${setId}`);
-      return response.data;
+      const response = await apiService.get<FlashcardStatistics>(`/flashcard/statistics/${setId}`);
+      if (response.success && response.data) {
+        return response.data;
+      } else {
+        console.error('Error fetching flashcard statistics:', response.error);
+        // Return mock statistics for now
+        return this.getMockStatistics();
+      }
     } catch (error) {
       console.error('Error fetching flashcard statistics:', error);
       // Return mock statistics for now
@@ -195,7 +262,10 @@ export class FlashcardService {
 
   async updateCardMastery(cardId: string, mastered: boolean): Promise<void> {
     try {
-      await apiService.patch(`/flashcards/${cardId}/mastery`, { mastered });
+      const response = await apiService.patch(`/flashcard/card/${cardId}/mastery`, { mastered });
+      if (!response.success) {
+        throw new Error(response.error || 'Failed to update card mastery');
+      }
     } catch (error) {
       console.error('Error updating card mastery:', error);
       throw error;
@@ -204,7 +274,10 @@ export class FlashcardService {
 
   async assignFlashcardSet(setId: string, classIds: string[]): Promise<void> {
     try {
-      await apiService.patch(`/flashcard-sets/${setId}/assign`, { classIds });
+      const response = await apiService.put(`/flashcard/set/${setId}/assign`, classIds);
+      if (!response.success) {
+        throw new Error(response.error || 'Failed to assign flashcard set');
+      }
     } catch (error) {
       console.error('Error assigning flashcard set:', error);
       throw error;
@@ -213,7 +286,10 @@ export class FlashcardService {
 
   async reorderFlashcards(setId: string, cards: Flashcard[]): Promise<void> {
     try {
-      await apiService.patch(`/flashcard-sets/${setId}/reorder`, { cards });
+      const response = await apiService.put(`/flashcard/set/${setId}/reorder`, { cards });
+      if (!response.success) {
+        throw new Error(response.error || 'Failed to reorder flashcards');
+      }
     } catch (error) {
       console.error('Error reordering flashcards:', error);
       throw error;
@@ -223,8 +299,13 @@ export class FlashcardService {
   // Additional methods for progress tracking
   async getProgress(userId: string, setId: string): Promise<FlashcardProgress | null> {
     try {
-      const response = await apiService.get<FlashcardProgress>(`/flashcard-progress/${userId}/${setId}`);
-      return response.data;
+      const response = await apiService.get<FlashcardProgress>(`/flashcard/progress/${userId}/${setId}`);
+      if (response.success && response.data) {
+        return response.data;
+      } else {
+        console.error('Error fetching progress:', response.error);
+        return null;
+      }
     } catch (error) {
       console.error('Error fetching progress:', error);
       return null;
@@ -233,7 +314,10 @@ export class FlashcardService {
 
   async updateProgress(progress: FlashcardProgress): Promise<void> {
     try {
-      await apiService.post('/flashcard-progress', progress);
+      const response = await apiService.post('/flashcard/progress', progress);
+      if (!response.success) {
+        throw new Error(response.error || 'Failed to update progress');
+      }
     } catch (error) {
       console.error('Error updating progress:', error);
       throw error;
@@ -242,8 +326,13 @@ export class FlashcardService {
 
   async getDetailedProgress(userId: string, setId: string): Promise<FlashcardProgress | null> {
     try {
-      const response = await apiService.get<FlashcardProgress>(`/flashcard-progress/${userId}/${setId}/detailed`);
-      return response.data;
+      const response = await apiService.get<FlashcardProgress>(`/flashcard/progress/${userId}/${setId}/detailed`);
+      if (response.success && response.data) {
+        return response.data;
+      } else {
+        console.error('Error fetching detailed progress:', response.error);
+        return null;
+      }
     } catch (error) {
       console.error('Error fetching detailed progress:', error);
       return null;
@@ -252,8 +341,13 @@ export class FlashcardService {
 
   async getUserBadges(userId: string): Promise<Badge[]> {
     try {
-      const response = await apiService.get<Badge[]>(`/badges/${userId}`);
-      return response.data;
+      const response = await apiService.get<Badge[]>(`/flashcard/badges/${userId}`);
+      if (response.success && response.data) {
+        return response.data;
+      } else {
+        console.error('Error fetching user badges:', response.error);
+        return [];
+      }
     } catch (error) {
       console.error('Error fetching user badges:', error);
       return [];
@@ -262,8 +356,14 @@ export class FlashcardService {
 
   async getStreakData(userId: string): Promise<StreakData> {
     try {
-      const response = await apiService.get<StreakData>(`/streak/${userId}`);
-      return response.data;
+      const response = await apiService.get<StreakData>(`/flashcard/streak/${userId}`);
+      if (response.success && response.data) {
+        return response.data;
+      } else {
+        console.error('Error fetching streak data:', response.error);
+        // Return mock streak data
+        return this.getMockStreakData();
+      }
     } catch (error) {
       console.error('Error fetching streak data:', error);
       // Return mock streak data
@@ -277,8 +377,14 @@ export class FlashcardService {
       if (courseId) params.append('courseId', courseId);
       if (setId) params.append('setId', setId);
 
-      const response = await apiService.get<TeacherAnalytics>(`/teacher-analytics/${userId}?${params}`);
-      return response.data;
+      const response = await apiService.get<TeacherAnalytics>(`/flashcard/analytics/teacher/${userId}?${params}`);
+      if (response.success && response.data) {
+        return response.data;
+      } else {
+        console.error('Error fetching teacher analytics:', response.error);
+        // Return mock analytics data
+        return this.getMockTeacherAnalytics();
+      }
     } catch (error) {
       console.error('Error fetching teacher analytics:', error);
       // Return mock analytics data
@@ -288,8 +394,14 @@ export class FlashcardService {
 
   async getFlashcardSetsByCourse(courseId: string): Promise<FlashcardSet[]> {
     try {
-      const response = await apiService.get<FlashcardSet[]>(`/flashcard-sets?courseId=${courseId}`);
-      return response.data;
+      const response = await apiService.get<FlashcardSet[]>(`/flashcard/sets/${courseId}`);
+      if (response.success && response.data) {
+        return response.data;
+      } else {
+        console.error('Error fetching flashcard sets by course:', response.error);
+        // Return filtered mock data
+        return this.getMockFlashcardSets().filter(set => set.courseId === courseId);
+      }
     } catch (error) {
       console.error('Error fetching flashcard sets by course:', error);
       // Return filtered mock data
@@ -360,6 +472,18 @@ export class FlashcardService {
         assignedClassIds: ['class_1'],
         isActive: true,
         totalCards: 12
+      },
+      {
+        id: 'shool_things',
+        title: 'Shool Things',
+        description: 'Learning about school things',
+        courseId: '1Tj7Zug9y2PtKCj3mR1X',
+        setId: 'shool_things',
+        createdBy: 'admin',
+        createdAt: new Date('2025-01-01'),
+        assignedClassIds: ['class_1'],
+        isActive: true,
+        totalCards: 5
       }
     ];
   }
@@ -386,6 +510,13 @@ export class FlashcardService {
         { id: '13', frontText: 'You have _____ eyes.', backText: 'two', order: 13, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() },
         { id: '14', frontText: 'A cat has _____ legs.', backText: 'four', order: 14, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() },
         { id: '15', frontText: 'There are _____ months in a year.', backText: 'twelve', order: 15, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() }
+      ],
+      shool_things: [
+        { id: '16', frontText: 'We write with a _____.', backText: 'pencil', order: 1, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() },
+        { id: '17', frontText: 'We sit on a _____.', backText: 'chair', order: 2, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() },
+        { id: '18', frontText: 'We read _____.', backText: 'books', order: 3, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() },
+        { id: '19', frontText: 'The teacher writes on the _____.', backText: 'board', order: 4, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() },
+        { id: '20', frontText: 'We carry our books in a _____.', backText: 'bag', order: 5, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() }
       ]
     };
 

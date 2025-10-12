@@ -41,7 +41,7 @@ const FlashcardSetManager: React.FC<FlashcardSetManagerProps> = ({
         flashcardSets =
           await flashcardService.getFlashcardSetsByCourse(courseId);
       } else {
-        flashcardSets = await flashcardService.getAllFlashcardSets();
+        flashcardSets = await flashcardService.getFlashcardSets();
       }
 
       setSets(flashcardSets);
@@ -74,6 +74,7 @@ const FlashcardSetManager: React.FC<FlashcardSetManagerProps> = ({
       await loadFlashcardSets();
     } catch (err: any) {
       setError(err.message || 'Failed to delete flashcard set');
+      console.error('Delete error:', err);
     }
   };
 
@@ -84,6 +85,10 @@ const FlashcardSetManager: React.FC<FlashcardSetManagerProps> = ({
   };
 
   const handleManageCards = (set: FlashcardSet) => {
+    // Ensure the set has an id, fallback to setId if id is missing
+    if (!set.id && set.setId) {
+      set.id = set.setId;
+    }
     setSelectedSet(set);
   };
 
@@ -97,7 +102,7 @@ const FlashcardSetManager: React.FC<FlashcardSetManagerProps> = ({
 
   const handleAssignSave = async () => {
     setAssigningSet(null);
-    await loadFlashcardSets(); // Refresh data to show updated assignments
+    await loadFlashcardSets();
   };
 
   if (selectedSet) {

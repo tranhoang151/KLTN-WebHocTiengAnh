@@ -23,15 +23,23 @@ const FlashcardEditor: React.FC<FlashcardEditorProps> = ({
   const [editingCard, setEditingCard] = useState<Flashcard | null>(null);
   const [draggedCard, setDraggedCard] = useState<Flashcard | null>(null);
 
+  // Ensure the flashcardSet has an id
+  const setId = flashcardSet.id || flashcardSet.setId || '';
+
   useEffect(() => {
-    loadFlashcards();
-  }, [flashcardSet.id]);
+    if (setId) {
+      loadFlashcards();
+    } else {
+      setError('Invalid flashcard set: missing ID');
+      setLoading(false);
+    }
+  }, [setId]);
 
   const loadFlashcards = async () => {
     try {
       setLoading(true);
       setError(null);
-      const cards = await flashcardService.getFlashcardsBySetId(flashcardSet.id);
+      const cards = await flashcardService.getFlashcardsBySetId(setId);
       // Sort by order
       cards.sort((a, b) => a.order - b.order);
       setFlashcards(cards);
@@ -112,7 +120,7 @@ const FlashcardEditor: React.FC<FlashcardEditorProps> = ({
       setFlashcards(updatedCards);
 
       // Save new order to backend
-      await flashcardService.reorderFlashcards(flashcardSet.id, updatedCards);
+      await flashcardService.reorderFlashcards(setId, updatedCards);
     } catch (err: any) {
       setError(err.message || 'Failed to reorder flashcards');
       await loadFlashcards(); // Reload to reset order
@@ -124,7 +132,7 @@ const FlashcardEditor: React.FC<FlashcardEditorProps> = ({
   if (showCreateForm) {
     return (
       <FlashcardForm
-        flashcardSetId={flashcardSet.id}
+        flashcardSetId={setId}
         editingCard={editingCard}
         nextOrder={flashcards.length + 1}
         onSave={handleCardSaved}

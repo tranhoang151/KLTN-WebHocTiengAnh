@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { FlashcardSetManager } from './index';
+import FlashcardSetManager from './FlashcardSetManager';
 import { useAuth } from '../../contexts/AuthContext';
-import './FlashcardManagement.css';
 
 interface FlashcardManagementProps {
   courseId?: string;

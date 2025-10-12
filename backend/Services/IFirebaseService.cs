@@ -74,6 +74,7 @@ public interface IFirebaseService
     Task AssignFlashcardSetAsync(string setId, List<string> classIds);
 
     // Exercise Management
+    Task<List<Exercise>> GetAllExercisesAsync();
     Task<List<Exercise>> GetExercisesByCourseAsync(string courseId);
     Task<Exercise?> GetExerciseByIdAsync(string exerciseId);
     Task<Exercise> CreateExerciseAsync(Exercise exercise);

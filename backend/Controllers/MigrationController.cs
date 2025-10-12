@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using BingGoWebAPI.Services;
 
 namespace BingGoWebAPI.Controllers
@@ -73,6 +74,34 @@ namespace BingGoWebAPI.Controllers
             {
                 _logger.LogError(ex, "Error during migration");
                 return StatusCode(500, new { message = "Internal server error during migration", error = ex.Message });
+            }
+        }
+
+        [HttpPost("seed-sample-flashcards")]
+        [AllowAnonymous]
+        public async Task<IActionResult> SeedSampleFlashcards()
+        {
+            try
+            {
+                _logger.LogInformation("Starting sample flashcards seeding");
+
+                var success = await _migrationService.SeedSampleFlashcardsAsync();
+
+                if (success)
+                {
+                    _logger.LogInformation("Sample flashcards seeded successfully");
+                    return Ok(new { message = "Sample flashcards seeded successfully" });
+                }
+                else
+                {
+                    _logger.LogError("Sample flashcards seeding failed");
+                    return StatusCode(500, new { message = "Sample flashcards seeding failed" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error during sample flashcards seeding");
+                return StatusCode(500, new { message = "Internal server error during sample flashcards seeding", error = ex.Message });
             }
         }
     }

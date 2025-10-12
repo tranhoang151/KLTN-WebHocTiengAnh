@@ -21,6 +21,22 @@ public class ExerciseController : ControllerBase
         _logger = logger;
     }
 
+    [HttpGet]
+    [Authorize(Roles = "admin,teacher")]
+    public async Task<IActionResult> GetAllExercises()
+    {
+        try
+        {
+            var exercises = await _firebaseService.GetAllExercisesAsync();
+            return Ok(exercises);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving all exercises");
+            return StatusCode(500, new { message = "Error retrieving exercises", error = ex.Message });
+        }
+    }
+
     [HttpGet("course/{courseId}")]
     public async Task<IActionResult> GetExercises(string courseId)
     {

@@ -11,6 +11,7 @@ namespace BingGoWebAPI.Services
         Task<MigrationResult> MigrateDataFromBackupAsync(string backupFilePath);
         Task<MigrationSummary> GetMigrationSummaryAsync();
         Task<bool> ValidateDataIntegrityAsync();
+        Task<bool> SeedSampleFlashcardsAsync();
     }
 
     public class MigrationSummary

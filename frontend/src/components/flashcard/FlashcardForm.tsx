@@ -161,7 +161,7 @@ const FlashcardForm: React.FC<FlashcardFormProps> = ({
       if (editingCard) {
         await flashcardService.updateFlashcard(editingCard.id, cardData);
       } else {
-        await flashcardService.createFlashcard(cardData);
+        await flashcardService.createFlashcard(flashcardSetId, cardData);
       }
 
       onSave();
