@@ -1763,7 +1763,7 @@ public class FirebaseService : IFirebaseService
             _logger.LogInformation("Getting videos from collection 'video_lectures'");
             var snapshot = await _firestore.Collection("video_lectures").GetSnapshotAsync();
             _logger.LogInformation($"Found {snapshot.Documents.Count} video documents");
-            
+
             var videos = snapshot.Documents.Select(doc => doc.ConvertTo<Video>()).ToList();
             _logger.LogInformation($"Converted {videos.Count} videos");
 
@@ -2558,8 +2558,8 @@ public class FirebaseService : IFirebaseService
                 return cachedTests ?? new List<Test>();
             }
 
-                    var query = _firestore.Collection("tests")
-                        .WhereEqualTo("course_id", courseId);
+            var query = _firestore.Collection("tests")
+                .WhereEqualTo("course_id", courseId);
             var snapshot = await query.GetSnapshotAsync();
             var tests = snapshot.Documents.Select(doc => doc.ConvertTo<Test>()).ToList();
 
