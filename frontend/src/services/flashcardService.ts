@@ -39,20 +39,33 @@ export class FlashcardService {
   }
 
   // Flashcard Set operations
-  async getFlashcardSets(courseId?: string): Promise<FlashcardSet[]> {
+  async getAllFlashcardSets(): Promise<FlashcardSet[]> {
     try {
       const response = await apiService.get<FlashcardSet[]>('/flashcard/sets');
       if (response.success && response.data) {
         return response.data;
       } else {
-        console.error('Error fetching flashcard sets:', response.error);
-        // Return mock data for now
+        console.error('Error fetching all flashcard sets:', response.error);
         return this.getMockFlashcardSets();
       }
     } catch (error) {
-      console.error('Error fetching flashcard sets:', error);
-      // Return mock data for now
+      console.error('Error fetching all flashcard sets:', error);
       return this.getMockFlashcardSets();
+    }
+  }
+
+  async getFlashcardSetsByCourse(courseId: string): Promise<FlashcardSet[]> {
+    try {
+      const response = await apiService.get<FlashcardSet[]>(`/flashcard/sets/${courseId}`);
+      if (response.success && response.data) {
+        return response.data;
+      } else {
+        console.error('Error fetching flashcard sets by course:', response.error);
+        return this.getMockFlashcardSets().filter(set => set.courseId === courseId);
+      }
+    } catch (error) {
+      console.error('Error fetching flashcard sets by course:', error);
+      return this.getMockFlashcardSets().filter(set => set.courseId === courseId);
     }
   }
 
@@ -390,27 +403,6 @@ export class FlashcardService {
       // Return mock analytics data
       return this.getMockTeacherAnalytics();
     }
-  }
-
-  async getFlashcardSetsByCourse(courseId: string): Promise<FlashcardSet[]> {
-    try {
-      const response = await apiService.get<FlashcardSet[]>(`/flashcard/sets/${courseId}`);
-      if (response.success && response.data) {
-        return response.data;
-      } else {
-        console.error('Error fetching flashcard sets by course:', response.error);
-        // Return filtered mock data
-        return this.getMockFlashcardSets().filter(set => set.courseId === courseId);
-      }
-    } catch (error) {
-      console.error('Error fetching flashcard sets by course:', error);
-      // Return filtered mock data
-      return this.getMockFlashcardSets().filter(set => set.courseId === courseId);
-    }
-  }
-
-  async getAllFlashcardSets(): Promise<FlashcardSet[]> {
-    return this.getFlashcardSets();
   }
 
   // Mock data methods for missing functionality

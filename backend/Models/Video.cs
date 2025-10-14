@@ -21,7 +21,7 @@ public class Video
     public string CourseId { get; set; } = string.Empty;
 
     [FirestoreProperty("duration")]
-    public int? Duration { get; set; }
+    public string? Duration { get; set; }
 
     [FirestoreProperty("thumbnail_url")]
     public string? ThumbnailUrl { get; set; }

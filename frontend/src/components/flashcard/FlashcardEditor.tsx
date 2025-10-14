@@ -40,6 +40,7 @@ const FlashcardEditor: React.FC<FlashcardEditorProps> = ({
       setLoading(true);
       setError(null);
       const cards = await flashcardService.getFlashcardsBySetId(setId);
+      console.log('Fetched cards:', cards);
       // Sort by order
       cards.sort((a, b) => a.order - b.order);
       setFlashcards(cards);

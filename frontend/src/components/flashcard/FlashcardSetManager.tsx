@@ -41,7 +41,7 @@ const FlashcardSetManager: React.FC<FlashcardSetManagerProps> = ({
         flashcardSets =
           await flashcardService.getFlashcardSetsByCourse(courseId);
       } else {
-        flashcardSets = await flashcardService.getFlashcardSets();
+        flashcardSets = await flashcardService.getAllFlashcardSets();
       }
 
       setSets(flashcardSets);
@@ -85,6 +85,7 @@ const FlashcardSetManager: React.FC<FlashcardSetManagerProps> = ({
   };
 
   const handleManageCards = (set: FlashcardSet) => {
+    console.log('Selected set:', set);
     // Ensure the set has an id, fallback to setId if id is missing
     if (!set.id && set.setId) {
       set.id = set.setId;

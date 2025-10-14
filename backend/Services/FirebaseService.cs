@@ -881,8 +881,7 @@ public class FirebaseService : IFirebaseService
             }
 
             var query = _firestore.Collection("flashcard_sets")
-                .WhereEqualTo("course_id", courseId)
-                .WhereEqualTo("is_active", true);
+                .WhereEqualTo("course_id", courseId);
 
             var snapshot = await query.GetSnapshotAsync();
             var sets = snapshot.Documents.Select(doc => doc.ConvertTo<FlashcardSet>()).ToList();
@@ -907,9 +906,7 @@ public class FirebaseService : IFirebaseService
                 return cachedCards ?? new List<Flashcard>();
             }
 
-            var query = _firestore.Collection("flashcards")
-                .WhereEqualTo("flashcard_set_id", setId)
-                .OrderBy("order");
+            var query = _firestore.Collection("flashcard_sets").Document(setId).Collection("cards").OrderBy("order");
 
             var snapshot = await query.GetSnapshotAsync();
             var cards = snapshot.Documents.Select(doc => doc.ConvertTo<Flashcard>()).ToList();
@@ -1763,8 +1760,12 @@ public class FirebaseService : IFirebaseService
                 return cachedVideos ?? new List<Video>();
             }
 
-            var snapshot = await _firestore.Collection("videos").GetSnapshotAsync();
+            _logger.LogInformation("Getting videos from collection 'video_lectures'");
+            var snapshot = await _firestore.Collection("video_lectures").GetSnapshotAsync();
+            _logger.LogInformation($"Found {snapshot.Documents.Count} video documents");
+            
             var videos = snapshot.Documents.Select(doc => doc.ConvertTo<Video>()).ToList();
+            _logger.LogInformation($"Converted {videos.Count} videos");
 
             _cache.Set(cacheKey, videos, _cacheExpiry);
             return videos;
@@ -1784,7 +1785,7 @@ public class FirebaseService : IFirebaseService
             video.CreatedAt = Timestamp.GetCurrentTimestamp();
             video.IsActive = true; // Default to active
 
-            var docRef = _firestore.Collection("videos").Document(video.Id);
+            var docRef = _firestore.Collection("video_lectures").Document(video.Id);
             await docRef.SetAsync(video);
 
             // Clear cache
