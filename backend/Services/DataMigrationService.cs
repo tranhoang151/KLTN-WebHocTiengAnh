@@ -221,7 +221,7 @@ namespace BingGoWebAPI.Services
                     Description = video.Description,
                     YoutubeId = youtubeId,
                     ThumbnailUrl = video.ThumbnailUrl,
-                    Duration = ParseDuration(video.Duration),
+                    Duration = video.Duration,
                     CourseId = video.CourseId,
                     CreatedAt = Timestamp.FromDateTime(DateTime.UtcNow),
                     AssignedClassIds = new List<string>(),

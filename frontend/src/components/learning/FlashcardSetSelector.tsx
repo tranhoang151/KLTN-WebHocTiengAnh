@@ -30,7 +30,7 @@ const FlashcardSetSelector: React.FC<FlashcardSetSelectorProps> = ({
       setLoading(true);
       setError(null);
       const flashcardSets =
-        await flashcardService.getFlashcardSets(courseId);
+        await flashcardService.getFlashcardSetsByCourse(courseId);
       setSets(flashcardSets);
     } catch (err: any) {
       setError(err.message || 'Failed to load flashcard sets');

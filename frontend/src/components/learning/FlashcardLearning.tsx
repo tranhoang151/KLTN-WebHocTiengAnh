@@ -73,7 +73,7 @@ const FlashcardLearning: React.FC<FlashcardLearningProps> = ({
     try {
       const progress = await flashcardService.getProgress(user.id, setId);
       if (progress) {
-        const initialLearned = new Set(progress.learnedCardIds);
+        const initialLearned = new Set(progress.learnedCardIds as string[]);
         setLearnedCards(initialLearned);
         setInitialLearnedCards(initialLearned);
         setInitialProgress(progress.completionPercentage);
