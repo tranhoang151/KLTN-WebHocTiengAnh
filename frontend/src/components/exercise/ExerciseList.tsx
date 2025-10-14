@@ -293,34 +293,47 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
 
                 {showActions && (
                   <div className="exercise-actions">
+                    {/* Preview is always available */}
                     {onPreviewExercise && (
                       <ChildFriendlyButton
                         variant="secondary"
                         onClick={() => onPreviewExercise(exercise)}
+                        className="preview-button"
                       >
                         Preview
                       </ChildFriendlyButton>
                     )}
-                    <ChildFriendlyButton
-                      variant="secondary"
-                      onClick={() => handleDuplicateExercise(exercise.id)}
-                    >
-                      Duplicate
-                    </ChildFriendlyButton>
+
+                    {/* Only show duplicate button if edit permission exists (implied by onEditExercise) */}
+                    {onEditExercise && (
+                      <ChildFriendlyButton
+                        variant="secondary"
+                        onClick={() => handleDuplicateExercise(exercise.id)}
+                        className="duplicate-button"
+                      >
+                        Duplicate
+                      </ChildFriendlyButton>
+                    )}
+
+                    {/* Edit button based on permission */}
                     {onEditExercise && (
                       <ChildFriendlyButton
                         variant="secondary"
                         onClick={() => onEditExercise(exercise)}
+                        className="edit-button"
                       >
                         Edit
                       </ChildFriendlyButton>
                     )}
+
+                    {/* Delete button based on permission */}
                     {onDeleteExercise && (
                       <ChildFriendlyButton
                         variant="danger"
                         onClick={() => handleDeleteExercise(exercise.id)}
                         loading={deletingId === exercise.id}
                         disabled={deletingId === exercise.id}
+                        className="delete-button"
                       >
                         Delete
                       </ChildFriendlyButton>

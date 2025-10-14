@@ -57,7 +57,7 @@ export class RoleService {
         { resource: 'reports', actions: ['read', 'export'] },
         { resource: 'content', actions: ['read', 'assign'] },
         { resource: 'flashcards', actions: ['read', 'assign'] },
-        { resource: 'exercises', actions: ['read', 'assign'] },
+        { resource: 'exercises', actions: ['read', 'create', 'update', 'delete', 'assign'] },
         { resource: 'tests', actions: ['read', 'assign'] },
         { resource: 'videos', actions: ['read', 'assign'] },
         { resource: 'profile', actions: ['read', 'update'] },

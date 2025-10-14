@@ -80,13 +80,19 @@ const ExerciseManagement: React.FC = () => {
         console.log('Exercise deleted:', exerciseId);
     };
 
-    // Check permissions
-    if (!permissions.canManageContent) {
+    // Check specific permissions for exercises
+    const canRead = permissions.hasPermission('exercises', 'read');
+    const canCreate = permissions.hasPermission('exercises', 'create');
+    const canEdit = permissions.hasPermission('exercises', 'update');
+    const canDelete = permissions.hasPermission('exercises', 'delete');
+
+    // Require at least read permission to view the management interface
+    if (!canRead) {
         return (
             <div className="exercise-management-unauthorized">
                 <div className="unauthorized-content">
                     <h2>Access Denied</h2>
-                    <p>You don't have permission to manage exercises.</p>
+                    <p>You don't have permission to view exercises.</p>
                 </div>
             </div>
         );
@@ -103,9 +109,9 @@ const ExerciseManagement: React.FC = () => {
 
             {viewMode === 'list' && (
                 <ExerciseList
-                    onCreateExercise={handleCreateExercise}
-                    onEditExercise={handleEditExercise}
-                    onDeleteExercise={handleDeleteExercise}
+                    onCreateExercise={canCreate ? handleCreateExercise : undefined}
+                    onEditExercise={canEdit ? handleEditExercise : undefined}
+                    onDeleteExercise={canDelete ? handleDeleteExercise : undefined}
                     onPreviewExercise={handlePreviewExercise}
                     showActions={true}
                 />
