@@ -6,7 +6,6 @@ import {
   Navigate,
 } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
-import { AccessibilityProvider } from './contexts/AccessibilityContext';
 import { SecurityProvider } from './components/security/SecurityProvider';
 import ProtectedRoute from './components/ProtectedRoute';
 import Login from './components/Login';
@@ -20,8 +19,6 @@ import CourseDetailPage from './pages/learning/CourseDetailPage';
 import { AchievementManager } from './components/achievement';
 import { useAuth } from './contexts/AuthContext';
 import { roleService } from './services/roleService';
-import SkipLinks from './components/accessibility/SkipLinks';
-import AccessibilityButton from './components/accessibility/AccessibilityButton';
 
 const AppRoutes: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
@@ -104,16 +101,12 @@ const App: React.FC = () => {
     <SecurityProvider>
       <Router>
         <AuthProvider>
-          <AccessibilityProvider>
-            <div className="App">
-              <SkipLinks />
-              <main id="main-content">
-                <AppRoutes />
-              </main>
-              <AchievementManager />
-              <AccessibilityButton />
-            </div>
-          </AccessibilityProvider>
+          <div className="App">
+            <main id="main-content">
+              <AppRoutes />
+            </main>
+            <AchievementManager />
+          </div>
         </AuthProvider>
       </Router>
     </SecurityProvider>

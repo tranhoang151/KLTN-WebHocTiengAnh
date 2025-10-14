@@ -17,145 +17,350 @@ const AdminDashboardHome: React.FC = () => {
   const { hasPermission } = usePermissions();
 
   return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div style={{ padding: '2rem' }}>
+      {/* Welcome Section */}
+      <div style={{
+        textAlign: 'center',
+        marginBottom: '3rem',
+        padding: '2rem',
+        background: 'linear-gradient(135deg, #dc2626 0%, #ef4444 50%, #f87171 100%)',
+        borderRadius: '16px',
+        color: 'white',
+        boxShadow: '0 10px 30px rgba(220, 38, 38, 0.3)'
+      }}>
+        <h1 style={{
+          fontSize: '2.5rem',
+          fontWeight: '700',
+          margin: '0 0 0.5rem 0',
+          textShadow: '0 2px 4px rgba(0,0,0,0.1)'
+        }}>
+          Welcome to Admin Dashboard
+        </h1>
+        <p style={{
+          fontSize: '1.1rem',
+          margin: 0,
+          opacity: 0.9
+        }}>
+          Manage your BingGo platform with powerful tools and insights
+        </p>
+      </div>
+
+      {/* Dashboard Cards */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+        gap: '1.5rem',
+        marginBottom: '2rem'
+      }}>
         {/* Analytics Dashboard */}
         {hasPermission('reports', 'read') && (
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-cyan-500 rounded-md flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">📈</span>
-                  </div>
-                </div>
-                <div className="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">
-                      Analytics
-                    </dt>
-                    <dd className="text-lg font-medium text-gray-900">
-                      Platform Stats
-                    </dd>
-                  </dl>
-                </div>
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.9)',
+            borderRadius: '16px',
+            padding: '1.5rem',
+            boxShadow: '0 8px 25px rgba(220, 38, 38, 0.1)',
+            border: '1px solid rgba(220, 38, 38, 0.1)',
+            transition: 'all 0.3s ease',
+            cursor: 'pointer'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translateY(-5px)';
+            e.currentTarget.style.boxShadow = '0 15px 35px rgba(220, 38, 38, 0.2)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = '0 8px 25px rgba(220, 38, 38, 0.1)';
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+              <div style={{
+                width: '50px',
+                height: '50px',
+                background: 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)',
+                borderRadius: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginRight: '1rem',
+                boxShadow: '0 4px 15px rgba(220, 38, 38, 0.3)'
+              }}>
+                <span style={{ fontSize: '1.5rem' }}>📊</span>
+              </div>
+              <div>
+                <h3 style={{
+                  fontSize: '1.2rem',
+                  fontWeight: '600',
+                  color: '#1f2937',
+                  margin: '0 0 0.25rem 0'
+                }}>
+                  Analytics
+                </h3>
+                <p style={{
+                  fontSize: '0.9rem',
+                  color: '#6b7280',
+                  margin: 0
+                }}>
+                  Platform Statistics
+                </p>
               </div>
             </div>
-            <div className="bg-gray-50 px-5 py-3">
-              <div className="text-sm">
-                <Link
-                  to="/admin/analytics"
-                  className="font-medium text-cyan-700 hover:text-cyan-900"
-                >
-                  View Analytics
-                </Link>
-              </div>
-            </div>
+            <Link
+              to="/admin/analytics"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                color: '#dc2626',
+                textDecoration: 'none',
+                fontWeight: '600',
+                fontSize: '0.9rem',
+                transition: 'color 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                const target = e.target as HTMLAnchorElement;
+                target.style.color = '#ef4444';
+              }}
+              onMouseLeave={(e) => {
+                const target = e.target as HTMLAnchorElement;
+                target.style.color = '#dc2626';
+              }}
+            >
+              View Analytics
+              <span style={{ fontSize: '0.8rem' }}>→</span>
+            </Link>
           </div>
         )}
 
         {/* Users Management */}
         {hasPermission('users', 'read') && (
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-blue-500 rounded-md flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">👥</span>
-                  </div>
-                </div>
-                <div className="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">
-                      Users
-                    </dt>
-                    <dd className="text-lg font-medium text-gray-900">
-                      Manage users
-                    </dd>
-                  </dl>
-                </div>
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.9)',
+            borderRadius: '16px',
+            padding: '1.5rem',
+            boxShadow: '0 8px 25px rgba(220, 38, 38, 0.1)',
+            border: '1px solid rgba(220, 38, 38, 0.1)',
+            transition: 'all 0.3s ease',
+            cursor: 'pointer'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translateY(-5px)';
+            e.currentTarget.style.boxShadow = '0 15px 35px rgba(220, 38, 38, 0.2)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = '0 8px 25px rgba(220, 38, 38, 0.1)';
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+              <div style={{
+                width: '50px',
+                height: '50px',
+                background: 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)',
+                borderRadius: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginRight: '1rem',
+                boxShadow: '0 4px 15px rgba(220, 38, 38, 0.3)'
+              }}>
+                <span style={{ fontSize: '1.5rem' }}>👥</span>
+              </div>
+              <div>
+                <h3 style={{
+                  fontSize: '1.2rem',
+                  fontWeight: '600',
+                  color: '#1f2937',
+                  margin: '0 0 0.25rem 0'
+                }}>
+                  Users
+                </h3>
+                <p style={{
+                  fontSize: '0.9rem',
+                  color: '#6b7280',
+                  margin: 0
+                }}>
+                  User Management
+                </p>
               </div>
             </div>
-            <div className="bg-gray-50 px-5 py-3">
-              <div className="text-sm">
-                <Link
-                  to="/admin/users"
-                  className="font-medium text-blue-700 hover:text-blue-900"
-                >
-                  Manage users
-                </Link>
-              </div>
-            </div>
+            <Link
+              to="/admin/users"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                color: '#dc2626',
+                textDecoration: 'none',
+                fontWeight: '600',
+                fontSize: '0.9rem',
+                transition: 'color 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                const target = e.target as HTMLAnchorElement;
+                target.style.color = '#ef4444';
+              }}
+              onMouseLeave={(e) => {
+                const target = e.target as HTMLAnchorElement;
+                target.style.color = '#dc2626';
+              }}
+            >
+              Manage Users
+              <span style={{ fontSize: '0.8rem' }}>→</span>
+            </Link>
           </div>
         )}
 
         {/* Courses Management */}
         {hasPermission('courses', 'read') && (
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-green-500 rounded-md flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">📚</span>
-                  </div>
-                </div>
-                <div className="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">
-                      Courses
-                    </dt>
-                    <dd className="text-lg font-medium text-gray-900">
-                      Manage courses
-                    </dd>
-                  </dl>
-                </div>
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.9)',
+            borderRadius: '16px',
+            padding: '1.5rem',
+            boxShadow: '0 8px 25px rgba(220, 38, 38, 0.1)',
+            border: '1px solid rgba(220, 38, 38, 0.1)',
+            transition: 'all 0.3s ease',
+            cursor: 'pointer'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translateY(-5px)';
+            e.currentTarget.style.boxShadow = '0 15px 35px rgba(220, 38, 38, 0.2)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = '0 8px 25px rgba(220, 38, 38, 0.1)';
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+              <div style={{
+                width: '50px',
+                height: '50px',
+                background: 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)',
+                borderRadius: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginRight: '1rem',
+                boxShadow: '0 4px 15px rgba(220, 38, 38, 0.3)'
+              }}>
+                <span style={{ fontSize: '1.5rem' }}>📚</span>
+              </div>
+              <div>
+                <h3 style={{
+                  fontSize: '1.2rem',
+                  fontWeight: '600',
+                  color: '#1f2937',
+                  margin: '0 0 0.25rem 0'
+                }}>
+                  Courses
+                </h3>
+                <p style={{
+                  fontSize: '0.9rem',
+                  color: '#6b7280',
+                  margin: 0
+                }}>
+                  Course Management
+                </p>
               </div>
             </div>
-            <div className="bg-gray-50 px-5 py-3">
-              <div className="text-sm">
-                <Link
-                  to="/admin/courses"
-                  className="font-medium text-green-700 hover:text-green-900"
-                >
-                  Manage courses
-                </Link>
-              </div>
-            </div>
+            <Link
+              to="/admin/courses"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                color: '#dc2626',
+                textDecoration: 'none',
+                fontWeight: '600',
+                fontSize: '0.9rem',
+                transition: 'color 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                const target = e.target as HTMLAnchorElement;
+                target.style.color = '#ef4444';
+              }}
+              onMouseLeave={(e) => {
+                const target = e.target as HTMLAnchorElement;
+                target.style.color = '#dc2626';
+              }}
+            >
+              Manage Courses
+              <span style={{ fontSize: '0.8rem' }}>→</span>
+            </Link>
           </div>
         )}
 
         {/* Classes Management */}
         {hasPermission('classes', 'read') && (
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-yellow-500 rounded-md flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">🏫</span>
-                  </div>
-                </div>
-                <div className="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">
-                      Classes
-                    </dt>
-                    <dd className="text-lg font-medium text-gray-900">
-                      Manage classes
-                    </dd>
-                  </dl>
-                </div>
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.9)',
+            borderRadius: '16px',
+            padding: '1.5rem',
+            boxShadow: '0 8px 25px rgba(220, 38, 38, 0.1)',
+            border: '1px solid rgba(220, 38, 38, 0.1)',
+            transition: 'all 0.3s ease',
+            cursor: 'pointer'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translateY(-5px)';
+            e.currentTarget.style.boxShadow = '0 15px 35px rgba(220, 38, 38, 0.2)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = '0 8px 25px rgba(220, 38, 38, 0.1)';
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+              <div style={{
+                width: '50px',
+                height: '50px',
+                background: 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)',
+                borderRadius: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginRight: '1rem',
+                boxShadow: '0 4px 15px rgba(220, 38, 38, 0.3)'
+              }}>
+                <span style={{ fontSize: '1.5rem' }}>🏫</span>
+              </div>
+              <div>
+                <h3 style={{
+                  fontSize: '1.2rem',
+                  fontWeight: '600',
+                  color: '#1f2937',
+                  margin: '0 0 0.25rem 0'
+                }}>
+                  Classes
+                </h3>
+                <p style={{
+                  fontSize: '0.9rem',
+                  color: '#6b7280',
+                  margin: 0
+                }}>
+                  Class Management
+                </p>
               </div>
             </div>
-            <div className="bg-gray-50 px-5 py-3">
-              <div className="text-sm">
-                <Link
-                  to="/admin/classes"
-                  className="font-medium text-yellow-700 hover:text-yellow-900"
-                >
-                  Manage classes
-                </Link>
-              </div>
-            </div>
+            <Link
+              to="/admin/classes"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                color: '#dc2626',
+                textDecoration: 'none',
+                fontWeight: '600',
+                fontSize: '0.9rem',
+                transition: 'color 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                const target = e.target as HTMLAnchorElement;
+                target.style.color = '#ef4444';
+              }}
+              onMouseLeave={(e) => {
+                const target = e.target as HTMLAnchorElement;
+                target.style.color = '#dc2626';
+              }}
+            >
+              Manage Classes
+              <span style={{ fontSize: '0.8rem' }}>→</span>
+            </Link>
           </div>
         )}
 
@@ -422,6 +627,72 @@ const AdminDashboardHome: React.FC = () => {
                 and maintain the learning platform.
               </p>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Quick Stats Section */}
+      <div style={{
+        marginTop: '3rem',
+        padding: '2rem',
+        background: 'rgba(255, 255, 255, 0.9)',
+        borderRadius: '16px',
+        boxShadow: '0 8px 25px rgba(220, 38, 38, 0.1)',
+        border: '1px solid rgba(220, 38, 38, 0.1)'
+      }}>
+        <h2 style={{
+          fontSize: '1.5rem',
+          fontWeight: '600',
+          color: '#1f2937',
+          margin: '0 0 1.5rem 0',
+          textAlign: 'center'
+        }}>
+          Quick Overview
+        </h2>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: '1rem'
+        }}>
+          <div style={{
+            textAlign: 'center',
+            padding: '1rem',
+            background: 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)',
+            borderRadius: '12px',
+            color: 'white'
+          }}>
+            <div style={{ fontSize: '2rem', fontWeight: '700', marginBottom: '0.5rem' }}>📊</div>
+            <div style={{ fontSize: '0.9rem', opacity: 0.9 }}>Total Analytics</div>
+          </div>
+          <div style={{
+            textAlign: 'center',
+            padding: '1rem',
+            background: 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)',
+            borderRadius: '12px',
+            color: 'white'
+          }}>
+            <div style={{ fontSize: '2rem', fontWeight: '700', marginBottom: '0.5rem' }}>👥</div>
+            <div style={{ fontSize: '0.9rem', opacity: 0.9 }}>Active Users</div>
+          </div>
+          <div style={{
+            textAlign: 'center',
+            padding: '1rem',
+            background: 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)',
+            borderRadius: '12px',
+            color: 'white'
+          }}>
+            <div style={{ fontSize: '2rem', fontWeight: '700', marginBottom: '0.5rem' }}>📚</div>
+            <div style={{ fontSize: '0.9rem', opacity: 0.9 }}>Total Courses</div>
+          </div>
+          <div style={{
+            textAlign: 'center',
+            padding: '1rem',
+            background: 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)',
+            borderRadius: '12px',
+            color: 'white'
+          }}>
+            <div style={{ fontSize: '2rem', fontWeight: '700', marginBottom: '0.5rem' }}>🏫</div>
+            <div style={{ fontSize: '0.9rem', opacity: 0.9 }}>Active Classes</div>
           </div>
         </div>
       </div>

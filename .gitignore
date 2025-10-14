@@ -16,6 +16,9 @@ out/
 .env.test.local
 .env.production.local
 
+# Local configuration files
+backend/appsettings.Local.json
+
 # Logs
 *.log
 logs/

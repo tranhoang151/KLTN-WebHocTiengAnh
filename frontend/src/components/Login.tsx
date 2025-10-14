@@ -3,9 +3,24 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { roleService } from '../services/roleService';
 import { UserRole } from '../types';
-import DemoLoginInfo from './DemoLoginInfo';
 
 export const Login: React.FC = () => {
+  // Add CSS for loading animation
+  React.useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      if (document.head.contains(style)) {
+        document.head.removeChild(style);
+      }
+    };
+  }, []);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -65,86 +80,285 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
-      <DemoLoginInfo />
-      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-xl shadow-lg">
-        <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
-            Welcome to BingGo
-          </h2>
-          <p className="text-gray-600">Sign in to your account</p>
-        </div>
-
-        <form className="space-y-6" onSubmit={handleSubmit}>
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md">
-              {error}
+    <div 
+      style={{
+        width: '100vw',
+        height: '100vh',
+        display: 'flex',
+        position: 'fixed',
+        top: 0,
+        left: 0
+      }}
+    >
+      {/* Left Side - Image (50% width) */}
+      <div 
+        style={{
+          width: '50%',
+          height: '100vh',
+          backgroundImage: 'url(/BingGo_background.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      />
+      
+      {/* Right Side - Login Form (50% width) */}
+      <div 
+        style={{
+          width: '50%',
+          height: '100vh',
+          background: 'white',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '2rem',
+          position: 'relative'
+        }}
+      >
+        <div 
+          style={{
+            width: '100%',
+            maxWidth: '400px',
+            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            backdropFilter: 'blur(10px)',
+            borderRadius: '16px',
+            padding: '1.5rem',
+            boxShadow: '0 15px 35px rgba(0, 0, 0, 0.1)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            position: 'relative',
+            zIndex: 2
+          }}
+        >
+          {/* Header */}
+          <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+            {/* Logo */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}>
+              <img 
+                src="/logo_BingGo.png" 
+                alt="BingGo Logo"
+                style={{
+                  height: '80px',
+                  width: 'auto',
+                  objectFit: 'contain'
+                }}
+              />
             </div>
-          )}
-
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Email Address
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Enter your email"
-              disabled={isLoading}
-            />
+            
+            <h2 style={{ 
+              fontSize: '2rem',
+              fontWeight: '700', 
+              margin: '0 0 0.25rem 0',
+              background: 'linear-gradient(135deg, #dc2626 0%, #ef4444 50%, #f87171 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}>
+              Welcome to BingGo
+            </h2>
+            <p style={{ 
+              color: '#6b7280', 
+              fontSize: '1rem',
+              fontWeight: '600',
+              margin: '0'
+            }}>
+              Sign in to your account
+            </p>
           </div>
 
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Password
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Enter your password"
-              disabled={isLoading}
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isLoading ? (
-              <div className="flex items-center">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                Signing in...
+          {/* Login Form */}
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {error && (
+              <div style={{
+                backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                border: '1px solid rgba(239, 68, 68, 0.2)',
+                color: '#dc2626',
+                padding: '1rem',
+                borderRadius: '12px',
+                fontSize: '0.875rem',
+                fontWeight: '500',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}>
+                {error}
               </div>
-            ) : (
-              'Sign In'
             )}
-          </button>
-        </form>
 
-        <div className="text-center text-sm text-gray-600">
-          <p>🚀 Demo Mode Active</p>
-          <p className="text-xs mt-1 text-blue-600">
-            Check the demo accounts panel on the right →
-          </p>
+            {/* Email Input */}
+            <div>
+              <label
+                htmlFor="email"
+                style={{
+                  display: 'block',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  color: '#374151',
+                  marginBottom: '0.5rem'
+                }}
+              >
+                Email
+              </label>
+              <div style={{ position: 'relative' }}>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '0.8rem 1rem',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '8px',
+                    fontSize: '0.9rem',
+                    outline: 'none',
+                    transition: 'all 0.3s ease',
+                    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                    backdropFilter: 'blur(5px)'
+                  }}
+                placeholder="Enter your email"
+                disabled={isLoading}
+                onFocus={(e) => {
+                  const target = e.target as HTMLInputElement;
+                  target.style.borderColor = '#dc2626';
+                  target.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.1)';
+                  target.style.transform = 'translateY(-2px)';
+                }}
+                onBlur={(e) => {
+                  const target = e.target as HTMLInputElement;
+                  target.style.borderColor = '#e5e7eb';
+                  target.style.boxShadow = 'none';
+                  target.style.transform = 'translateY(0)';
+                }}
+                />
+              </div>
+            </div>
+
+            {/* Password Input */}
+            <div>
+              <label
+                htmlFor="password"
+                style={{
+                  display: 'block',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  color: '#374151',
+                  marginBottom: '0.5rem'
+                }}
+              >
+                Password
+              </label>
+              <div style={{ position: 'relative' }}>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '0.8rem 1rem',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '8px',
+                    fontSize: '0.9rem',
+                    outline: 'none',
+                    transition: 'all 0.3s ease',
+                    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                    backdropFilter: 'blur(5px)'
+                  }}
+                placeholder="Enter your password"
+                disabled={isLoading}
+                onFocus={(e) => {
+                  const target = e.target as HTMLInputElement;
+                  target.style.borderColor = '#dc2626';
+                  target.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.1)';
+                  target.style.transform = 'translateY(-2px)';
+                }}
+                onBlur={(e) => {
+                  const target = e.target as HTMLInputElement;
+                  target.style.borderColor = '#e5e7eb';
+                  target.style.boxShadow = 'none';
+                  target.style.transform = 'translateY(0)';
+                }}
+                />
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={isLoading}
+              style={{
+                width: '100%',
+                padding: '0.75rem 1rem',
+                marginTop: '2rem',
+                background: 'linear-gradient(135deg, #dc2626 0%, #ef4444 50%, #f87171 100%)',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                fontSize: '1rem',
+                fontWeight: '600',
+                cursor: isLoading ? 'not-allowed' : 'pointer',
+                opacity: isLoading ? 0.7 : 1,
+                transition: 'all 0.3s ease',
+                position: 'relative',
+                overflow: 'hidden'
+              }}
+              onMouseEnter={(e) => {
+                if (!isLoading) {
+                  const target = e.target as HTMLButtonElement;
+                  target.style.transform = 'translateY(-3px)';
+                  target.style.boxShadow = '0 15px 35px rgba(220, 38, 38, 0.4)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isLoading) {
+                  const target = e.target as HTMLButtonElement;
+                  target.style.transform = 'translateY(0)';
+                  target.style.boxShadow = '0 10px 25px rgba(220, 38, 38, 0.3)';
+                }
+              }}
+            >
+              {isLoading ? (
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem' }}>
+                  <div style={{
+                    width: '1.25rem',
+                    height: '1.25rem',
+                    border: '2px solid transparent',
+                    borderTop: '2px solid white',
+                    borderRadius: '50%',
+                    animation: 'spin 1s linear infinite'
+                  }}></div>
+                  <span>Signing in...</span>
+                </div>
+              ) : (
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
+                  <span>Sign In</span>
+                </div>
+              )}
+            </button>
+
+            {/* Additional Info */}
+            <div style={{
+              textAlign: 'center',
+            }}>
+              <p style={{
+                color: '#6b7280',
+                fontSize: '0.8rem',
+                margin: 0,
+                fontWeight: '500'
+              }}>
+                New to BingGo? Contact admin for account access
+              </p>
+            </div>
+          </form>
         </div>
       </div>
     </div>

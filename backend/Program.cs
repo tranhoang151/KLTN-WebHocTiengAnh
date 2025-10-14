@@ -13,7 +13,8 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add additional configuration files
-builder.Configuration.AddJsonFile("appsettings.Security.json", optional: true, reloadOnChange: true);
+// builder.Configuration.AddJsonFile("appsettings.Security.json", optional: true, reloadOnChange: true);
+builder.Configuration.AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true);
 
 builder.Services.AddHttpContextAccessor();
 
