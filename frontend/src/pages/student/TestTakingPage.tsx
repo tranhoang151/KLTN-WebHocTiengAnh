@@ -2,13 +2,14 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { testService } from '../../services/testService';
 import { TestQuestion, TestSession } from '../../types/test';
+import { Question } from '../../types';
 import { Clock, ChevronLeft, ChevronRight, Flag, CheckCircle } from 'lucide-react';
 import './TestTakingPage.css';
 
 const TestTakingPage: React.FC = () => {
     const { testId } = useParams<{ testId: string }>();
     const navigate = useNavigate();
-    const [questions, setQuestions] = useState<TestQuestion[]>([]);
+    const [questions, setQuestions] = useState<Question[]>([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [session, setSession] = useState<TestSession | null>(null);
     const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -206,7 +207,7 @@ const TestTakingPage: React.FC = () => {
                 <div className="question-header">
                     <div className="question-info">
                         <h4>Question {currentQuestionIndex + 1}</h4>
-                        <span style={{ color: '#666' }}>{currentQuestion.points} points</span>
+                        <span style={{ color: '#666' }}>1 point</span>
                     </div>
                     <button
                         className={`flag-button ${isFlagged ? 'flagged' : ''}`}
@@ -218,7 +219,7 @@ const TestTakingPage: React.FC = () => {
                 </div>
 
                 <div className="question-content">
-                    <p className="question-text">{currentQuestion.question}</p>
+                    <p className="question-text">{currentQuestion.content}</p>
 
                     <div className="answer-options">
                         {currentQuestion.options.map((option, index) => (

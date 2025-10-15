@@ -1,239 +1,120 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { ChildFriendlyCard } from '../ui';
-import { Clock, CheckCircle, PlayCircle, BookOpen } from 'lucide-react';
-import { apiService } from '../../services/api';
+import React from 'react';
+import { Test, Course } from '../../types';
+import { Card } from '../ui/Card';
+import { Button } from '../ui/Button';
+import { Edit, Trash2, Eye, Clock, FileText } from 'lucide-react';
 
-interface Test {
-    id: string;
-    title: string;
-    courseId: string;
-    duration: number;
-    maxScore: number;
-    difficulty: string;
-    isActive: boolean;
-    createdAt: string;
+interface TestListProps {
+    tests: Test[];
+    courses: Course[];
+    onEdit: (test: Test) => void;
+    onDelete: (testId: string) => Promise<void>;
+    onPreview: (test: Test) => void;
 }
 
-interface Course {
-    id: string;
-    name: string;
-    description: string;
-}
-
-const TestList: React.FC = () => {
-    const [tests, setTests] = useState<Test[]>([]);
-    const [courses, setCourses] = useState<Course[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [filter, setFilter] = useState<string>('all');
-
-    useEffect(() => {
-        fetchTests();
-        fetchCourses();
-    }, []);
-
-    const fetchTests = async () => {
-        try {
-            const response = await apiService.get('/tests');
-            if (response.success && response.data) {
-                setTests(response.data as Test[]);
-            }
-        } catch (error) {
-            console.error('Failed to fetch tests');
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const fetchCourses = async () => {
-        try {
-            const response = await apiService.get('/courses');
-            if (response.success && response.data) {
-                setCourses(response.data as Course[]);
-            }
-        } catch (error) {
-            console.error('Failed to fetch courses');
-        }
-    };
-
+const TestList: React.FC<TestListProps> = ({
+    tests,
+    courses,
+    onEdit,
+    onDelete,
+    onPreview
+}) => {
     const getCourseName = (courseId: string) => {
         const course = courses.find(c => c.id === courseId);
-        return course ? course.name : 'Unknown Course';
+        return course?.name || 'Unknown Course';
     };
 
-    const getDifficultyColor = (difficulty: string): 'blue' | 'green' | 'orange' | 'purple' | 'pink' | 'default' => {
-        switch (difficulty.toLowerCase()) {
-            case 'easy': return 'green';
-            case 'medium': return 'orange';
-            case 'hard': return 'purple';
-            default: return 'blue';
+    const formatDuration = (minutes: number) => {
+        if (minutes < 60) {
+            return `${minutes} min`;
+        }
+        const hours = Math.floor(minutes / 60);
+        const mins = minutes % 60;
+        return `${hours}h ${mins}m`;
+    };
+
+    const handleDelete = async (testId: string) => {
+        if (window.confirm('Are you sure you want to delete this test?')) {
+            await onDelete(testId);
         }
     };
 
-    const filteredTests = filter === 'all'
-        ? tests
-        : tests.filter(test => test.difficulty.toLowerCase() === filter);
-
-    if (loading) {
+    if (!tests || tests.length === 0) {
         return (
-            <div className="flex items-center justify-center min-h-screen">
-                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
-            </div>
+            <Card className="p-8 text-center">
+                <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No tests found</h3>
+                <p className="text-gray-600">Create your first test to get started.</p>
+            </Card>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 py-8">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                {/* Header */}
-                <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900 flex items-center">
-                        <BookOpen className="mr-3 h-8 w-8 text-blue-500" />
-                        Tests & Quizzes
-                    </h1>
-                    <p className="mt-2 text-gray-600">
-                        Challenge yourself with fun quizzes and tests to track your learning progress!
-                    </p>
-                </div>
+        <div className="grid gap-6">
+            {tests && tests.map((test) => (
+                <Card key={test.id} className="p-6 bg-gradient-to-r from-white to-blue-50 border border-blue-200 hover:shadow-lg transition-all duration-300 hover:border-blue-300">
+                    <div className="flex justify-between items-start">
+                        <div className="flex-1">
+                            <div className="flex items-center gap-3 mb-3">
+                                <h3 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">{test.title}</h3>
+                                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-800 border border-blue-200">
+                                    {getCourseName(test.course_id)}
+                                </span>
+                            </div>
 
-                {/* Filter Buttons */}
-                <div className="mb-6 flex flex-wrap gap-2">
-                    <button
-                        onClick={() => setFilter('all')}
-                        className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${filter === 'all'
-                            ? 'bg-blue-500 text-white'
-                            : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'
-                            }`}
-                    >
-                        All Tests
-                    </button>
-                    <button
-                        onClick={() => setFilter('easy')}
-                        className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${filter === 'easy'
-                            ? 'bg-green-500 text-white'
-                            : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'
-                            }`}
-                    >
-                        Easy
-                    </button>
-                    <button
-                        onClick={() => setFilter('medium')}
-                        className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${filter === 'medium'
-                            ? 'bg-orange-500 text-white'
-                            : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'
-                            }`}
-                    >
-                        Medium
-                    </button>
-                    <button
-                        onClick={() => setFilter('hard')}
-                        className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${filter === 'hard'
-                            ? 'bg-red-500 text-white'
-                            : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'
-                            }`}
-                    >
-                        Hard
-                    </button>
-                </div>
-
-                {/* Tests Grid */}
-                {filteredTests.length === 0 ? (
-                    <ChildFriendlyCard
-                        title="No Tests Available"
-                        icon="📝"
-                        color="blue"
-                        className="text-center py-12"
-                    >
-                        <p className="text-gray-600 mb-4">
-                            {filter === 'all'
-                                ? "No tests are available at the moment."
-                                : `No ${filter} tests are available at the moment.`
-                            }
-                        </p>
-                        <p className="text-sm text-gray-500">
-                            Check back later for new tests and quizzes!
-                        </p>
-                    </ChildFriendlyCard>
-                ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {filteredTests.map((test) => (
-                            <ChildFriendlyCard
-                                key={test.id}
-                                title={test.title}
-                                icon="📝"
-                                color={getDifficultyColor(test.difficulty)}
-                                interactive
-                                className="h-full"
-                            >
-                                <div className="space-y-4">
-                                    <div className="flex items-center justify-between text-sm text-gray-600">
-                                        <span className="flex items-center">
-                                            <BookOpen className="h-4 w-4 mr-1" />
-                                            {getCourseName(test.courseId)}
-                                        </span>
-                                        <span className={`px-2 py-1 rounded-full text-xs font-medium bg-${getDifficultyColor(test.difficulty)}-100 text-${getDifficultyColor(test.difficulty)}-800`}>
-                                            {test.difficulty}
-                                        </span>
-                                    </div>
-
-                                    <div className="flex items-center justify-between text-sm text-gray-600">
-                                        <span className="flex items-center">
-                                            <Clock className="h-4 w-4 mr-1" />
-                                            {test.duration} min
-                                        </span>
-                                        <span className="flex items-center">
-                                            <CheckCircle className="h-4 w-4 mr-1" />
-                                            {test.maxScore} points
-                                        </span>
-                                    </div>
-
-                                    <div className="pt-4">
-                                        <Link
-                                            to={`/student/tests/${test.id}`}
-                                            className="w-full bg-blue-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-600 transition-colors flex items-center justify-center"
-                                        >
-                                            <PlayCircle className="h-4 w-4 mr-2" />
-                                            Start Test
-                                        </Link>
-                                    </div>
+                            <div className="flex items-center gap-6 text-sm text-gray-700 mb-4">
+                                <div className="flex items-center gap-2 bg-blue-50 px-3 py-1 rounded-lg">
+                                    <FileText className="w-4 h-4 text-blue-500" />
+                                    <span className="font-medium">{test.questions?.length || 0} questions</span>
                                 </div>
-                            </ChildFriendlyCard>
-                        ))}
-                    </div>
-                )}
+                                <div className="flex items-center gap-2 bg-green-50 px-3 py-1 rounded-lg">
+                                    <Clock className="w-4 h-4 text-green-500" />
+                                    <span className="font-medium">{formatDuration(test.duration)}</span>
+                                </div>
+                                <div className="flex items-center gap-2 bg-purple-50 px-3 py-1 rounded-lg">
+                                    <span className="font-medium text-purple-700">Max Score: {test.maxScore}</span>
+                                </div>
+                            </div>
 
-                {/* Test Tips */}
-                <ChildFriendlyCard
-                    title="Test Tips"
-                    icon="💡"
-                    color="purple"
-                    className="mt-8"
-                >
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                        <div className="flex items-start space-x-3">
-                            <span className="text-2xl">⏰</span>
-                            <div>
-                                <p className="font-medium text-gray-900">Time Management</p>
-                                <p className="text-gray-600">Keep track of time and don't spend too long on one question.</p>
-                            </div>
+                            {test.created_at && (
+                                <p className="text-xs text-gray-500 bg-gray-50 px-2 py-1 rounded inline-block">
+                                    Created: {new Date(test.created_at.seconds * 1000).toLocaleDateString()}
+                                </p>
+                            )}
                         </div>
-                        <div className="flex items-start space-x-3">
-                            <span className="text-2xl">🎯</span>
-                            <div>
-                                <p className="font-medium text-gray-900">Read Carefully</p>
-                                <p className="text-gray-600">Read each question thoroughly before selecting your answer.</p>
-                            </div>
-                        </div>
-                        <div className="flex items-start space-x-3">
-                            <span className="text-2xl">🏆</span>
-                            <div>
-                                <p className="font-medium text-gray-900">Best Effort</p>
-                                <p className="text-gray-600">Answer every question - you might get partial credit!</p>
-                            </div>
+
+                        <div className="flex items-center gap-3 ml-6">
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => onPreview(test)}
+                                className="flex items-center gap-2 bg-gradient-to-r from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 border-blue-300 text-blue-700 hover:text-blue-800 transition-all duration-200"
+                            >
+                                <Eye className="w-4 h-4" />
+                                Preview
+                            </Button>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => onEdit(test)}
+                                className="flex items-center gap-2 bg-gradient-to-r from-indigo-50 to-indigo-100 hover:from-indigo-100 hover:to-indigo-200 border-indigo-300 text-indigo-700 hover:text-indigo-800 transition-all duration-200"
+                            >
+                                <Edit className="w-4 h-4" />
+                                Edit
+                            </Button>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => handleDelete(test.id)}
+                                className="flex items-center gap-2 bg-gradient-to-r from-red-50 to-red-100 hover:from-red-100 hover:to-red-200 border-red-300 text-red-600 hover:text-red-700 transition-all duration-200"
+                            >
+                                <Trash2 className="w-4 h-4" />
+                                Delete
+                            </Button>
                         </div>
                     </div>
-                </ChildFriendlyCard>
-            </div>
+                </Card>
+            ))}
         </div>
     );
 };
