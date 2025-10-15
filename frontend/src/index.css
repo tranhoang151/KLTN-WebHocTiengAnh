@@ -4,16 +4,48 @@
 /* Import Accessibility Styles */
 @import './styles/accessibility.css';
 
-body {
-  margin: 0;
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
 
 code {
   font-family:
     source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* Force 2-column layout for Login only */
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+html,
+body {
+  height: 100% !important;
+}
+
+/* Only apply overflow hidden to Login page */
+.login-page {
+  overflow: hidden !important;
+  height: 100vh !important;
+}
+
+/* Remove all default focus outlines */
+*:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove browser default button styles */
+button {
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+}
+
+/* Remove browser default input styles */
+input {
+  outline: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
 }

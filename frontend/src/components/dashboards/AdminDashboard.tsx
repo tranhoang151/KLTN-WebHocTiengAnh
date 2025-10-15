@@ -17,35 +17,99 @@ const AdminDashboardHome: React.FC = () => {
   const { hasPermission } = usePermissions();
 
   return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+          gap: '24px',
+        }}
+      >
         {/* Analytics Dashboard */}
         {hasPermission('reports', 'read') && (
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-cyan-500 rounded-md flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">📈</span>
+          <div
+            style={{
+              backgroundColor: 'white',
+              overflow: 'hidden',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              borderRadius: '8px',
+              border: '1px solid #e5e7eb',
+            }}
+          >
+            <div style={{ padding: '20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ flexShrink: 0 }}>
+                  <div
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      backgroundColor: '#06b6d4',
+                      borderRadius: '6px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: 'white',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                      }}
+                    >
+                      📈
+                    </span>
                   </div>
                 </div>
-                <div className="ml-5 w-0 flex-1">
+                <div style={{ marginLeft: '20px', flex: 1 }}>
                   <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">
+                    <dt
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        color: '#6b7280',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
                       Analytics
                     </dt>
-                    <dd className="text-lg font-medium text-gray-900">
+                    <dd
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: '500',
+                        color: '#111827',
+                        margin: '4px 0 0 0',
+                      }}
+                    >
                       Platform Stats
                     </dd>
                   </dl>
                 </div>
               </div>
             </div>
-            <div className="bg-gray-50 px-5 py-3">
-              <div className="text-sm">
+            <div
+              style={{
+                backgroundColor: '#f9fafb',
+                padding: '12px 20px',
+                borderTop: '1px solid #e5e7eb',
+              }}
+            >
+              <div style={{ fontSize: '14px' }}>
                 <Link
                   to="/admin/analytics"
-                  className="font-medium text-cyan-700 hover:text-cyan-900"
+                  style={{
+                    fontWeight: '500',
+                    color: '#0891b2',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#0e7490';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#0891b2';
+                  }}
                 >
                   View Analytics
                 </Link>
@@ -56,31 +120,89 @@ const AdminDashboardHome: React.FC = () => {
 
         {/* Users Management */}
         {hasPermission('users', 'read') && (
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-blue-500 rounded-md flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">👥</span>
+          <div
+            style={{
+              backgroundColor: 'white',
+              overflow: 'hidden',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              borderRadius: '8px',
+              border: '1px solid #e5e7eb',
+            }}
+          >
+            <div style={{ padding: '20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ flexShrink: 0 }}>
+                  <div
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      backgroundColor: '#3b82f6',
+                      borderRadius: '6px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: 'white',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                      }}
+                    >
+                      👥
+                    </span>
                   </div>
                 </div>
-                <div className="ml-5 w-0 flex-1">
+                <div style={{ marginLeft: '20px', flex: 1 }}>
                   <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">
+                    <dt
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        color: '#6b7280',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
                       Users
                     </dt>
-                    <dd className="text-lg font-medium text-gray-900">
+                    <dd
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: '500',
+                        color: '#111827',
+                        margin: '4px 0 0 0',
+                      }}
+                    >
                       Manage users
                     </dd>
                   </dl>
                 </div>
               </div>
             </div>
-            <div className="bg-gray-50 px-5 py-3">
-              <div className="text-sm">
+            <div
+              style={{
+                backgroundColor: '#f9fafb',
+                padding: '12px 20px',
+                borderTop: '1px solid #e5e7eb',
+              }}
+            >
+              <div style={{ fontSize: '14px' }}>
                 <Link
                   to="/admin/users"
-                  className="font-medium text-blue-700 hover:text-blue-900"
+                  style={{
+                    fontWeight: '500',
+                    color: '#1d4ed8',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#1e40af';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#1d4ed8';
+                  }}
                 >
                   Manage users
                 </Link>
@@ -91,31 +213,89 @@ const AdminDashboardHome: React.FC = () => {
 
         {/* Courses Management */}
         {hasPermission('courses', 'read') && (
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-green-500 rounded-md flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">📚</span>
+          <div
+            style={{
+              backgroundColor: 'white',
+              overflow: 'hidden',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              borderRadius: '8px',
+              border: '1px solid #e5e7eb',
+            }}
+          >
+            <div style={{ padding: '20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ flexShrink: 0 }}>
+                  <div
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      backgroundColor: '#10b981',
+                      borderRadius: '6px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: 'white',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                      }}
+                    >
+                      📚
+                    </span>
                   </div>
                 </div>
-                <div className="ml-5 w-0 flex-1">
+                <div style={{ marginLeft: '20px', flex: 1 }}>
                   <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">
+                    <dt
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        color: '#6b7280',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
                       Courses
                     </dt>
-                    <dd className="text-lg font-medium text-gray-900">
+                    <dd
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: '500',
+                        color: '#111827',
+                        margin: '4px 0 0 0',
+                      }}
+                    >
                       Manage courses
                     </dd>
                   </dl>
                 </div>
               </div>
             </div>
-            <div className="bg-gray-50 px-5 py-3">
-              <div className="text-sm">
+            <div
+              style={{
+                backgroundColor: '#f9fafb',
+                padding: '12px 20px',
+                borderTop: '1px solid #e5e7eb',
+              }}
+            >
+              <div style={{ fontSize: '14px' }}>
                 <Link
                   to="/admin/courses"
-                  className="font-medium text-green-700 hover:text-green-900"
+                  style={{
+                    fontWeight: '500',
+                    color: '#047857',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#065f46';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#047857';
+                  }}
                 >
                   Manage courses
                 </Link>
@@ -126,31 +306,89 @@ const AdminDashboardHome: React.FC = () => {
 
         {/* Classes Management */}
         {hasPermission('classes', 'read') && (
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-yellow-500 rounded-md flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">🏫</span>
+          <div
+            style={{
+              backgroundColor: 'white',
+              overflow: 'hidden',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              borderRadius: '8px',
+              border: '1px solid #e5e7eb',
+            }}
+          >
+            <div style={{ padding: '20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ flexShrink: 0 }}>
+                  <div
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      backgroundColor: '#eab308',
+                      borderRadius: '6px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: 'white',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                      }}
+                    >
+                      🏫
+                    </span>
                   </div>
                 </div>
-                <div className="ml-5 w-0 flex-1">
+                <div style={{ marginLeft: '20px', flex: 1 }}>
                   <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">
+                    <dt
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        color: '#6b7280',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
                       Classes
                     </dt>
-                    <dd className="text-lg font-medium text-gray-900">
+                    <dd
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: '500',
+                        color: '#111827',
+                        margin: '4px 0 0 0',
+                      }}
+                    >
                       Manage classes
                     </dd>
                   </dl>
                 </div>
               </div>
             </div>
-            <div className="bg-gray-50 px-5 py-3">
-              <div className="text-sm">
+            <div
+              style={{
+                backgroundColor: '#f9fafb',
+                padding: '12px 20px',
+                borderTop: '1px solid #e5e7eb',
+              }}
+            >
+              <div style={{ fontSize: '14px' }}>
                 <Link
                   to="/admin/classes"
-                  className="font-medium text-yellow-700 hover:text-yellow-900"
+                  style={{
+                    fontWeight: '500',
+                    color: '#a16207',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#854d0e';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#a16207';
+                  }}
                 >
                   Manage classes
                 </Link>
@@ -161,31 +399,89 @@ const AdminDashboardHome: React.FC = () => {
 
         {/* Content Management */}
         {hasPermission('content', 'read') && (
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-purple-500 rounded-md flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">📝</span>
+          <div
+            style={{
+              backgroundColor: 'white',
+              overflow: 'hidden',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              borderRadius: '8px',
+              border: '1px solid #e5e7eb',
+            }}
+          >
+            <div style={{ padding: '20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ flexShrink: 0 }}>
+                  <div
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      backgroundColor: '#8b5cf6',
+                      borderRadius: '6px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: 'white',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                      }}
+                    >
+                      📝
+                    </span>
                   </div>
                 </div>
-                <div className="ml-5 w-0 flex-1">
+                <div style={{ marginLeft: '20px', flex: 1 }}>
                   <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">
+                    <dt
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        color: '#6b7280',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
                       Content
                     </dt>
-                    <dd className="text-lg font-medium text-gray-900">
+                    <dd
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: '500',
+                        color: '#111827',
+                        margin: '4px 0 0 0',
+                      }}
+                    >
                       Manage content
                     </dd>
                   </dl>
                 </div>
               </div>
             </div>
-            <div className="bg-gray-50 px-5 py-3">
-              <div className="text-sm">
+            <div
+              style={{
+                backgroundColor: '#f9fafb',
+                padding: '12px 20px',
+                borderTop: '1px solid #e5e7eb',
+              }}
+            >
+              <div style={{ fontSize: '14px' }}>
                 <Link
                   to="/admin/content"
-                  className="font-medium text-purple-700 hover:text-purple-900"
+                  style={{
+                    fontWeight: '500',
+                    color: '#7c3aed',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#6d28d9';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#7c3aed';
+                  }}
                 >
                   Manage content
                 </Link>
@@ -196,31 +492,89 @@ const AdminDashboardHome: React.FC = () => {
 
         {/* Flashcards */}
         {hasPermission('flashcards', 'read') && (
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-indigo-500 rounded-md flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">🃏</span>
+          <div
+            style={{
+              backgroundColor: 'white',
+              overflow: 'hidden',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              borderRadius: '8px',
+              border: '1px solid #e5e7eb',
+            }}
+          >
+            <div style={{ padding: '20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ flexShrink: 0 }}>
+                  <div
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      backgroundColor: '#6366f1',
+                      borderRadius: '6px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: 'white',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                      }}
+                    >
+                      🃏
+                    </span>
                   </div>
                 </div>
-                <div className="ml-5 w-0 flex-1">
+                <div style={{ marginLeft: '20px', flex: 1 }}>
                   <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">
+                    <dt
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        color: '#6b7280',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
                       Flashcards
                     </dt>
-                    <dd className="text-lg font-medium text-gray-900">
+                    <dd
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: '500',
+                        color: '#111827',
+                        margin: '4px 0 0 0',
+                      }}
+                    >
                       Manage flashcards
                     </dd>
                   </dl>
                 </div>
               </div>
             </div>
-            <div className="bg-gray-50 px-5 py-3">
-              <div className="text-sm">
+            <div
+              style={{
+                backgroundColor: '#f9fafb',
+                padding: '12px 20px',
+                borderTop: '1px solid #e5e7eb',
+              }}
+            >
+              <div style={{ fontSize: '14px' }}>
                 <Link
                   to="/admin/flashcards"
-                  className="font-medium text-indigo-700 hover:text-indigo-900"
+                  style={{
+                    fontWeight: '500',
+                    color: '#4338ca',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#3730a3';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#4338ca';
+                  }}
                 >
                   Manage flashcards
                 </Link>
@@ -231,31 +585,89 @@ const AdminDashboardHome: React.FC = () => {
 
         {/* Exercises */}
         {hasPermission('exercises', 'read') && (
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-pink-500 rounded-md flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">✏️</span>
+          <div
+            style={{
+              backgroundColor: 'white',
+              overflow: 'hidden',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              borderRadius: '8px',
+              border: '1px solid #e5e7eb',
+            }}
+          >
+            <div style={{ padding: '20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ flexShrink: 0 }}>
+                  <div
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      backgroundColor: '#ec4899',
+                      borderRadius: '6px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: 'white',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                      }}
+                    >
+                      ✏️
+                    </span>
                   </div>
                 </div>
-                <div className="ml-5 w-0 flex-1">
+                <div style={{ marginLeft: '20px', flex: 1 }}>
                   <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">
+                    <dt
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        color: '#6b7280',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
                       Exercises
                     </dt>
-                    <dd className="text-lg font-medium text-gray-900">
+                    <dd
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: '500',
+                        color: '#111827',
+                        margin: '4px 0 0 0',
+                      }}
+                    >
                       Manage exercises
                     </dd>
                   </dl>
                 </div>
               </div>
             </div>
-            <div className="bg-gray-50 px-5 py-3">
-              <div className="text-sm">
+            <div
+              style={{
+                backgroundColor: '#f9fafb',
+                padding: '12px 20px',
+                borderTop: '1px solid #e5e7eb',
+              }}
+            >
+              <div style={{ fontSize: '14px' }}>
                 <Link
                   to="/admin/exercises"
-                  className="font-medium text-pink-700 hover:text-pink-900"
+                  style={{
+                    fontWeight: '500',
+                    color: '#be185d',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#9d174d';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#be185d';
+                  }}
                 >
                   Manage exercises
                 </Link>
@@ -266,31 +678,89 @@ const AdminDashboardHome: React.FC = () => {
 
         {/* Questions Bank */}
         {hasPermission('questions', 'read') && (
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-red-500 rounded-md flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">❓</span>
+          <div
+            style={{
+              backgroundColor: 'white',
+              overflow: 'hidden',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              borderRadius: '8px',
+              border: '1px solid #e5e7eb',
+            }}
+          >
+            <div style={{ padding: '20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ flexShrink: 0 }}>
+                  <div
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      backgroundColor: '#ef4444',
+                      borderRadius: '6px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: 'white',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                      }}
+                    >
+                      ❓
+                    </span>
                   </div>
                 </div>
-                <div className="ml-5 w-0 flex-1">
+                <div style={{ marginLeft: '20px', flex: 1 }}>
                   <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">
+                    <dt
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        color: '#6b7280',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
                       Questions
                     </dt>
-                    <dd className="text-lg font-medium text-gray-900">
+                    <dd
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: '500',
+                        color: '#111827',
+                        margin: '4px 0 0 0',
+                      }}
+                    >
                       Question bank
                     </dd>
                   </dl>
                 </div>
               </div>
             </div>
-            <div className="bg-gray-50 px-5 py-3">
-              <div className="text-sm">
+            <div
+              style={{
+                backgroundColor: '#f9fafb',
+                padding: '12px 20px',
+                borderTop: '1px solid #e5e7eb',
+              }}
+            >
+              <div style={{ fontSize: '14px' }}>
                 <Link
                   to="/admin/questions"
-                  className="font-medium text-red-700 hover:text-red-900"
+                  style={{
+                    fontWeight: '500',
+                    color: '#dc2626',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#b91c1c';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#dc2626';
+                  }}
                 >
                   Manage questions
                 </Link>
@@ -301,31 +771,89 @@ const AdminDashboardHome: React.FC = () => {
 
         {/* Videos Management */}
         {hasPermission('videos', 'read') && (
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-orange-500 rounded-md flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">🎥</span>
+          <div
+            style={{
+              backgroundColor: 'white',
+              overflow: 'hidden',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              borderRadius: '8px',
+              border: '1px solid #e5e7eb',
+            }}
+          >
+            <div style={{ padding: '20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ flexShrink: 0 }}>
+                  <div
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      backgroundColor: '#f97316',
+                      borderRadius: '6px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: 'white',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                      }}
+                    >
+                      🎥
+                    </span>
                   </div>
                 </div>
-                <div className="ml-5 w-0 flex-1">
+                <div style={{ marginLeft: '20px', flex: 1 }}>
                   <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">
+                    <dt
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        color: '#6b7280',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
                       Videos
                     </dt>
-                    <dd className="text-lg font-medium text-gray-900">
+                    <dd
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: '500',
+                        color: '#111827',
+                        margin: '4px 0 0 0',
+                      }}
+                    >
                       Manage video lessons
                     </dd>
                   </dl>
                 </div>
               </div>
             </div>
-            <div className="bg-gray-50 px-5 py-3">
-              <div className="text-sm">
+            <div
+              style={{
+                backgroundColor: '#f9fafb',
+                padding: '12px 20px',
+                borderTop: '1px solid #e5e7eb',
+              }}
+            >
+              <div style={{ fontSize: '14px' }}>
                 <Link
                   to="/admin/videos"
-                  className="font-medium text-orange-700 hover:text-orange-900"
+                  style={{
+                    fontWeight: '500',
+                    color: '#ea580c',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#c2410c';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#ea580c';
+                  }}
                 >
                   Manage videos
                 </Link>
@@ -336,31 +864,89 @@ const AdminDashboardHome: React.FC = () => {
 
         {/* System Configuration */}
         {hasPermission('admin', 'write') && (
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-purple-500 rounded-md flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">⚙️</span>
+          <div
+            style={{
+              backgroundColor: 'white',
+              overflow: 'hidden',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              borderRadius: '8px',
+              border: '1px solid #e5e7eb',
+            }}
+          >
+            <div style={{ padding: '20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ flexShrink: 0 }}>
+                  <div
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      backgroundColor: '#8b5cf6',
+                      borderRadius: '6px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: 'white',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                      }}
+                    >
+                      ⚙️
+                    </span>
                   </div>
                 </div>
-                <div className="ml-5 w-0 flex-1">
+                <div style={{ marginLeft: '20px', flex: 1 }}>
                   <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">
+                    <dt
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        color: '#6b7280',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
                       System Config
                     </dt>
-                    <dd className="text-lg font-medium text-gray-900">
+                    <dd
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: '500',
+                        color: '#111827',
+                        margin: '4px 0 0 0',
+                      }}
+                    >
                       System settings & maintenance
                     </dd>
                   </dl>
                 </div>
               </div>
             </div>
-            <div className="bg-gray-50 px-5 py-3">
-              <div className="text-sm">
+            <div
+              style={{
+                backgroundColor: '#f9fafb',
+                padding: '12px 20px',
+                borderTop: '1px solid #e5e7eb',
+              }}
+            >
+              <div style={{ fontSize: '14px' }}>
                 <Link
                   to="/admin/system-config"
-                  className="font-medium text-purple-700 hover:text-purple-900"
+                  style={{
+                    fontWeight: '500',
+                    color: '#7c3aed',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#6d28d9';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#7c3aed';
+                  }}
                 >
                   Manage system
                 </Link>
@@ -371,31 +957,89 @@ const AdminDashboardHome: React.FC = () => {
 
         {/* System Reports */}
         {hasPermission('reports', 'read') && (
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="p-5">
-              <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 bg-gray-500 rounded-md flex items-center justify-center">
-                    <span className="text-white text-sm font-medium">📊</span>
+          <div
+            style={{
+              backgroundColor: 'white',
+              overflow: 'hidden',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              borderRadius: '8px',
+              border: '1px solid #e5e7eb',
+            }}
+          >
+            <div style={{ padding: '20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ flexShrink: 0 }}>
+                  <div
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      backgroundColor: '#6b7280',
+                      borderRadius: '6px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: 'white',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                      }}
+                    >
+                      📊
+                    </span>
                   </div>
                 </div>
-                <div className="ml-5 w-0 flex-1">
+                <div style={{ marginLeft: '20px', flex: 1 }}>
                   <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">
+                    <dt
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        color: '#6b7280',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
                       Reports
                     </dt>
-                    <dd className="text-lg font-medium text-gray-900">
+                    <dd
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: '500',
+                        color: '#111827',
+                        margin: '4px 0 0 0',
+                      }}
+                    >
                       System reports
                     </dd>
                   </dl>
                 </div>
               </div>
             </div>
-            <div className="bg-gray-50 px-5 py-3">
-              <div className="text-sm">
+            <div
+              style={{
+                backgroundColor: '#f9fafb',
+                padding: '12px 20px',
+                borderTop: '1px solid #e5e7eb',
+              }}
+            >
+              <div style={{ fontSize: '14px' }}>
                 <Link
                   to="/admin/reports"
-                  className="font-medium text-gray-700 hover:text-gray-900"
+                  style={{
+                    fontWeight: '500',
+                    color: '#4b5563',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#374151';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#4b5563';
+                  }}
                 >
                   View reports
                 </Link>
@@ -406,23 +1050,145 @@ const AdminDashboardHome: React.FC = () => {
       </div>
 
       {/* System Overview */}
-      <div className="mt-8 bg-red-50 border border-red-200 rounded-md p-4">
-        <div className="flex">
-          <div className="flex-shrink-0">
-            <span className="text-red-400 text-xl">⚙️</span>
+      <div
+        style={{
+          marginTop: '32px',
+          backgroundColor: '#fef2f2',
+          border: '1px solid #fecaca',
+          borderRadius: '6px',
+          padding: '16px',
+        }}
+      >
+        <div style={{ display: 'flex' }}>
+          <div style={{ flexShrink: 0 }}>
+            <span style={{ color: '#f87171', fontSize: '20px' }}>⚙️</span>
           </div>
-          <div className="ml-3">
-            <h3 className="text-sm font-medium text-red-800">
+          <div style={{ marginLeft: '12px' }}>
+            <h3
+              style={{
+                fontSize: '14px',
+                fontWeight: '500',
+                color: '#991b1b',
+                margin: '0 0 8px 0',
+              }}
+            >
               System Administration
             </h3>
-            <div className="mt-2 text-sm text-red-700">
-              <p>
+            <div style={{ fontSize: '14px', color: '#b91c1c' }}>
+              <p style={{ margin: '0' }}>
                 Full system access for managing users, courses, classes, and all
                 learning content. Monitor system performance, generate reports,
                 and maintain the learning platform.
               </p>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Quick Actions Section */}
+      <div
+        style={{
+          backgroundColor: 'white',
+          borderRadius: '8px',
+          padding: '24px',
+          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+          border: '1px solid #e5e7eb',
+        }}
+      >
+        <h3
+          style={{
+            fontSize: '18px',
+            fontWeight: '600',
+            color: '#111827',
+            margin: '0 0 16px 0',
+          }}
+        >
+          Quick Actions
+        </h3>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '16px',
+          }}
+        >
+          <Link
+            to="/admin/users"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              padding: '12px 16px',
+              backgroundColor: '#f8fafc',
+              borderRadius: '6px',
+              textDecoration: 'none',
+              color: '#374151',
+              border: '1px solid #e2e8f0',
+              transition: 'all 0.2s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#e2e8f0';
+              e.currentTarget.style.borderColor = '#cbd5e1';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = '#f8fafc';
+              e.currentTarget.style.borderColor = '#e2e8f0';
+            }}
+          >
+            <span style={{ marginRight: '8px' }}>👥</span>
+            <span style={{ fontWeight: '500' }}>Add New User</span>
+          </Link>
+
+          <Link
+            to="/admin/courses"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              padding: '12px 16px',
+              backgroundColor: '#f8fafc',
+              borderRadius: '6px',
+              textDecoration: 'none',
+              color: '#374151',
+              border: '1px solid #e2e8f0',
+              transition: 'all 0.2s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#e2e8f0';
+              e.currentTarget.style.borderColor = '#cbd5e1';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = '#f8fafc';
+              e.currentTarget.style.borderColor = '#e2e8f0';
+            }}
+          >
+            <span style={{ marginRight: '8px' }}>📚</span>
+            <span style={{ fontWeight: '500' }}>Create Course</span>
+          </Link>
+
+          <Link
+            to="/admin/analytics"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              padding: '12px 16px',
+              backgroundColor: '#f8fafc',
+              borderRadius: '6px',
+              textDecoration: 'none',
+              color: '#374151',
+              border: '1px solid #e2e8f0',
+              transition: 'all 0.2s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#e2e8f0';
+              e.currentTarget.style.borderColor = '#cbd5e1';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = '#f8fafc';
+              e.currentTarget.style.borderColor = '#e2e8f0';
+            }}
+          >
+            <span style={{ marginRight: '8px' }}>📊</span>
+            <span style={{ fontWeight: '500' }}>View Reports</span>
+          </Link>
         </div>
       </div>
     </div>
