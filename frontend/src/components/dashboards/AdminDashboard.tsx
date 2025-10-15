@@ -47,252 +47,6 @@ const AdminDashboardHome: React.FC = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      {/* System Overview */}
-      <div
-        style={{
-          backgroundColor: 'white',
-          borderRadius: '8px',
-          padding: '24px',
-          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
-          border: '1px solid #e5e7eb',
-        }}
-      >
-        <h2
-          style={{
-            fontSize: '24px',
-            fontWeight: '600',
-            color: '#111827',
-            margin: '0 0 16px 0',
-          }}
-        >
-          System Overview
-        </h2>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '16px',
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: '#f8fafc',
-              borderRadius: '6px',
-              padding: '16px',
-              border: '1px solid #e2e8f0',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <div style={{ flexShrink: 0 }}>
-                <div
-                  style={{
-                    width: '32px',
-                    height: '32px',
-                    backgroundColor: '#3b82f6',
-                    borderRadius: '6px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <span
-                    style={{
-                      color: 'white',
-                      fontSize: '14px',
-                      fontWeight: '500',
-                    }}
-                  >
-                    👥
-                  </span>
-                </div>
-              </div>
-              <div style={{ marginLeft: '12px', flex: 1 }}>
-                <div
-                  style={{
-                    fontSize: '24px',
-                    fontWeight: '600',
-                    color: '#111827',
-                  }}
-                >
-                  {loading ? '...' : stats.totalUsers}
-                </div>
-                <div
-                  style={{
-                    fontSize: '14px',
-                    color: '#6b7280',
-                  }}
-                >
-                  Total users
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            style={{
-              backgroundColor: '#f8fafc',
-              borderRadius: '6px',
-              padding: '16px',
-              border: '1px solid #e2e8f0',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <div style={{ flexShrink: 0 }}>
-                <div
-                  style={{
-                    width: '32px',
-                    height: '32px',
-                    backgroundColor: '#eab308',
-                    borderRadius: '6px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <span
-                    style={{
-                      color: 'white',
-                      fontSize: '14px',
-                      fontWeight: '500',
-                    }}
-                  >
-                    🏫
-                  </span>
-                </div>
-              </div>
-              <div style={{ marginLeft: '12px', flex: 1 }}>
-                <div
-                  style={{
-                    fontSize: '24px',
-                    fontWeight: '600',
-                    color: '#111827',
-                  }}
-                >
-                  {loading ? '...' : stats.totalClasses}
-                </div>
-                <div
-                  style={{
-                    fontSize: '14px',
-                    color: '#6b7280',
-                  }}
-                >
-                  Classes
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            style={{
-              backgroundColor: '#f8fafc',
-              borderRadius: '6px',
-              padding: '16px',
-              border: '1px solid #e2e8f0',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <div style={{ flexShrink: 0 }}>
-                <div
-                  style={{
-                    width: '32px',
-                    height: '32px',
-                    backgroundColor: '#10b981',
-                    borderRadius: '6px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <span
-                    style={{
-                      color: 'white',
-                      fontSize: '14px',
-                      fontWeight: '500',
-                    }}
-                  >
-                    👨‍🏫
-                  </span>
-                </div>
-              </div>
-              <div style={{ marginLeft: '12px', flex: 1 }}>
-                <div
-                  style={{
-                    fontSize: '24px',
-                    fontWeight: '600',
-                    color: '#111827',
-                  }}
-                >
-                  {loading ? '...' : stats.totalTeachers}
-                </div>
-                <div
-                  style={{
-                    fontSize: '14px',
-                    color: '#6b7280',
-                  }}
-                >
-                  Teachers
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            style={{
-              backgroundColor: '#f8fafc',
-              borderRadius: '6px',
-              padding: '16px',
-              border: '1px solid #e2e8f0',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <div style={{ flexShrink: 0 }}>
-                <div
-                  style={{
-                    width: '32px',
-                    height: '32px',
-                    backgroundColor: '#8b5cf6',
-                    borderRadius: '6px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <span
-                    style={{
-                      color: 'white',
-                      fontSize: '14px',
-                      fontWeight: '500',
-                    }}
-                  >
-                    📚
-                  </span>
-                </div>
-              </div>
-              <div style={{ marginLeft: '12px', flex: 1 }}>
-                <div
-                  style={{
-                    fontSize: '24px',
-                    fontWeight: '600',
-                    color: '#111827',
-                  }}
-                >
-                  {loading ? '...' : stats.totalContent}
-                </div>
-                <div
-                  style={{
-                    fontSize: '14px',
-                    color: '#6b7280',
-                  }}
-                >
-                  Content
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Action Buttons */}
       <div
         style={{
           display: 'grid',
@@ -300,7 +54,100 @@ const AdminDashboardHome: React.FC = () => {
           gap: '24px',
         }}
       >
-        {/* Manage Users */}
+        {/* Analytics Dashboard */}
+        {hasPermission('reports', 'read') && (
+          <div
+            style={{
+              backgroundColor: 'white',
+              overflow: 'hidden',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              borderRadius: '8px',
+              border: '1px solid #e5e7eb',
+            }}
+          >
+            <div style={{ padding: '20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ flexShrink: 0 }}>
+                  <div
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      backgroundColor: '#06b6d4',
+                      borderRadius: '6px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: 'white',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                      }}
+                    >
+                      📈
+                    </span>
+                  </div>
+                </div>
+                <div style={{ marginLeft: '20px', flex: 1 }}>
+                  <dl>
+                    <dt
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        color: '#6b7280',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      Analytics
+                    </dt>
+                    <dd
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: '500',
+                        color: '#111827',
+                        margin: '4px 0 0 0',
+                      }}
+                    >
+                      Platform Stats
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+            <div
+              style={{
+                backgroundColor: '#f9fafb',
+                padding: '12px 20px',
+                borderTop: '1px solid #e5e7eb',
+              }}
+            >
+              <div style={{ fontSize: '14px' }}>
+                <Link
+                  to="/admin/analytics"
+                  style={{
+                    fontWeight: '500',
+                    color: '#0891b2',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#0e7490';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#0891b2';
+                  }}
+                >
+                  View Analytics
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Users Management */}
         {hasPermission('users', 'read') && (
           <div
             style={{
@@ -348,7 +195,7 @@ const AdminDashboardHome: React.FC = () => {
                         whiteSpace: 'nowrap',
                       }}
                     >
-                      Manage Users
+                      Users
                     </dt>
                     <dd
                       style={{
@@ -358,7 +205,7 @@ const AdminDashboardHome: React.FC = () => {
                         margin: '4px 0 0 0',
                       }}
                     >
-                      User management
+                      Manage users
                     </dd>
                   </dl>
                 </div>
@@ -386,107 +233,13 @@ const AdminDashboardHome: React.FC = () => {
                     e.currentTarget.style.color = '#1d4ed8';
                   }}
                 >
-                  Manage users
-                </Link>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Manage classes */}
-        {hasPermission('classes', 'read') && (
-          <div
-            style={{
-              backgroundColor: 'white',
-              overflow: 'hidden',
-              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
-              borderRadius: '8px',
-              border: '1px solid #e5e7eb',
-            }}
-          >
-            <div style={{ padding: '20px' }}>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <div style={{ flexShrink: 0 }}>
-                  <div
-                    style={{
-                      width: '32px',
-                      height: '32px',
-                      backgroundColor: '#eab308',
-                      borderRadius: '6px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    <span
-                      style={{
-                        color: 'white',
-                        fontSize: '14px',
-                        fontWeight: '500',
-                      }}
-                    >
-                      🏫
-                    </span>
-                  </div>
-                </div>
-                <div style={{ marginLeft: '20px', flex: 1 }}>
-                  <dl>
-                    <dt
-                      style={{
-                        fontSize: '14px',
-                        fontWeight: '500',
-                        color: '#6b7280',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      Manage classes
-                    </dt>
-                    <dd
-                      style={{
-                        fontSize: '18px',
-                        fontWeight: '500',
-                        color: '#111827',
-                        margin: '4px 0 0 0',
-                      }}
-                    >
-                      Class management
-                    </dd>
-                  </dl>
+                  Total users
                 </div>
               </div>
             </div>
-            <div
-              style={{
-                backgroundColor: '#f9fafb',
-                padding: '12px 20px',
-                borderTop: '1px solid #e5e7eb',
-              }}
-            >
-              <div style={{ fontSize: '14px' }}>
-                <Link
-                  to="/admin/classes"
-                  style={{
-                    fontWeight: '500',
-                    color: '#a16207',
-                    textDecoration: 'none',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = '#854d0e';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = '#a16207';
-                  }}
-                >
-                  Manage classes
-                </Link>
-              </div>
-            </div>
           </div>
-        )}
 
-        {/* Manage courses */}
+        {/* Courses Management */}
         {hasPermission('courses', 'read') && (
           <div
             style={{
@@ -534,7 +287,7 @@ const AdminDashboardHome: React.FC = () => {
                         whiteSpace: 'nowrap',
                       }}
                     >
-                      Manage courses
+                      Courses
                     </dt>
                     <dd
                       style={{
@@ -544,7 +297,7 @@ const AdminDashboardHome: React.FC = () => {
                         margin: '4px 0 0 0',
                       }}
                     >
-                      Course management
+                      Manage courses
                     </dd>
                   </dl>
                 </div>
@@ -579,7 +332,99 @@ const AdminDashboardHome: React.FC = () => {
           </div>
         )}
 
-        {/* Manage content */}
+        {/* Classes Management */}
+        {hasPermission('classes', 'read') && (
+          <div
+            style={{
+              backgroundColor: 'white',
+              overflow: 'hidden',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              borderRadius: '8px',
+              border: '1px solid #e5e7eb',
+            }}
+          >
+            <div style={{ padding: '20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ flexShrink: 0 }}>
+                  <div
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      backgroundColor: '#eab308',
+                      borderRadius: '6px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: 'white',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                      }}
+                    >
+                      🏫
+                    </span>
+                  </div>
+                </div>
+                <div style={{ marginLeft: '20px', flex: 1 }}>
+                  <dl>
+                    <dt
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        color: '#6b7280',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      Classes
+                    </dt>
+                    <dd
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: '500',
+                        color: '#111827',
+                        margin: '4px 0 0 0',
+                      }}
+                    >
+                      Manage classes
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+            <div
+              style={{
+                backgroundColor: '#f9fafb',
+                padding: '12px 20px',
+                borderTop: '1px solid #e5e7eb',
+              }}
+            >
+              <div style={{ fontSize: '14px' }}>
+                <Link
+                  to="/admin/classes"
+                  style={{
+                    fontWeight: '500',
+                    color: '#a16207',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#854d0e';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#a16207';
+                  }}
+                >
+                  Classes
+                </div>
+              </div>
+            </div>
+          </div>
+
+        {/* Content Management */}
         {hasPermission('content', 'read') && (
           <div
             style={{
@@ -627,7 +472,7 @@ const AdminDashboardHome: React.FC = () => {
                         whiteSpace: 'nowrap',
                       }}
                     >
-                      Manage content
+                      Content
                     </dt>
                     <dd
                       style={{
@@ -637,7 +482,7 @@ const AdminDashboardHome: React.FC = () => {
                         margin: '4px 0 0 0',
                       }}
                     >
-                      Content management
+                      Manage content
                     </dd>
                   </dl>
                 </div>
@@ -651,94 +496,736 @@ const AdminDashboardHome: React.FC = () => {
               }}
             >
               <div style={{ fontSize: '14px' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <Link
-                    to="/admin/content?tab=flashcards"
+                <Link
+                  to="/admin/content"
+                  style={{
+                    fontWeight: '500',
+                    color: '#7c3aed',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#6d28d9';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#7c3aed';
+                  }}
+                >
+                  Manage content
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Flashcards */}
+        {hasPermission('flashcards', 'read') && (
+          <div
+            style={{
+              backgroundColor: 'white',
+              overflow: 'hidden',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              borderRadius: '8px',
+              border: '1px solid #e5e7eb',
+            }}
+          >
+            <div style={{ padding: '20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ flexShrink: 0 }}>
+                  <div
                     style={{
-                      fontWeight: '500',
-                      color: '#7c3aed',
-                      textDecoration: 'none',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.color = '#6d28d9';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.color = '#7c3aed';
+                      width: '32px',
+                      height: '32px',
+                      backgroundColor: '#6366f1',
+                      borderRadius: '6px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
                     }}
                   >
-                    Manage Flashcards
-                  </Link>
-                  <Link
-                    to="/admin/content?tab=exercises"
-                    style={{
-                      fontWeight: '500',
-                      color: '#7c3aed',
-                      textDecoration: 'none',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.color = '#6d28d9';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.color = '#7c3aed';
-                    }}
-                  >
-                    Manage Exercises
-                  </Link>
-                  <Link
-                    to="/admin/content?tab=tests"
-                    style={{
-                      fontWeight: '500',
-                      color: '#7c3aed',
-                      textDecoration: 'none',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.color = '#6d28d9';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.color = '#7c3aed';
-                    }}
-                  >
-                    Manage Tests
-                  </Link>
-                  <Link
-                    to="/admin/videos"
-                    style={{
-                      fontWeight: '500',
-                      color: '#7c3aed',
-                      textDecoration: 'none',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.color = '#6d28d9';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.color = '#7c3aed';
-                    }}
-                  >
-                    Manage Video
-                  </Link>
-                  <Link
-                    to="/admin/questions"
-                    style={{
-                      fontWeight: '500',
-                      color: '#7c3aed',
-                      textDecoration: 'none',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.color = '#6d28d9';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.color = '#7c3aed';
-                    }}
-                  >
-                    Question bank
-                  </Link>
+                    <span
+                      style={{
+                        color: 'white',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                      }}
+                    >
+                      🃏
+                    </span>
+                  </div>
                 </div>
+                <div style={{ marginLeft: '20px', flex: 1 }}>
+                  <dl>
+                    <dt
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        color: '#6b7280',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      Flashcards
+                    </dt>
+                    <dd
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: '500',
+                        color: '#111827',
+                        margin: '4px 0 0 0',
+                      }}
+                    >
+                      Manage flashcards
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+            <div
+              style={{
+                backgroundColor: '#f9fafb',
+                padding: '12px 20px',
+                borderTop: '1px solid #e5e7eb',
+              }}
+            >
+              <div style={{ fontSize: '14px' }}>
+                <Link
+                  to="/admin/flashcards"
+                  style={{
+                    fontWeight: '500',
+                    color: '#4338ca',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#3730a3';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#4338ca';
+                  }}
+                >
+                  Teachers
+                </div>
+              </div>
+            </div>
+          </div>
+
+        {/* Exercises */}
+        {hasPermission('exercises', 'read') && (
+          <div
+            style={{
+              backgroundColor: 'white',
+              overflow: 'hidden',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              borderRadius: '8px',
+              border: '1px solid #e5e7eb',
+            }}
+          >
+            <div style={{ padding: '20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ flexShrink: 0 }}>
+                  <div
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      backgroundColor: '#ec4899',
+                      borderRadius: '6px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: 'white',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                      }}
+                    >
+                      ✏️
+                    </span>
+                  </div>
+                </div>
+                <div style={{ marginLeft: '20px', flex: 1 }}>
+                  <dl>
+                    <dt
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        color: '#6b7280',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      Exercises
+                    </dt>
+                    <dd
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: '500',
+                        color: '#111827',
+                        margin: '4px 0 0 0',
+                      }}
+                    >
+                      Manage exercises
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+            <div
+              style={{
+                backgroundColor: '#f9fafb',
+                padding: '12px 20px',
+                borderTop: '1px solid #e5e7eb',
+              }}
+            >
+              <div style={{ fontSize: '14px' }}>
+                <Link
+                  to="/admin/exercises"
+                  style={{
+                    fontWeight: '500',
+                    color: '#be185d',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#9d174d';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#be185d';
+                  }}
+                >
+                  {loading ? '...' : stats.totalContent}
+                </div>
+                <div
+                  style={{
+                    fontSize: '14px',
+                    color: '#6b7280',
+                  }}
+                >
+                  Content
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+        {/* Questions Bank */}
+        {hasPermission('questions', 'read') && (
+          <div
+            style={{
+              backgroundColor: 'white',
+              overflow: 'hidden',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              borderRadius: '8px',
+              border: '1px solid #e5e7eb',
+            }}
+          >
+            <div style={{ padding: '20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ flexShrink: 0 }}>
+                  <div
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      backgroundColor: '#ef4444',
+                      borderRadius: '6px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: 'white',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                      }}
+                    >
+                      ❓
+                    </span>
+                  </div>
+                </div>
+                <div style={{ marginLeft: '20px', flex: 1 }}>
+                  <dl>
+                    <dt
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        color: '#6b7280',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      Questions
+                    </dt>
+                    <dd
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: '500',
+                        color: '#111827',
+                        margin: '4px 0 0 0',
+                      }}
+                    >
+                      Question bank
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+            <div
+              style={{
+                backgroundColor: '#f9fafb',
+                padding: '12px 20px',
+                borderTop: '1px solid #e5e7eb',
+              }}
+            >
+              <div style={{ fontSize: '14px' }}>
+                <Link
+                  to="/admin/questions"
+                  style={{
+                    fontWeight: '500',
+                    color: '#dc2626',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#b91c1c';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#dc2626';
+                  }}
+                >
+                  Manage users
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Videos Management */}
+        {hasPermission('videos', 'read') && (
+          <div
+            style={{
+              backgroundColor: 'white',
+              overflow: 'hidden',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              borderRadius: '8px',
+              border: '1px solid #e5e7eb',
+            }}
+          >
+            <div style={{ padding: '20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ flexShrink: 0 }}>
+                  <div
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      backgroundColor: '#f97316',
+                      borderRadius: '6px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: 'white',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                      }}
+                    >
+                      🎥
+                    </span>
+                  </div>
+                </div>
+                <div style={{ marginLeft: '20px', flex: 1 }}>
+                  <dl>
+                    <dt
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        color: '#6b7280',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      Videos
+                    </dt>
+                    <dd
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: '500',
+                        color: '#111827',
+                        margin: '4px 0 0 0',
+                      }}
+                    >
+                      Manage video lessons
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+            <div
+              style={{
+                backgroundColor: '#f9fafb',
+                padding: '12px 20px',
+                borderTop: '1px solid #e5e7eb',
+              }}
+            >
+              <div style={{ fontSize: '14px' }}>
+                <Link
+                  to="/admin/videos"
+                  style={{
+                    fontWeight: '500',
+                    color: '#ea580c',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#c2410c';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#ea580c';
+                  }}
+                >
+                  Manage classes
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* System Configuration */}
+        {hasPermission('admin', 'write') && (
+          <div
+            style={{
+              backgroundColor: 'white',
+              overflow: 'hidden',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              borderRadius: '8px',
+              border: '1px solid #e5e7eb',
+            }}
+          >
+            <div style={{ padding: '20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ flexShrink: 0 }}>
+                  <div
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      backgroundColor: '#8b5cf6',
+                      borderRadius: '6px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: 'white',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                      }}
+                    >
+                      ⚙️
+                    </span>
+                  </div>
+                </div>
+                <div style={{ marginLeft: '20px', flex: 1 }}>
+                  <dl>
+                    <dt
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        color: '#6b7280',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      System Config
+                    </dt>
+                    <dd
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: '500',
+                        color: '#111827',
+                        margin: '4px 0 0 0',
+                      }}
+                    >
+                      System settings & maintenance
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+            <div
+              style={{
+                backgroundColor: '#f9fafb',
+                padding: '12px 20px',
+                borderTop: '1px solid #e5e7eb',
+              }}
+            >
+              <div style={{ fontSize: '14px' }}>
+                <Link
+                  to="/admin/system-config"
+                  style={{
+                    fontWeight: '500',
+                    color: '#7c3aed',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#6d28d9';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#7c3aed';
+                  }}
+                >
+                  Manage courses
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* System Reports */}
+        {hasPermission('reports', 'read') && (
+          <div
+            style={{
+              backgroundColor: 'white',
+              overflow: 'hidden',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+              borderRadius: '8px',
+              border: '1px solid #e5e7eb',
+            }}
+          >
+            <div style={{ padding: '20px' }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ flexShrink: 0 }}>
+                  <div
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      backgroundColor: '#6b7280',
+                      borderRadius: '6px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: 'white',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                      }}
+                    >
+                      📊
+                    </span>
+                  </div>
+                </div>
+                <div style={{ marginLeft: '20px', flex: 1 }}>
+                  <dl>
+                    <dt
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        color: '#6b7280',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      Reports
+                    </dt>
+                    <dd
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: '500',
+                        color: '#111827',
+                        margin: '4px 0 0 0',
+                      }}
+                    >
+                      System reports
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+            <div
+              style={{
+                backgroundColor: '#f9fafb',
+                padding: '12px 20px',
+                borderTop: '1px solid #e5e7eb',
+              }}
+            >
+              <div style={{ fontSize: '14px' }}>
+                <Link
+                  to="/admin/reports"
+                  style={{
+                    fontWeight: '500',
+                    color: '#4b5563',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#374151';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#4b5563';
+                  }}
+                >
+                  View reports
+                </Link>
               </div>
             </div>
           </div>
         )}
       </div>
 
+      {/* System Overview */}
+      <div
+        style={{
+          marginTop: '32px',
+          backgroundColor: '#fef2f2',
+          border: '1px solid #fecaca',
+          borderRadius: '6px',
+          padding: '16px',
+        }}
+      >
+        <div style={{ display: 'flex' }}>
+          <div style={{ flexShrink: 0 }}>
+            <span style={{ color: '#f87171', fontSize: '20px' }}>⚙️</span>
+          </div>
+          <div style={{ marginLeft: '12px' }}>
+            <h3
+              style={{
+                fontSize: '14px',
+                fontWeight: '500',
+                color: '#991b1b',
+                margin: '0 0 8px 0',
+              }}
+            >
+              System Administration
+            </h3>
+            <div style={{ fontSize: '14px', color: '#b91c1c' }}>
+              <p style={{ margin: '0' }}>
+                Full system access for managing users, courses, classes, and all
+                learning content. Monitor system performance, generate reports,
+                and maintain the learning platform.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Quick Actions Section */}
+      <div
+        style={{
+          backgroundColor: 'white',
+          borderRadius: '8px',
+          padding: '24px',
+          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+          border: '1px solid #e5e7eb',
+        }}
+      >
+        <h3
+          style={{
+            fontSize: '18px',
+            fontWeight: '600',
+            color: '#111827',
+            margin: '0 0 16px 0',
+          }}
+        >
+          Quick Actions
+        </h3>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '16px',
+          }}
+        >
+          <Link
+            to="/admin/users"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              padding: '12px 16px',
+              backgroundColor: '#f8fafc',
+              borderRadius: '6px',
+              textDecoration: 'none',
+              color: '#374151',
+              border: '1px solid #e2e8f0',
+              transition: 'all 0.2s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#e2e8f0';
+              e.currentTarget.style.borderColor = '#cbd5e1';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = '#f8fafc';
+              e.currentTarget.style.borderColor = '#e2e8f0';
+            }}
+          >
+            <span style={{ marginRight: '8px' }}>👥</span>
+            <span style={{ fontWeight: '500' }}>Add New User</span>
+          </Link>
+
+          <Link
+            to="/admin/courses"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              padding: '12px 16px',
+              backgroundColor: '#f8fafc',
+              borderRadius: '6px',
+              textDecoration: 'none',
+              color: '#374151',
+              border: '1px solid #e2e8f0',
+              transition: 'all 0.2s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#e2e8f0';
+              e.currentTarget.style.borderColor = '#cbd5e1';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = '#f8fafc';
+              e.currentTarget.style.borderColor = '#e2e8f0';
+            }}
+          >
+            <span style={{ marginRight: '8px' }}>📚</span>
+            <span style={{ fontWeight: '500' }}>Create Course</span>
+          </Link>
+
+          <Link
+            to="/admin/analytics"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              padding: '12px 16px',
+              backgroundColor: '#f8fafc',
+              borderRadius: '6px',
+              textDecoration: 'none',
+              color: '#374151',
+              border: '1px solid #e2e8f0',
+              transition: 'all 0.2s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#e2e8f0';
+              e.currentTarget.style.borderColor = '#cbd5e1';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = '#f8fafc';
+              e.currentTarget.style.borderColor = '#e2e8f0';
+            }}
+          >
+            <span style={{ marginRight: '8px' }}>📊</span>
+            <span style={{ fontWeight: '500' }}>View Reports</span>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };
