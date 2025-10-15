@@ -141,62 +141,134 @@ namespace BingGoWebAPI.Services
                 _logger.LogInformation("Starting to get student dashboard data for user {UserId}", userId);
 
                 _logger.LogInformation("Fetching user progress for user {UserId}", userId);
-                var progress = await GetUserProgressAsync(userId);
-                _logger.LogInformation("User progress retrieved: {@Progress}", progress);
+                UserProgress progress;
+                try
+                {
+                    progress = await GetUserProgressAsync(userId);
+                    _logger.LogInformation("User progress retrieved: {@Progress}", progress);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex, "Failed to fetch user progress for {UserId}, using default", userId);
+                    progress = new UserProgress { UserId = userId };
+                }
 
                 _logger.LogInformation("Fetching user streak for user {UserId}", userId);
-                var streak = await GetUserStreakAsync(userId);
-                _logger.LogInformation("User streak retrieved: {@Streak}", streak);
+                LearningStreak streak;
+                try
+                {
+                    streak = await GetUserStreakAsync(userId);
+                    _logger.LogInformation("User streak retrieved: {@Streak}", streak);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex, "Failed to fetch user streak for {UserId}, using default", userId);
+                    streak = new LearningStreak { UserId = userId };
+                }
 
                 _logger.LogInformation("Fetching user activities for user {UserId}", userId);
-                var activities = await GetUserActivitiesAsync(userId, DateTime.UtcNow.AddDays(-30));
-                _logger.LogInformation("User activities retrieved: {ActivityCount} activities", activities?.Count ?? 0);
+                List<LearningActivity> activities;
+                try
+                {
+                    activities = await GetUserActivitiesAsync(userId, DateTime.UtcNow.AddDays(-30));
+                    _logger.LogInformation("User activities retrieved: {ActivityCount} activities", activities?.Count ?? 0);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex, "Failed to fetch user activities for {UserId}, using empty list", userId);
+                    activities = new List<LearningActivity>();
+                }
 
                 _logger.LogInformation("Retrieved progress, streak, and activities for user {UserId}", userId);
 
                 // Calculate completed flashcard sets and exercises from activities
                 _logger.LogInformation("Calculating completed flashcard sets");
-                var completedFlashcardSets = activities
-                    .Where(a => a.Type == "flashcard" && !string.IsNullOrEmpty(a.FlashcardSetId))
-                    .Select(a => a.FlashcardSetId)
-                    .Distinct()
-                    .Count();
-                _logger.LogInformation("Completed flashcard sets: {Count}", completedFlashcardSets);
+                int completedFlashcardSets;
+                try
+                {
+                    completedFlashcardSets = activities
+                        .Where(a => a.Type == "flashcard" && !string.IsNullOrEmpty(a.FlashcardSetId))
+                        .Select(a => a.FlashcardSetId)
+                        .Distinct()
+                        .Count();
+                    _logger.LogInformation("Completed flashcard sets: {Count}", completedFlashcardSets);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex, "Failed to calculate completed flashcard sets for {UserId}, using 0", userId);
+                    completedFlashcardSets = 0;
+                }
 
                 _logger.LogInformation("Calculating completed exercises");
-                var completedExercises = activities
-                    .Where(a => a.Type == "exercise" && !string.IsNullOrEmpty(a.ExerciseId))
-                    .Select(a => a.ExerciseId)
-                    .Distinct()
-                    .Count();
-                _logger.LogInformation("Completed exercises: {Count}", completedExercises);
+                int completedExercises;
+                try
+                {
+                    completedExercises = activities
+                        .Where(a => a.Type == "exercise" && !string.IsNullOrEmpty(a.ExerciseId))
+                        .Select(a => a.ExerciseId)
+                        .Distinct()
+                        .Count();
+                    _logger.LogInformation("Completed exercises: {Count}", completedExercises);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex, "Failed to calculate completed exercises for {UserId}, using 0", userId);
+                    completedExercises = 0;
+                }
 
                 // Calculate total study time in hours
                 _logger.LogInformation("Calculating total study time");
-                var totalStudyTimeHours = activities.Sum(a => a.TimeSpent) / 3600.0;
-                _logger.LogInformation("Total study time hours: {Hours}", totalStudyTimeHours);
+                double totalStudyTimeHours;
+                try
+                {
+                    totalStudyTimeHours = activities.Sum(a => a.TimeSpent) / 3600.0;
+                    _logger.LogInformation("Total study time hours: {Hours}", totalStudyTimeHours);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex, "Failed to calculate total study time for {UserId}, using 0", userId);
+                    totalStudyTimeHours = 0.0;
+                }
 
                 // Get recent activities (last 10)
                 _logger.LogInformation("Getting recent activities");
-                var recentActivities = activities
-                    .OrderByDescending(a => a.Timestamp)
-                    .Take(10)
-                    .ToList();
-                _logger.LogInformation("Recent activities count: {Count}", recentActivities.Count);
+                List<LearningActivity> recentActivities;
+                try
+                {
+                    recentActivities = activities
+                        .OrderByDescending(a => a.Timestamp)
+                        .Take(10)
+                        .ToList();
+                    _logger.LogInformation("Recent activities count: {Count}", recentActivities.Count);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex, "Failed to get recent activities for {UserId}, using empty list", userId);
+                    recentActivities = new List<LearningActivity>();
+                }
 
                 // Generate performance data points from exercise activities
                 _logger.LogInformation("Generating exercise performance data");
-                var exercisePerformance = activities
-                    .Where(a => a.Type == "exercise" && a.Score.HasValue)
-                    .GroupBy(a => a.Timestamp.Date)
-                    .Select(g => new PerformanceDataPoint
-                    {
-                        Date = g.Key,
-                        Score = g.Average(a => a.Score ?? 0)
-                    })
-                    .OrderBy(p => p.Date)
-                    .ToList();
-                _logger.LogInformation("Exercise performance data points: {Count}", exercisePerformance.Count);
+                List<PerformanceDataPoint> exercisePerformance;
+                try
+                {
+                    exercisePerformance = activities
+                        .Where(a => a.Type == "exercise" && a.Score.HasValue)
+                        .GroupBy(a => a.Timestamp.Date)
+                        .Select(g => new PerformanceDataPoint
+                        {
+                            Date = g.Key,
+                            Score = g.Average(a => a.Score ?? 0)
+                        })
+                        .OrderBy(p => p.Date)
+                        .ToList();
+                    _logger.LogInformation("Exercise performance data points: {Count}", exercisePerformance.Count);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex, "Failed to generate exercise performance data for {UserId}, using empty list", userId);
+                    exercisePerformance = new List<PerformanceDataPoint>();
+                }
 
                 var result = new StudentDashboardDto
                 {
