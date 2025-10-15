@@ -7,6 +7,10 @@ tôi đã chạy lại chương trình (cả backend và frontend) với tài kh
 hiện tại, khi tôi chạy dự án (cả frontend: D:/DoAn/KLTN-WebHocTiengAnh/SourceCode/frontend và backend: D:/DoAn/KLTN-WebHocTiengAnh/SourceCode/backend cùng lúc) với tài khoản admin lấy từ @backend/backup.json . trên react app có hiện thông báo lỗi sau: @ReactErrors.md
 
 
+khi tôi npm start, login với tài khoản admin, tôi đã thấy giao diện thay đổi. nhưng khi tôi nhấn 1 nút manage ở mục manage content (ví dụ: Manage flashcards) thì không thấy chuyển sang trang tương ứng, ở trong trang Content Management (https://localhost:3000/admin/content) vẫn còn các nút chức năng cũ (Courses, Classes, Questions, Exercises, Tests), chưa thay bằng các nút với chức năng tương ứng mới  liệt kê tại mục Content Management ở trang Admin Dashboard (Manage Flashcards, Manage Exercises, Manage Tests, Manage Video, Question bank)
+
+
+
 Tôi đã login và authorize bằng cả tài khoản admin và tài khoản student lấy từ @/WebConversion/backup.json rồi test /api/progress/dashboard/{userId} với các userId của admin, teacher, student nhưng luôn nhận được thông báo: @/ReactErrors.md . liệu có phải tại  frontend đang gọi nhầm
 
 
