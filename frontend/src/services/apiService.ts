@@ -38,7 +38,7 @@ class ApiService {
     }
 
     if (response.status === 204) {
-        return null as T;
+      return null as T;
     }
 
     return response.json();
@@ -71,6 +71,20 @@ class ApiService {
 
   delete<T>(endpoint: string): Promise<T> {
     return this.request<T>(endpoint, { method: 'DELETE' });
+  }
+
+  // Dashboard statistics endpoint
+  async getDashboardStats(): Promise<{
+    user: any;
+    stats: {
+      totalUsers: number;
+      totalClasses: number;
+      totalTeachers: number;
+      totalContent: number;
+    };
+    recentActivity: any;
+  }> {
+    return this.get('/dashboard/admin');
   }
 }
 

@@ -91,6 +91,30 @@ export interface Exercise {
   difficulty: 'easy' | 'medium' | 'hard';
 }
 
+// Test Types
+export interface Test {
+  id: string;
+  title: string;
+  course_id?: string;
+  courseId?: string;
+  questions: Question[];
+  duration: number; // in minutes
+  maxScore: number;
+  passingScore?: number;
+  difficulty?: 'easy' | 'medium' | 'hard';
+  questionIds?: string[];
+  totalQuestions?: number;
+  created_at?: any; // Firebase Timestamp
+  created_by?: string;
+  createdBy?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  isPublished?: boolean;
+  isActive?: boolean;
+  instructions?: string;
+  description?: string;
+}
+
 export interface Question {
   id: string;
   content: string;

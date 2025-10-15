@@ -285,6 +285,17 @@ namespace BingGoWebAPI.Controllers
                 var exercisesSnapshot = await exercisesQuery.GetSnapshotAsync();
                 var totalExercises = exercisesSnapshot.Count;
 
+                // Calculate total content (exercises + courses + flashcard sets + videos)
+                var flashcardSetsQuery = _firestoreDb.Collection("flashcard_sets");
+                var flashcardSetsSnapshot = await flashcardSetsQuery.GetSnapshotAsync();
+                var totalFlashcardSets = flashcardSetsSnapshot.Count;
+
+                var videosQuery = _firestoreDb.Collection("video_lectures");
+                var videosSnapshot = await videosQuery.GetSnapshotAsync();
+                var totalVideos = videosSnapshot.Count;
+
+                var totalContent = totalExercises + totalCourses + totalFlashcardSets + totalVideos;
+
                 var dashboard = new
                 {
                     user = new
@@ -297,12 +308,9 @@ namespace BingGoWebAPI.Controllers
                     stats = new
                     {
                         totalUsers,
-                        totalStudents = students,
-                        totalTeachers = teachers,
-                        totalAdmins = admins,
                         totalClasses,
-                        totalCourses,
-                        totalExercises
+                        totalTeachers = teachers,
+                        totalContent
                     },
                     recentActivity = new
                     {

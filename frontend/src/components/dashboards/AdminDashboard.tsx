@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import DashboardLayout from '../DashboardLayout';
 import { usePermissions } from '../../hooks/usePermissions';
+import { apiService } from '../../services/apiService';
 import UserManagement from '../admin/UserManagement';
 import SystemConfigManagement from '../admin/SystemConfigManagement';
 import VideoManagementPage from '../../pages/admin/videos/VideoManagementPage';
@@ -15,6 +16,34 @@ import FlashcardManagement from '../flashcard/FlashcardManagement';
 
 const AdminDashboardHome: React.FC = () => {
   const { hasPermission } = usePermissions();
+  const [stats, setStats] = useState({
+    totalUsers: 0,
+    totalClasses: 0,
+    totalTeachers: 0,
+    totalContent: 0,
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const dashboardData = await apiService.getDashboardStats();
+        setStats({
+          totalUsers: dashboardData.stats.totalUsers,
+          totalClasses: dashboardData.stats.totalClasses,
+          totalTeachers: dashboardData.stats.totalTeachers,
+          totalContent: dashboardData.stats.totalContent,
+        });
+      } catch (error) {
+        console.error('Failed to fetch dashboard stats:', error);
+        // Keep default values (0) on error
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStats();
+  }, []);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
@@ -204,12 +233,11 @@ const AdminDashboardHome: React.FC = () => {
                     e.currentTarget.style.color = '#1d4ed8';
                   }}
                 >
-                  Manage users
-                </Link>
+                  Total users
+                </div>
               </div>
             </div>
           </div>
-        )}
 
         {/* Courses Management */}
         {hasPermission('courses', 'read') && (
@@ -390,12 +418,11 @@ const AdminDashboardHome: React.FC = () => {
                     e.currentTarget.style.color = '#a16207';
                   }}
                 >
-                  Manage classes
-                </Link>
+                  Classes
+                </div>
               </div>
             </div>
           </div>
-        )}
 
         {/* Content Management */}
         {hasPermission('content', 'read') && (
@@ -576,12 +603,11 @@ const AdminDashboardHome: React.FC = () => {
                     e.currentTarget.style.color = '#4338ca';
                   }}
                 >
-                  Manage flashcards
-                </Link>
+                  Teachers
+                </div>
               </div>
             </div>
           </div>
-        )}
 
         {/* Exercises */}
         {hasPermission('exercises', 'read') && (
@@ -669,12 +695,21 @@ const AdminDashboardHome: React.FC = () => {
                     e.currentTarget.style.color = '#be185d';
                   }}
                 >
-                  Manage exercises
-                </Link>
+                  {loading ? '...' : stats.totalContent}
+                </div>
+                <div
+                  style={{
+                    fontSize: '14px',
+                    color: '#6b7280',
+                  }}
+                >
+                  Content
+                </div>
               </div>
             </div>
           </div>
-        )}
+        </div>
+      </div>
 
         {/* Questions Bank */}
         {hasPermission('questions', 'read') && (
@@ -762,7 +797,7 @@ const AdminDashboardHome: React.FC = () => {
                     e.currentTarget.style.color = '#dc2626';
                   }}
                 >
-                  Manage questions
+                  Manage users
                 </Link>
               </div>
             </div>
@@ -855,7 +890,7 @@ const AdminDashboardHome: React.FC = () => {
                     e.currentTarget.style.color = '#ea580c';
                   }}
                 >
-                  Manage videos
+                  Manage classes
                 </Link>
               </div>
             </div>
@@ -948,7 +983,7 @@ const AdminDashboardHome: React.FC = () => {
                     e.currentTarget.style.color = '#7c3aed';
                   }}
                 >
-                  Manage system
+                  Manage courses
                 </Link>
               </div>
             </div>

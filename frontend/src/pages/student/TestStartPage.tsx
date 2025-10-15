@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { testService } from '../../services/testService';
-import { Test } from '../../types/test';
+import { Test } from '../../types';
 import { Clock, HelpCircle, Trophy, Play } from 'lucide-react';
 import './TestStartPage.css';
 
