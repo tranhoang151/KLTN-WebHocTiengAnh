@@ -25,12 +25,13 @@ public class ProgressController : ControllerBase
         try
         {
             var data = await _progressService.GetStudentDashboardDataAsync(userId);
+            _logger.LogInformation("Dashboard data retrieved successfully for user {UserId}: {@Data}", userId, data);
             return Ok(data);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to get dashboard data for user {UserId}", userId);
-            return StatusCode(500, "An error occurred while fetching dashboard data.");
+            _logger.LogError(ex, "Failed to get dashboard data for user {UserId}: {Message}", userId, ex.Message);
+            return StatusCode(500, new { error = "An error occurred while fetching dashboard data.", details = ex.Message });
         }
     }
 

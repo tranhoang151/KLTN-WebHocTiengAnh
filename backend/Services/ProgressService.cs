@@ -138,33 +138,54 @@ namespace BingGoWebAPI.Services
         {
             try
             {
+                _logger.LogInformation("Starting to get student dashboard data for user {UserId}", userId);
+
+                _logger.LogInformation("Fetching user progress for user {UserId}", userId);
                 var progress = await GetUserProgressAsync(userId);
+                _logger.LogInformation("User progress retrieved: {@Progress}", progress);
+
+                _logger.LogInformation("Fetching user streak for user {UserId}", userId);
                 var streak = await GetUserStreakAsync(userId);
+                _logger.LogInformation("User streak retrieved: {@Streak}", streak);
+
+                _logger.LogInformation("Fetching user activities for user {UserId}", userId);
                 var activities = await GetUserActivitiesAsync(userId, DateTime.UtcNow.AddDays(-30));
+                _logger.LogInformation("User activities retrieved: {ActivityCount} activities", activities?.Count ?? 0);
+
+                _logger.LogInformation("Retrieved progress, streak, and activities for user {UserId}", userId);
 
                 // Calculate completed flashcard sets and exercises from activities
+                _logger.LogInformation("Calculating completed flashcard sets");
                 var completedFlashcardSets = activities
                     .Where(a => a.Type == "flashcard" && !string.IsNullOrEmpty(a.FlashcardSetId))
                     .Select(a => a.FlashcardSetId)
                     .Distinct()
                     .Count();
+                _logger.LogInformation("Completed flashcard sets: {Count}", completedFlashcardSets);
 
+                _logger.LogInformation("Calculating completed exercises");
                 var completedExercises = activities
                     .Where(a => a.Type == "exercise" && !string.IsNullOrEmpty(a.ExerciseId))
                     .Select(a => a.ExerciseId)
                     .Distinct()
                     .Count();
+                _logger.LogInformation("Completed exercises: {Count}", completedExercises);
 
                 // Calculate total study time in hours
+                _logger.LogInformation("Calculating total study time");
                 var totalStudyTimeHours = activities.Sum(a => a.TimeSpent) / 3600.0;
+                _logger.LogInformation("Total study time hours: {Hours}", totalStudyTimeHours);
 
                 // Get recent activities (last 10)
+                _logger.LogInformation("Getting recent activities");
                 var recentActivities = activities
                     .OrderByDescending(a => a.Timestamp)
                     .Take(10)
                     .ToList();
+                _logger.LogInformation("Recent activities count: {Count}", recentActivities.Count);
 
                 // Generate performance data points from exercise activities
+                _logger.LogInformation("Generating exercise performance data");
                 var exercisePerformance = activities
                     .Where(a => a.Type == "exercise" && a.Score.HasValue)
                     .GroupBy(a => a.Timestamp.Date)
@@ -175,8 +196,9 @@ namespace BingGoWebAPI.Services
                     })
                     .OrderBy(p => p.Date)
                     .ToList();
+                _logger.LogInformation("Exercise performance data points: {Count}", exercisePerformance.Count);
 
-                return new StudentDashboardDto
+                var result = new StudentDashboardDto
                 {
                     StreakCount = streak.CurrentStreak,
                     TotalStudyTimeHours = totalStudyTimeHours,
@@ -185,10 +207,14 @@ namespace BingGoWebAPI.Services
                     RecentActivities = recentActivities,
                     ExercisePerformance = exercisePerformance
                 };
+
+                _logger.LogInformation("Successfully created StudentDashboardDto for user {UserId}: {@Result}", userId, result);
+
+                return result;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error getting student dashboard data for user {UserId}", userId);
+                _logger.LogError(ex, "Error getting student dashboard data for user {UserId}. Exception: {ExceptionMessage}. StackTrace: {StackTrace}", userId, ex.Message, ex.StackTrace);
                 throw;
             }
         }

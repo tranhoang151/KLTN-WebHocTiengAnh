@@ -7,6 +7,9 @@ tôi đã chạy lại chương trình (cả backend và frontend) với tài kh
 hiện tại, khi tôi chạy dự án (cả frontend: D:/DoAn/KLTN-WebHocTiengAnh/SourceCode/frontend và backend: D:/DoAn/KLTN-WebHocTiengAnh/SourceCode/backend cùng lúc) với tài khoản admin lấy từ @backend/backup.json . trên react app có hiện thông báo lỗi sau: @ReactErrors.md
 
 
+Tôi đã login và authorize bằng cả tài khoản admin và tài khoản student lấy từ @/WebConversion/backup.json rồi test /api/progress/dashboard/{userId} với các userId của admin, teacher, student nhưng luôn nhận được thông báo: @/ReactErrors.md . liệu có phải tại  frontend đang gọi nhầm
+
+
 dự án hiện tại tôi là chuyển đổi app android KLTN-Android thành 1 web application sử dụng chung firestore database với app abdroid đó backup.json . tôi muốn dự án phải bám sát theo những dữ liệu đã có trong database, không thêm những những chức năng mà database không có dữ liệu.bạn có thể xem lại phần backend backend và front end frontend của dự án và app android để xem liệu backend và frontend đã chuyển đổi đúng và đủ tất cả các chức năng của app android chưa được không ? có bị thừa hay thiếu chức năng nào không ?
 
 bạn có thể so sánh các chức năng CRUD của từng đối tượng (Users, Classes, Courses, Questions, Flashcards, Exercises, Tests, Video) và mối quan hệ về chức năng của từng đối tượng trong app android @/KLTN-Android với phần backend của dự án hiện tại @/backend để xem liệu dự án hiện tại đã chuyển đổi đúng và đủ tất cả các chức năng CRUD của từng đối tượng từ app android ? (ví dụ:  ở app android, khi thêm 1 user mới thì tôi thấy các textbox và drop down list để thêm thông tin: full name, email, password, gender, role(chỉ được chọn giữa student hoặc teacher). còn ở POST/api/User, tôi lại thấy các phần để thêm thông tin: fullname, email, role, gender, classIds; rõ ràng là chưa tương thích về chức năng Create và Update Users) 
