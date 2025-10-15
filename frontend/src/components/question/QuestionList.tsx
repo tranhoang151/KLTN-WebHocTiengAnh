@@ -435,30 +435,32 @@ const QuestionList: React.FC<QuestionListProps> = ({
 
                                     {showActions && (
                                         <div className="question-actions">
-                                            <ChildFriendlyButton
-                                                variant="secondary"
-                                                onClick={() => handleDuplicateQuestion(question.id)}
-                                            >
-                                                Duplicate
-                                            </ChildFriendlyButton>
-                                            {onEditQuestion && (
+                                            <div className="action-buttons-row">
                                                 <ChildFriendlyButton
                                                     variant="secondary"
-                                                    onClick={() => onEditQuestion(question)}
+                                                    onClick={() => handleDuplicateQuestion(question.id)}
                                                 >
-                                                    Edit
+                                                    📋 Duplicate
                                                 </ChildFriendlyButton>
-                                            )}
-                                            {onDeleteQuestion && (
-                                                <ChildFriendlyButton
-                                                    variant="danger"
-                                                    onClick={() => handleDeleteQuestion(question.id)}
-                                                    loading={deletingId === question.id}
-                                                    disabled={deletingId === question.id}
-                                                >
-                                                    Delete
-                                                </ChildFriendlyButton>
-                                            )}
+                                                {onEditQuestion && (
+                                                    <ChildFriendlyButton
+                                                        variant="primary"
+                                                        onClick={() => onEditQuestion(question)}
+                                                    >
+                                                        ✏️ Edit
+                                                    </ChildFriendlyButton>
+                                                )}
+                                                {onDeleteQuestion && (
+                                                    <ChildFriendlyButton
+                                                        variant="danger"
+                                                        onClick={() => handleDeleteQuestion(question.id)}
+                                                        loading={deletingId === question.id}
+                                                        disabled={deletingId === question.id}
+                                                    >
+                                                        🗑️ Delete
+                                                    </ChildFriendlyButton>
+                                                )}
+                                            </div>
                                         </div>
                                     )}
                                 </div>

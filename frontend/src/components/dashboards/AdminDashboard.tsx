@@ -7,9 +7,9 @@ import SystemConfigManagement from '../admin/SystemConfigManagement';
 import VideoManagementPage from '../../pages/admin/videos/VideoManagementPage';
 import AnalyticsPage from '../../pages/admin/AnalyticsPage';
 import { ContentManagement } from '../content';
-import CourseList from '../course/CourseList';
+import CourseManagement from '../course/CourseManagement';
 import ClassManagement from '../class/ClassManagement';
-import ExerciseList from '../exercise/ExerciseList';
+import ExerciseManagement from '../exercise/ExerciseManagement';
 import QuestionManagement from '../question/QuestionManagement';
 import FlashcardManagement from '../flashcard/FlashcardManagement';
 
@@ -435,9 +435,9 @@ export const AdminDashboard: React.FC = () => {
       <Routes>
         <Route path="/" element={<AdminDashboardHome />} />
         <Route path="/users" element={<UserManagement />} />
-        <Route path="/courses" element={<CourseList />} />
+        <Route path="/courses" element={<CourseManagement />} />
         <Route path="/classes" element={<ClassManagement />} />
-        <Route path="/exercises" element={<ExerciseList />} />
+        <Route path="/exercises" element={<ExerciseManagement />} />
         <Route path="/questions" element={<QuestionManagement />} />
         <Route path="/flashcards" element={<FlashcardManagement />} />
         <Route path="/content" element={<ContentManagement />} />

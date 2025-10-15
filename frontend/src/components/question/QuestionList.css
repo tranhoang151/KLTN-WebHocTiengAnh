@@ -331,6 +331,9 @@
     gap: 0.5rem;
     justify-content: flex-end;
     flex-wrap: wrap;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color, #e5e7eb);
 }
 
 @media (max-width: 768px) {
@@ -373,6 +376,17 @@
 
     .question-actions button {
         flex: 1;
+        font-size: 0.9rem;
+        padding: 0.6rem 1rem;
+        font-weight: 600;
+        min-width: 100px;
+    }
+
+    .action-buttons-row {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: flex-end;
+        flex-wrap: wrap;
     }
 }
 
