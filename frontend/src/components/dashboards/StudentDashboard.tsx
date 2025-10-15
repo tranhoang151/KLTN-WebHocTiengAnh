@@ -305,10 +305,10 @@ const StudentDashboard: React.FC = () => {
   return (
     <DashboardLayout title="Student Dashboard">
       <Routes>
-        <Route path="/" element={<ProgressDashboardPage />} />{' '}
-        {/* New main route */}
+        <Route path="/" element={<StudentDashboardHome />} />{' '}
+        {/* Main home screen with learning options */}
         <Route path="/progress" element={<ProgressDashboardPage />} />{' '}
-        {/* Direct route */}
+        {/* Progress tracking page */}
         <Route path="/streak" element={<StreakPage />} />
         <Route
           path="/flashcards"
