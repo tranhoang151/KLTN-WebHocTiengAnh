@@ -50,10 +50,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
         if (user) {
           setUser(user);
-          // Token is already stored in localStorage by AuthService
+          // Token is already stored in sessionStorage by AuthService
         } else {
           setUser(null);
-          localStorage.removeItem('authToken');
+          sessionStorage.removeItem('authToken');
         }
 
         setLoading(false);
@@ -64,11 +64,25 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
+  // Check token expiration every 5 minutes
+  useEffect(() => {
+    const checkExpiration = async () => {
+      const token = await authService.getCurrentUserToken();
+      if (!token && user) {
+        // Token expired, logout user
+        setUser(null);
+      }
+    };
+
+    const interval = setInterval(checkExpiration, 5 * 60 * 1000); // 5 minutes
+    return () => clearInterval(interval);
+  }, [user]);
+
   const login = async (email: string, password: string): Promise<void> => {
     setLoading(true);
     try {
       const result = await authService.signIn(email, password);
-      // AuthService already stores token and user data
+      // AuthService already stores token and user data in sessionStorage
       setUser(result.user);
     } catch (error) {
       console.error('Login error:', error);
@@ -97,7 +111,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   const updateUser = (newUser: Partial<User>) => {
-    setUser(prevUser => {
+    setUser((prevUser) => {
       if (prevUser) {
         return { ...prevUser, ...newUser };
       }

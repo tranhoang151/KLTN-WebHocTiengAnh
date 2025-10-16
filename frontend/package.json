@@ -28,6 +28,7 @@
   },
   "scripts": {
     "start": "cross-env HTTPS=true SSL_CRT_FILE=./certs/localhost.pem SSL_KEY_FILE=./certs/localhost-key.pem react-scripts start",
+    "dev": "cross-env FAST_REFRESH=true CHOKIDAR_USEPOLLING=true WATCHPACK_POLLING=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll=false --passWithNoTests",
     "test:watch": "react-scripts test",

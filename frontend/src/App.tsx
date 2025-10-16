@@ -14,6 +14,7 @@ import Unauthorized from './components/Unauthorized';
 import StudentDashboard from './components/dashboards/StudentDashboard';
 import TeacherDashboard from './components/dashboards/TeacherDashboard';
 import AdminDashboard from './components/dashboards/AdminDashboard';
+// import { AdminDashboard } from './utils/routeLazyLoading';
 import ParentDashboard from './components/dashboards/ParentDashboard';
 import Profile from './components/Profile';
 import CourseDetailPage from './pages/learning/CourseDetailPage';
@@ -105,14 +106,14 @@ const App: React.FC = () => {
       <Router>
         <AuthProvider>
           {/* <AccessibilityProvider> */}
-            <div className="App">
-              {/* <SkipLinks /> */}
-              <main id="main-content">
-                <AppRoutes />
-              </main>
-              <AchievementManager />
-              {/* <AccessibilityButton /> */}
-            </div>
+          <div className="App">
+            {/* <SkipLinks /> */}
+            <main id="main-content">
+              <AppRoutes />
+            </main>
+            <AchievementManager />
+            {/* <AccessibilityButton /> */}
+          </div>
           {/* </AccessibilityProvider> */}
         </AuthProvider>
       </Router>

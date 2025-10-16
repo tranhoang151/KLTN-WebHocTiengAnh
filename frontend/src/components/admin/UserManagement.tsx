@@ -10,8 +10,18 @@ import UserList from './UserList';
 import UserForm from './UserForm';
 import UserSearch from './UserSearch';
 import { useAuth } from '../../contexts/AuthContext';
+import { AdminHeader } from '../AdminHeader';
+import { BackButton } from '../BackButton';
+import {
+  Users,
+  Plus,
+  Search,
+  Filter,
+  RefreshCw,
+  AlertCircle,
+} from 'lucide-react';
 
-interface UserManagementProps { }
+interface UserManagementProps {}
 
 const UserManagement: React.FC<UserManagementProps> = () => {
   const { user: currentUser, getAuthToken } = useAuth();
@@ -80,16 +90,13 @@ const UserManagement: React.FC<UserManagementProps> = () => {
     }
   };
 
-  const handleToggleUserStatus = async (user: User) => {
+  const handleToggleUserStatus = async (userId: string, isActive: boolean) => {
     try {
       const token = await getAuthToken();
       if (!token) return;
-      await userService.updateUserStatus(
-        user.id,
-        {
-          isActive: !user.is_active,
-        }
-      );
+      await userService.updateUserStatus(userId, {
+        isActive: isActive,
+      });
       await loadUsers();
       setError(null);
     } catch (err: any) {
@@ -97,10 +104,15 @@ const UserManagement: React.FC<UserManagementProps> = () => {
     }
   };
 
-  const handleDeleteUser = async (user: User) => {
+  const handleDeleteUser = async (userId: string) => {
     try {
       const token = await getAuthToken();
       if (!token) return;
+
+      // Find user to get name for confirmation
+      const user = users.find((u) => u.id === userId);
+      if (!user) return;
+
       if (
         !window.confirm(
           `Are you sure you want to delete user "${user.full_name}"? This action cannot be undone.`
@@ -109,7 +121,7 @@ const UserManagement: React.FC<UserManagementProps> = () => {
         return;
       }
 
-      await userService.deleteUser(user.id);
+      await userService.deleteUser(userId);
       await loadUsers();
       setError(null);
     } catch (err: any) {
@@ -132,59 +144,292 @@ const UserManagement: React.FC<UserManagementProps> = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
-      </div>
+      <>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '256px',
+          }}
+        >
+          <div
+            style={{
+              width: '48px',
+              height: '48px',
+              border: '4px solid #e5e7eb',
+              borderTop: '4px solid #3b82f6',
+              borderRadius: '50%',
+              animation: 'spin 1s linear infinite',
+            }}
+          />
+        </div>
+        <style>
+          {`
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          `}
+        </style>
+      </>
     );
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">User Management</h1>
-          <p className="text-gray-600">Manage system users and their roles</p>
+    <div style={{ minHeight: '100vh', backgroundColor: '#f8fafc' }}>
+      {/* Main Content */}
+      <main
+        style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          // padding: '30px',
+        }}
+      >
+        {/* Back Button */}
+        <div style={{ marginBottom: '24px' }}>
+          <BackButton />
         </div>
-        <button
-          onClick={() => {
-            setShowCreateForm(true);
-            setEditingUser(null);
-          }}
-          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors"
-        >
-          Create New User
-        </button>
-      </div>
 
-      {/* Error Message */}
-      {error && (
-        <div className="bg-red-50 border border-red-200 rounded-md p-4">
-          <div className="flex">
-            <div className="flex-shrink-0">
-              <span className="text-red-400 text-xl">⚠️</span>
-            </div>
-            <div className="ml-3">
-              <h3 className="text-sm font-medium text-red-800">Error</h3>
-              <div className="mt-2 text-sm text-red-700">
-                <p>{error}</p>
+        {/* Error Message */}
+        {error && (
+          <div
+            style={{
+              padding: '16px',
+              borderRadius: '12px',
+              marginBottom: '24px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              background: 'linear-gradient(135deg, #fee2e2, #fecaca)',
+              border: '1px solid #ef4444',
+              color: '#991b1b',
+            }}
+          >
+            <AlertCircle size={20} />
+            <span style={{ fontWeight: '500', flex: 1 }}>{error}</span>
+            <button
+              onClick={() => setError(null)}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                color: 'inherit',
+                opacity: '0.7',
+                padding: '4px',
+              }}
+            >
+              ×
+            </button>
+          </div>
+        )}
+
+        {/* Search and Filters */}
+        <div
+          style={{
+            background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+            borderRadius: '16px',
+            padding: '28px',
+            marginBottom: '24px',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            position: 'relative',
+            overflow: 'hidden',
+          }}
+        >
+          {/* Background decoration */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '-50px',
+              right: '-50px',
+              width: '120px',
+              height: '120px',
+              background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+              borderRadius: '50%',
+              opacity: '0.05',
+              zIndex: 0,
+            }}
+          />
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '-30px',
+              left: '-30px',
+              width: '80px',
+              height: '80px',
+              background: 'linear-gradient(135deg, #10b981, #059669)',
+              borderRadius: '50%',
+              opacity: '0.05',
+              zIndex: 0,
+            }}
+          />
+
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '20px',
+              position: 'relative',
+              zIndex: 1,
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              <div
+                style={{
+                  width: '48px',
+                  height: '48px',
+                  background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                  borderRadius: '12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)',
+                }}
+              >
+                <Search size={20} style={{ color: 'white' }} />
+              </div>
+              <div>
+                <h3
+                  style={{
+                    fontSize: '20px',
+                    fontWeight: '700',
+                    background: 'linear-gradient(135deg, #1f2937, #374151)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    margin: '0 0 4px 0',
+                  }}
+                >
+                  Search & Filter Users
+                </h3>
+                <p
+                  style={{
+                    fontSize: '14px',
+                    color: '#6b7280',
+                    margin: '0',
+                    fontWeight: '500',
+                  }}
+                >
+                  Find and manage user accounts
+                </p>
               </div>
             </div>
+
+            <div
+              style={{
+                display: 'flex',
+                gap: '12px',
+                position: 'relative',
+                zIndex: 1,
+              }}
+            >
+              <button
+                onClick={loadUsers}
+                disabled={loading}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '12px 20px',
+                  background: 'linear-gradient(135deg, #f8fafc, #e2e8f0)',
+                  color: '#475569',
+                  border: '1px solid #cbd5e1',
+                  borderRadius: '12px',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  cursor: loading ? 'not-allowed' : 'pointer',
+                  transition: 'all 0.3s ease',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+                  position: 'relative',
+                  overflow: 'hidden',
+                }}
+                onMouseEnter={(e) => {
+                  if (!loading) {
+                    e.currentTarget.style.background =
+                      'linear-gradient(135deg, #3b82f6, #1d4ed8)';
+                    e.currentTarget.style.color = 'white';
+                    e.currentTarget.style.borderColor = '#3b82f6';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow =
+                      '0 8px 25px rgba(59, 130, 246, 0.3)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!loading) {
+                    e.currentTarget.style.background =
+                      'linear-gradient(135deg, #f8fafc, #e2e8f0)';
+                    e.currentTarget.style.color = '#475569';
+                    e.currentTarget.style.borderColor = '#cbd5e1';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow =
+                      '0 2px 8px rgba(0, 0, 0, 0.05)';
+                  }
+                }}
+              >
+                <RefreshCw
+                  size={16}
+                  style={{
+                    animation: loading ? 'spin 1s linear infinite' : 'none',
+                    color: 'inherit',
+                  }}
+                />
+                Refresh
+              </button>
+
+              <button
+                onClick={() => setShowCreateForm(true)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '12px 20px',
+                  background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '12px',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  boxShadow: '0 4px 16px rgba(59, 130, 246, 0.4)',
+                  position: 'relative',
+                  overflow: 'hidden',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform =
+                    'translateY(-2px) scale(1.02)';
+                  e.currentTarget.style.boxShadow =
+                    '0 8px 30px rgba(59, 130, 246, 0.5)';
+                  e.currentTarget.style.background =
+                    'linear-gradient(135deg, #1d4ed8, #1e40af)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                  e.currentTarget.style.boxShadow =
+                    '0 4px 16px rgba(59, 130, 246, 0.4)';
+                  e.currentTarget.style.background =
+                    'linear-gradient(135deg, #3b82f6, #1d4ed8)';
+                }}
+              >
+                <Plus size={16} />
+                Add New User
+              </button>
+            </div>
+          </div>
+
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            <UserSearch
+              filters={filters}
+              onFiltersChange={handleFiltersChange}
+              totalUsers={users.length}
+              filteredUsers={users.length}
+            />
           </div>
         </div>
-      )}
 
-      {/* Search and Filters */}
-      <UserSearch
-        filters={filters}
-        onFiltersChange={handleFiltersChange}
-        totalUsers={users.length} // This might need adjustment if backend paginates
-        filteredUsers={users.length} // Now reflects the count from backend
-      />
-
-      {/* Create/Edit Form */}
-      {(showCreateForm || editingUser) && (
-        <div className="bg-white rounded-lg shadow-md p-6">
+        {/* Create/Edit Form Popup */}
+        {(showCreateForm || editingUser) && (
           <UserForm
             user={editingUser}
             onSubmit={
@@ -197,48 +442,219 @@ const UserManagement: React.FC<UserManagementProps> = () => {
             }
             isEditing={!!editingUser}
           />
-        </div>
-      )}
+        )}
 
-      {/* User List */}
-      <div className="bg-white rounded-lg shadow-md">
-        <UserList
-          users={users} // Use users directly
-          onEdit={handleEditUser}
-          onToggleStatus={handleToggleUserStatus}
-          onDelete={handleDeleteUser}
-        />
-      </div>
+        {/* User List */}
+        <div
+          style={{
+            background: 'white',
+            borderRadius: '12px',
+            padding: '24px',
+            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+            border: '1px solid #e5e7eb',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              marginBottom: '20px',
+            }}
+          >
+            <Filter size={20} style={{ color: '#6b7280' }} />
+            <h3
+              style={{
+                fontSize: '18px',
+                fontWeight: '600',
+                color: '#1f2937',
+                margin: '0',
+              }}
+            >
+              Users List
+            </h3>
+            <div
+              style={{
+                marginLeft: 'auto',
+                padding: '4px 12px',
+                background: '#f3f4f6',
+                borderRadius: '20px',
+                fontSize: '14px',
+                fontWeight: '500',
+                color: '#6b7280',
+              }}
+            >
+              {users.length} user{users.length !== 1 ? 's' : ''}
+            </div>
+          </div>
 
-      {/* Summary */}
-      <div className="bg-gray-50 rounded-lg p-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
-          <div>
-            <div className="text-2xl font-bold text-blue-600">
-              {users.length}
+          <UserList
+            users={users}
+            loading={loading}
+            onEdit={setEditingUser}
+            onDelete={handleDeleteUser}
+            onToggleStatus={handleToggleUserStatus}
+            currentUser={currentUser as any}
+          />
+        </div>
+
+        {/* Summary */}
+        <div
+          style={{
+            background: 'white',
+            borderRadius: '12px',
+            padding: '24px',
+            marginTop: '24px',
+            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+            border: '1px solid #e5e7eb',
+          }}
+        >
+          <h3
+            style={{
+              fontSize: '18px',
+              fontWeight: '600',
+              color: '#1f2937',
+              margin: '0 0 20px 0',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+            }}
+          >
+            <Users size={20} style={{ color: '#6b7280' }} />
+            User Statistics
+          </h3>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: '20px',
+            }}
+          >
+            <div
+              style={{
+                padding: '20px',
+                background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)',
+                borderRadius: '12px',
+                textAlign: 'center',
+              }}
+            >
+              <div
+                style={{
+                  fontSize: '32px',
+                  fontWeight: '700',
+                  color: '#1e40af',
+                  marginBottom: '8px',
+                }}
+              >
+                {users.length}
+              </div>
+              <div
+                style={{
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  color: '#1e40af',
+                }}
+              >
+                Total Users
+              </div>
             </div>
-            <div className="text-sm text-gray-600">Total Users</div>
-          </div>
-          <div>
-            <div className="text-2xl font-bold text-green-600">
-              {users.filter((u) => u.is_active).length}
+            <div
+              style={{
+                padding: '20px',
+                background: 'linear-gradient(135deg, #d1fae5, #a7f3d0)',
+                borderRadius: '12px',
+                textAlign: 'center',
+              }}
+            >
+              <div
+                style={{
+                  fontSize: '32px',
+                  fontWeight: '700',
+                  color: '#065f46',
+                  marginBottom: '8px',
+                }}
+              >
+                {users.filter((u) => u.is_active).length}
+              </div>
+              <div
+                style={{
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  color: '#065f46',
+                }}
+              >
+                Active Users
+              </div>
             </div>
-            <div className="text-sm text-gray-600">Active Users</div>
-          </div>
-          <div>
-            <div className="text-2xl font-bold text-yellow-600">
-              {users.filter((u) => u.role === 'student').length}
+            <div
+              style={{
+                padding: '20px',
+                background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+                borderRadius: '12px',
+                textAlign: 'center',
+              }}
+            >
+              <div
+                style={{
+                  fontSize: '32px',
+                  fontWeight: '700',
+                  color: '#92400e',
+                  marginBottom: '8px',
+                }}
+              >
+                {users.filter((u) => u.role === 'student').length}
+              </div>
+              <div
+                style={{
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  color: '#92400e',
+                }}
+              >
+                Students
+              </div>
             </div>
-            <div className="text-sm text-gray-600">Students</div>
-          </div>
-          <div>
-            <div className="text-2xl font-bold text-purple-600">
-              {users.filter((u) => u.role === 'teacher').length}
+            <div
+              style={{
+                padding: '20px',
+                background: 'linear-gradient(135deg, #e9d5ff, #d8b4fe)',
+                borderRadius: '12px',
+                textAlign: 'center',
+              }}
+            >
+              <div
+                style={{
+                  fontSize: '32px',
+                  fontWeight: '700',
+                  color: '#7c3aed',
+                  marginBottom: '8px',
+                }}
+              >
+                {users.filter((u) => u.role === 'teacher').length}
+              </div>
+              <div
+                style={{
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  color: '#7c3aed',
+                }}
+              >
+                Teachers
+              </div>
             </div>
-            <div className="text-sm text-gray-600">Teachers</div>
           </div>
         </div>
-      </div>
+      </main>
+
+      {/* CSS Animation */}
+      <style>
+        {`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}
+      </style>
     </div>
   );
 };
