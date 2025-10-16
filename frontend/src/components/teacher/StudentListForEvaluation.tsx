@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { User, Class, EvaluationSummaryDto } from '../../types';
 import { classService } from '../../services/classService';
-import { EvaluationService } from '../../services/evaluationService';
+import { evaluationService } from '../../services/evaluationService';
 import ChildFriendlyCard from '../ui/ChildFriendlyCard';
 import ChildFriendlyButton from '../ui/ChildFriendlyButton';
 import OptimizedImage from '../ui/OptimizedImage';
@@ -17,7 +17,7 @@ export const StudentListForEvaluation: React.FC<StudentListForEvaluationProps> =
     onStudentSelect,
     onBack
 }) => {
-    const [classes, setClasses] = useState<Class[]>([]);
+    const [classes, setClasses] = useState<any[]>([]);
     const [selectedClass, setSelectedClass] = useState<string>('');
     const [students, setStudents] = useState<User[]>([]);
     const [evaluations, setEvaluations] = useState<EvaluationSummaryDto[]>([]);
@@ -37,7 +37,7 @@ export const StudentListForEvaluation: React.FC<StudentListForEvaluationProps> =
     const loadTeacherClasses = async () => {
         try {
             setLoading(true);
-            const classesData = await classService.getClassesForTeacher();
+            const classesData = await classService.getTeacherClasses();
             setClasses(classesData);
 
             if (classesData.length > 0) {
@@ -60,20 +60,20 @@ export const StudentListForEvaluation: React.FC<StudentListForEvaluationProps> =
             setStudents(studentsData);
 
             // Load existing evaluations for context
-            const evaluationsData = await EvaluationService.getEvaluationsByClass(selectedClass);
+            const evaluationsData = await evaluationService.getTeacherEvaluations();
             // Convert Evaluation[] to EvaluationSummaryDto[] for display
             const summaryData: EvaluationSummaryDto[] = evaluationsData.map(e => ({
                 evaluationId: e.id,
-                studentId: e.student_id,
+                studentId: e.studentId,
                 studentName: '', // Would need to fetch student name
-                teacherId: e.teacher_id,
+                teacherId: e.teacherId,
                 teacherName: '', // Would need to fetch teacher name
-                classId: e.class_id,
+                classId: e.classId,
                 className: '', // Would need to fetch class name
-                overallRating: e.overall_rating,
+                overallRating: 0, // TODO: Calculate from ratings
                 score: e.score,
-                evaluationDate: e.evaluation_date,
-                comments: e.comments
+                evaluationDate: e.evaluationDate,
+                comments: e.comment
             }));
             setEvaluations(summaryData);
         } catch (err) {

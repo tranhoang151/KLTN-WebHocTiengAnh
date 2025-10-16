@@ -46,11 +46,6 @@ export const AdminDashboard = lazyRoute(
   'AdminDashboard'
 );
 
-// Parent Dashboard Components
-export const ParentDashboard = lazyRoute(
-  () => import('../components/dashboards/ParentDashboard'),
-  'ParentDashboard'
-);
 
 // Profile Components
 export const Profile = lazyRoute(
@@ -81,9 +76,6 @@ export const preloadRoutesByRole = (userRole: string) => {
       );
       break;
     case 'parent':
-      preloadPromises.push(
-        import('../components/dashboards/ParentDashboard')
-      );
       break;
   }
 

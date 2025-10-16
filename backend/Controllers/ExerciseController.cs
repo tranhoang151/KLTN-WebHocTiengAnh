@@ -22,7 +22,7 @@ public class ExerciseController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = "admin,teacher")]
+    [Authorize(Roles = "admin,teacher,student")]
     public async Task<IActionResult> GetAllExercises()
     {
         try

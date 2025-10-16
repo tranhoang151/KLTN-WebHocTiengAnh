@@ -80,36 +80,20 @@ class ProgressService {
     }
   }
 
-  async getChildrenProgressSummaries(
-    parentId: string
-  ): Promise<ApiResponse<StudentProgressSummaryDto[]>> {
-    try {
-      const response = await apiService.get<StudentProgressSummaryDto[]>(
-        `/progress/parent/${parentId}/children-summaries`
-      );
-      return response;
-    } catch (error) {
-      console.error('Error fetching children progress summaries:', error);
-      return {
-        success: false,
-        error: 'Failed to fetch children progress summaries.',
-      };
-    }
-  }
 
-  async getDetailedChildProgress(
-    childId: string
+  async getDetailedStudentProgress(
+    studentId: string
   ): Promise<ApiResponse<StudentDashboardDto>> {
     try {
       const response = await apiService.get<StudentDashboardDto>(
-        `/progress/dashboard/${childId}`
+        `/progress/dashboard/${studentId}`
       );
       return response;
     } catch (error) {
-      console.error('Error fetching detailed child progress:', error);
+      console.error('Error fetching detailed student progress:', error);
       return {
         success: false,
-        error: 'Failed to fetch detailed child progress.',
+        error: 'Failed to fetch detailed student progress.',
       };
     }
   }

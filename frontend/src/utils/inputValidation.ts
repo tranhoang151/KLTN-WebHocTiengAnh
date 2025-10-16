@@ -363,7 +363,7 @@ export class SpecificValidators {
             validator.addError('Mật khẩu xác nhận không khớp');
         }
 
-        const allowedRoles = ['student', 'teacher', 'admin', 'parent'];
+        const allowedRoles = ['student', 'teacher', 'admin'];
         if (!allowedRoles.includes(data.role)) {
             validator.addError('Vai trò không hợp lệ');
         }

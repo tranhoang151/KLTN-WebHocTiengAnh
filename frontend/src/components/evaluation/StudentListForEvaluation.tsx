@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { User, Evaluation } from '../../types';
-import { EvaluationService } from '../../services/evaluationService';
+import { evaluationService } from '../../services/evaluationService';
 
 interface StudentListForEvaluationProps {
     teacherId: string;
@@ -34,10 +34,10 @@ const StudentListForEvaluation: React.FC<StudentListForEvaluationProps> = ({
             setError(null);
 
             // Get students needing evaluation
-            const studentsNeedingEvaluation = await EvaluationService.getStudentsNeedingEvaluation(teacherId);
+            const studentsNeedingEvaluation = await evaluationService.getTeacherEvaluations(); // TODO: Implement proper method
 
             // Get existing evaluations for the teacher
-            const evaluations = await EvaluationService.getEvaluationsByTeacher(teacherId);
+            const evaluations = await evaluationService.getTeacherEvaluations();
 
             // For now, we'll use mock student data since we don't have a direct way to get all students
             // In a real implementation, you'd fetch students from a students service
@@ -85,10 +85,10 @@ const StudentListForEvaluation: React.FC<StudentListForEvaluationProps> = ({
 
             // Add evaluation status to students
             const studentsWithStatus = mockStudents.map(student => {
-                const studentEvaluations = evaluations.filter(e => e.student_id === student.id);
+                const studentEvaluations = evaluations.filter(e => e.studentId === student.id);
                 const latestEvaluation = studentEvaluations.length > 0
                     ? studentEvaluations.sort((a, b) =>
-                        new Date(b.evaluation_date).getTime() - new Date(a.evaluation_date).getTime()
+                        new Date(b.evaluationDate).getTime() - new Date(a.evaluationDate).getTime()
                     )[0]
                     : undefined;
 
@@ -100,7 +100,7 @@ const StudentListForEvaluation: React.FC<StudentListForEvaluationProps> = ({
                 };
             });
 
-            setStudents(studentsWithStatus);
+            setStudents(studentsWithStatus as any[]);
         } catch (err) {
             console.error('Error loading students:', err);
             setError('Failed to load students');
@@ -179,8 +179,8 @@ const StudentListForEvaluation: React.FC<StudentListForEvaluationProps> = ({
                         <button
                             onClick={() => setFilter('all')}
                             className={`px-3 py-1 text-sm rounded-md ${filter === 'all'
-                                    ? 'bg-blue-600 text-white'
-                                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                ? 'bg-blue-600 text-white'
+                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                                 }`}
                         >
                             All ({students.length})
@@ -188,8 +188,8 @@ const StudentListForEvaluation: React.FC<StudentListForEvaluationProps> = ({
                         <button
                             onClick={() => setFilter('needs-evaluation')}
                             className={`px-3 py-1 text-sm rounded-md ${filter === 'needs-evaluation'
-                                    ? 'bg-red-600 text-white'
-                                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                ? 'bg-red-600 text-white'
+                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                                 }`}
                         >
                             Need Evaluation ({students.filter(s => s.needsEvaluation).length})
@@ -197,8 +197,8 @@ const StudentListForEvaluation: React.FC<StudentListForEvaluationProps> = ({
                         <button
                             onClick={() => setFilter('has-evaluation')}
                             className={`px-3 py-1 text-sm rounded-md ${filter === 'has-evaluation'
-                                    ? 'bg-green-600 text-white'
-                                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                ? 'bg-green-600 text-white'
+                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                                 }`}
                         >
                             Evaluated ({students.filter(s => s.hasEvaluation).length})

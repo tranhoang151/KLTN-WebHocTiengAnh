@@ -69,14 +69,6 @@ const AppRoutes: React.FC = () => {
         }
       />
 
-      <Route
-        path="/parent/*"
-        element={
-          <ProtectedRoute requiredRole="parent">
-            <ParentDashboard />
-          </ProtectedRoute>
-        }
-      />
 
       {/* Profile Route - Available to all authenticated users */}
       <Route
