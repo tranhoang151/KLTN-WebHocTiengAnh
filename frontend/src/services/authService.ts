@@ -56,10 +56,12 @@ export class AuthService {
       this.token = data.token;
       this.currentUser = data.user;
 
-      // Store in localStorage for persistence
-      localStorage.setItem('auth_token', data.token);
-      localStorage.setItem('refresh_token', data.refreshToken || '');
-      localStorage.setItem('user_data', JSON.stringify(data.user));
+      // Store in sessionStorage - will be cleared when browser is closed
+      const expirationTime = Date.now() + (24 * 60 * 60 * 1000); // 24 hours
+      sessionStorage.setItem('auth_token', data.token);
+      sessionStorage.setItem('refresh_token', data.refreshToken || '');
+      sessionStorage.setItem('user_data', JSON.stringify(data.user));
+      sessionStorage.setItem('auth_expiration', expirationTime.toString());
 
       return {
         user: data.user,
@@ -104,10 +106,11 @@ export class AuthService {
       console.error('Logout API error:', error);
       // Continue with local logout even if API call fails
     } finally {
-      // Clear local storage and state
-      localStorage.removeItem('auth_token');
-      localStorage.removeItem('refresh_token');
-      localStorage.removeItem('user_data');
+      // Clear session storage and state
+      sessionStorage.removeItem('auth_token');
+      sessionStorage.removeItem('refresh_token');
+      sessionStorage.removeItem('user_data');
+      sessionStorage.removeItem('auth_expiration');
       this.token = null;
       this.currentUser = null;
     }
@@ -117,11 +120,19 @@ export class AuthService {
    * Get the current user's token
    */
   async getCurrentUserToken(): Promise<string | null> {
+    // Check if token is expired
+    const expirationTime = sessionStorage.getItem('auth_expiration');
+    if (expirationTime && Date.now() > parseInt(expirationTime)) {
+      // Token expired, clear all auth data
+      await this.signOut();
+      return null;
+    }
+
     if (this.token) {
       return this.token;
     }
-    // Try to get from localStorage
-    const storedToken = localStorage.getItem('auth_token');
+    // Try to get from sessionStorage
+    const storedToken = sessionStorage.getItem('auth_token');
     if (storedToken) {
       this.token = storedToken;
       return storedToken;
@@ -150,7 +161,7 @@ export class AuthService {
 
       if (response.ok && data.isValid && data.user) {
         this.currentUser = data.user;
-        localStorage.setItem('user_data', JSON.stringify(data.user));
+        sessionStorage.setItem('user_data', JSON.stringify(data.user));
         return true;
       }
 
@@ -186,9 +197,10 @@ export class AuthService {
    * Clear session data
    */
   private clearSession(): void {
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('refresh_token');
-    localStorage.removeItem('user_data');
+    sessionStorage.removeItem('auth_token');
+    sessionStorage.removeItem('refresh_token');
+    sessionStorage.removeItem('user_data');
+    sessionStorage.removeItem('auth_expiration');
     this.token = null;
     this.currentUser = null;
   }
@@ -198,7 +210,7 @@ export class AuthService {
    */
   async refreshToken(): Promise<string | null> {
     try {
-      const refreshToken = localStorage.getItem('refresh_token');
+      const refreshToken = sessionStorage.getItem('refresh_token');
       if (!refreshToken) {
         console.warn('No refresh token available');
         return null;
@@ -217,9 +229,11 @@ export class AuthService {
 
       if (response.ok && data.success && data.token) {
         this.token = data.token;
-        localStorage.setItem('auth_token', data.token);
+        const expirationTime = Date.now() + (24 * 60 * 60 * 1000); // 24 hours
+        sessionStorage.setItem('auth_token', data.token);
+        sessionStorage.setItem('auth_expiration', expirationTime.toString());
         if (data.refreshToken) {
-          localStorage.setItem('refresh_token', data.refreshToken);
+          sessionStorage.setItem('refresh_token', data.refreshToken);
         }
         console.log('Token refreshed successfully');
         return data.token;
@@ -302,9 +316,9 @@ export class AuthService {
    * Listen to authentication state changes (simplified for custom auth)
    */
   onAuthStateChanged(callback: (user: User | null) => void): () => void {
-    // For custom auth, check localStorage on initialization
-    const storedUser = localStorage.getItem('user_data');
-    const storedToken = localStorage.getItem('auth_token');
+    // For custom auth, check sessionStorage on initialization
+    const storedUser = sessionStorage.getItem('user_data');
+    const storedToken = sessionStorage.getItem('auth_token');
 
     if (storedUser && storedToken) {
       this.currentUser = JSON.parse(storedUser);
@@ -325,8 +339,8 @@ export class AuthService {
     if (this.currentUser) {
       return this.currentUser;
     }
-    // Try to get from localStorage
-    const storedUser = localStorage.getItem('user_data');
+    // Try to get from sessionStorage
+    const storedUser = sessionStorage.getItem('user_data');
     if (storedUser) {
       this.currentUser = JSON.parse(storedUser);
       return this.currentUser;
@@ -387,7 +401,7 @@ export class AuthService {
     hasUser: boolean;
     tokenExpiry?: Date;
   } {
-    const token = localStorage.getItem('auth_token');
+    const token = sessionStorage.getItem('auth_token');
     const user = this.getCurrentUser();
 
     return {

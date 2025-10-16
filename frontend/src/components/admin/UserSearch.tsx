@@ -2,6 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { UserFilters } from '../../services/userService';
 import { userService } from '../../services/userService';
 import { useAuth } from '../../contexts/AuthContext';
+import {
+  Search,
+  Filter,
+  X,
+  Users,
+  Shield,
+  GraduationCap,
+  User as UserIcon,
+  UserCheck,
+  UserX,
+} from 'lucide-react';
 
 interface UserSearchProps {
   filters: UserFilters;
@@ -68,117 +79,485 @@ const UserSearch: React.FC<UserSearchProps> = ({
 
   const hasActiveFilters = searchTerm || selectedRole || selectedStatus;
 
+  const getRoleIcon = (role: string) => {
+    switch (role) {
+      case 'admin':
+        return <Shield size={14} />;
+      case 'teacher':
+        return <GraduationCap size={14} />;
+      case 'student':
+        return <UserIcon size={14} />;
+      default:
+        return <UserIcon size={14} />;
+    }
+  };
+
+  const getRoleColor = (role: string) => {
+    switch (role) {
+      case 'admin':
+        return {
+          bg: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+          text: '#92400e',
+          border: '#fcd34d',
+        };
+      case 'teacher':
+        return {
+          bg: 'linear-gradient(135deg, #d1fae5, #a7f3d0)',
+          text: '#065f46',
+          border: '#6ee7b7',
+        };
+      case 'student':
+        return {
+          bg: 'linear-gradient(135deg, #dbeafe, #bfdbfe)',
+          text: '#1e40af',
+          border: '#93c5fd',
+        };
+      default:
+        return {
+          bg: 'linear-gradient(135deg, #e5e7eb, #d1d5db)',
+          text: '#4b5563',
+          border: '#9ca3af',
+        };
+    }
+  };
+
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0 lg:space-x-4">
+    <div
+      style={{
+        background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+        borderRadius: '16px',
+        padding: '24px',
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
+        position: 'relative',
+        overflow: 'hidden',
+      }}
+    >
+      {/* Background decoration */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '-20px',
+          right: '-20px',
+          width: '60px',
+          height: '60px',
+          background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+          borderRadius: '50%',
+          opacity: '0.08',
+          zIndex: 0,
+        }}
+      />
+
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '20px',
+          position: 'relative',
+          zIndex: 1,
+        }}
+      >
         {/* Search Input */}
-        <div className="flex-1 max-w-md">
+        <div style={{ flex: 1 }}>
           <label
             htmlFor="search"
-            className="block text-sm font-medium text-gray-700 mb-2"
+            style={{
+              display: 'block',
+              fontSize: '14px',
+              fontWeight: '600',
+              color: '#374151',
+              marginBottom: '8px',
+            }}
           >
             Search Users
           </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <span className="text-gray-400">🔍</span>
+          <div style={{ position: 'relative' }}>
+            <div
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '12px',
+                transform: 'translateY(-50%)',
+                zIndex: 2,
+                pointerEvents: 'none',
+              }}
+            >
+              <Search size={18} style={{ color: '#6b7280' }} />
             </div>
             <input
               type="text"
               id="search"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+              style={{
+                width: '100%',
+                padding: '12px 12px 12px 44px',
+                border: '2px solid #e5e7eb',
+                borderRadius: '12px',
+                fontSize: '14px',
+                fontWeight: '500',
+                background: 'white',
+                color: '#1f2937',
+                transition: 'all 0.2s ease',
+                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.02)',
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = '#3b82f6';
+                e.currentTarget.style.boxShadow =
+                  '0 0 0 3px rgba(59, 130, 246, 0.1)';
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.borderColor = '#e5e7eb';
+                e.currentTarget.style.boxShadow =
+                  '0 2px 4px rgba(0, 0, 0, 0.02)';
+              }}
               placeholder="Search by name or email..."
             />
           </div>
         </div>
 
-        {/* Role Filter */}
-        <div className="min-w-0 flex-1 max-w-xs">
-          <label
-            htmlFor="role"
-            className="block text-sm font-medium text-gray-700 mb-2"
-          >
-            Filter by Role
-          </label>
-          <select
-            id="role"
-            value={selectedRole}
-            onChange={(e) => setSelectedRole(e.target.value)}
-            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-          >
-            <option value="">All Roles</option>
-            {availableRoles.map((role) => (
-              <option key={role} value={role}>
-                {role.charAt(0).toUpperCase() + role.slice(1)}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Status Filter */}
-        <div className="min-w-0 flex-1 max-w-xs">
-          <label
-            htmlFor="status"
-            className="block text-sm font-medium text-gray-700 mb-2"
-          >
-            Filter by Status
-          </label>
-          <select
-            id="status"
-            value={selectedStatus}
-            onChange={(e) => setSelectedStatus(e.target.value)}
-            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-          >
-            <option value="">All Status</option>
-            <option value="true">Active</option>
-            <option value="false">Inactive</option>
-          </select>
-        </div>
-
-        {/* Clear Filters Button */}
-        {hasActiveFilters && (
-          <div className="flex items-end">
-            <button
-              onClick={handleClearFilters}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+        {/* Filters Row */}
+        <div
+          style={{
+            display: 'flex',
+            gap: '16px',
+            flexWrap: 'wrap',
+            alignItems: 'end',
+          }}
+        >
+          {/* Role Filter */}
+          <div style={{ flex: 1, minWidth: '200px' }}>
+            <label
+              htmlFor="role"
+              style={{
+                display: 'block',
+                fontSize: '14px',
+                fontWeight: '600',
+                color: '#374151',
+                marginBottom: '8px',
+              }}
             >
-              Clear Filters
-            </button>
+              Filter by Role
+            </label>
+            <div style={{ position: 'relative' }}>
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '12px',
+                  transform: 'translateY(-50%)',
+                  zIndex: 2,
+                  pointerEvents: 'none',
+                }}
+              >
+                <Filter size={16} style={{ color: '#6b7280' }} />
+              </div>
+              <select
+                id="role"
+                value={selectedRole}
+                onChange={(e) => setSelectedRole(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '12px 12px 12px 40px',
+                  border: '2px solid #e5e7eb',
+                  borderRadius: '12px',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  background: 'white',
+                  color: '#1f2937',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.02)',
+                  appearance: 'none',
+                  backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
+                  backgroundPosition: 'right 12px center',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundSize: '16px',
+                }}
+                onFocus={(e) => {
+                  e.currentTarget.style.borderColor = '#3b82f6';
+                  e.currentTarget.style.boxShadow =
+                    '0 0 0 3px rgba(59, 130, 246, 0.1)';
+                }}
+                onBlur={(e) => {
+                  e.currentTarget.style.borderColor = '#e5e7eb';
+                  e.currentTarget.style.boxShadow =
+                    '0 2px 4px rgba(0, 0, 0, 0.02)';
+                }}
+              >
+                <option value="">All Roles</option>
+                {availableRoles.map((role) => (
+                  <option key={role} value={role}>
+                    {role.charAt(0).toUpperCase() + role.slice(1)}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-        )}
+
+          {/* Status Filter */}
+          <div style={{ flex: 1, minWidth: '200px' }}>
+            <label
+              htmlFor="status"
+              style={{
+                display: 'block',
+                fontSize: '14px',
+                fontWeight: '600',
+                color: '#374151',
+                marginBottom: '8px',
+              }}
+            >
+              Filter by Status
+            </label>
+            <div style={{ position: 'relative' }}>
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '12px',
+                  transform: 'translateY(-50%)',
+                  zIndex: 2,
+                  pointerEvents: 'none',
+                }}
+              >
+                {selectedStatus === 'true' ? (
+                  <UserCheck size={16} style={{ color: '#10b981' }} />
+                ) : selectedStatus === 'false' ? (
+                  <UserX size={16} style={{ color: '#ef4444' }} />
+                ) : (
+                  <Users size={16} style={{ color: '#6b7280' }} />
+                )}
+              </div>
+              <select
+                id="status"
+                value={selectedStatus}
+                onChange={(e) => setSelectedStatus(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '12px 12px 12px 40px',
+                  border: '2px solid #e5e7eb',
+                  borderRadius: '12px',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  background: 'white',
+                  color: '#1f2937',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.02)',
+                  appearance: 'none',
+                  backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
+                  backgroundPosition: 'right 12px center',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundSize: '16px',
+                }}
+                onFocus={(e) => {
+                  e.currentTarget.style.borderColor = '#3b82f6';
+                  e.currentTarget.style.boxShadow =
+                    '0 0 0 3px rgba(59, 130, 246, 0.1)';
+                }}
+                onBlur={(e) => {
+                  e.currentTarget.style.borderColor = '#e5e7eb';
+                  e.currentTarget.style.boxShadow =
+                    '0 2px 4px rgba(0, 0, 0, 0.02)';
+                }}
+              >
+                <option value="">All Status</option>
+                <option value="true">Active</option>
+                <option value="false">Inactive</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Clear Filters Button */}
+          {hasActiveFilters && (
+            <div style={{ display: 'flex', alignItems: 'end' }}>
+              <button
+                onClick={handleClearFilters}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '12px 16px',
+                  background: 'linear-gradient(135deg, #fef2f2, #fee2e2)',
+                  color: '#dc2626',
+                  border: '1px solid #fecaca',
+                  borderRadius: '12px',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.02)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background =
+                    'linear-gradient(135deg, #dc2626, #b91c1c)';
+                  e.currentTarget.style.color = 'white';
+                  e.currentTarget.style.transform = 'translateY(-1px)';
+                  e.currentTarget.style.boxShadow =
+                    '0 4px 12px rgba(220, 38, 38, 0.3)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background =
+                    'linear-gradient(135deg, #fef2f2, #fee2e2)';
+                  e.currentTarget.style.color = '#dc2626';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow =
+                    '0 2px 4px rgba(0, 0, 0, 0.02)';
+                }}
+              >
+                <X size={16} />
+                Clear Filters
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Results Summary */}
-      <div className="mt-4 pt-4 border-t border-gray-200">
-        <div className="flex items-center justify-between text-sm text-gray-600">
-          <div>
+      <div
+        style={{
+          marginTop: '20px',
+          paddingTop: '20px',
+          borderTop: '1px solid #e5e7eb',
+          position: 'relative',
+          zIndex: 1,
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '12px',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              fontSize: '14px',
+              color: '#6b7280',
+              fontWeight: '500',
+            }}
+          >
+            <Users size={16} style={{ color: '#3b82f6' }} />
             Showing{' '}
-            <span className="font-medium text-gray-900">{filteredUsers}</span>{' '}
-            of <span className="font-medium text-gray-900">{totalUsers}</span>{' '}
+            <span
+              style={{
+                fontWeight: '700',
+                color: '#1f2937',
+                background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              {filteredUsers}
+            </span>{' '}
+            of{' '}
+            <span
+              style={{
+                fontWeight: '700',
+                color: '#1f2937',
+                background: 'linear-gradient(135deg, #10b981, #059669)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              {totalUsers}
+            </span>{' '}
             users
           </div>
 
           {hasActiveFilters && (
-            <div className="flex items-center space-x-2">
-              <span className="text-blue-600">Filters applied:</span>
-              <div className="flex space-x-1">
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                flexWrap: 'wrap',
+              }}
+            >
+              <span
+                style={{
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  color: '#3b82f6',
+                }}
+              >
+                Active filters:
+              </span>
+              <div
+                style={{
+                  display: 'flex',
+                  gap: '8px',
+                  flexWrap: 'wrap',
+                }}
+              >
                 {searchTerm && (
-                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                    Search: "{searchTerm}"
+                  <span
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      padding: '6px 12px',
+                      borderRadius: '20px',
+                      fontSize: '12px',
+                      fontWeight: '600',
+                      background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)',
+                      color: '#1e40af',
+                      border: '1px solid #93c5fd',
+                    }}
+                  >
+                    <Search size={12} />"{searchTerm}"
                   </span>
                 )}
                 {selectedRole && (
-                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                    Role:{' '}
+                  <span
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      padding: '6px 12px',
+                      borderRadius: '20px',
+                      fontSize: '12px',
+                      fontWeight: '600',
+                      ...getRoleColor(selectedRole),
+                    }}
+                  >
+                    {getRoleIcon(selectedRole)}
                     {selectedRole.charAt(0).toUpperCase() +
                       selectedRole.slice(1)}
                   </span>
                 )}
                 {selectedStatus && (
-                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                    Status: {selectedStatus === 'true' ? 'Active' : 'Inactive'}
+                  <span
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      padding: '6px 12px',
+                      borderRadius: '20px',
+                      fontSize: '12px',
+                      fontWeight: '600',
+                      background:
+                        selectedStatus === 'true'
+                          ? 'linear-gradient(135deg, #d1fae5, #a7f3d0)'
+                          : 'linear-gradient(135deg, #fee2e2, #fecaca)',
+                      color: selectedStatus === 'true' ? '#065f46' : '#dc2626',
+                      border:
+                        selectedStatus === 'true'
+                          ? '1px solid #6ee7b7'
+                          : '1px solid #fecaca',
+                    }}
+                  >
+                    {selectedStatus === 'true' ? (
+                      <UserCheck size={12} />
+                    ) : (
+                      <UserX size={12} />
+                    )}
+                    {selectedStatus === 'true' ? 'Active' : 'Inactive'}
                   </span>
                 )}
               </div>

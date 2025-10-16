@@ -6,6 +6,16 @@ import {
 } from '../../services/userService';
 import { userService } from '../../services/userService';
 import { useAuth } from '../../contexts/AuthContext';
+import {
+  X,
+  User as UserIcon,
+  Mail,
+  Shield,
+  GraduationCap,
+  UserCheck,
+  Info,
+  AlertTriangle,
+} from 'lucide-react';
 
 interface UserFormProps {
   user?: User | null;
@@ -65,8 +75,6 @@ const UserForm: React.FC<UserFormProps> = ({
     }
   }, [user, isEditing]);
 
-
-
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
@@ -124,207 +132,748 @@ const UserForm: React.FC<UserFormProps> = ({
   };
 
   return (
-    <div>
-      <div className="mb-6">
-        <h2 className="text-xl font-semibold text-gray-900">
-          {isEditing ? 'Edit User' : 'Create New User'}
-        </h2>
-        <p className="text-gray-600">
-          {isEditing
-            ? 'Update user information and role'
-            : 'Add a new user to the system'}
-        </p>
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 1000,
+        padding: '20px',
+      }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) {
+          onCancel();
+        }
+      }}
+    >
+      <div
+        style={{
+          background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+          borderRadius: '20px',
+          padding: '0',
+          maxWidth: '600px',
+          width: '100%',
+          maxHeight: '90vh',
+          overflow: 'hidden',
+          boxShadow: '0 25px 50px rgba(0, 0, 0, 0.25)',
+          position: 'relative',
+        }}
+      >
+        {/* Header */}
+        <div
+          style={{
+            background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+            padding: '24px',
+            position: 'relative',
+            overflow: 'hidden',
+          }}
+        >
+          {/* Background decoration */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '-20px',
+              right: '-20px',
+              width: '80px',
+              height: '80px',
+              background: 'rgba(255, 255, 255, 0.1)',
+              borderRadius: '50%',
+            }}
+          />
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '-30px',
+              left: '-30px',
+              width: '60px',
+              height: '60px',
+              background: 'rgba(255, 255, 255, 0.05)',
+              borderRadius: '50%',
+            }}
+          />
+
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              position: 'relative',
+              zIndex: 1,
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              <div
+                style={{
+                  width: '48px',
+                  height: '48px',
+                  background: 'rgba(255, 255, 255, 0.2)',
+                  borderRadius: '12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backdropFilter: 'blur(10px)',
+                }}
+              >
+                <UserIcon size={24} style={{ color: 'white' }} />
+              </div>
+              <div>
+                <h2
+                  style={{
+                    fontSize: '24px',
+                    fontWeight: '700',
+                    color: 'white',
+                    margin: '0 0 4px 0',
+                  }}
+                >
+                  {isEditing ? 'Edit User' : 'Create New User'}
+                </h2>
+                <p
+                  style={{
+                    fontSize: '14px',
+                    color: 'rgba(255, 255, 255, 0.8)',
+                    margin: '0',
+                    fontWeight: '500',
+                  }}
+                >
+                  {isEditing
+                    ? 'Update user information and role'
+                    : 'Add a new user to the system'}
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={onCancel}
+              style={{
+                width: '40px',
+                height: '40px',
+                background: 'rgba(255, 255, 255, 0.2)',
+                border: 'none',
+                borderRadius: '10px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                backdropFilter: 'blur(10px)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.3)';
+                e.currentTarget.style.transform = 'scale(1.05)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+            >
+              <X size={20} style={{ color: 'white' }} />
+            </button>
+          </div>
+        </div>
+
+        {/* Form Content */}
+        <div
+          style={{
+            padding: '32px',
+            maxHeight: 'calc(90vh - 120px)',
+            overflowY: 'auto',
+          }}
+        >
+          <form onSubmit={handleSubmit}>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                gap: '24px',
+                marginBottom: '32px',
+              }}
+            >
+              {/* Full Name */}
+              <div>
+                <label
+                  htmlFor="fullName"
+                  style={{
+                    display: 'block',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    color: '#374151',
+                    marginBottom: '8px',
+                  }}
+                >
+                  Full Name *
+                </label>
+                <div style={{ position: 'relative' }}>
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '12px',
+                      transform: 'translateY(-50%)',
+                      zIndex: 2,
+                      pointerEvents: 'none',
+                    }}
+                  >
+                    <UserIcon size={18} style={{ color: '#6b7280' }} />
+                  </div>
+                  <input
+                    type="text"
+                    id="fullName"
+                    name="fullName"
+                    value={formData.fullName}
+                    onChange={handleInputChange}
+                    style={{
+                      width: '100%',
+                      padding: '12px 12px 12px 44px',
+                      border: `2px solid ${errors.fullName ? '#ef4444' : '#e5e7eb'}`,
+                      borderRadius: '12px',
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      background: 'white',
+                      color: '#1f2937',
+                      transition: 'all 0.2s ease',
+                      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.02)',
+                    }}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = '#3b82f6';
+                      e.currentTarget.style.boxShadow =
+                        '0 0 0 3px rgba(59, 130, 246, 0.1)';
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = errors.fullName
+                        ? '#ef4444'
+                        : '#e5e7eb';
+                      e.currentTarget.style.boxShadow =
+                        '0 2px 4px rgba(0, 0, 0, 0.02)';
+                    }}
+                    placeholder="Enter full name"
+                  />
+                </div>
+                {errors.fullName && (
+                  <p
+                    style={{
+                      marginTop: '8px',
+                      fontSize: '12px',
+                      color: '#ef4444',
+                      fontWeight: '500',
+                    }}
+                  >
+                    {errors.fullName}
+                  </p>
+                )}
+              </div>
+
+              {/* Email */}
+              <div>
+                <label
+                  htmlFor="email"
+                  style={{
+                    display: 'block',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    color: '#374151',
+                    marginBottom: '8px',
+                  }}
+                >
+                  Email Address *
+                </label>
+                <div style={{ position: 'relative' }}>
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '12px',
+                      transform: 'translateY(-50%)',
+                      zIndex: 2,
+                      pointerEvents: 'none',
+                    }}
+                  >
+                    <Mail size={18} style={{ color: '#6b7280' }} />
+                  </div>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    style={{
+                      width: '100%',
+                      padding: '12px 12px 12px 44px',
+                      border: `2px solid ${errors.email ? '#ef4444' : '#e5e7eb'}`,
+                      borderRadius: '12px',
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      background: 'white',
+                      color: '#1f2937',
+                      transition: 'all 0.2s ease',
+                      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.02)',
+                    }}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = '#3b82f6';
+                      e.currentTarget.style.boxShadow =
+                        '0 0 0 3px rgba(59, 130, 246, 0.1)';
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = errors.email
+                        ? '#ef4444'
+                        : '#e5e7eb';
+                      e.currentTarget.style.boxShadow =
+                        '0 2px 4px rgba(0, 0, 0, 0.02)';
+                    }}
+                    placeholder="Enter email address"
+                  />
+                </div>
+                {errors.email && (
+                  <p
+                    style={{
+                      marginTop: '8px',
+                      fontSize: '12px',
+                      color: '#ef4444',
+                      fontWeight: '500',
+                    }}
+                  >
+                    {errors.email}
+                  </p>
+                )}
+              </div>
+
+              {/* Role */}
+              <div>
+                <label
+                  htmlFor="role"
+                  style={{
+                    display: 'block',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    color: '#374151',
+                    marginBottom: '8px',
+                  }}
+                >
+                  Role *
+                </label>
+                <div style={{ position: 'relative' }}>
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '12px',
+                      transform: 'translateY(-50%)',
+                      zIndex: 2,
+                      pointerEvents: 'none',
+                    }}
+                  >
+                    {formData.role === 'admin' ? (
+                      <Shield size={18} style={{ color: '#6b7280' }} />
+                    ) : formData.role === 'teacher' ? (
+                      <GraduationCap size={18} style={{ color: '#6b7280' }} />
+                    ) : (
+                      <UserCheck size={18} style={{ color: '#6b7280' }} />
+                    )}
+                  </div>
+                  <select
+                    id="role"
+                    name="role"
+                    value={formData.role}
+                    onChange={handleInputChange}
+                    style={{
+                      width: '100%',
+                      padding: '12px 12px 12px 44px',
+                      border: `2px solid ${errors.role ? '#ef4444' : '#e5e7eb'}`,
+                      borderRadius: '12px',
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      background: 'white',
+                      color: '#1f2937',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.02)',
+                      appearance: 'none',
+                      backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
+                      backgroundPosition: 'right 12px center',
+                      backgroundRepeat: 'no-repeat',
+                      backgroundSize: '16px',
+                    }}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = '#3b82f6';
+                      e.currentTarget.style.boxShadow =
+                        '0 0 0 3px rgba(59, 130, 246, 0.1)';
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = errors.role
+                        ? '#ef4444'
+                        : '#e5e7eb';
+                      e.currentTarget.style.boxShadow =
+                        '0 2px 4px rgba(0, 0, 0, 0.02)';
+                    }}
+                  >
+                    {availableRoles.map((role) => (
+                      <option key={role} value={role}>
+                        {role.charAt(0).toUpperCase() + role.slice(1)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                {errors.role && (
+                  <p
+                    style={{
+                      marginTop: '8px',
+                      fontSize: '12px',
+                      color: '#ef4444',
+                      fontWeight: '500',
+                    }}
+                  >
+                    {errors.role}
+                  </p>
+                )}
+              </div>
+
+              {/* Gender */}
+              <div>
+                <label
+                  htmlFor="gender"
+                  style={{
+                    display: 'block',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    color: '#374151',
+                    marginBottom: '8px',
+                  }}
+                >
+                  Gender
+                </label>
+                <select
+                  id="gender"
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleInputChange}
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '12px',
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    background: 'white',
+                    color: '#1f2937',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.02)',
+                    appearance: 'none',
+                    backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
+                    backgroundPosition: 'right 12px center',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: '16px',
+                  }}
+                  onFocus={(e) => {
+                    e.currentTarget.style.borderColor = '#3b82f6';
+                    e.currentTarget.style.boxShadow =
+                      '0 0 0 3px rgba(59, 130, 246, 0.1)';
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.borderColor = '#e5e7eb';
+                    e.currentTarget.style.boxShadow =
+                      '0 2px 4px rgba(0, 0, 0, 0.02)';
+                  }}
+                >
+                  <option value="">Select gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Role-specific information */}
+            {formData.role === 'student' && (
+              <div
+                style={{
+                  background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)',
+                  border: '1px solid #93c5fd',
+                  borderRadius: '16px',
+                  padding: '20px',
+                  marginBottom: '24px',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '12px',
+                  }}
+                >
+                  <div
+                    style={{
+                      width: '40px',
+                      height: '40px',
+                      background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                      borderRadius: '10px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0,
+                    }}
+                  >
+                    <Info size={20} style={{ color: 'white' }} />
+                  </div>
+                  <div>
+                    <h3
+                      style={{
+                        fontSize: '16px',
+                        fontWeight: '700',
+                        color: '#1e40af',
+                        margin: '0 0 8px 0',
+                      }}
+                    >
+                      Student Account
+                    </h3>
+                    <p
+                      style={{
+                        fontSize: '14px',
+                        color: '#1e40af',
+                        margin: '0',
+                        lineHeight: '1.5',
+                      }}
+                    >
+                      Students will be able to access learning materials, take
+                      exercises, and track their progress.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {formData.role === 'teacher' && (
+              <div
+                style={{
+                  background: 'linear-gradient(135deg, #d1fae5, #a7f3d0)',
+                  border: '1px solid #6ee7b7',
+                  borderRadius: '16px',
+                  padding: '20px',
+                  marginBottom: '24px',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '12px',
+                  }}
+                >
+                  <div
+                    style={{
+                      width: '40px',
+                      height: '40px',
+                      background: 'linear-gradient(135deg, #10b981, #059669)',
+                      borderRadius: '10px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0,
+                    }}
+                  >
+                    <GraduationCap size={20} style={{ color: 'white' }} />
+                  </div>
+                  <div>
+                    <h3
+                      style={{
+                        fontSize: '16px',
+                        fontWeight: '700',
+                        color: '#065f46',
+                        margin: '0 0 8px 0',
+                      }}
+                    >
+                      Teacher Account
+                    </h3>
+                    <p
+                      style={{
+                        fontSize: '14px',
+                        color: '#065f46',
+                        margin: '0',
+                        lineHeight: '1.5',
+                      }}
+                    >
+                      Teachers can manage classes, assign content, and monitor
+                      student progress.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {formData.role === 'admin' && (
+              <div
+                style={{
+                  background: 'linear-gradient(135deg, #fee2e2, #fecaca)',
+                  border: '1px solid #fecaca',
+                  borderRadius: '16px',
+                  padding: '20px',
+                  marginBottom: '24px',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '12px',
+                  }}
+                >
+                  <div
+                    style={{
+                      width: '40px',
+                      height: '40px',
+                      background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                      borderRadius: '10px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0,
+                    }}
+                  >
+                    <AlertTriangle size={20} style={{ color: 'white' }} />
+                  </div>
+                  <div>
+                    <h3
+                      style={{
+                        fontSize: '16px',
+                        fontWeight: '700',
+                        color: '#dc2626',
+                        margin: '0 0 8px 0',
+                      }}
+                    >
+                      Administrator Account
+                    </h3>
+                    <p
+                      style={{
+                        fontSize: '14px',
+                        color: '#dc2626',
+                        margin: '0',
+                        lineHeight: '1.5',
+                      }}
+                    >
+                      Administrators have full system access including user
+                      management, content management, and system configuration.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Form Actions */}
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                gap: '12px',
+                paddingTop: '24px',
+                borderTop: '1px solid #e5e7eb',
+              }}
+            >
+              <button
+                type="button"
+                onClick={onCancel}
+                style={{
+                  padding: '12px 24px',
+                  background: 'linear-gradient(135deg, #f8fafc, #e2e8f0)',
+                  color: '#475569',
+                  border: '1px solid #cbd5e1',
+                  borderRadius: '12px',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.02)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background =
+                    'linear-gradient(135deg, #e2e8f0, #cbd5e1)';
+                  e.currentTarget.style.transform = 'translateY(-1px)';
+                  e.currentTarget.style.boxShadow =
+                    '0 4px 8px rgba(0, 0, 0, 0.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background =
+                    'linear-gradient(135deg, #f8fafc, #e2e8f0)';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow =
+                    '0 2px 4px rgba(0, 0, 0, 0.02)';
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={loading}
+                style={{
+                  padding: '12px 24px',
+                  background: loading
+                    ? 'linear-gradient(135deg, #9ca3af, #6b7280)'
+                    : 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '12px',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  cursor: loading ? 'not-allowed' : 'pointer',
+                  transition: 'all 0.2s ease',
+                  boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                }}
+                onMouseEnter={(e) => {
+                  if (!loading) {
+                    e.currentTarget.style.transform = 'translateY(-1px)';
+                    e.currentTarget.style.boxShadow =
+                      '0 6px 20px rgba(59, 130, 246, 0.4)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!loading) {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow =
+                      '0 4px 12px rgba(59, 130, 246, 0.3)';
+                  }
+                }}
+              >
+                {loading ? (
+                  <>
+                    <div
+                      style={{
+                        width: '16px',
+                        height: '16px',
+                        border: '2px solid rgba(255, 255, 255, 0.3)',
+                        borderTop: '2px solid white',
+                        borderRadius: '50%',
+                        animation: 'spin 1s linear infinite',
+                      }}
+                    />
+                    {isEditing ? 'Updating...' : 'Creating...'}
+                  </>
+                ) : isEditing ? (
+                  'Update User'
+                ) : (
+                  'Create User'
+                )}
+              </button>
+            </div>
+          </form>
+        </div>
+
+        {/* CSS Animation */}
+        <style>
+          {`
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          `}
+        </style>
       </div>
-
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Full Name */}
-          <div>
-            <label
-              htmlFor="fullName"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Full Name *
-            </label>
-            <input
-              type="text"
-              id="fullName"
-              name="fullName"
-              value={formData.fullName}
-              onChange={handleInputChange}
-              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.fullName ? 'border-red-300' : 'border-gray-300'
-                }`}
-              placeholder="Enter full name"
-            />
-            {errors.fullName && (
-              <p className="mt-1 text-sm text-red-600">{errors.fullName}</p>
-            )}
-          </div>
-
-          {/* Email */}
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Email Address *
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.email ? 'border-red-300' : 'border-gray-300'
-                }`}
-              placeholder="Enter email address"
-            />
-            {errors.email && (
-              <p className="mt-1 text-sm text-red-600">{errors.email}</p>
-            )}
-          </div>
-
-          {/* Role */}
-          <div>
-            <label
-              htmlFor="role"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Role *
-            </label>
-            <select
-              id="role"
-              name="role"
-              value={formData.role}
-              onChange={handleInputChange}
-              className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.role ? 'border-red-300' : 'border-gray-300'
-                }`}
-            >
-              {availableRoles.map((role) => (
-                <option key={role} value={role}>
-                  {role.charAt(0).toUpperCase() + role.slice(1)}
-                </option>
-              ))}
-            </select>
-            {errors.role && (
-              <p className="mt-1 text-sm text-red-600">{errors.role}</p>
-            )}
-          </div>
-
-          {/* Gender */}
-          <div>
-            <label
-              htmlFor="gender"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Gender
-            </label>
-            <select
-              id="gender"
-              name="gender"
-              value={formData.gender}
-              onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="">Select gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-        </div>
-
-        {/* Role-specific information */}
-        {formData.role === 'student' && (
-          <div className="bg-blue-50 border border-blue-200 rounded-md p-4">
-            <div className="flex">
-              <div className="flex-shrink-0">
-                <span className="text-blue-400 text-xl">ℹ️</span>
-              </div>
-              <div className="ml-3">
-                <h3 className="text-sm font-medium text-blue-800">
-                  Student Account
-                </h3>
-                <div className="mt-2 text-sm text-blue-700">
-                  <p>
-                    Students will be able to access learning materials, take
-                    exercises, and track their progress.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {formData.role === 'teacher' && (
-          <div className="bg-green-50 border border-green-200 rounded-md p-4">
-            <div className="flex">
-              <div className="flex-shrink-0">
-                <span className="text-green-400 text-xl">👨‍🏫</span>
-              </div>
-              <div className="ml-3">
-                <h3 className="text-sm font-medium text-green-800">
-                  Teacher Account
-                </h3>
-                <div className="mt-2 text-sm text-green-700">
-                  <p>
-                    Teachers can manage classes, assign content, and monitor
-                    student progress.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {formData.role === 'admin' && (
-          <div className="bg-red-50 border border-red-200 rounded-md p-4">
-            <div className="flex">
-              <div className="flex-shrink-0">
-                <span className="text-red-400 text-xl">⚠️</span>
-              </div>
-              <div className="ml-3">
-                <h3 className="text-sm font-medium text-red-800">
-                  Administrator Account
-                </h3>
-                <div className="mt-2 text-sm text-red-700">
-                  <p>
-                    Administrators have full system access including user
-                    management, content management, and system configuration.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Form Actions */}
-        <div className="flex justify-end space-x-4 pt-6 border-t border-gray-200">
-          <button
-            type="button"
-            onClick={onCancel}
-            className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            disabled={loading}
-            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {loading ? (
-              <span className="flex items-center">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                {isEditing ? 'Updating...' : 'Creating...'}
-              </span>
-            ) : isEditing ? (
-              'Update User'
-            ) : (
-              'Create User'
-            )}
-          </button>
-        </div>
-      </form>
     </div>
   );
 };
