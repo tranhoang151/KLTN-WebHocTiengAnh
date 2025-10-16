@@ -97,15 +97,6 @@ export const preloadCriticalChunks = async (
         dynamicImport(() => import('../components/admin/UserManagement'))
       );
       break;
-
-    case 'parent':
-      criticalChunks.push(
-        dynamicImport(() => import('../components/dashboards/ParentDashboard')),
-        dynamicImport(
-          () => import('../components/progress/ParentProgressInterface')
-        )
-      );
-      break;
   }
 
   // Route-based chunk preloading

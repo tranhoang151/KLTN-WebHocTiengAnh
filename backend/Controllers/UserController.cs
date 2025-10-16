@@ -257,7 +257,7 @@ public class UserController : ControllerBase
     [Authorize(Roles = "admin")]
     public IActionResult GetAvailableRoles()
     {
-        var roles = new[] { "student", "teacher", "admin", "parent" };
+        var roles = new[] { "student", "teacher", "admin" };
         return Ok(roles);
     }
 

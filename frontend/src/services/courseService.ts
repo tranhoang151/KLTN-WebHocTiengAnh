@@ -89,7 +89,7 @@ class CourseService {
             const classPromises = profile.classIds.map(classId => classService.getClassById(classId));
             const classes = await Promise.all(classPromises);
 
-            const courseIds = [...new Set(classes.filter(c => c).map(c => c!.course_id))];
+            const courseIds = [...new Set(classes.filter(c => c).map(c => (c as any).course_id || (c as any).courseId))];
 
             if (courseIds.length === 0) {
                 return [];

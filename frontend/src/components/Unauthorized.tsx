@@ -23,9 +23,6 @@ export const Unauthorized: React.FC = () => {
         case 'admin':
           navigate('/admin');
           break;
-        case 'parent':
-          navigate('/parent');
-          break;
         default:
           navigate('/');
       }

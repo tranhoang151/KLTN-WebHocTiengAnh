@@ -33,7 +33,7 @@ export {
   // SystemSettings, // Not exported from routeLazyLoading
   // SystemConfigManagement, // Not exported from routeLazyLoading
   // FlashcardManagement, // Not exported from routeLazyLoading
-  ParentDashboard,
+  // ParentDashboard, // Removed - parent role no longer exists
   // ParentProgressInterface, // Not exported from routeLazyLoading
   Profile,
   // Settings, // Not exported from routeLazyLoading

@@ -38,15 +38,14 @@ const ClassList: React.FC<ClassListProps> = ({
             setLoading(true);
             setError(null);
 
-            const [classesData, coursesData, teachersData] = await Promise.all([
+            const [classesData, coursesData] = await Promise.all([
                 classService.getAllClasses(),
                 courseService.getAllCourses(),
-                classService.getAvailableTeachers(),
             ]);
 
-            setClasses(classesData);
+            setClasses(classesData as any[]);
             setCourses(coursesData);
-            setTeachers(teachersData);
+            setTeachers([]); // TODO: Implement teacher loading
         } catch (err: any) {
             setError(err.message || 'Failed to load classes');
         } finally {

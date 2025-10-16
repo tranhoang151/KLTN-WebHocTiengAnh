@@ -21,7 +21,7 @@ public class CourseController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = "admin,teacher")]
+    [Authorize(Roles = "admin,teacher,student")]
     public async Task<IActionResult> GetAllCourses([FromQuery] string? search = null)
     {
         try

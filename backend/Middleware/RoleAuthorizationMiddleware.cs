@@ -117,13 +117,6 @@ public class RoleAuthorizationMiddleware
                 "/api/progress",
                 "/api/badges"
             },
-            ["parent"] = new[]
-            {
-                "/api/children",
-                "/api/progress",
-                "/api/reports",
-                "/api/users/profile"
-            }
         };
 
         if (!rolePermissions.ContainsKey(role))

@@ -57,7 +57,7 @@ const AssignmentList: React.FC<AssignmentListProps> = ({
 
             setAssignments(assignmentsData);
             setCourses(coursesData);
-            setClasses(classesData);
+            setClasses(classesData as any[]);
         } catch (err) {
             console.error('Error loading assignments:', err);
             setError('Failed to load assignments. Please try again.');
@@ -360,7 +360,7 @@ const AssignmentList: React.FC<AssignmentListProps> = ({
                                 <option value="created_at">Created Date</option>
                             </select>
                             <ChildFriendlyButton
-                                variant="secondary"onClick={() => setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc')}
+                                variant="secondary" onClick={() => setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc')}
                             >
                                 {sortOrder === 'asc' ? '↑' : '↓'}
                             </ChildFriendlyButton>
@@ -445,22 +445,22 @@ const AssignmentList: React.FC<AssignmentListProps> = ({
 
                                 <div className="assignment-actions">
                                     <ChildFriendlyButton
-                                        variant="secondary"onClick={() => onViewAssignment(assignment)}
+                                        variant="secondary" onClick={() => onViewAssignment(assignment)}
                                     >
                                         👁️ View
                                     </ChildFriendlyButton>
                                     <ChildFriendlyButton
-                                        variant="secondary"onClick={() => onEditAssignment(assignment)}
+                                        variant="secondary" onClick={() => onEditAssignment(assignment)}
                                     >
                                         ✏️ Edit
                                     </ChildFriendlyButton>
                                     <ChildFriendlyButton
-                                        variant="secondary"onClick={() => handleDuplicateAssignment(assignment.id)}
+                                        variant="secondary" onClick={() => handleDuplicateAssignment(assignment.id)}
                                     >
                                         📋 Duplicate
                                     </ChildFriendlyButton>
                                     <ChildFriendlyButton
-                                        variant="secondary"onClick={() => handleDeleteAssignment(assignment.id)}
+                                        variant="secondary" onClick={() => handleDeleteAssignment(assignment.id)}
                                         className="delete-btn"
                                     >
                                         🗑️ Delete

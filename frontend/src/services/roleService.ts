@@ -116,25 +116,6 @@ export class RoleService {
         { resource: 'profile', actions: ['read', 'update'] },
       ],
     },
-    {
-      role: 'parent',
-      dashboardPath: '/parent',
-      allowedRoutes: [
-        '/parent',
-        '/parent/children',
-        '/parent/progress',
-        '/parent/reports',
-        '/parent/profile',
-        '/profile',
-        '/logout',
-      ],
-      permissions: [
-        { resource: 'children', actions: ['read'] },
-        { resource: 'progress', actions: ['read'] },
-        { resource: 'reports', actions: ['read'] },
-        { resource: 'profile', actions: ['read', 'update'] },
-      ],
-    },
   ];
 
   /**
@@ -234,10 +215,10 @@ export class RoleService {
   }
 
   /**
-   * Check if a role can view student progress (teacher, admin, or parent)
+   * Check if a role can view student progress (teacher or admin)
    */
   static canViewStudentProgress(role: UserRole): boolean {
-    return role === 'teacher' || role === 'admin' || role === 'parent';
+    return role === 'teacher' || role === 'admin';
   }
 
   /**
@@ -255,10 +236,10 @@ export class RoleService {
   }
 
   /**
-   * Check if a role is a parent
+   * Check if a role is a parent (deprecated - parent role removed)
    */
   static isParent(role: UserRole): boolean {
-    return role === 'parent';
+    return false; // Parent role no longer exists
   }
 
   /**
@@ -269,7 +250,6 @@ export class RoleService {
       student: 'Student',
       teacher: 'Teacher',
       admin: 'Administrator',
-      parent: 'Parent',
     };
     return roleNames[role] || role;
   }
@@ -282,7 +262,6 @@ export class RoleService {
       student: 'blue',
       teacher: 'green',
       admin: 'red',
-      parent: 'purple',
     };
     return roleColors[role] || 'gray';
   }
