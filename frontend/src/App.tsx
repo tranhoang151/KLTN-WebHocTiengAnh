@@ -15,7 +15,6 @@ import StudentDashboard from './components/dashboards/StudentDashboard';
 import TeacherDashboard from './components/dashboards/TeacherDashboard';
 import AdminDashboard from './components/dashboards/AdminDashboard';
 // import { AdminDashboard } from './utils/routeLazyLoading';
-import ParentDashboard from './components/dashboards/ParentDashboard';
 import Profile from './components/Profile';
 import CourseDetailPage from './pages/learning/CourseDetailPage';
 import { AchievementManager } from './components/achievement';
@@ -68,7 +67,6 @@ const AppRoutes: React.FC = () => {
           </ProtectedRoute>
         }
       />
-
 
       {/* Profile Route - Available to all authenticated users */}
       <Route
