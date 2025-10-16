@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChildFriendlyButton } from './';
+import ChildFriendlyButton from './ChildFriendlyButton';
 import './OfflineIndicator.css';
 
 interface OfflineIndicatorProps {
