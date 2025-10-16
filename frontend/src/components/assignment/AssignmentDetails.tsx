@@ -65,7 +65,7 @@ const AssignmentDetails: React.FC<AssignmentDetailsProps> = ({
             ]);
 
             setCourse(courseData);
-            setClasses(classesData.filter(Boolean) as Class[]);
+            setClasses(classesData.filter(Boolean) as any[]);
             setStudents(studentsData);
 
             // Load evaluations for teacher view

@@ -1,180 +1,117 @@
 import { apiService } from './api';
-import {
-    Evaluation,
-    CreateEvaluationDto,
-    UpdateEvaluationDto,
-    EvaluationSummaryDto,
-    EvaluationAnalyticsDto,
-    ApiResponse
-} from '../types';
 
-export class EvaluationService {
-    private static readonly BASE_URL = '/api/evaluations';
+// --- TYPE DEFINITIONS ---
 
-    /**
-     * Get all evaluations for a teacher
-     */
-    static async getEvaluationsByTeacher(teacherId: string): Promise<Evaluation[]> {
-        try {
-            const response = await apiService.get<ApiResponse<Evaluation[]>>(
-                `${this.BASE_URL}/teacher/${teacherId}`
-            );
-            return response.data.data || [];
-        } catch (error) {
-            console.error('Error fetching evaluations by teacher:', error);
-            throw error;
-        }
-    }
-
-    /**
-     * Get all evaluations for a student
-     */
-    static async getEvaluationsByStudent(studentId: string): Promise<Evaluation[]> {
-        try {
-            const response = await apiService.get<ApiResponse<Evaluation[]>>(
-                `${this.BASE_URL}/student/${studentId}`
-            );
-            return response.data.data || [];
-        } catch (error) {
-            console.error('Error fetching evaluations by student:', error);
-            throw error;
-        }
-    }
-
-    /**
-     * Get evaluations for a specific class
-     */
-    static async getEvaluationsByClass(classId: string): Promise<Evaluation[]> {
-        try {
-            const response = await apiService.get<ApiResponse<Evaluation[]>>(
-                `${this.BASE_URL}/class/${classId}`
-            );
-            return response.data.data || [];
-        } catch (error) {
-            console.error('Error fetching evaluations by class:', error);
-            throw error;
-        }
-    }
-
-    /**
-     * Get a specific evaluation by ID
-     */
-    static async getEvaluationById(evaluationId: string): Promise<Evaluation> {
-        try {
-            const response = await apiService.get<ApiResponse<Evaluation>>(
-                `${this.BASE_URL}/${evaluationId}`
-            );
-            return response.data.data!;
-        } catch (error) {
-            console.error('Error fetching evaluation by ID:', error);
-            throw error;
-        }
-    }
-
-    /**
-     * Create a new evaluation
-     */
-    static async createEvaluation(evaluationData: CreateEvaluationDto): Promise<Evaluation> {
-        try {
-            const response = await apiService.post<ApiResponse<Evaluation>>(
-                this.BASE_URL,
-                evaluationData
-            );
-            return response.data.data!;
-        } catch (error) {
-            console.error('Error creating evaluation:', error);
-            throw error;
-        }
-    }
-
-    /**
-     * Update an existing evaluation
-     */
-    static async updateEvaluation(
-        evaluationId: string,
-        evaluationData: UpdateEvaluationDto
-    ): Promise<Evaluation> {
-        try {
-            const response = await apiService.put<ApiResponse<Evaluation>>(
-                `${this.BASE_URL}/${evaluationId}`,
-                evaluationData
-            );
-            return response.data.data!;
-        } catch (error) {
-            console.error('Error updating evaluation:', error);
-            throw error;
-        }
-    }
-
-    /**
-     * Delete an evaluation
-     */
-    static async deleteEvaluation(evaluationId: string): Promise<void> {
-        try {
-            await apiService.delete<ApiResponse<void>>(`${this.BASE_URL}/${evaluationId}`);
-        } catch (error) {
-            console.error('Error deleting evaluation:', error);
-            throw error;
-        }
-    }
-
-    /**
-     * Get evaluation summaries for a teacher
-     */
-    static async getEvaluationSummaries(teacherId: string): Promise<EvaluationSummaryDto[]> {
-        try {
-            const response = await apiService.get<ApiResponse<EvaluationSummaryDto[]>>(
-                `${this.BASE_URL}/summaries/teacher/${teacherId}`
-            );
-            return response.data.data || [];
-        } catch (error) {
-            console.error('Error fetching evaluation summaries:', error);
-            throw error;
-        }
-    }
-
-    /**
-     * Get evaluation analytics for a teacher
-     */
-    static async getEvaluationAnalytics(teacherId: string): Promise<EvaluationAnalyticsDto> {
-        try {
-            const response = await apiService.get<ApiResponse<EvaluationAnalyticsDto>>(
-                `${this.BASE_URL}/analytics/teacher/${teacherId}`
-            );
-            return response.data.data!;
-        } catch (error) {
-            console.error('Error fetching evaluation analytics:', error);
-            throw error;
-        }
-    }
-
-    /**
-     * Get evaluation analytics for a class
-     */
-    static async getClassEvaluationAnalytics(classId: string): Promise<EvaluationAnalyticsDto> {
-        try {
-            const response = await apiService.get<ApiResponse<EvaluationAnalyticsDto>>(
-                `${this.BASE_URL}/analytics/class/${classId}`
-            );
-            return response.data.data!;
-        } catch (error) {
-            console.error('Error fetching class evaluation analytics:', error);
-            throw error;
-        }
-    }
-
-    /**
-     * Get students who need evaluation for a teacher
-     */
-    static async getStudentsNeedingEvaluation(teacherId: string): Promise<any[]> {
-        try {
-            const response = await apiService.get<ApiResponse<any[]>>(
-                `${this.BASE_URL}/students/needing-evaluation/${teacherId}`
-            );
-            return response.data.data || [];
-        } catch (error) {
-            console.error('Error fetching students needing evaluation:', error);
-            throw error;
-        }
-    }
+export interface Evaluation {
+    id: string;
+    studentId: string;
+    teacherId: string;
+    classId: string;
+    score: number;
+    comment: string;
+    evaluationDate: string;
+    category: 'academic' | 'behavior' | 'participation' | 'overall';
+    isActive: boolean;
 }
+
+export interface CreateEvaluationRequest {
+    studentId: string;
+    classId: string;
+    score: number;
+    comment: string;
+    category: 'academic' | 'behavior' | 'participation' | 'overall';
+}
+
+export interface UpdateEvaluationRequest {
+    score?: number;
+    comment?: string;
+    category?: 'academic' | 'behavior' | 'participation' | 'overall';
+}
+
+export interface StudentEvaluationSummary {
+    studentId: string;
+    studentName: string;
+    classId: string;
+    className: string;
+    averageScore: number;
+    totalEvaluations: number;
+    latestEvaluation?: Evaluation;
+    evaluations: Evaluation[];
+}
+
+// --- SERVICE FUNCTIONS ---
+
+const API_URL = '/evaluation';
+
+export const evaluationService = {
+    // Get all evaluations for teacher
+    getTeacherEvaluations: async (): Promise<Evaluation[]> => {
+        const response = await apiService.get<Evaluation[]>(`${API_URL}/teacher`);
+        if (!response.success) {
+            throw new Error(response.error || 'Failed to fetch evaluations');
+        }
+        return response.data || [];
+    },
+
+    // Get evaluations for a specific student
+    getStudentEvaluations: async (studentId: string): Promise<Evaluation[]> => {
+        const response = await apiService.get<Evaluation[]>(`${API_URL}/student/${studentId}`);
+        if (!response.success) {
+            throw new Error(response.error || 'Failed to fetch student evaluations');
+        }
+        return response.data || [];
+    },
+
+    // Get evaluation by ID
+    getEvaluationById: async (evaluationId: string): Promise<Evaluation> => {
+        const response = await apiService.get<Evaluation>(`${API_URL}/${evaluationId}`);
+        if (!response.success) {
+            throw new Error(response.error || 'Failed to fetch evaluation');
+        }
+        return response.data as Evaluation;
+    },
+
+    // Create new evaluation
+    createEvaluation: async (evaluationData: CreateEvaluationRequest): Promise<Evaluation> => {
+        const response = await apiService.post<Evaluation>(API_URL, evaluationData);
+        if (!response.success) {
+            throw new Error(response.error || 'Failed to create evaluation');
+        }
+        return response.data as Evaluation;
+    },
+
+    // Update evaluation
+    updateEvaluation: async (evaluationId: string, evaluationData: UpdateEvaluationRequest): Promise<Evaluation> => {
+        const response = await apiService.put<Evaluation>(`${API_URL}/${evaluationId}`, evaluationData);
+        if (!response.success) {
+            throw new Error(response.error || 'Failed to update evaluation');
+        }
+        return response.data as Evaluation;
+    },
+
+    // Delete evaluation
+    deleteEvaluation: async (evaluationId: string): Promise<void> => {
+        const response = await apiService.delete<void>(`${API_URL}/${evaluationId}`);
+        if (!response.success) {
+            throw new Error(response.error || 'Failed to delete evaluation');
+        }
+    },
+
+    // Get evaluation summary for all students in teacher's classes
+    getTeacherEvaluationSummary: async (): Promise<StudentEvaluationSummary[]> => {
+        const response = await apiService.get<StudentEvaluationSummary[]>(`${API_URL}/teacher/summary`);
+        if (!response.success) {
+            throw new Error(response.error || 'Failed to fetch evaluation summary');
+        }
+        return response.data || [];
+    },
+
+    // Get evaluation statistics for a class
+    getClassEvaluationStats: async (classId: string): Promise<any> => {
+        const response = await apiService.get<any>(`${API_URL}/class/${classId}/stats`);
+        if (!response.success) {
+            throw new Error(response.error || 'Failed to fetch class evaluation stats');
+        }
+        return response.data;
+    },
+};

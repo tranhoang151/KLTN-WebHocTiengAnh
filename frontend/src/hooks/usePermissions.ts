@@ -21,7 +21,6 @@ export const usePermissions = () => {
         isAdmin: false,
         isTeacher: false,
         isStudent: false,
-        isParent: false,
         canManageClasses: false,
         canViewStudentProgress: false,
         getRoleDisplayName: () => '',
@@ -84,10 +83,6 @@ export const usePermissions = () => {
        */
       isStudent: roleService.isStudent(userRole),
 
-      /**
-       * Check if user is parent
-       */
-      isParent: roleService.isParent(userRole),
 
       /**
        * Check if user can manage classes
@@ -154,7 +149,6 @@ export const useUserRole = () => {
     isAdmin,
     isTeacher,
     isStudent,
-    isParent,
     getRoleDisplayName,
     getRoleColor,
   } = usePermissions();
@@ -164,7 +158,6 @@ export const useUserRole = () => {
     isAdmin,
     isTeacher,
     isStudent,
-    isParent,
     displayName: getRoleDisplayName(),
     color: getRoleColor(),
     user,

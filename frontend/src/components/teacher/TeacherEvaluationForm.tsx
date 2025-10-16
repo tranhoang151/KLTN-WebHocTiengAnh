@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { User, Evaluation, CreateEvaluationDto, UpdateEvaluationDto } from '../../types';
-import { EvaluationService } from '../../services/evaluationService';
+import { evaluationService } from '../../services/evaluationService';
 import ChildFriendlyCard from '../ui/ChildFriendlyCard';
 import ChildFriendlyButton from '../ui/ChildFriendlyButton';
 

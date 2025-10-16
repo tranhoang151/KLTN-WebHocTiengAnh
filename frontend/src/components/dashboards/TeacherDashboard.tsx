@@ -6,8 +6,9 @@ import TeacherProgressPage from '../../pages/teacher/TeacherProgressPage';
 import ClassProgressPage from '../../pages/teacher/ClassProgressPage';
 import StudentProgressDetailPage from '../../pages/teacher/StudentProgressDetailPage';
 import TeacherAnalyticsDashboard from '../progress/TeacherAnalyticsDashboard';
-import StudentListForEvaluation from '../evaluation/StudentListForEvaluation';
-import TeacherEvaluationForm from '../evaluation/TeacherEvaluationForm';
+import TeacherStudentManagement from '../../pages/teacher/TeacherStudentManagement';
+import TeacherEvaluationPage from '../../pages/teacher/TeacherEvaluationPage';
+import AssignmentManagement from '../assignment/AssignmentManagement';
 import DashboardLayout from '../DashboardLayout';
 import { usePermissions } from '../../hooks/usePermissions';
 import { useAuth } from '../../contexts/AuthContext';
@@ -15,41 +16,17 @@ import { useAuth } from '../../contexts/AuthContext';
 export const TeacherDashboard: React.FC = () => {
   const { hasPermission } = usePermissions();
   const { user } = useAuth();
-  const [selectedStudent, setSelectedStudent] = React.useState<any>(null);
-  const [showEvaluationForm, setShowEvaluationForm] = React.useState(false);
-
-  const handleSelectStudent = (student: any) => {
-    setSelectedStudent(student);
-    setShowEvaluationForm(true);
-  };
-
-  const handleEvaluationSubmit = () => {
-    setShowEvaluationForm(false);
-    setSelectedStudent(null);
-    // Refresh the student list
-    window.location.reload();
-  };
-
-  const handleEvaluationCancel = () => {
-    setShowEvaluationForm(false);
-    setSelectedStudent(null);
-  };
 
   return (
     <Routes>
       <Route path="/analytics" element={<TeacherAnalyticsDashboard />} />
       <Route path="/flashcards" element={<FlashcardSetManager />} />
-      <Route
-        path="/evaluations"
-        element={
-          <DashboardLayout title="Student Evaluations">
-            <StudentListForEvaluation
-              teacherId={user?.id || ''}
-              onSelectStudent={handleSelectStudent}
-            />
-          </DashboardLayout>
-        }
-      />
+      <Route path="/students" element={<TeacherStudentManagement />} />
+      <Route path="/evaluations" element={<TeacherEvaluationPage />} />
+      <Route path="/assignments" element={<AssignmentManagement />} />
+      <Route path="/progress" element={<TeacherProgressPage />} />
+      <Route path="/progress/class/:classId" element={<ClassProgressPage />} />
+      <Route path="/progress/student/:studentId" element={<StudentProgressDetailPage />} />
       <Route
         path="/"
         element={
@@ -118,12 +95,12 @@ export const TeacherDashboard: React.FC = () => {
                   </div>
                   <div className="bg-gray-50 px-5 py-3">
                     <div className="text-sm">
-                      <a
-                        href="/teacher/students"
+                      <Link
+                        to="/teacher/students"
                         className="font-medium text-green-700 hover:text-green-900"
                       >
-                        View students
-                      </a>
+                        Manage students
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -155,12 +132,12 @@ export const TeacherDashboard: React.FC = () => {
                   </div>
                   <div className="bg-gray-50 px-5 py-3">
                     <div className="text-sm">
-                      <a
-                        href="/teacher/assignments"
+                      <Link
+                        to="/teacher/assignments"
                         className="font-medium text-yellow-700 hover:text-yellow-900"
                       >
                         Manage assignments
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -193,10 +170,10 @@ export const TeacherDashboard: React.FC = () => {
                   <div className="bg-gray-50 px-5 py-3">
                     <div className="text-sm">
                       <Link
-                        to="/teacher/analytics"
+                        to="/teacher/progress"
                         className="font-medium text-purple-700 hover:text-purple-900"
                       >
-                        View analytics
+                        View progress
                       </Link>
                     </div>
                   </div>
@@ -376,20 +353,6 @@ export const TeacherDashboard: React.FC = () => {
           </DashboardLayout>
         }
       />
-      {showEvaluationForm && selectedStudent && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-          <div className="relative top-20 mx-auto p-5 border w-11/12 max-w-4xl shadow-lg rounded-md bg-white">
-            <div className="mt-3">
-              <TeacherEvaluationForm
-                student={selectedStudent}
-                teacherId={user?.id || ''}
-                onSubmit={handleEvaluationSubmit}
-                onCancel={handleEvaluationCancel}
-              />
-            </div>
-          </div>
-        </div>
-      )}
     </Routes>
   );
 };

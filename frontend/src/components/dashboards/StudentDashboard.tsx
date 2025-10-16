@@ -5,7 +5,8 @@ import { usePermissions } from '../../hooks/usePermissions';
 import { ChildFriendlyCard } from '../ui';
 import './StudentDashboard.css';
 import FlashcardLearningFlow from '../learning/FlashcardLearningFlow';
-import ExerciseFlow from '../learning/ExerciseFlow';
+import StudentExerciseList from '../exercise/StudentExerciseList';
+import ExerciseScreen from '../exercise/ExerciseScreen';
 import VideoLecturesPage from '../../pages/student/VideoLecturesPage';
 import VideoDetailPage from '../../pages/student/VideoDetailPage';
 import VideoProgressPage from '../../pages/student/VideoProgressPage';
@@ -320,7 +321,8 @@ const StudentDashboard: React.FC = () => {
           }
         />
         <Route path="/flashcards/:setId/learn" element={<FlashcardLearningPage />} />
-        <Route path="/exercises/*" element={<ExerciseFlow />} />
+        <Route path="/exercises" element={<StudentExerciseList />} />
+        <Route path="/exercises/:exerciseId" element={<ExerciseScreen />} />
         <Route path="/tests" element={<div>Test List Page - Coming Soon</div>} />
         <Route path="/tests/:testId/start" element={<TestStartPage />} />
         <Route path="/tests/:testId/take" element={<TestTakingPage />} />

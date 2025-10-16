@@ -103,7 +103,7 @@ const AssignmentForm: React.FC<AssignmentFormProps> = ({
                 classService.getAllClasses(),
             ]);
             setCourses(coursesData);
-            setClasses(classesData);
+            setClasses(classesData as any[]);
         } catch (error) {
             console.error('Error loading initial data:', error);
         } finally {

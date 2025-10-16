@@ -18,7 +18,7 @@ public class User
     public string Password { get; set; } = string.Empty;
 
     [FirestoreProperty("role")]
-    public string Role { get; set; } = string.Empty; // student, teacher, admin, parent
+    public string Role { get; set; } = string.Empty; // student, teacher, admin
 
     [FirestoreProperty("gender")]
     public string Gender { get; set; } = string.Empty;

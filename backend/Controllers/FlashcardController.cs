@@ -458,7 +458,7 @@ public class FlashcardController : ControllerBase
     }
 
     [HttpGet("badges/{userId}")]
-    [Authorize(Roles = "admin,teacher,parent,student")]
+    [Authorize(Roles = "admin,teacher,student")]
     public async Task<IActionResult> GetUserBadges(string userId)
     {
         try

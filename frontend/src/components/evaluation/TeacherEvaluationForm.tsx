@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { EvaluationService } from '../../services/evaluationService';
+import { evaluationService } from '../../services/evaluationService';
 import {
     CreateEvaluationDto,
     UpdateEvaluationDto,
@@ -147,10 +147,10 @@ const TeacherEvaluationForm: React.FC<TeacherEvaluationFormProps> = ({
                     areasForImprovement: formData.areasForImprovement,
                     recommendations: formData.recommendations,
                 };
-                await EvaluationService.updateEvaluation(existingEvaluation.id, updateData);
+                await evaluationService.updateEvaluation(existingEvaluation.id, updateData);
             } else {
                 // Create new evaluation
-                await EvaluationService.createEvaluation(formData);
+                await evaluationService.createEvaluation(formData as any);
             }
             onSubmit();
         } catch (error) {

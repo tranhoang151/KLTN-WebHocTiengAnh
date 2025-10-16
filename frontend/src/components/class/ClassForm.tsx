@@ -59,15 +59,13 @@ const ClassForm: React.FC<ClassFormProps> = ({
     const loadInitialData = async () => {
         try {
             setLoadingData(true);
-            const [coursesData, teachersData, studentsData] = await Promise.all([
+            const [coursesData] = await Promise.all([
                 courseService.getAllCourses(),
-                classService.getAvailableTeachers(),
-                classService.getAvailableStudents(),
             ]);
 
             setCourses(coursesData);
-            setTeachers(teachersData);
-            setAvailableStudents(studentsData);
+            setTeachers([]); // TODO: Implement teacher loading
+            setAvailableStudents([]); // TODO: Implement student loading
         } catch (error) {
             console.error('Error loading initial data:', error);
         } finally {

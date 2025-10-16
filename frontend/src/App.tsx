@@ -14,7 +14,6 @@ import Unauthorized from './components/Unauthorized';
 import StudentDashboard from './components/dashboards/StudentDashboard';
 import TeacherDashboard from './components/dashboards/TeacherDashboard';
 import AdminDashboard from './components/dashboards/AdminDashboard';
-import ParentDashboard from './components/dashboards/ParentDashboard';
 import Profile from './components/Profile';
 import CourseDetailPage from './pages/learning/CourseDetailPage';
 import { AchievementManager } from './components/achievement';
@@ -68,14 +67,6 @@ const AppRoutes: React.FC = () => {
         }
       />
 
-      <Route
-        path="/parent/*"
-        element={
-          <ProtectedRoute requiredRole="parent">
-            <ParentDashboard />
-          </ProtectedRoute>
-        }
-      />
 
       {/* Profile Route - Available to all authenticated users */}
       <Route
@@ -105,14 +96,14 @@ const App: React.FC = () => {
       <Router>
         <AuthProvider>
           {/* <AccessibilityProvider> */}
-            <div className="App">
-              {/* <SkipLinks /> */}
-              <main id="main-content">
-                <AppRoutes />
-              </main>
-              <AchievementManager />
-              {/* <AccessibilityButton /> */}
-            </div>
+          <div className="App">
+            {/* <SkipLinks /> */}
+            <main id="main-content">
+              <AppRoutes />
+            </main>
+            <AchievementManager />
+            {/* <AccessibilityButton /> */}
+          </div>
           {/* </AccessibilityProvider> */}
         </AuthProvider>
       </Router>
