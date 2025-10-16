@@ -133,6 +133,7 @@ export interface Question {
 export interface AnswerDto {
   questionId: string;
   answer: string;
+  isCorrect: boolean;
 }
 
 export interface ExerciseSubmissionDto {

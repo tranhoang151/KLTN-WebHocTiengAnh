@@ -39,8 +39,30 @@ const ExerciseScreen: React.FC = () => {
       setLoading(true);
       setError(null);
       const data = await exerciseService.getExerciseById(id);
-      setExercise(data);
-      setSessionQuestions(data.questions); // Initialize sessionQuestions
+
+      // Transform questions to match frontend expectations
+      const transformedQuestions = data.questions.map((q: any) => ({
+        id: q.id,
+        content: q.question_text || q.content,
+        type: q.type,
+        options: q.options || [],
+        correct_answer: q.correct_answer,
+        explanation: q.explanation || '',
+        difficulty: q.difficulty || 'easy',
+        course_id: q.course_id || data.course_id,
+        tags: q.tags || [],
+        created_by: q.created_by || '',
+        created_at: q.created_at || Date.now(),
+        is_active: q.is_active !== undefined ? q.is_active : true
+      }));
+
+      const transformedExercise = {
+        ...data,
+        questions: transformedQuestions
+      };
+
+      setExercise(transformedExercise);
+      setSessionQuestions(transformedQuestions); // Initialize sessionQuestions
     } catch (err: any) {
       setError(err.message || 'Failed to load exercise.');
     } finally {
@@ -135,14 +157,15 @@ const ExerciseScreen: React.FC = () => {
   const handleSubmit = async () => {
     if (!user || !exercise || isSubmitted) return; // Prevent multiple submissions
 
-    const submission: any = {
+    const submission = {
       userId: user.id,
       exerciseId: exercise.id,
       courseId: exercise.course_id,
       answers: Array.from(userAnswers.entries()).map(
         ([questionId, answer]) => ({
           questionId,
-          answer,
+          answer: answer.toString(), // Ensure answer is string
+          isCorrect: false, // Backend expects this field
         })
       ),
       timeSpent: Math.floor((Date.now() - startTime) / 1000),
@@ -188,6 +211,8 @@ const ExerciseScreen: React.FC = () => {
     return (
       <div className="exercise-error">
         No questions available for this session.
+        <br />
+        <small>Exercise data: {exercise ? JSON.stringify(exercise.questions) : 'No exercise data'}</small>
       </div>
     );
   }
@@ -200,7 +225,7 @@ const ExerciseScreen: React.FC = () => {
       <div className="exercise-header">
         <h2>{exercise.title}</h2>
         {exercise.time_limit && (
-          <div className="timer-container ${getTimerClassName()}">
+          <div className={`timer-container ${getTimerClassName()}`}>
             <span className="timer-display">{formatTime(timeLeft)}</span>
             <button
               onClick={togglePause}
