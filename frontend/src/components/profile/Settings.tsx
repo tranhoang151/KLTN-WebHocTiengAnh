@@ -390,7 +390,7 @@ const Settings: React.FC = () => {
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                         <div className="bg-blue-50 p-4 rounded-lg">
                                             <div className="text-2xl font-bold text-blue-600">
-                                                {user.streak_count}
+                                                {user.learning_streak_count}
                                             </div>
                                             <div className="text-sm text-blue-800">
                                                 Current Streak

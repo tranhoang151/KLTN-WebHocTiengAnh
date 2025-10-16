@@ -13,7 +13,7 @@ export interface User {
   isActive: boolean;
   createdAt: any; // Firestore Timestamp
   lastLoginDate?: string;
-  streakCount?: number;
+  learningStreakCount?: number;
   classIds?: string[];
   badges: Record<
     string,
@@ -27,7 +27,7 @@ export interface User {
   is_active: boolean;
   created_at: any;
   last_login_date: string;
-  streak_count: number;
+  learning_streak_count: number;
   class_ids?: string[];
   avatar_url?: string;
   avatar_base64?: string;
@@ -91,8 +91,8 @@ export const userService = {
       created_at: user.createdAt || user.created_at,
       lastLoginDate: user.lastLoginDate || user.last_login_date,
       last_login_date: user.lastLoginDate || user.last_login_date,
-      streakCount: user.streakCount || user.streak_count || 0,
-      streak_count: user.streakCount || user.streak_count || 0,
+      learningStreakCount: user.learningStreakCount || user.learning_streak_count || 0,
+      learning_streak_count: user.learningStreakCount || user.learning_streak_count || 0,
       classIds: user.classIds || user.class_ids || [],
       class_ids: user.classIds || user.class_ids || [],
       avatarUrl: user.avatarUrl || user.avatar_url,

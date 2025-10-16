@@ -9,7 +9,7 @@ export interface User {
   gender: string;
   avatar_url?: string;
   avatar_base64?: string;
-  streak_count: number;
+  learning_streak_count: number;
   last_login_date: string;
   class_ids?: string[];
   badges: Record<

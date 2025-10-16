@@ -14,6 +14,10 @@ import Unauthorized from './components/Unauthorized';
 import StudentDashboard from './components/dashboards/StudentDashboard';
 import TeacherDashboard from './components/dashboards/TeacherDashboard';
 import AdminDashboard from './components/dashboards/AdminDashboard';
+<<<<<<< Updated upstream
+=======
+// import { AdminDashboard } from './utils/routeLazyLoading';
+>>>>>>> Stashed changes
 import Profile from './components/Profile';
 import CourseDetailPage from './pages/learning/CourseDetailPage';
 import { AchievementManager } from './components/achievement';

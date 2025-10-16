@@ -52,7 +52,7 @@ const mockUser = {
     email: 'test@example.com',
     role: 'student' as const,
     gender: 'other',
-    streak_count: 0,
+    learning_streak_count: 0,
     last_login_date: new Date().toISOString(),
     badges: {},
 };

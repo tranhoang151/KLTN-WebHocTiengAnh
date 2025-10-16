@@ -49,7 +49,7 @@ const StudentListForEvaluation: React.FC<StudentListForEvaluationProps> = ({
                     role: 'student',
                     gender: 'male',
                     avatar_url: '',
-                    streak_count: 5,
+                    learning_streak_count: 5,
                     last_login_date: new Date().toISOString(),
                     class_ids: classId ? [classId] : [],
                     badges: {},
@@ -62,7 +62,7 @@ const StudentListForEvaluation: React.FC<StudentListForEvaluationProps> = ({
                     role: 'student',
                     gender: 'female',
                     avatar_url: '',
-                    streak_count: 3,
+                    learning_streak_count: 3,
                     last_login_date: new Date().toISOString(),
                     class_ids: classId ? [classId] : [],
                     badges: {},
@@ -75,7 +75,7 @@ const StudentListForEvaluation: React.FC<StudentListForEvaluationProps> = ({
                     role: 'student',
                     gender: 'male',
                     avatar_url: '',
-                    streak_count: 7,
+                    learning_streak_count: 7,
                     last_login_date: new Date().toISOString(),
                     class_ids: classId ? [classId] : [],
                     badges: {},
@@ -239,7 +239,7 @@ const StudentListForEvaluation: React.FC<StudentListForEvaluationProps> = ({
                                 <div className="flex items-center space-x-3">
                                     {getStatusBadge(student)}
                                     <div className="text-sm text-gray-500">
-                                        Streak: {student.streak_count} days
+                                        Streak: {student.learning_streak_count} days
                                     </div>
                                 </div>
                             </div>
