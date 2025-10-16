@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChildFriendlyButton } from './';
+import ChildFriendlyButton from './ChildFriendlyButton';
 import './ErrorMessage.css';
 
 interface ErrorMessageProps {

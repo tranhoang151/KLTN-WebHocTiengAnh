@@ -2,7 +2,17 @@ import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import DashboardLayout from '../DashboardLayout';
 import { usePermissions } from '../../hooks/usePermissions';
-import { ChildFriendlyCard } from '../ui';
+// import { ChildFriendlyCard } from '../ui'; // Removed to avoid circular dependency
+import {
+  BookOpen,
+  PenTool,
+  FileText,
+  Video,
+  BarChart3,
+  Award,
+  ArrowRight,
+  Sparkles,
+} from 'lucide-react';
 import './StudentDashboard.css';
 import FlashcardLearningFlow from '../learning/FlashcardLearningFlow';
 import StudentExerciseList from '../exercise/StudentExerciseList';
@@ -22,279 +32,786 @@ const StudentDashboardHome: React.FC = () => {
   const { hasPermission } = usePermissions();
 
   return (
-    <div className="student-dashboard">
-      {/* Floating background elements */}
-      <div className="floating-elements">
-        <div className="floating-element">🌟</div>
-        <div className="floating-element">📚</div>
-        <div className="floating-element">🎯</div>
-        <div className="floating-element">🏆</div>
+    <div
+      style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        padding: '40px 20px',
+        position: 'relative',
+        overflow: 'hidden',
+      }}
+    >
+      {/* Background decorations */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '-50px',
+          right: '-50px',
+          width: '200px',
+          height: '200px',
+          background:
+            'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))',
+          borderRadius: '50%',
+          zIndex: 0,
+        }}
+      />
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '-100px',
+          left: '-100px',
+          width: '300px',
+          height: '300px',
+          background:
+            'linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03))',
+          borderRadius: '50%',
+          zIndex: 0,
+        }}
+      />
+
+      {/* Welcome Header */}
+      <div
+        style={{
+          textAlign: 'center',
+          marginBottom: '40px',
+          position: 'relative',
+          zIndex: 1,
+        }}
+      >
+        <h1
+          style={{
+            fontSize: '48px',
+            fontWeight: '800',
+            background: 'linear-gradient(135deg, #ffffff, #f0f8ff)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            margin: '0 0 16px 0',
+            textShadow: '0 4px 8px rgba(0,0,0,0.1)',
+          }}
+        >
+          Welcome to BingGo! 🎉
+        </h1>
+        <p
+          style={{
+            fontSize: '20px',
+            color: 'rgba(255,255,255,0.9)',
+            margin: '0',
+            fontWeight: '500',
+          }}
+        >
+          Choose your learning adventure below
+        </p>
       </div>
 
-      <div className="dashboard-grid">
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+          gap: '30px',
+          maxWidth: '1400px',
+          margin: '0 auto',
+          position: 'relative',
+          zIndex: 1,
+        }}
+      >
         {/* Flashcards */}
         {hasPermission('flashcards', 'read') && (
-          <ChildFriendlyCard
-            title="Flashcards"
-            icon="📚"
-            color="blue"
-            interactive
-            onClick={() => (window.location.href = '/student/flashcards/animals/learn')}
+          <div
+            style={{
+              background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+              borderRadius: '20px',
+              padding: '32px',
+              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              backdropFilter: 'blur(10px)',
+              transition: 'all 0.3s ease',
+              cursor: 'pointer',
+              position: 'relative',
+              overflow: 'hidden',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
+              e.currentTarget.style.boxShadow =
+                '0 30px 60px rgba(59, 130, 246, 0.3)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0) scale(1)';
+              e.currentTarget.style.boxShadow =
+                '0 20px 40px rgba(0, 0, 0, 0.1)';
+            }}
+            onClick={() =>
+              (window.location.href = '/student/flashcards/animals/learn')
+            }
           >
-            <p style={{ margin: 0, fontSize: 'var(--font-size-md)' }}>
+            {/* Background decoration */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '-20px',
+                right: '-20px',
+                width: '80px',
+                height: '80px',
+                background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                borderRadius: '50%',
+                opacity: '0.1',
+              }}
+            />
+
+            {/* Icon */}
+            <div
+              style={{
+                width: '64px',
+                height: '64px',
+                background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                borderRadius: '16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: '20px',
+                boxShadow: '0 8px 16px rgba(59, 130, 246, 0.3)',
+              }}
+            >
+              <BookOpen size={32} color="white" />
+            </div>
+
+            {/* Title */}
+            <h3
+              style={{
+                fontSize: '24px',
+                fontWeight: '700',
+                color: '#1f2937',
+                margin: '0 0 12px 0',
+              }}
+            >
+              Flashcards
+            </h3>
+
+            {/* Description */}
+            <p
+              style={{
+                fontSize: '16px',
+                color: '#6b7280',
+                margin: '0 0 24px 0',
+                lineHeight: '1.6',
+              }}
+            >
               Learn new vocabulary with fun, interactive flashcards!
             </p>
-            <div style={{ marginTop: 'var(--spacing-md)' }}>
-              <Link
-                to="/student/flashcards/animals/learn"
-                style={{
-                  color: 'var(--primary-blue)',
-                  textDecoration: 'none',
-                  fontWeight: '600',
-                  fontSize: 'var(--font-size-md)',
-                }}
-              >
-                Start Learning! 🚀
-              </Link>
-            </div>
-          </ChildFriendlyCard>
+
+            {/* Action Button */}
+            <Link
+              to="/student/flashcards/animals/learn"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '12px 24px',
+                background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                color: 'white',
+                textDecoration: 'none',
+                borderRadius: '12px',
+                fontWeight: '600',
+                fontSize: '16px',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 12px rgba(59, 130, 246, 0.4)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow =
+                  '0 8px 20px rgba(59, 130, 246, 0.6)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow =
+                  '0 4px 12px rgba(59, 130, 246, 0.4)';
+              }}
+            >
+              Start Learning
+              <ArrowRight size={18} />
+            </Link>
+          </div>
         )}
 
         {/* Exercises */}
         {hasPermission('exercises', 'read') && (
-          <ChildFriendlyCard
-            title="Exercises"
-            icon="✏️"
-            color="green"
-            interactive
+          <div
+            style={{
+              background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+              borderRadius: '20px',
+              padding: '32px',
+              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              backdropFilter: 'blur(10px)',
+              transition: 'all 0.3s ease',
+              cursor: 'pointer',
+              position: 'relative',
+              overflow: 'hidden',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
+              e.currentTarget.style.boxShadow =
+                '0 30px 60px rgba(34, 197, 94, 0.3)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0) scale(1)';
+              e.currentTarget.style.boxShadow =
+                '0 20px 40px rgba(0, 0, 0, 0.1)';
+            }}
             onClick={() => (window.location.href = '/student/exercises')}
           >
-            <p style={{ margin: 0, fontSize: 'var(--font-size-md)' }}>
+            {/* Background decoration */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '-20px',
+                right: '-20px',
+                width: '80px',
+                height: '80px',
+                background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+                borderRadius: '50%',
+                opacity: '0.1',
+              }}
+            />
+
+            {/* Icon */}
+            <div
+              style={{
+                width: '64px',
+                height: '64px',
+                background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+                borderRadius: '16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: '20px',
+                boxShadow: '0 8px 16px rgba(34, 197, 94, 0.3)',
+              }}
+            >
+              <PenTool size={32} color="white" />
+            </div>
+
+            {/* Title */}
+            <h3
+              style={{
+                fontSize: '24px',
+                fontWeight: '700',
+                color: '#1f2937',
+                margin: '0 0 12px 0',
+              }}
+            >
+              Exercises
+            </h3>
+
+            {/* Description */}
+            <p
+              style={{
+                fontSize: '16px',
+                color: '#6b7280',
+                margin: '0 0 24px 0',
+                lineHeight: '1.6',
+              }}
+            >
               Practice your English skills with fun exercises and games!
             </p>
-            <div style={{ marginTop: 'var(--spacing-md)' }}>
-              <Link
-                to="/student/exercises"
-                style={{
-                  color: 'var(--primary-green)',
-                  textDecoration: 'none',
-                  fontWeight: '600',
-                  fontSize: 'var(--font-size-md)',
-                }}
-              >
-                Start Practicing! 💪
-              </Link>
-            </div>
-          </ChildFriendlyCard>
+
+            {/* Action Button */}
+            <Link
+              to="/student/exercises"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '12px 24px',
+                background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+                color: 'white',
+                textDecoration: 'none',
+                borderRadius: '12px',
+                fontWeight: '600',
+                fontSize: '16px',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 12px rgba(34, 197, 94, 0.4)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow =
+                  '0 8px 20px rgba(34, 197, 94, 0.6)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow =
+                  '0 4px 12px rgba(34, 197, 94, 0.4)';
+              }}
+            >
+              Start Practicing
+              <ArrowRight size={18} />
+            </Link>
+          </div>
         )}
 
         {/* Tests */}
         {hasPermission('tests', 'read') && (
-          <ChildFriendlyCard
-            title="Tests"
-            icon="📝"
-            color="orange"
-            interactive
+          <div
+            style={{
+              background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+              borderRadius: '20px',
+              padding: '32px',
+              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              backdropFilter: 'blur(10px)',
+              transition: 'all 0.3s ease',
+              cursor: 'pointer',
+              position: 'relative',
+              overflow: 'hidden',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
+              e.currentTarget.style.boxShadow =
+                '0 30px 60px rgba(249, 115, 22, 0.3)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0) scale(1)';
+              e.currentTarget.style.boxShadow =
+                '0 20px 40px rgba(0, 0, 0, 0.1)';
+            }}
             onClick={() => (window.location.href = '/student/tests')}
           >
-            <p style={{ margin: 0, fontSize: 'var(--font-size-md)' }}>
+            {/* Background decoration */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '-20px',
+                right: '-20px',
+                width: '80px',
+                height: '80px',
+                background: 'linear-gradient(135deg, #f97316, #ea580c)',
+                borderRadius: '50%',
+                opacity: '0.1',
+              }}
+            />
+
+            {/* Icon */}
+            <div
+              style={{
+                width: '64px',
+                height: '64px',
+                background: 'linear-gradient(135deg, #f97316, #ea580c)',
+                borderRadius: '16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: '20px',
+                boxShadow: '0 8px 16px rgba(249, 115, 22, 0.3)',
+              }}
+            >
+              <FileText size={32} color="white" />
+            </div>
+
+            {/* Title */}
+            <h3
+              style={{
+                fontSize: '24px',
+                fontWeight: '700',
+                color: '#1f2937',
+                margin: '0 0 12px 0',
+              }}
+            >
+              Tests
+            </h3>
+
+            {/* Description */}
+            <p
+              style={{
+                fontSize: '16px',
+                color: '#6b7280',
+                margin: '0 0 24px 0',
+                lineHeight: '1.6',
+              }}
+            >
               Show what you've learned with fun quizzes and tests!
             </p>
-            <div style={{ marginTop: 'var(--spacing-md)' }}>
-              <Link
-                to="/student/tests"
-                style={{
-                  color: 'var(--primary-orange)',
-                  textDecoration: 'none',
-                  fontWeight: '600',
-                  fontSize: 'var(--font-size-md)',
-                }}
-              >
-                Take a Test! 🎯
-              </Link>
-            </div>
-          </ChildFriendlyCard>
+
+            {/* Action Button */}
+            <Link
+              to="/student/tests"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '12px 24px',
+                background: 'linear-gradient(135deg, #f97316, #ea580c)',
+                color: 'white',
+                textDecoration: 'none',
+                borderRadius: '12px',
+                fontWeight: '600',
+                fontSize: '16px',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 12px rgba(249, 115, 22, 0.4)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow =
+                  '0 8px 20px rgba(249, 115, 22, 0.6)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow =
+                  '0 4px 12px rgba(249, 115, 22, 0.4)';
+              }}
+            >
+              Take a Test
+              <ArrowRight size={18} />
+            </Link>
+          </div>
         )}
 
         {/* Videos */}
         {hasPermission('videos', 'read') && (
-          <ChildFriendlyCard
-            title="Videos"
-            icon="🎥"
-            color="purple"
-            interactive
+          <div
+            style={{
+              background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+              borderRadius: '20px',
+              padding: '32px',
+              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              backdropFilter: 'blur(10px)',
+              transition: 'all 0.3s ease',
+              cursor: 'pointer',
+              position: 'relative',
+              overflow: 'hidden',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
+              e.currentTarget.style.boxShadow =
+                '0 30px 60px rgba(168, 85, 247, 0.3)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0) scale(1)';
+              e.currentTarget.style.boxShadow =
+                '0 20px 40px rgba(0, 0, 0, 0.1)';
+            }}
             onClick={() => (window.location.href = '/student/videos')}
           >
-            <p style={{ margin: 0, fontSize: 'var(--font-size-md)' }}>
+            {/* Background decoration */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '-20px',
+                right: '-20px',
+                width: '80px',
+                height: '80px',
+                background: 'linear-gradient(135deg, #a855f7, #9333ea)',
+                borderRadius: '50%',
+                opacity: '0.1',
+              }}
+            />
+
+            {/* Icon */}
+            <div
+              style={{
+                width: '64px',
+                height: '64px',
+                background: 'linear-gradient(135deg, #a855f7, #9333ea)',
+                borderRadius: '16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: '20px',
+                boxShadow: '0 8px 16px rgba(168, 85, 247, 0.3)',
+              }}
+            >
+              <Video size={32} color="white" />
+            </div>
+
+            {/* Title */}
+            <h3
+              style={{
+                fontSize: '24px',
+                fontWeight: '700',
+                color: '#1f2937',
+                margin: '0 0 12px 0',
+              }}
+            >
+              Videos
+            </h3>
+
+            {/* Description */}
+            <p
+              style={{
+                fontSize: '16px',
+                color: '#6b7280',
+                margin: '0 0 24px 0',
+                lineHeight: '1.6',
+              }}
+            >
               Watch exciting English lessons and stories!
             </p>
-            <div style={{ marginTop: 'var(--spacing-md)' }}>
-              <Link
-                to="/student/videos"
-                style={{
-                  color: 'var(--primary-purple)',
-                  textDecoration: 'none',
-                  fontWeight: '600',
-                  fontSize: 'var(--font-size-md)',
-                }}
-              >
-                Watch Videos! 🍿
-              </Link>
-            </div>
-          </ChildFriendlyCard>
+
+            {/* Action Button */}
+            <Link
+              to="/student/videos"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '12px 24px',
+                background: 'linear-gradient(135deg, #a855f7, #9333ea)',
+                color: 'white',
+                textDecoration: 'none',
+                borderRadius: '12px',
+                fontWeight: '600',
+                fontSize: '16px',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 12px rgba(168, 85, 247, 0.4)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow =
+                  '0 8px 20px rgba(168, 85, 247, 0.6)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow =
+                  '0 4px 12px rgba(168, 85, 247, 0.4)';
+              }}
+            >
+              Watch Videos
+              <ArrowRight size={18} />
+            </Link>
+          </div>
         )}
 
         {/* Progress */}
         {hasPermission('progress', 'read') && (
-          <ChildFriendlyCard
-            title="My Progress"
-            icon="📊"
-            color="blue"
-            interactive
+          <div
+            style={{
+              background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+              borderRadius: '20px',
+              padding: '32px',
+              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              backdropFilter: 'blur(10px)',
+              transition: 'all 0.3s ease',
+              cursor: 'pointer',
+              position: 'relative',
+              overflow: 'hidden',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
+              e.currentTarget.style.boxShadow =
+                '0 30px 60px rgba(59, 130, 246, 0.3)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0) scale(1)';
+              e.currentTarget.style.boxShadow =
+                '0 20px 40px rgba(0, 0, 0, 0.1)';
+            }}
             onClick={() => (window.location.href = '/student/progress')}
           >
-            <p style={{ margin: 0, fontSize: 'var(--font-size-md)' }}>
+            {/* Background decoration */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '-20px',
+                right: '-20px',
+                width: '80px',
+                height: '80px',
+                background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                borderRadius: '50%',
+                opacity: '0.1',
+              }}
+            />
+
+            {/* Icon */}
+            <div
+              style={{
+                width: '64px',
+                height: '64px',
+                background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                borderRadius: '16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: '20px',
+                boxShadow: '0 8px 16px rgba(59, 130, 246, 0.3)',
+              }}
+            >
+              <BarChart3 size={32} color="white" />
+            </div>
+
+            {/* Title */}
+            <h3
+              style={{
+                fontSize: '24px',
+                fontWeight: '700',
+                color: '#1f2937',
+                margin: '0 0 12px 0',
+              }}
+            >
+              My Progress
+            </h3>
+
+            {/* Description */}
+            <p
+              style={{
+                fontSize: '16px',
+                color: '#6b7280',
+                margin: '0 0 24px 0',
+                lineHeight: '1.6',
+              }}
+            >
               See how much you've learned and grown!
             </p>
-            <div style={{ marginTop: 'var(--spacing-md)' }}>
-              <Link
-                to="/student/progress"
-                style={{
-                  color: 'var(--primary-blue)',
-                  textDecoration: 'none',
-                  fontWeight: '600',
-                  fontSize: 'var(--font-size-md)',
-                }}
-              >
-                Check Progress! 📈
-              </Link>
-            </div>
-          </ChildFriendlyCard>
+
+            {/* Action Button */}
+            <Link
+              to="/student/progress"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '12px 24px',
+                background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                color: 'white',
+                textDecoration: 'none',
+                borderRadius: '12px',
+                fontWeight: '600',
+                fontSize: '16px',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 12px rgba(59, 130, 246, 0.4)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow =
+                  '0 8px 20px rgba(59, 130, 246, 0.6)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow =
+                  '0 4px 12px rgba(59, 130, 246, 0.4)';
+              }}
+            >
+              Check Progress
+              <ArrowRight size={18} />
+            </Link>
+          </div>
         )}
 
         {/* Badges */}
         {hasPermission('badges', 'read') && (
-          <ChildFriendlyCard
-            title="My Badges"
-            icon="🏆"
-            color="pink"
-            interactive
-            onClick={() => (window.location.href = '/student/badges')}
-          >
-            <p style={{ margin: 0, fontSize: 'var(--font-size-md)' }}>
-              Collect awesome badges for your achievements!
-            </p>
-            <div style={{ marginTop: 'var(--spacing-md)' }}>
-              <Link
-                to="/student/badges"
-                style={{
-                  color: 'var(--primary-pink)',
-                  textDecoration: 'none',
-                  fontWeight: '600',
-                  fontSize: 'var(--font-size-md)',
-                }}
-              >
-                See My Badges! 🌟
-              </Link>
-            </div>
-          </ChildFriendlyCard>
-        )}
-        {/* Video Progress */}
-        {hasPermission('progress', 'read') && (
-          <ChildFriendlyCard
-            title="Video Progress"
-            icon="📈"
-            color="green"
-            interactive
-            onClick={() => (window.location.href = '/student/videos/progress')}
-          >
-            <p style={{ margin: 0, fontSize: 'var(--font-size-md)' }}>
-              See all the amazing videos you've watched!
-            </p>
-            <div style={{ marginTop: 'var(--spacing-md)' }}>
-              <Link
-                to="/student/videos/progress"
-                style={{
-                  color: 'var(--primary-green)',
-                  textDecoration: 'none',
-                  fontWeight: '600',
-                  fontSize: 'var(--font-size-md)',
-                }}
-              >
-                View History! 📺
-              </Link>
-            </div>
-          </ChildFriendlyCard>
-        )}
-
-        {/* Learning Streak */}
-        {hasPermission('progress', 'read') && (
-          <ChildFriendlyCard
-            title="Learning Streak"
-            icon="🔥"
-            color="orange"
-            interactive
-            onClick={() => (window.location.href = '/student/streak')}
-          >
-            <p style={{ margin: 0, fontSize: 'var(--font-size-md)' }}>
-              Keep your learning fire burning every day!
-            </p>
-            <div style={{ marginTop: 'var(--spacing-md)' }}>
-              <Link
-                to="/student/streak"
-                style={{
-                  color: 'var(--primary-orange)',
-                  textDecoration: 'none',
-                  fontWeight: '600',
-                  fontSize: 'var(--font-size-md)',
-                }}
-              >
-                View Streak! 🔥
-              </Link>
-            </div>
-          </ChildFriendlyCard>
-        )}
-      </div>
-
-      {/* Welcome Message */}
-      <ChildFriendlyCard
-        title="Welcome to Your Learning Adventure!"
-        icon="👋"
-        color="blue"
-        className="welcome-card"
-      >
-        <div style={{ textAlign: 'center' }}>
-          <h3 className="heading-child heading-lg text-rainbow">
-            Ready to Learn English? 🚀
-          </h3>
-          <p
-            style={{
-              fontSize: 'var(--font-size-md)',
-              lineHeight: '1.6',
-              margin: 'var(--spacing-md) 0',
-            }}
-          >
-            Choose any activity above to start your amazing English learning
-            journey! You can learn new words with flashcards, practice with fun
-            exercises, watch exciting videos, and collect cool badges! 🌟
-          </p>
           <div
             style={{
-              display: 'flex',
-              justifyContent: 'center',
-              gap: 'var(--spacing-sm)',
-              marginTop: 'var(--spacing-lg)',
-              flexWrap: 'wrap',
+              background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+              borderRadius: '20px',
+              padding: '32px',
+              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              backdropFilter: 'blur(10px)',
+              transition: 'all 0.3s ease',
+              cursor: 'pointer',
+              position: 'relative',
+              overflow: 'hidden',
             }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
+              e.currentTarget.style.boxShadow =
+                '0 30px 60px rgba(236, 72, 153, 0.3)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0) scale(1)';
+              e.currentTarget.style.boxShadow =
+                '0 20px 40px rgba(0, 0, 0, 0.1)';
+            }}
+            onClick={() => (window.location.href = '/student/badges')}
           >
-            <span style={{ fontSize: '2em' }}>🎯</span>
-            <span style={{ fontSize: '2em' }}>📚</span>
-            <span style={{ fontSize: '2em' }}>🎮</span>
-            <span style={{ fontSize: '2em' }}>🏆</span>
-            <span style={{ fontSize: '2em' }}>🌈</span>
+            {/* Background decoration */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '-20px',
+                right: '-20px',
+                width: '80px',
+                height: '80px',
+                background: 'linear-gradient(135deg, #ec4899, #db2777)',
+                borderRadius: '50%',
+                opacity: '0.1',
+              }}
+            />
+
+            {/* Icon */}
+            <div
+              style={{
+                width: '64px',
+                height: '64px',
+                background: 'linear-gradient(135deg, #ec4899, #db2777)',
+                borderRadius: '16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: '20px',
+                boxShadow: '0 8px 16px rgba(236, 72, 153, 0.3)',
+              }}
+            >
+              <Award size={32} color="white" />
+            </div>
+
+            {/* Title */}
+            <h3
+              style={{
+                fontSize: '24px',
+                fontWeight: '700',
+                color: '#1f2937',
+                margin: '0 0 12px 0',
+              }}
+            >
+              My Badges
+            </h3>
+
+            {/* Description */}
+            <p
+              style={{
+                fontSize: '16px',
+                color: '#6b7280',
+                margin: '0 0 24px 0',
+                lineHeight: '1.6',
+              }}
+            >
+              Collect awesome badges for your achievements!
+            </p>
+
+            {/* Action Button */}
+            <Link
+              to="/student/badges"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '12px 24px',
+                background: 'linear-gradient(135deg, #ec4899, #db2777)',
+                color: 'white',
+                textDecoration: 'none',
+                borderRadius: '12px',
+                fontWeight: '600',
+                fontSize: '16px',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 12px rgba(236, 72, 153, 0.4)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow =
+                  '0 8px 20px rgba(236, 72, 153, 0.6)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow =
+                  '0 4px 12px rgba(236, 72, 153, 0.4)';
+              }}
+            >
+              See My Badges
+              <ArrowRight size={18} />
+            </Link>
           </div>
-        </div>
-      </ChildFriendlyCard>
+        )}
+      </div>
     </div>
   );
 };
@@ -320,14 +837,23 @@ const StudentDashboard: React.FC = () => {
             />
           }
         />
-        <Route path="/flashcards/:setId/learn" element={<FlashcardLearningPage />} />
+        <Route
+          path="/flashcards/:setId/learn"
+          element={<FlashcardLearningPage />}
+        />
         <Route path="/exercises" element={<StudentExerciseList />} />
         <Route path="/exercises/:exerciseId" element={<ExerciseScreen />} />
-        <Route path="/tests" element={<div>Test List Page - Coming Soon</div>} />
+        <Route
+          path="/tests"
+          element={<div>Test List Page - Coming Soon</div>}
+        />
         <Route path="/tests/:testId/start" element={<TestStartPage />} />
         <Route path="/tests/:testId/take" element={<TestTakingPage />} />
         <Route path="/tests/:testId/results" element={<TestResultPage />} />
-        <Route path="/flashcards/:setId/learn" element={<FlashcardLearningPage />} />
+        <Route
+          path="/flashcards/:setId/learn"
+          element={<FlashcardLearningPage />}
+        />
         <Route path="/videos" element={<VideoLecturesPage />} />
         <Route path="/videos/progress" element={<VideoProgressPage />} />
         <Route path="/videos/:videoId" element={<VideoDetailPage />} />
