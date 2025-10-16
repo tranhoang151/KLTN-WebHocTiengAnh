@@ -366,7 +366,7 @@ const AnnouncementManager: React.FC = () => {
                       targetRoles: handleArrayInput(e.target.value),
                     })
                   }
-                  placeholder="admin, teacher, student, parent"
+                  placeholder="admin, teacher, student"
                 />
               </div>
 
@@ -379,8 +379,8 @@ const AnnouncementManager: React.FC = () => {
                     value={
                       editingAnnouncement.startDate
                         ? new Date(editingAnnouncement.startDate)
-                            .toISOString()
-                            .slice(0, 16)
+                          .toISOString()
+                          .slice(0, 16)
                         : ''
                     }
                     onChange={(e) =>
@@ -402,8 +402,8 @@ const AnnouncementManager: React.FC = () => {
                     value={
                       editingAnnouncement.endDate
                         ? new Date(editingAnnouncement.endDate)
-                            .toISOString()
-                            .slice(0, 16)
+                          .toISOString()
+                          .slice(0, 16)
                         : ''
                     }
                     onChange={(e) =>

@@ -62,11 +62,11 @@ const UserSearch: React.FC<UserSearchProps> = ({
         const roles = await userService.getAvailableRoles();
         setAvailableRoles(roles);
       } else {
-        setAvailableRoles(['student', 'teacher', 'admin', 'parent']);
+        setAvailableRoles(['student', 'teacher', 'admin']);
       }
     } catch (error) {
       console.error('Error loading roles:', error);
-      setAvailableRoles(['student', 'teacher', 'admin', 'parent']);
+      setAvailableRoles(['student', 'teacher', 'admin']);
     }
   };
 

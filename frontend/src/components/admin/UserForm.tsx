@@ -51,12 +51,12 @@ const UserForm: React.FC<UserFormProps> = ({
           setAvailableRoles(roles);
         } else {
           // Fallback roles if no token
-          setAvailableRoles(['student', 'teacher', 'admin', 'parent']);
+          setAvailableRoles(['student', 'teacher', 'admin']);
         }
       } catch (error) {
         console.error('Error loading roles:', error);
         // Fallback roles if API fails
-        setAvailableRoles(['student', 'teacher', 'admin', 'parent']);
+        setAvailableRoles(['student', 'teacher', 'admin']);
       }
     };
 
