@@ -3997,7 +3997,6 @@
         "_nanoseconds": 0
       },
       "last_learning_date": "",
-      "child_ids": [],
       "learning_streak_count": 1,
       "last_login_date": "2025-10-08"
     },
@@ -4058,7 +4057,6 @@
         "_nanoseconds": 0
       },
       "last_learning_date": "",
-      "child_ids": [],
       "learning_streak_count": 3,
       "last_login_date": "2025-10-09",
       "password": "admin123"
@@ -4089,7 +4087,6 @@
         "_seconds": 0,
         "_nanoseconds": 0
       },
-      "child_ids": [],
       "learning_streak_count": 2,
       "last_login_date": "2025-10-06"
     },
@@ -4137,7 +4134,6 @@
         "_seconds": 0,
         "_nanoseconds": 0
       },
-      "child_ids": [],
       "last_login_date": "2025-10-08"
     },
     {

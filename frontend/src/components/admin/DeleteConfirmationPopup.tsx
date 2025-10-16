@@ -28,8 +28,6 @@ const DeleteConfirmationPopup: React.FC<DeleteConfirmationPopupProps> = ({
         return { background: '#eff6ff', color: '#2563eb', border: '#bfdbfe' };
       case 'student':
         return { background: '#f0fdf4', color: '#16a34a', border: '#bbf7d0' };
-      case 'parent':
-        return { background: '#faf5ff', color: '#9333ea', border: '#e9d5ff' };
       default:
         return { background: '#f9fafb', color: '#6b7280', border: '#e5e7eb' };
     }
@@ -43,8 +41,6 @@ const DeleteConfirmationPopup: React.FC<DeleteConfirmationPopupProps> = ({
         return <User size={14} style={{ color: '#2563eb' }} />;
       case 'student':
         return <User size={14} style={{ color: '#16a34a' }} />;
-      case 'parent':
-        return <User size={14} style={{ color: '#9333ea' }} />;
       default:
         return <User size={14} style={{ color: '#6b7280' }} />;
     }
