@@ -18,11 +18,13 @@ const VideoDetailPage: React.FC = () => {
 
     const fetchVideo = async () => {
       try {
+        console.log('Fetching video with ID:', videoId);
         const fetchedVideo = await videoService.getVideoById(videoId);
+        console.log('Fetched video:', fetchedVideo);
         setVideo(fetchedVideo);
       } catch (err) {
+        console.error('Error fetching video:', err);
         setError('Failed to fetch video details.');
-        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -115,6 +117,8 @@ const VideoDetailPage: React.FC = () => {
   }
 
   const youtubeVideoId = extractYouTubeId(video.videoUrl);
+  console.log('Video URL:', video.videoUrl);
+  console.log('Extracted YouTube ID:', youtubeVideoId);
 
   return (
     <div className="container mt-4">
@@ -128,7 +132,9 @@ const VideoDetailPage: React.FC = () => {
           onEnd={handleVideoEnd}
         />
       ) : (
-        <div className="alert alert-danger">Invalid YouTube URL provided.</div>
+        <div className="alert alert-danger">
+          Invalid YouTube URL provided: {video.videoUrl}
+        </div>
       )}
     </div>
   );

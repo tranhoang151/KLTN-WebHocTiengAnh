@@ -219,7 +219,7 @@ namespace BingGoWebAPI.Services
                     Id = video.Id,
                     Title = video.Title,
                     Description = video.Description,
-                    YoutubeId = youtubeId,
+                    VideoUrl = video.VideoUrl,
                     ThumbnailUrl = video.ThumbnailUrl,
                     Duration = video.Duration,
                     CourseId = video.CourseId,

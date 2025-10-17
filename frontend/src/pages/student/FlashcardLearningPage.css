@@ -49,9 +49,7 @@
     transition: transform 0.3s ease;
 }
 
-.flashcard:hover {
-    transform: translateY(-5px);
-}
+/* Removed hover effect - card only flips on click */
 
 .flashcard-inner {
     position: relative;

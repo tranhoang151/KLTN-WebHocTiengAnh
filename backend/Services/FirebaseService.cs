@@ -1703,12 +1703,16 @@ public class FirebaseService : IFirebaseService
                 return cachedVideos ?? new List<Video>();
             }
 
-            var query = _firestore.Collection("videos")
-                .WhereEqualTo("course_id", courseId)
-                .WhereEqualTo("is_active", true);
+            var query = _firestore.Collection("video_lectures")
+                .WhereEqualTo("course_id", courseId);
 
             var snapshot = await query.GetSnapshotAsync();
-            var videos = snapshot.Documents.Select(doc => doc.ConvertTo<Video>()).ToList();
+            var videos = snapshot.Documents.Select(doc =>
+            {
+                var video = doc.ConvertTo<Video>();
+                video.Id = doc.Id; // Set the document ID
+                return video;
+            }).ToList();
 
             _cache.Set(cacheKey, videos, _cacheExpiry);
             return videos;
@@ -1730,7 +1734,7 @@ public class FirebaseService : IFirebaseService
                 return cachedVideo;
             }
 
-            var docRef = _firestore.Collection("videos").Document(videoId);
+            var docRef = _firestore.Collection("video_lectures").Document(videoId);
             var snapshot = await docRef.GetSnapshotAsync();
 
             if (!snapshot.Exists)
@@ -1739,6 +1743,7 @@ public class FirebaseService : IFirebaseService
             }
 
             var video = snapshot.ConvertTo<Video>();
+            video.Id = snapshot.Id; // Set the document ID
             _cache.Set(cacheKey, video, _cacheExpiry);
 
             return video;
@@ -1764,7 +1769,12 @@ public class FirebaseService : IFirebaseService
             var snapshot = await _firestore.Collection("video_lectures").GetSnapshotAsync();
             _logger.LogInformation($"Found {snapshot.Documents.Count} video documents");
 
-            var videos = snapshot.Documents.Select(doc => doc.ConvertTo<Video>()).ToList();
+            var videos = snapshot.Documents.Select(doc =>
+            {
+                var video = doc.ConvertTo<Video>();
+                video.Id = doc.Id; // Set the document ID
+                return video;
+            }).ToList();
             _logger.LogInformation($"Converted {videos.Count} videos");
 
             _cache.Set(cacheKey, videos, _cacheExpiry);
@@ -1807,7 +1817,7 @@ public class FirebaseService : IFirebaseService
         try
         {
             video.Id = videoId;
-            var docRef = _firestore.Collection("videos").Document(videoId);
+            var docRef = _firestore.Collection("video_lectures").Document(videoId);
             await docRef.SetAsync(video, SetOptions.MergeAll);
 
             // Clear cache
@@ -1829,7 +1839,7 @@ public class FirebaseService : IFirebaseService
     {
         try
         {
-            var docRef = _firestore.Collection("videos").Document(videoId);
+            var docRef = _firestore.Collection("video_lectures").Document(videoId);
             var snapshot = await docRef.GetSnapshotAsync();
 
             if (!snapshot.Exists)

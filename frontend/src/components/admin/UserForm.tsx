@@ -15,7 +15,9 @@ import {
   UserCheck,
   Info,
   AlertTriangle,
+  Lock,
 } from 'lucide-react';
+import AvatarUpload from '../profile/AvatarUpload';
 
 interface UserFormProps {
   user?: User | null;
@@ -34,9 +36,11 @@ const UserForm: React.FC<UserFormProps> = ({
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
+    password: '',
     role: 'student',
     gender: '',
     classIds: [] as string[],
+    avatarBase64: '',
   });
   const [availableRoles, setAvailableRoles] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
@@ -68,9 +72,11 @@ const UserForm: React.FC<UserFormProps> = ({
       setFormData({
         fullName: user.full_name,
         email: user.email,
+        password: '', // Don't populate password for security
         role: user.role,
         gender: user.gender || '',
         classIds: user.class_ids || [],
+        avatarBase64: user.avatar_base64 || '',
       });
     }
   }, [user, isEditing]);
@@ -86,6 +92,13 @@ const UserForm: React.FC<UserFormProps> = ({
       newErrors.email = 'Email is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Please enter a valid email address';
+    }
+
+    // Password validation - required for new users, optional for editing
+    if (!isEditing && !formData.password.trim()) {
+      newErrors.password = 'Password is required for new users';
+    } else if (formData.password.trim() && formData.password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters long';
     }
 
     if (!formData.role) {
@@ -105,7 +118,16 @@ const UserForm: React.FC<UserFormProps> = ({
 
     setLoading(true);
     try {
-      await onSubmit(formData);
+      // Prepare data for submission
+      const submitData = {
+        ...formData,
+        // Only include password if it's provided (for new users or password updates)
+        password: formData.password.trim() || undefined,
+        // Only include avatar if it's provided
+        avatarBase64: formData.avatarBase64 || undefined,
+      };
+
+      await onSubmit(submitData);
     } catch (error) {
       console.error('Error submitting form:', error);
     } finally {
@@ -129,6 +151,13 @@ const UserForm: React.FC<UserFormProps> = ({
         [name]: '',
       }));
     }
+  };
+
+  const handleAvatarChange = (avatarBase64?: string | null) => {
+    setFormData((prev) => ({
+      ...prev,
+      avatarBase64: avatarBase64 || '',
+    }));
   };
 
   return (
@@ -442,6 +471,85 @@ const UserForm: React.FC<UserFormProps> = ({
                 )}
               </div>
 
+              {/* Password */}
+              <div>
+                <label
+                  htmlFor="password"
+                  style={{
+                    display: 'block',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    color: '#374151',
+                    marginBottom: '8px',
+                  }}
+                >
+                  Password {!isEditing ? '*' : ''}
+                  {isEditing && (
+                    <span style={{ fontSize: '12px', color: '#6b7280', fontWeight: '400' }}>
+                      {' '}(leave blank to keep current)
+                    </span>
+                  )}
+                </label>
+                <div style={{ position: 'relative' }}>
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '12px',
+                      transform: 'translateY(-50%)',
+                      zIndex: 2,
+                      pointerEvents: 'none',
+                    }}
+                  >
+                    <Lock size={18} style={{ color: '#6b7280' }} />
+                  </div>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleInputChange}
+                    style={{
+                      width: '100%',
+                      padding: '12px 12px 12px 44px',
+                      border: `2px solid ${errors.password ? '#ef4444' : '#e5e7eb'}`,
+                      borderRadius: '12px',
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      background: 'white',
+                      color: '#1f2937',
+                      transition: 'all 0.2s ease',
+                      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.02)',
+                    }}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = '#3b82f6';
+                      e.currentTarget.style.boxShadow =
+                        '0 0 0 3px rgba(59, 130, 246, 0.1)';
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = errors.password
+                        ? '#ef4444'
+                        : '#e5e7eb';
+                      e.currentTarget.style.boxShadow =
+                        '0 2px 4px rgba(0, 0, 0, 0.02)';
+                    }}
+                    placeholder={isEditing ? "Enter new password (optional)" : "Enter password"}
+                  />
+                </div>
+                {errors.password && (
+                  <p
+                    style={{
+                      marginTop: '8px',
+                      fontSize: '12px',
+                      color: '#ef4444',
+                      fontWeight: '500',
+                    }}
+                  >
+                    {errors.password}
+                  </p>
+                )}
+              </div>
+
               {/* Role */}
               <div>
                 <label
@@ -585,6 +693,35 @@ const UserForm: React.FC<UserFormProps> = ({
                   <option value="female">Female</option>
                   <option value="other">Other</option>
                 </select>
+              </div>
+
+              {/* Avatar Upload */}
+              <div>
+                <label
+                  style={{
+                    display: 'block',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    color: '#374151',
+                    marginBottom: '8px',
+                  }}
+                >
+                  Profile Picture
+                </label>
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  padding: '20px',
+                  border: '2px dashed #e5e7eb',
+                  borderRadius: '12px',
+                  background: '#f9fafb'
+                }}>
+                  <AvatarUpload
+                    currentAvatar={formData.avatarBase64}
+                    onAvatarChange={handleAvatarChange}
+                    uploadMode="form"
+                  />
+                </div>
               </div>
             </div>
 

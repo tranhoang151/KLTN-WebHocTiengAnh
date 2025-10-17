@@ -90,7 +90,7 @@ const FlashcardLearning: React.FC<FlashcardLearningProps> = ({
     setFlipAnimation('flip-start');
     setTimeout(() => {
       setIsFlipped(!isFlipped);
-      setFlipAnimation('flip-end');
+      setFlipAnimation('');
     }, 150);
   }, [isFlipped]);
 

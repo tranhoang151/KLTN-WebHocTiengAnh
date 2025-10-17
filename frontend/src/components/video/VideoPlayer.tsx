@@ -16,7 +16,12 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
 }) => {
   const onPlayerReady: YouTubeProps['onReady'] = (event) => {
     // access to player in all event handlers via event.target
+    console.log('YouTube player ready for video ID:', videoId);
     event.target.pauseVideo();
+  };
+
+  const onPlayerError: YouTubeProps['onError'] = (event) => {
+    console.error('YouTube player error:', event.data);
   };
 
   const opts: YouTubeProps['opts'] = {
@@ -28,11 +33,14 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
     },
   };
 
+  console.log('Rendering YouTube player with video ID:', videoId);
+
   return (
     <YouTube
       videoId={videoId}
       opts={opts}
       onReady={onPlayerReady}
+      onError={onPlayerError}
       onEnd={onEnd}
       onPlay={onPlay}
       onPause={onPause}
