@@ -277,7 +277,7 @@ app.UseCors("AllowReactApp");
 // Security middleware - order matters
 app.UseMiddleware<SecurityHeadersMiddleware>();
 app.UseMiddleware<RateLimitingMiddleware>();
-app.UseMiddleware<InputValidationMiddleware>();
+// app.UseMiddleware<InputValidationMiddleware>(); // Temporarily disabled for debugging
 
 // Add the authentication middleware to the pipeline.
 // It must come before UseAuthorization.

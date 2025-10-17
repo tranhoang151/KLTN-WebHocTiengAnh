@@ -1,458 +1,103 @@
-Security measures initialized successfully
-SecurityProvider.tsx:39 Security measures initialized successfully
-index.iife.js:1347 content script loaded
-index.iife.js:1 initial theme: light
-api.ts:31   GET https://localhost:5001/api/progress/dashboard/uGHwsrznOSIf1oHGvtll 500 (Internal Server Error)
-request @ api.ts:31
-await in request
-get @ api.ts:84
-getStudentDashboardData @ progressService.ts:45
-loadDashboardData @ ProgressDashboardPage.tsx:33
-(anonymous) @ ProgressDashboardPage.tsx:24
-react_stack_bottom_frame @ react-dom-client.development.js:23953
-runWithFiberInDEV @ react-dom-client.development.js:1518
-commitHookEffectListMount @ react-dom-client.development.js:11886
-commitHookPassiveMountEffects @ react-dom-client.development.js:12024
-commitPassiveMountOnFiber @ react-dom-client.development.js:13840
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13957
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13957
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13957
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13957
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13957
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13957
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13957
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13957
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13957
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13957
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13957
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13957
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13853
-flushPassiveEffects @ react-dom-client.development.js:15737
-(anonymous) @ react-dom-client.development.js:15379
-performWorkUntilDeadline @ scheduler.development.js:45
-<ProgressDashboardPage>
-(anonymous) @ react-jsx-dev-runtime.development.js:336
-StudentDashboard @ StudentDashboard.tsx:308
-react_stack_bottom_frame @ react-dom-client.development.js:23863
-renderWithHooksAgain @ react-dom-client.development.js:5629
-renderWithHooks @ react-dom-client.development.js:5541
-updateFunctionComponent @ react-dom-client.development.js:8897
-beginWork @ react-dom-client.development.js:10522
-runWithFiberInDEV @ react-dom-client.development.js:1518
-performUnitOfWork @ react-dom-client.development.js:15130
-workLoopSync @ react-dom-client.development.js:14956
-renderRootSync @ react-dom-client.development.js:14936
-performWorkOnRoot @ react-dom-client.development.js:14417
-performWorkOnRootViaSchedulerTask @ react-dom-client.development.js:16216
-performWorkUntilDeadline @ scheduler.development.js:45
-<StudentDashboard>
-(anonymous) @ react-jsx-dev-runtime.development.js:336
-AppRoutes @ App.tsx:47
-react_stack_bottom_frame @ react-dom-client.development.js:23863
-renderWithHooksAgain @ react-dom-client.development.js:5629
-renderWithHooks @ react-dom-client.development.js:5541
-updateFunctionComponent @ react-dom-client.development.js:8897
-beginWork @ react-dom-client.development.js:10522
-runWithFiberInDEV @ react-dom-client.development.js:1518
-performUnitOfWork @ react-dom-client.development.js:15130
-workLoopSync @ react-dom-client.development.js:14956
-renderRootSync @ react-dom-client.development.js:14936
-performWorkOnRoot @ react-dom-client.development.js:14417
-performWorkOnRootViaSchedulerTask @ react-dom-client.development.js:16216
-performWorkUntilDeadline @ scheduler.development.js:45
-<AppRoutes>
-(anonymous) @ react-jsx-dev-runtime.development.js:336
-App @ App.tsx:110
-react_stack_bottom_frame @ react-dom-client.development.js:23863
-renderWithHooksAgain @ react-dom-client.development.js:5629
-renderWithHooks @ react-dom-client.development.js:5541
-updateFunctionComponent @ react-dom-client.development.js:8897
-beginWork @ react-dom-client.development.js:10522
-runWithFiberInDEV @ react-dom-client.development.js:1518
-performUnitOfWork @ react-dom-client.development.js:15130
-workLoopSync @ react-dom-client.development.js:14956
-renderRootSync @ react-dom-client.development.js:14936
-performWorkOnRoot @ react-dom-client.development.js:14417
-performWorkOnRootViaSchedulerTask @ react-dom-client.development.js:16216
-performWorkUntilDeadline @ scheduler.development.js:45
-<App>
-(anonymous) @ react-jsx-dev-runtime.development.js:336
-./src/index.tsx @ index.tsx:11
-(anonymous) @ react refresh:37
-__webpack_require__ @ bootstrap:22
-(anonymous) @ startup:7
-(anonymous) @ startup:7
-api.ts:73  API request failed: Error: HTTP error! status: 500
-    at ApiService.request (api.ts:63:1)
-    at async ProgressService.getStudentDashboardData (progressService.ts:45:1)
-    at async loadDashboardData (ProgressDashboardPage.tsx:33:1)
-overrideMethod @ hook.js:608
-request @ api.ts:73
-await in request
-get @ api.ts:84
-getStudentDashboardData @ progressService.ts:45
-loadDashboardData @ ProgressDashboardPage.tsx:33
-(anonymous) @ ProgressDashboardPage.tsx:24
-react_stack_bottom_frame @ react-dom-client.development.js:23953
-runWithFiberInDEV @ react-dom-client.development.js:1518
-commitHookEffectListMount @ react-dom-client.development.js:11886
-commitHookPassiveMountEffects @ react-dom-client.development.js:12024
-commitPassiveMountOnFiber @ react-dom-client.development.js:13840
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13957
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13957
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13957
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13957
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13957
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13957
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13957
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13957
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13957
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13957
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13957
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13834
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13957
-recursivelyTraversePassiveMountEffects @ react-dom-client.development.js:13813
-commitPassiveMountOnFiber @ react-dom-client.development.js:13853
-flushPassiveEffects @ react-dom-client.development.js:15737
-(anonymous) @ react-dom-client.development.js:15379
-performWorkUntilDeadline @ scheduler.development.js:45
-<ProgressDashboardPage>
-(anonymous) @ react-jsx-dev-runtime.development.js:336
-StudentDashboard @ StudentDashboard.tsx:308
-react_stack_bottom_frame @ react-dom-client.development.js:23863
-renderWithHooksAgain @ react-dom-client.development.js:5629
-renderWithHooks @ react-dom-client.development.js:5541
-updateFunctionComponent @ react-dom-client.development.js:8897
-beginWork @ react-dom-client.development.js:10522
-runWithFiberInDEV @ react-dom-client.development.js:1518
-performUnitOfWork @ react-dom-client.development.js:15130
-workLoopSync @ react-dom-client.development.js:14956
-renderRootSync @ react-dom-client.development.js:14936
-performWorkOnRoot @ react-dom-client.development.js:14417
-performWorkOnRootViaSchedulerTask @ react-dom-client.development.js:16216
-performWorkUntilDeadline @ scheduler.development.js:45
-<StudentDashboard>
-(anonymous) @ react-jsx-dev-runtime.development.js:336
-AppRoutes @ App.tsx:47
-react_stack_bottom_frame @ react-dom-client.development.js:23863
-renderWithHooksAgain @ react-dom-client.development.js:5629
-renderWithHooks @ react-dom-client.development.js:5541
-updateFunctionComponent @ react-dom-client.development.js:8897
-beginWork @ react-dom-client.development.js:10522
-runWithFiberInDEV @ react-dom-client.development.js:1518
-performUnitOfWork @ react-dom-client.development.js:15130
-workLoopSync @ react-dom-client.development.js:14956
-renderRootSync @ react-dom-client.development.js:14936
-performWorkOnRoot @ react-dom-client.development.js:14417
-performWorkOnRootViaSchedulerTask @ react-dom-client.development.js:16216
-performWorkUntilDeadline @ scheduler.development.js:45
-<AppRoutes>
-(anonymous) @ react-jsx-dev-runtime.development.js:336
-App @ App.tsx:110
-react_stack_bottom_frame @ react-dom-client.development.js:23863
-renderWithHooksAgain @ react-dom-client.development.js:5629
-renderWithHooks @ react-dom-client.development.js:5541
-updateFunctionComponent @ react-dom-client.development.js:8897
-beginWork @ react-dom-client.development.js:10522
-runWithFiberInDEV @ react-dom-client.development.js:1518
-performUnitOfWork @ react-dom-client.development.js:15130
-workLoopSync @ react-dom-client.development.js:14956
-renderRootSync @ react-dom-client.development.js:14936
-performWorkOnRoot @ react-dom-client.development.js:14417
-performWorkOnRootViaSchedulerTask @ react-dom-client.development.js:16216
-performWorkUntilDeadline @ scheduler.development.js:45
-<App>
-(anonymous) @ react-jsx-dev-runtime.development.js:336
-./src/index.tsx @ index.tsx:11
-(anonymous) @ react refresh:37
-__webpack_require__ @ bootstrap:22
-(anonymous) @ startup:7
-(anonymous) @ startup:7
-api.ts:31   GET https://localhost:5001/api/progress/dashboard/uGHwsrznOSIf1oHGvtll 500 (Internal Server Error)
-request @ api.ts:31
-await in request
-get @ api.ts:84
-getStudentDashboardData @ progressService.ts:45
-loadDashboardData @ ProgressDashboardPage.tsx:33
-(anonymous) @ ProgressDashboardPage.tsx:24
-react_stack_bottom_frame @ react-dom-client.development.js:23953
-runWithFiberInDEV @ react-dom-client.development.js:1518
-commitHookEffectListMount @ react-dom-client.development.js:11886
-commitHookPassiveMountEffects @ react-dom-client.development.js:12024
-reconnectPassiveEffects @ react-dom-client.development.js:14004
-recursivelyTraverseReconnectPassiveEffects @ react-dom-client.development.js:13975
-reconnectPassiveEffects @ react-dom-client.development.js:14051
-recursivelyTraverseReconnectPassiveEffects @ react-dom-client.development.js:13975
-reconnectPassiveEffects @ react-dom-client.development.js:13997
-recursivelyTraverseReconnectPassiveEffects @ react-dom-client.development.js:13975
-reconnectPassiveEffects @ react-dom-client.development.js:13997
-recursivelyTraverseReconnectPassiveEffects @ react-dom-client.development.js:13975
-reconnectPassiveEffects @ react-dom-client.development.js:14051
-recursivelyTraverseReconnectPassiveEffects @ react-dom-client.development.js:13975
-reconnectPassiveEffects @ react-dom-client.development.js:14051
-recursivelyTraverseReconnectPassiveEffects @ react-dom-client.development.js:13975
-reconnectPassiveEffects @ react-dom-client.development.js:14051
-recursivelyTraverseReconnectPassiveEffects @ react-dom-client.development.js:13975
-reconnectPassiveEffects @ react-dom-client.development.js:13997
-recursivelyTraverseReconnectPassiveEffects @ react-dom-client.development.js:13975
-reconnectPassiveEffects @ react-dom-client.development.js:13997
-doubleInvokeEffectsOnFiber @ react-dom-client.development.js:15964
-runWithFiberInDEV @ react-dom-client.development.js:1518
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-commitDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15977
-flushPassiveEffects @ react-dom-client.development.js:15747
-(anonymous) @ react-dom-client.development.js:15379
-performWorkUntilDeadline @ scheduler.development.js:45
-<ProgressDashboardPage>
-(anonymous) @ react-jsx-dev-runtime.development.js:336
-StudentDashboard @ StudentDashboard.tsx:308
-react_stack_bottom_frame @ react-dom-client.development.js:23863
-renderWithHooksAgain @ react-dom-client.development.js:5629
-renderWithHooks @ react-dom-client.development.js:5541
-updateFunctionComponent @ react-dom-client.development.js:8897
-beginWork @ react-dom-client.development.js:10522
-runWithFiberInDEV @ react-dom-client.development.js:1518
-performUnitOfWork @ react-dom-client.development.js:15130
-workLoopSync @ react-dom-client.development.js:14956
-renderRootSync @ react-dom-client.development.js:14936
-performWorkOnRoot @ react-dom-client.development.js:14417
-performWorkOnRootViaSchedulerTask @ react-dom-client.development.js:16216
-performWorkUntilDeadline @ scheduler.development.js:45
-<StudentDashboard>
-(anonymous) @ react-jsx-dev-runtime.development.js:336
-AppRoutes @ App.tsx:47
-react_stack_bottom_frame @ react-dom-client.development.js:23863
-renderWithHooksAgain @ react-dom-client.development.js:5629
-renderWithHooks @ react-dom-client.development.js:5541
-updateFunctionComponent @ react-dom-client.development.js:8897
-beginWork @ react-dom-client.development.js:10522
-runWithFiberInDEV @ react-dom-client.development.js:1518
-performUnitOfWork @ react-dom-client.development.js:15130
-workLoopSync @ react-dom-client.development.js:14956
-renderRootSync @ react-dom-client.development.js:14936
-performWorkOnRoot @ react-dom-client.development.js:14417
-performWorkOnRootViaSchedulerTask @ react-dom-client.development.js:16216
-performWorkUntilDeadline @ scheduler.development.js:45
-<AppRoutes>
-(anonymous) @ react-jsx-dev-runtime.development.js:336
-App @ App.tsx:110
-react_stack_bottom_frame @ react-dom-client.development.js:23863
-renderWithHooksAgain @ react-dom-client.development.js:5629
-renderWithHooks @ react-dom-client.development.js:5541
-updateFunctionComponent @ react-dom-client.development.js:8897
-beginWork @ react-dom-client.development.js:10522
-runWithFiberInDEV @ react-dom-client.development.js:1518
-performUnitOfWork @ react-dom-client.development.js:15130
-workLoopSync @ react-dom-client.development.js:14956
-renderRootSync @ react-dom-client.development.js:14936
-performWorkOnRoot @ react-dom-client.development.js:14417
-performWorkOnRootViaSchedulerTask @ react-dom-client.development.js:16216
-performWorkUntilDeadline @ scheduler.development.js:45
-<App>
-(anonymous) @ react-jsx-dev-runtime.development.js:336
-./src/index.tsx @ index.tsx:11
-(anonymous) @ react refresh:37
-__webpack_require__ @ bootstrap:22
-(anonymous) @ startup:7
-(anonymous) @ startup:7
-api.ts:73  API request failed: Error: HTTP error! status: 500
-    at ApiService.request (api.ts:63:1)
-    at async ProgressService.getStudentDashboardData (progressService.ts:45:1)
-    at async loadDashboardData (ProgressDashboardPage.tsx:33:1)
-overrideMethod @ hook.js:608
-request @ api.ts:73
-await in request
-get @ api.ts:84
-getStudentDashboardData @ progressService.ts:45
-loadDashboardData @ ProgressDashboardPage.tsx:33
-(anonymous) @ ProgressDashboardPage.tsx:24
-react_stack_bottom_frame @ react-dom-client.development.js:23953
-runWithFiberInDEV @ react-dom-client.development.js:1518
-commitHookEffectListMount @ react-dom-client.development.js:11886
-commitHookPassiveMountEffects @ react-dom-client.development.js:12024
-reconnectPassiveEffects @ react-dom-client.development.js:14004
-recursivelyTraverseReconnectPassiveEffects @ react-dom-client.development.js:13975
-reconnectPassiveEffects @ react-dom-client.development.js:14051
-recursivelyTraverseReconnectPassiveEffects @ react-dom-client.development.js:13975
-reconnectPassiveEffects @ react-dom-client.development.js:13997
-recursivelyTraverseReconnectPassiveEffects @ react-dom-client.development.js:13975
-reconnectPassiveEffects @ react-dom-client.development.js:13997
-recursivelyTraverseReconnectPassiveEffects @ react-dom-client.development.js:13975
-reconnectPassiveEffects @ react-dom-client.development.js:14051
-recursivelyTraverseReconnectPassiveEffects @ react-dom-client.development.js:13975
-reconnectPassiveEffects @ react-dom-client.development.js:14051
-recursivelyTraverseReconnectPassiveEffects @ react-dom-client.development.js:13975
-reconnectPassiveEffects @ react-dom-client.development.js:14051
-recursivelyTraverseReconnectPassiveEffects @ react-dom-client.development.js:13975
-reconnectPassiveEffects @ react-dom-client.development.js:13997
-recursivelyTraverseReconnectPassiveEffects @ react-dom-client.development.js:13975
-reconnectPassiveEffects @ react-dom-client.development.js:13997
-doubleInvokeEffectsOnFiber @ react-dom-client.development.js:15964
-runWithFiberInDEV @ react-dom-client.development.js:1518
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-recursivelyTraverseAndDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15925
-commitDoubleInvokeEffectsInDEV @ react-dom-client.development.js:15977
-flushPassiveEffects @ react-dom-client.development.js:15747
-(anonymous) @ react-dom-client.development.js:15379
-performWorkUntilDeadline @ scheduler.development.js:45
-<ProgressDashboardPage>
-(anonymous) @ react-jsx-dev-runtime.development.js:336
-StudentDashboard @ StudentDashboard.tsx:308
-react_stack_bottom_frame @ react-dom-client.development.js:23863
-renderWithHooksAgain @ react-dom-client.development.js:5629
-renderWithHooks @ react-dom-client.development.js:5541
-updateFunctionComponent @ react-dom-client.development.js:8897
-beginWork @ react-dom-client.development.js:10522
-runWithFiberInDEV @ react-dom-client.development.js:1518
-performUnitOfWork @ react-dom-client.development.js:15130
-workLoopSync @ react-dom-client.development.js:14956
-renderRootSync @ react-dom-client.development.js:14936
-performWorkOnRoot @ react-dom-client.development.js:14417
-performWorkOnRootViaSchedulerTask @ react-dom-client.development.js:16216
-performWorkUntilDeadline @ scheduler.development.js:45
-<StudentDashboard>
-(anonymous) @ react-jsx-dev-runtime.development.js:336
-AppRoutes @ App.tsx:47
-react_stack_bottom_frame @ react-dom-client.development.js:23863
-renderWithHooksAgain @ react-dom-client.development.js:5629
-renderWithHooks @ react-dom-client.development.js:5541
-updateFunctionComponent @ react-dom-client.development.js:8897
-beginWork @ react-dom-client.development.js:10522
-runWithFiberInDEV @ react-dom-client.development.js:1518
-performUnitOfWork @ react-dom-client.development.js:15130
-workLoopSync @ react-dom-client.development.js:14956
-renderRootSync @ react-dom-client.development.js:14936
-performWorkOnRoot @ react-dom-client.development.js:14417
-performWorkOnRootViaSchedulerTask @ react-dom-client.development.js:16216
-performWorkUntilDeadline @ scheduler.development.js:45
-<AppRoutes>
-(anonymous) @ react-jsx-dev-runtime.development.js:336
-App @ App.tsx:110
-react_stack_bottom_frame @ react-dom-client.development.js:23863
-renderWithHooksAgain @ react-dom-client.development.js:5629
-renderWithHooks @ react-dom-client.development.js:5541
-updateFunctionComponent @ react-dom-client.development.js:8897
-beginWork @ react-dom-client.development.js:10522
-runWithFiberInDEV @ react-dom-client.development.js:1518
-performUnitOfWork @ react-dom-client.development.js:15130
-workLoopSync @ react-dom-client.development.js:14956
-renderRootSync @ react-dom-client.development.js:14936
-performWorkOnRoot @ react-dom-client.development.js:14417
-performWorkOnRootViaSchedulerTask @ react-dom-client.development.js:16216
-performWorkUntilDeadline @ scheduler.development.js:45
-<App>
-(anonymous) @ react-jsx-dev-runtime.development.js:336
-./src/index.tsx @ index.tsx:11
-(anonymous) @ react refresh:37
-__webpack_require__ @ bootstrap:22
-(anonymous) @ startup:7
-(anonymous) @ startup:7
+POST
+/api/User
+
+Parameters
+Cancel
+Reset
+No parameters
+
+Request body
+
+application/json
+{
+  "fullName": "Test User",
+  "email": "aa@gmail.com",
+  "password": "123456",
+  "role": "Student",
+  "gender": "string",
+  "avatarBase64": "",
+  "classIds": [
+    "string"
+  ]
+}
+Execute
+Clear
+Responses
+Curl
+
+curl -X 'POST' \
+  'https://localhost:5001/api/User' \
+  -H 'accept: */*' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJVMDAzIiwiZW1haWwiOiJhZG1pbmNAZXhhbXBsZS5jb20iLCJqdGkiOiI5Zjk5Njk3NS01MTZmLTRmZDAtOGJmMy1iMTEyMDQ3YmY0ZmIiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsImZ1bGxfbmFtZSI6IkxlIFZhbiBDIiwiZXhwIjoxNzYwNzgyNTc3LCJpc3MiOiJCaW5nR29XZWJBUEkiLCJhdWQiOiJCaW5nR29XZWJBcHAifQ.t6WjS7H2AAxZOYpm3QzDujAZwgC4cL-fzRTtEASLJmM' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "fullName": "Test User",
+  "email": "aa@gmail.com",
+  "password": "123456",
+  "role": "Student",
+  "gender": "string",
+  "avatarBase64": "",
+  "classIds": [
+    "string"
+  ]
+}'
+Request URL
+https://localhost:5001/api/User
+Server response
+Code	Details
+201
+Undocumented
+Response body
+Download
+{
+  "id": "702e62cc-6be1-4242-a1fa-b41667affe80",
+  "fullName": "Test User",
+  "email": "aa@gmail.com",
+  "password": "123456",
+  "role": "Student",
+  "gender": "string",
+  "avatarUrl": null,
+  "avatarBase64": "",
+  "loginStreakCount": 0,
+  "learningStreakCount": 0,
+  "streakCount": 0,
+  "lastLearningDate": "",
+  "lastLoginDate": "",
+  "classIds": [
+    "string"
+  ],
+  "badges": {},
+  "learningHistory": {},
+  "createdAt": {},
+  "isActive": true
+}
+Response headers
+ access-control-allow-credentials: true 
+ access-control-allow-origin: https://localhost:5001 
+ content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.youtube.com https://www.google.com https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https: https://firebasestorage.googleapis.com; media-src 'self' https: https://firebasestorage.googleapis.com; connect-src 'self' https://firestore.googleapis.com https://firebase.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com wss://firestore.googleapis.com https://localhost:5000 https://localhost:5001 https://localhost:7163 http://localhost:5163 https://localhost:3000 https://localhost:3001 ; frame-src 'self' https://www.youtube.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; 
+ content-type: application/json; charset=utf-8 
+ cross-origin-embedder-policy: require-corp 
+ cross-origin-opener-policy: same-origin 
+ cross-origin-resource-policy: same-origin 
+ date: Fri,17 Oct 2025 10:18:01 GMT 
+ location: https://localhost:5001/api/User/702e62cc-6be1-4242-a1fa-b41667affe80 
+ permissions-policy: camera=(),microphone=(),geolocation=(),payment=() 
+ referrer-policy: strict-origin-when-cross-origin 
+ server: Kestrel 
+ strict-transport-security: max-age=31536000; includeSubDomains; preload 
+ vary: Origin 
+ x-content-type-options: nosniff 
+ x-frame-options: DENY 
+ x-ratelimit-limit: 100 
+ x-ratelimit-remaining: 99 
+ x-ratelimit-reset: 1760696341 
+ x-ratelimit-window: 60 
+ x-xss-protection: 1; mode=block 
+Request duration
+888 ms
+Responses
+Code	Description	Links
+200	
+Success
+
+No links
