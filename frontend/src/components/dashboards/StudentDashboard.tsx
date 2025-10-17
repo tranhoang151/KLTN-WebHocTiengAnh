@@ -140,7 +140,7 @@ const StudentDashboardHome: React.FC = () => {
                 '0 20px 40px rgba(0, 0, 0, 0.1)';
             }}
             onClick={() =>
-              (window.location.href = '/student/flashcards/animals/learn')
+              (window.location.href = '/student/flashcards')
             }
           >
             {/* Background decoration */}
@@ -832,7 +832,7 @@ const StudentDashboard: React.FC = () => {
           path="/flashcards"
           element={
             <FlashcardLearningFlow
-              courseId="default-course" // TODO: Get from user's enrolled courses
+              courseId="LABTsID1zvPRsVjPjhLd" // Using the same courseId as in VideoLecturesPage
               onExit={() => window.history.back()}
             />
           }
