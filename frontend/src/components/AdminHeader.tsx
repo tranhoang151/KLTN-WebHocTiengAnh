@@ -1,17 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { useUserRole } from '../hooks/usePermissions';
+import { useUserRole, usePermissions } from '../hooks/usePermissions';
 import { User, LogOut, Settings, ChevronDown } from 'lucide-react';
-import { roleService } from '../services/roleService';
 
 interface AdminHeaderProps {
   title: string;
 }
 
 export const AdminHeader: React.FC<AdminHeaderProps> = ({ title }) => {
-  const { logout, user } = useAuth();
-  const { displayName } = useUserRole();
+  const { logout } = useAuth();
+  const { user, displayName } = useUserRole();
+  const { getDashboardPath } = usePermissions();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -21,14 +21,6 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ title }) => {
     } catch (error) {
       console.error('Logout error:', error);
     }
-  };
-
-  // Get dashboard path based on user role
-  const getDashboardPath = () => {
-    if (user?.role) {
-      return roleService.getDashboardPath(user.role);
-    }
-    return '/';
   };
 
   // Close dropdown when clicking outside
@@ -105,6 +97,13 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ title }) => {
                   style={{
                     textDecoration: 'none',
                     cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'scale(1.05)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)';
                   }}
                 >
                   <h1
@@ -117,15 +116,6 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ title }) => {
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
                       backgroundClip: 'text',
-                      transition: 'all 0.3s ease',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'scale(1.05)';
-                      e.currentTarget.style.filter = 'brightness(1.1)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'scale(1)';
-                      e.currentTarget.style.filter = 'brightness(1)';
                     }}
                   >
                     BingGo

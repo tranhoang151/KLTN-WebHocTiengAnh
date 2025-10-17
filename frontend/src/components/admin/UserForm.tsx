@@ -15,11 +15,6 @@ import {
   UserCheck,
   Info,
   AlertTriangle,
-  Lock,
-  Eye,
-  EyeOff,
-  Upload,
-  Image as ImageIcon,
 } from 'lucide-react';
 
 interface UserFormProps {
@@ -39,19 +34,13 @@ const UserForm: React.FC<UserFormProps> = ({
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
-    password: '',
-    confirmPassword: '',
     role: 'student',
     gender: '',
     classIds: [] as string[],
-    avatar: null as File | null,
-    avatarPreview: null as string | null,
   });
   const [availableRoles, setAvailableRoles] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   useEffect(() => {
     const loadRoles = async () => {
@@ -79,13 +68,9 @@ const UserForm: React.FC<UserFormProps> = ({
       setFormData({
         fullName: user.full_name,
         email: user.email,
-        password: '', // Don't pre-fill password for security
-        confirmPassword: '',
         role: user.role,
         gender: user.gender || '',
         classIds: user.class_ids || [],
-        avatar: null,
-        avatarPreview: user.avatar_url || null,
       });
     }
   }, [user, isEditing]);
@@ -103,28 +88,8 @@ const UserForm: React.FC<UserFormProps> = ({
       newErrors.email = 'Please enter a valid email address';
     }
 
-    // Password validation
-    if (!isEditing || formData.password.trim()) {
-      if (!formData.password.trim()) {
-        newErrors.password = 'Password is required';
-      } else if (formData.password.length < 6) {
-        newErrors.password = 'Password must be at least 6 characters';
-      }
-
-      if (!formData.confirmPassword.trim()) {
-        newErrors.confirmPassword = 'Please confirm your password';
-      } else if (formData.password !== formData.confirmPassword) {
-        newErrors.confirmPassword = 'Passwords do not match';
-      }
-    }
-
     if (!formData.role) {
       newErrors.role = 'Role is required';
-    }
-
-    // Avatar validation - required for new users (like Android app)
-    if (!isEditing && !formData.avatar && !formData.avatarPreview) {
-      newErrors.avatar = 'Avatar is required';
     }
 
     setErrors(newErrors);
@@ -140,19 +105,7 @@ const UserForm: React.FC<UserFormProps> = ({
 
     setLoading(true);
     try {
-      // Prepare form data for submission
-      const submitData = {
-        ...formData,
-        // Remove confirmPassword from submission
-        confirmPassword: undefined,
-      };
-
-      // If editing and no password provided, remove password from submission
-      if (isEditing && !formData.password.trim()) {
-        submitData.password = undefined;
-      }
-
-      await onSubmit(submitData);
+      await onSubmit(formData);
     } catch (error) {
       console.error('Error submitting form:', error);
     } finally {
@@ -176,51 +129,6 @@ const UserForm: React.FC<UserFormProps> = ({
         [name]: '',
       }));
     }
-  };
-
-  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      // Validate file type
-      if (!file.type.startsWith('image/')) {
-        setErrors((prev) => ({
-          ...prev,
-          avatar: 'Please select a valid image file',
-        }));
-        return;
-      }
-
-      // Validate file size (max 2MB)
-      if (file.size > 2 * 1024 * 1024) {
-        setErrors((prev) => ({
-          ...prev,
-          avatar: 'Image size must be less than 2MB',
-        }));
-        return;
-      }
-
-      setFormData((prev) => ({
-        ...prev,
-        avatar: file,
-        avatarPreview: URL.createObjectURL(file),
-      }));
-
-      // Clear error
-      if (errors.avatar) {
-        setErrors((prev) => ({
-          ...prev,
-          avatar: '',
-        }));
-      }
-    }
-  };
-
-  const removeAvatar = () => {
-    setFormData((prev) => ({
-      ...prev,
-      avatar: null,
-      avatarPreview: null,
-    }));
   };
 
   return (
@@ -493,7 +401,6 @@ const UserForm: React.FC<UserFormProps> = ({
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    autoComplete="username"
                     style={{
                       width: '100%',
                       padding: '12px 12px 12px 44px',
@@ -534,204 +441,6 @@ const UserForm: React.FC<UserFormProps> = ({
                   </p>
                 )}
               </div>
-
-              {/* Password */}
-              <div>
-                <label
-                  htmlFor="password"
-                  style={{
-                    display: 'block',
-                    fontSize: '14px',
-                    fontWeight: '600',
-                    color: '#374151',
-                    marginBottom: '8px',
-                  }}
-                >
-                  Password {!isEditing && '*'}
-                </label>
-                <div style={{ position: 'relative' }}>
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: '12px',
-                      transform: 'translateY(-50%)',
-                      zIndex: 2,
-                      pointerEvents: 'none',
-                    }}
-                  >
-                    <Lock size={18} style={{ color: '#6b7280' }} />
-                  </div>
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    id="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleInputChange}
-                    autoComplete="new-password"
-                    style={{
-                      width: '100%',
-                      padding: '12px 44px 12px 44px',
-                      border: `2px solid ${errors.password ? '#ef4444' : '#e5e7eb'}`,
-                      borderRadius: '12px',
-                      fontSize: '14px',
-                      fontWeight: '500',
-                      background: 'white',
-                      color: '#1f2937',
-                      transition: 'all 0.2s ease',
-                      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.02)',
-                    }}
-                    onFocus={(e) => {
-                      e.currentTarget.style.borderColor = '#3b82f6';
-                      e.currentTarget.style.boxShadow =
-                        '0 0 0 3px rgba(59, 130, 246, 0.1)';
-                    }}
-                    onBlur={(e) => {
-                      e.currentTarget.style.borderColor = errors.password
-                        ? '#ef4444'
-                        : '#e5e7eb';
-                      e.currentTarget.style.boxShadow =
-                        '0 2px 4px rgba(0, 0, 0, 0.02)';
-                    }}
-                    placeholder={isEditing ? "Leave blank to keep current password" : "Enter password"}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    style={{
-                      position: 'absolute',
-                      top: '50%',
-                      right: '12px',
-                      transform: 'translateY(-50%)',
-                      background: 'none',
-                      border: 'none',
-                      cursor: 'pointer',
-                      padding: '4px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    {showPassword ? (
-                      <EyeOff size={18} style={{ color: '#6b7280' }} />
-                    ) : (
-                      <Eye size={18} style={{ color: '#6b7280' }} />
-                    )}
-                  </button>
-                </div>
-                {errors.password && (
-                  <p
-                    style={{
-                      marginTop: '8px',
-                      fontSize: '12px',
-                      color: '#ef4444',
-                      fontWeight: '500',
-                    }}
-                  >
-                    {errors.password}
-                  </p>
-                )}
-              </div>
-
-              {/* Confirm Password */}
-              {(!isEditing || formData.password.trim()) && (
-                <div>
-                  <label
-                    htmlFor="confirmPassword"
-                    style={{
-                      display: 'block',
-                      fontSize: '14px',
-                      fontWeight: '600',
-                      color: '#374151',
-                      marginBottom: '8px',
-                    }}
-                  >
-                    Confirm Password *
-                  </label>
-                  <div style={{ position: 'relative' }}>
-                    <div
-                      style={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '12px',
-                        transform: 'translateY(-50%)',
-                        zIndex: 2,
-                        pointerEvents: 'none',
-                      }}
-                    >
-                      <Lock size={18} style={{ color: '#6b7280' }} />
-                    </div>
-                    <input
-                      type={showConfirmPassword ? 'text' : 'password'}
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      value={formData.confirmPassword}
-                      onChange={handleInputChange}
-                      autoComplete="new-password"
-                      style={{
-                        width: '100%',
-                        padding: '12px 44px 12px 44px',
-                        border: `2px solid ${errors.confirmPassword ? '#ef4444' : '#e5e7eb'}`,
-                        borderRadius: '12px',
-                        fontSize: '14px',
-                        fontWeight: '500',
-                        background: 'white',
-                        color: '#1f2937',
-                        transition: 'all 0.2s ease',
-                        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.02)',
-                      }}
-                      onFocus={(e) => {
-                        e.currentTarget.style.borderColor = '#3b82f6';
-                        e.currentTarget.style.boxShadow =
-                          '0 0 0 3px rgba(59, 130, 246, 0.1)';
-                      }}
-                      onBlur={(e) => {
-                        e.currentTarget.style.borderColor = errors.confirmPassword
-                          ? '#ef4444'
-                          : '#e5e7eb';
-                        e.currentTarget.style.boxShadow =
-                          '0 2px 4px rgba(0, 0, 0, 0.02)';
-                      }}
-                      placeholder="Confirm password"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      style={{
-                        position: 'absolute',
-                        top: '50%',
-                        right: '12px',
-                        transform: 'translateY(-50%)',
-                        background: 'none',
-                        border: 'none',
-                        cursor: 'pointer',
-                        padding: '4px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}
-                    >
-                      {showConfirmPassword ? (
-                        <EyeOff size={18} style={{ color: '#6b7280' }} />
-                      ) : (
-                        <Eye size={18} style={{ color: '#6b7280' }} />
-                      )}
-                    </button>
-                  </div>
-                  {errors.confirmPassword && (
-                    <p
-                      style={{
-                        marginTop: '8px',
-                        fontSize: '12px',
-                        color: '#ef4444',
-                        fontWeight: '500',
-                      }}
-                    >
-                      {errors.confirmPassword}
-                    </p>
-                  )}
-                </div>
-              )}
 
               {/* Role */}
               <div>
@@ -876,177 +585,6 @@ const UserForm: React.FC<UserFormProps> = ({
                   <option value="female">Female</option>
                   <option value="other">Other</option>
                 </select>
-              </div>
-            </div>
-
-            {/* Avatar Upload Section */}
-            <div
-              style={{
-                background: 'linear-gradient(135deg, #f8fafc, #e2e8f0)',
-                border: '1px solid #cbd5e1',
-                borderRadius: '16px',
-                padding: '24px',
-                marginBottom: '24px',
-              }}
-            >
-              <h3
-                style={{
-                  fontSize: '16px',
-                  fontWeight: '700',
-                  color: '#374151',
-                  margin: '0 0 16px 0',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                }}
-              >
-                <ImageIcon size={20} />
-                Profile Picture
-              </h3>
-
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '20px',
-                  flexWrap: 'wrap',
-                }}
-              >
-                {/* Avatar Preview */}
-                <div
-                  style={{
-                    width: '80px',
-                    height: '80px',
-                    borderRadius: '50%',
-                    background: 'linear-gradient(135deg, #e5e7eb, #d1d5db)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    overflow: 'hidden',
-                    border: '3px solid #e5e7eb',
-                    position: 'relative',
-                  }}
-                >
-                  {formData.avatarPreview ? (
-                    <img
-                      src={formData.avatarPreview}
-                      alt="Avatar preview"
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                      }}
-                    />
-                  ) : (
-                    <UserIcon size={32} style={{ color: '#9ca3af' }} />
-                  )}
-                </div>
-
-                {/* Upload Controls */}
-                <div style={{ flex: 1, minWidth: '200px' }}>
-                  <div
-                    style={{
-                      display: 'flex',
-                      gap: '12px',
-                      flexWrap: 'wrap',
-                    }}
-                  >
-                    <label
-                      htmlFor="avatar"
-                      style={{
-                        padding: '10px 16px',
-                        background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
-                        color: 'white',
-                        borderRadius: '8px',
-                        fontSize: '14px',
-                        fontWeight: '600',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '8px',
-                        transition: 'all 0.2s ease',
-                        boxShadow: '0 2px 4px rgba(59, 130, 246, 0.3)',
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-1px)';
-                        e.currentTarget.style.boxShadow = '0 4px 8px rgba(59, 130, 246, 0.4)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 2px 4px rgba(59, 130, 246, 0.3)';
-                      }}
-                    >
-                      <Upload size={16} />
-                      {formData.avatarPreview ? 'Change Photo' : 'Upload Photo'}
-                    </label>
-
-                    {formData.avatarPreview && (
-                      <button
-                        type="button"
-                        onClick={removeAvatar}
-                        style={{
-                          padding: '10px 16px',
-                          background: 'linear-gradient(135deg, #ef4444, #dc2626)',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: '8px',
-                          fontSize: '14px',
-                          fontWeight: '600',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          transition: 'all 0.2s ease',
-                          boxShadow: '0 2px 4px rgba(239, 68, 68, 0.3)',
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.transform = 'translateY(-1px)';
-                          e.currentTarget.style.boxShadow = '0 4px 8px rgba(239, 68, 68, 0.4)';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.transform = 'translateY(0)';
-                          e.currentTarget.style.boxShadow = '0 2px 4px rgba(239, 68, 68, 0.3)';
-                        }}
-                      >
-                        <X size={16} />
-                        Remove
-                      </button>
-                    )}
-                  </div>
-
-                  <input
-                    type="file"
-                    id="avatar"
-                    accept="image/*"
-                    onChange={handleAvatarChange}
-                    style={{ display: 'none' }}
-                  />
-
-                  <p
-                    style={{
-                      fontSize: '12px',
-                      color: '#6b7280',
-                      margin: '8px 0 0 0',
-                      lineHeight: '1.4',
-                    }}
-                  >
-                    Recommended: Square image, at least 200x200px. Max size: 2MB.
-                    Supported formats: JPG, PNG, GIF.
-                  </p>
-
-                  {errors.avatar && (
-                    <p
-                      style={{
-                        marginTop: '8px',
-                        fontSize: '12px',
-                        color: '#ef4444',
-                        fontWeight: '500',
-                      }}
-                    >
-                      {errors.avatar}
-                    </p>
-                  )}
-                </div>
               </div>
             </div>
 
