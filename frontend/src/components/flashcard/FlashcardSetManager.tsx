@@ -7,6 +7,21 @@ import { useAuth } from '../../contexts/AuthContext';
 import FlashcardSetForm from './FlashcardSetForm';
 import FlashcardEditor from './FlashcardEditor';
 import AssignDialog from './AssignDialog'; // Import the new dialog
+import { BackButton } from '../BackButton';
+import {
+  BookOpen,
+  Plus,
+  Edit,
+  Trash2,
+  Calendar,
+  Users,
+  CheckCircle,
+  XCircle,
+  AlertCircle,
+  RefreshCw,
+  FileText,
+  UserCheck,
+} from 'lucide-react';
 import './FlashcardSetManager.css';
 
 interface FlashcardSetManagerProps {
@@ -26,6 +41,12 @@ const FlashcardSetManager: React.FC<FlashcardSetManagerProps> = ({
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [editingSet, setEditingSet] = useState<FlashcardSet | null>(null);
   const [assigningSet, setAssigningSet] = useState<FlashcardSet | null>(null); // State for assignment dialog
+  const [hoveredEditButton, setHoveredEditButton] = useState<string | null>(
+    null
+  );
+  const [hoveredDeleteButton, setHoveredDeleteButton] = useState<string | null>(
+    null
+  );
 
   useEffect(() => {
     loadFlashcardSets();
@@ -115,153 +136,802 @@ const FlashcardSetManager: React.FC<FlashcardSetManagerProps> = ({
     );
   }
 
-  if (showCreateForm) {
-    return (
-      <FlashcardSetForm
-        courseId={courseId}
-        editingSet={editingSet}
-        onSave={handleSetSaved}
-        onCancel={() => {
-          setShowCreateForm(false);
-          setEditingSet(null);
-        }}
-      />
-    );
-  }
+  // Remove the early return for showCreateForm - we'll render it as overlay instead
 
-  if (assigningSet) {
-    return (
-      <AssignDialog
-        flashcardSet={assigningSet}
-        onClose={handleCloseAssignDialog}
-        onSave={handleAssignSave}
-      />
-    );
-  }
+  // Remove the early return for assigningSet - we'll render it as overlay instead
 
   if (loading) {
     return (
-      <div className="flashcard-manager-loading">
-        <div className="loading-spinner"></div>
-        <p>Loading flashcard sets...</p>
+      <div
+        style={{
+          minHeight: '100vh',
+          background: '#f8fafc',
+          padding: '20px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <div
+          style={{
+            background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+            borderRadius: '20px',
+            padding: '40px',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+            border: '1px solid #e5e7eb',
+            textAlign: 'center',
+            maxWidth: '400px',
+          }}
+        >
+          <div
+            style={{
+              width: '40px',
+              height: '40px',
+              border: '4px solid #e5e7eb',
+              borderTop: '4px solid #3b82f6',
+              borderRadius: '50%',
+              animation: 'spin 1s linear infinite',
+              margin: '0 auto 20px',
+            }}
+          ></div>
+          <h3
+            style={{
+              fontSize: '18px',
+              fontWeight: '600',
+              color: '#1f2937',
+              margin: '0 0 8px 0',
+            }}
+          >
+            Loading Flashcard Sets
+          </h3>
+          <p
+            style={{
+              fontSize: '14px',
+              color: '#6b7280',
+              margin: '0',
+            }}
+          >
+            Please wait while we load your flashcard sets...
+          </p>
+        </div>
+        <style>{`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flashcard-manager-error">
-        <div className="error-icon">⚠️</div>
-        <h3>Error Loading Flashcard Sets</h3>
-        <p>{error}</p>
-        <div className="error-actions">
-          <button onClick={loadFlashcardSets} className="btn-primary">
-            Try Again
-          </button>
-          {onBack && (
-            <button onClick={onBack} className="btn-secondary">
-              Go Back
+      <div
+        style={{
+          minHeight: '100vh',
+          background: '#f8fafc',
+          padding: '20px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <div
+          style={{
+            background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+            borderRadius: '20px',
+            padding: '40px',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+            border: '1px solid #e5e7eb',
+            textAlign: 'center',
+            maxWidth: '500px',
+          }}
+        >
+          <div
+            style={{
+              width: '48px',
+              height: '48px',
+              background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+              borderRadius: '12px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 20px',
+              boxShadow: '0 4px 12px rgba(239, 68, 68, 0.3)',
+            }}
+          >
+            <AlertCircle size={24} color="white" />
+          </div>
+          <h3
+            style={{
+              fontSize: '20px',
+              fontWeight: '700',
+              color: '#1f2937',
+              margin: '0 0 12px 0',
+            }}
+          >
+            Error Loading Flashcard Sets
+          </h3>
+          <p
+            style={{
+              fontSize: '14px',
+              color: '#6b7280',
+              margin: '0 0 24px 0',
+              lineHeight: '1.5',
+            }}
+          >
+            {error}
+          </p>
+          <div
+            style={{
+              display: 'flex',
+              gap: '12px',
+              justifyContent: 'center',
+            }}
+          >
+            <button
+              onClick={loadFlashcardSets}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                color: 'white',
+                border: 'none',
+                padding: '12px 20px',
+                borderRadius: '12px',
+                fontSize: '14px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform =
+                  'translateY(-2px) scale(1.02)';
+                e.currentTarget.style.boxShadow =
+                  '0 8px 25px rgba(59, 130, 246, 0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                e.currentTarget.style.boxShadow =
+                  '0 4px 12px rgba(59, 130, 246, 0.3)';
+              }}
+            >
+              <RefreshCw size={16} />
+              Try Again
             </button>
-          )}
+            {onBack && (
+              <button
+                onClick={onBack}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  background: 'linear-gradient(135deg, #f8fafc, #e2e8f0)',
+                  color: '#374151',
+                  border: '1px solid #cbd5e1',
+                  padding: '12px 20px',
+                  borderRadius: '12px',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background =
+                    'linear-gradient(135deg, #3b82f6, #1d4ed8)';
+                  e.currentTarget.style.color = 'white';
+                  e.currentTarget.style.borderColor = '#3b82f6';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow =
+                    '0 8px 25px rgba(59, 130, 246, 0.3)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background =
+                    'linear-gradient(135deg, #f8fafc, #e2e8f0)';
+                  e.currentTarget.style.color = '#374151';
+                  e.currentTarget.style.borderColor = '#cbd5e1';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
+                Go Back
+              </button>
+            )}
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flashcard-set-manager">
-      <div className="manager-header">
-        {onBack && (
-          <button onClick={onBack} className="btn-back">
-            ← Back
-          </button>
-        )}
-        <div className="header-content">
-          <h2>Flashcard Set Management</h2>
-          <p>Create and manage flashcard sets for learning</p>
-        </div>
-        <button onClick={handleCreateSet} className="btn-primary">
-          + Create New Set
-        </button>
+    <div
+      style={{
+        minHeight: '100vh',
+        background: '#f8fafc',
+        padding: '20px',
+      }}
+    >
+      {/* Back Button */}
+      <div style={{ marginBottom: '24px' }}>
+        <BackButton to="/admin" label="Back to Dashboard" />
       </div>
 
-      {sets.length === 0 ? (
-        <div className="empty-state">
-          <div className="empty-icon">📚</div>
-          <h3>No Flashcard Sets</h3>
-          <p>Create your first flashcard set to get started.</p>
-          <button onClick={handleCreateSet} className="btn-primary">
-            Create First Set
-          </button>
+      <div
+        style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+        }}
+      >
+        {/* Header Section */}
+        <div
+          style={{
+            background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+            borderRadius: '16px',
+            padding: '32px',
+            marginBottom: '24px',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
+            border: '1px solid #e5e7eb',
+            position: 'relative',
+            overflow: 'hidden',
+          }}
+        >
+          {/* Background decorations */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '-50px',
+              right: '-50px',
+              width: '100px',
+              height: '100px',
+              background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)',
+              borderRadius: '50%',
+              opacity: '0.05',
+              zIndex: 0,
+            }}
+          ></div>
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '-30px',
+              left: '-30px',
+              width: '60px',
+              height: '60px',
+              background: 'linear-gradient(135deg, #10b981, #06b6d4)',
+              borderRadius: '50%',
+              opacity: '0.05',
+              zIndex: 0,
+            }}
+          ></div>
+
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              position: 'relative',
+              zIndex: 1,
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '16px',
+              }}
+            >
+              <div
+                style={{
+                  width: '56px',
+                  height: '56px',
+                  background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                  borderRadius: '16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 8px 20px rgba(59, 130, 246, 0.3)',
+                }}
+              >
+                <BookOpen size={28} color="white" />
+              </div>
+              <div>
+                <h1
+                  style={{
+                    fontSize: '32px',
+                    fontWeight: '700',
+                    background: 'linear-gradient(135deg, #1f2937, #374151)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    margin: '0 0 8px 0',
+                  }}
+                >
+                  Flashcard Set Management
+                </h1>
+                <p
+                  style={{
+                    fontSize: '16px',
+                    color: '#6b7280',
+                    margin: '0',
+                    fontWeight: '500',
+                  }}
+                >
+                  Create and manage flashcard sets for learning
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={handleCreateSet}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                color: 'white',
+                border: 'none',
+                padding: '12px 24px',
+                borderRadius: '12px',
+                fontSize: '14px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform =
+                  'translateY(-2px) scale(1.02)';
+                e.currentTarget.style.boxShadow =
+                  '0 8px 25px rgba(59, 130, 246, 0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                e.currentTarget.style.boxShadow =
+                  '0 4px 12px rgba(59, 130, 246, 0.3)';
+              }}
+            >
+              <Plus size={18} />
+              Create New Set
+            </button>
+          </div>
         </div>
-      ) : (
-        <div className="sets-grid">
-          {sets.map((set) => (
-            <div key={set.id} className="set-management-card">
-              <div className="set-card-header">
-                <h3>{set.title}</h3>
-                <div className="set-actions">
+
+        {sets.length === 0 ? (
+          <div
+            style={{
+              background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+              borderRadius: '20px',
+              padding: '48px',
+              textAlign: 'center',
+              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
+              border: '1px solid #e5e7eb',
+            }}
+          >
+            <div
+              style={{
+                width: '80px',
+                height: '80px',
+                background: 'linear-gradient(135deg, #e5e7eb, #d1d5db)',
+                borderRadius: '20px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 24px',
+                boxShadow: '0 8px 20px rgba(0, 0, 0, 0.1)',
+              }}
+            >
+              <BookOpen size={40} color="#6b7280" />
+            </div>
+            <h3
+              style={{
+                fontSize: '24px',
+                fontWeight: '700',
+                color: '#1f2937',
+                margin: '0 0 12px 0',
+              }}
+            >
+              No Flashcard Sets
+            </h3>
+            <p
+              style={{
+                fontSize: '16px',
+                color: '#6b7280',
+                margin: '0 0 32px 0',
+                lineHeight: '1.5',
+              }}
+            >
+              Create your first flashcard set to get started with interactive
+              learning.
+            </p>
+            <button
+              onClick={handleCreateSet}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                color: 'white',
+                border: 'none',
+                padding: '12px 24px',
+                borderRadius: '12px',
+                fontSize: '14px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)',
+                margin: '0 auto',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform =
+                  'translateY(-2px) scale(1.02)';
+                e.currentTarget.style.boxShadow =
+                  '0 8px 25px rgba(59, 130, 246, 0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                e.currentTarget.style.boxShadow =
+                  '0 4px 12px rgba(59, 130, 246, 0.3)';
+              }}
+            >
+              <Plus size={18} />
+              Create First Set
+            </button>
+          </div>
+        ) : (
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(400px, 1fr))',
+              gap: '24px',
+            }}
+          >
+            {sets.map((set) => (
+              <div
+                key={set.id}
+                style={{
+                  background:
+                    'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+                  borderRadius: '16px',
+                  padding: '24px',
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
+                  border: '1px solid #e5e7eb',
+                  transition: 'all 0.3s ease',
+                  position: 'relative',
+                  overflow: 'hidden',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.boxShadow =
+                    '0 8px 32px rgba(0, 0, 0, 0.12)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow =
+                    '0 4px 20px rgba(0, 0, 0, 0.08)';
+                }}
+              >
+                {/* Status Badge */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '20px',
+                    right: '16px',
+                    padding: '4px 12px',
+                    borderRadius: '20px',
+                    fontSize: '12px',
+                    fontWeight: '600',
+                    background: set.isActive
+                      ? 'linear-gradient(135deg, #10b981, #059669)'
+                      : 'linear-gradient(135deg, #ef4444, #dc2626)',
+                    color: 'white',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                  }}
+                >
+                  {set.isActive ? 'ACTIVE' : 'INACTIVE'}
+                </div>
+
+                {/* Header */}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    marginBottom: '16px',
+                    paddingRight: '80px',
+                  }}
+                >
+                  <div
+                    style={{
+                      width: '48px',
+                      height: '48px',
+                      background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                      borderRadius: '12px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)',
+                    }}
+                  >
+                    <FileText size={24} color="white" />
+                  </div>
+                  <div>
+                    <h3
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: '700',
+                        color: '#1f2937',
+                        margin: '0 0 4px 0',
+                      }}
+                    >
+                      {set.title}
+                    </h3>
+                    <p
+                      style={{
+                        fontSize: '14px',
+                        color: '#6b7280',
+                        margin: '0',
+                      }}
+                    >
+                      {set.description || 'No description available'}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Action Icons */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '16px',
+                    right: '90px',
+                    display: 'flex',
+                    gap: '8px',
+                  }}
+                >
                   <button
                     onClick={() => handleEditSet(set)}
-                    className="btn-icon"
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      background:
+                        hoveredEditButton === set.id
+                          ? 'linear-gradient(135deg, #3b82f6, #1d4ed8)'
+                          : 'linear-gradient(135deg, #f8fafc, #e2e8f0)',
+                      border: `1px solid ${hoveredEditButton === set.id ? '#3b82f6' : '#cbd5e1'}`,
+                      borderRadius: '8px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      transform:
+                        hoveredEditButton === set.id
+                          ? 'translateY(-2px)'
+                          : 'translateY(0)',
+                      boxShadow:
+                        hoveredEditButton === set.id
+                          ? '0 4px 12px rgba(59, 130, 246, 0.3)'
+                          : 'none',
+                    }}
+                    onMouseEnter={() => setHoveredEditButton(set.id)}
+                    onMouseLeave={() => setHoveredEditButton(null)}
                     title="Edit Set"
                   >
-                    ✏️
+                    <Edit
+                      size={16}
+                      color={hoveredEditButton === set.id ? 'white' : '#6b7280'}
+                    />
                   </button>
                   <button
                     onClick={() => handleDeleteSet(set.id)}
-                    className="btn-icon btn-danger"
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      background:
+                        hoveredDeleteButton === set.id
+                          ? 'linear-gradient(135deg, #ef4444, #dc2626)'
+                          : 'linear-gradient(135deg, #fef2f2, #fee2e2)',
+                      border: `1px solid ${hoveredDeleteButton === set.id ? '#ef4444' : '#fecaca'}`,
+                      borderRadius: '8px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      transform:
+                        hoveredDeleteButton === set.id
+                          ? 'translateY(-2px)'
+                          : 'translateY(0)',
+                      boxShadow:
+                        hoveredDeleteButton === set.id
+                          ? '0 4px 12px rgba(239, 68, 68, 0.3)'
+                          : 'none',
+                    }}
+                    onMouseEnter={() => setHoveredDeleteButton(set.id)}
+                    onMouseLeave={() => setHoveredDeleteButton(null)}
                     title="Delete Set"
                   >
-                    🗑️
+                    <Trash2
+                      size={16}
+                      color={
+                        hoveredDeleteButton === set.id ? 'white' : '#ef4444'
+                      }
+                    />
+                  </button>
+                </div>
+
+                {/* Details */}
+                <div
+                  style={{
+                    display: 'grid',
+                    gap: '12px',
+                    marginBottom: '20px',
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                    }}
+                  >
+                    <BookOpen size={16} color="#6b7280" />
+                    <span
+                      style={{
+                        fontSize: '14px',
+                        color: '#6b7280',
+                        fontWeight: '500',
+                      }}
+                    >
+                      Course:
+                    </span>
+                    <span
+                      style={{
+                        fontSize: '14px',
+                        color: '#1f2937',
+                        fontWeight: '600',
+                      }}
+                    >
+                      {set.courseId}
+                    </span>
+                  </div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                    }}
+                  >
+                    <Calendar size={16} color="#6b7280" />
+                    <span
+                      style={{
+                        fontSize: '14px',
+                        color: '#6b7280',
+                        fontWeight: '500',
+                      }}
+                    >
+                      Created:
+                    </span>
+                    <span
+                      style={{
+                        fontSize: '14px',
+                        color: '#1f2937',
+                        fontWeight: '600',
+                      }}
+                    >
+                      {new Date(
+                        set.createdAt?.getTime?.() || Date.now()
+                      ).toLocaleDateString()}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div
+                  style={{
+                    display: 'flex',
+                    gap: '12px',
+                  }}
+                >
+                  <button
+                    onClick={() => handleOpenAssignDialog(set)}
+                    style={{
+                      flex: 1,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '8px',
+                      background: 'linear-gradient(135deg, #f8fafc, #e2e8f0)',
+                      color: '#374151',
+                      border: '1px solid #cbd5e1',
+                      padding: '12px 16px',
+                      borderRadius: '12px',
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background =
+                        'linear-gradient(135deg, #3b82f6, #1d4ed8)';
+                      e.currentTarget.style.color = 'white';
+                      e.currentTarget.style.borderColor = '#3b82f6';
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                      e.currentTarget.style.boxShadow =
+                        '0 4px 12px rgba(59, 130, 246, 0.3)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background =
+                        'linear-gradient(135deg, #f8fafc, #e2e8f0)';
+                      e.currentTarget.style.color = '#374151';
+                      e.currentTarget.style.borderColor = '#cbd5e1';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
+                  >
+                    <UserCheck size={16} />
+                    Assign
+                  </button>
+                  <button
+                    onClick={() => handleManageCards(set)}
+                    style={{
+                      flex: 1,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '8px',
+                      background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                      color: 'white',
+                      border: 'none',
+                      padding: '12px 16px',
+                      borderRadius: '12px',
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform =
+                        'translateY(-2px) scale(1.02)';
+                      e.currentTarget.style.boxShadow =
+                        '0 8px 25px rgba(59, 130, 246, 0.4)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform =
+                        'translateY(0) scale(1)';
+                      e.currentTarget.style.boxShadow =
+                        '0 4px 12px rgba(59, 130, 246, 0.3)';
+                    }}
+                  >
+                    <FileText size={16} />
+                    Manage Cards
                   </button>
                 </div>
               </div>
+            ))}
+          </div>
+        )}
+      </div>
 
-              <div className="set-description">
-                <p>{set.description || 'No description available'}</p>
-              </div>
+      {/* Flashcard Set Form Popup Overlay */}
+      {showCreateForm && (
+        <FlashcardSetForm
+          courseId={courseId}
+          editingSet={editingSet}
+          onSave={handleSetSaved}
+          onCancel={() => {
+            setShowCreateForm(false);
+            setEditingSet(null);
+          }}
+        />
+      )}
 
-              <div className="set-meta">
-                <div className="meta-item">
-                  <span className="meta-label">Course:</span>
-                  <span className="meta-value">{set.courseId}</span>
-                </div>
-                <div className="meta-item">
-                  <span className="meta-label">Created:</span>
-                  <span className="meta-value">
-                    {new Date(
-                      set.createdAt?.getTime?.() || Date.now()
-                    ).toLocaleDateString()}
-                  </span>
-                </div>
-                <div className="meta-item">
-                  <span className="meta-label">Status:</span>
-                  <span
-                    className={`status ${set.isActive ? 'active' : 'inactive'}`}
-                  >
-                    {set.isActive ? 'Active' : 'Inactive'}
-                  </span>
-                </div>
-              </div>
-
-              <div className="set-card-footer">
-                <button
-                  onClick={() => handleOpenAssignDialog(set)}
-                  className="btn-secondary"
-                >
-                  Assign
-                </button>
-                <button
-                  onClick={() => handleManageCards(set)}
-                  className="btn-primary"
-                >
-                  Manage Cards
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+      {/* Assign Dialog Popup Overlay */}
+      {assigningSet && (
+        <AssignDialog
+          flashcardSet={assigningSet}
+          onClose={handleCloseAssignDialog}
+          onSave={handleAssignSave}
+        />
       )}
     </div>
   );

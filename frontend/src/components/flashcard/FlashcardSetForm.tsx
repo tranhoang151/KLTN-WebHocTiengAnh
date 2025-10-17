@@ -4,6 +4,17 @@ import {
   flashcardService,
 } from '../../services/flashcardService';
 import { useAuth } from '../../contexts/AuthContext';
+import {
+  X,
+  FileText,
+  BookOpen,
+  Users,
+  AlertCircle,
+  CheckCircle,
+  XCircle,
+  School,
+  UserCheck,
+} from 'lucide-react';
 import './FlashcardSetForm.css';
 
 interface FlashcardSetFormProps {
@@ -124,110 +135,543 @@ const FlashcardSetForm: React.FC<FlashcardSetFormProps> = ({
   };
 
   return (
-    <div className="flashcard-set-form">
-      <div className="form-header">
-        <h2>
-          {editingSet ? 'Edit Flashcard Set' : 'Create New Flashcard Set'}
-        </h2>
-        <button onClick={onCancel} className="btn-close">
-          ✕
-        </button>
-      </div>
-
-      {error && (
-        <div className="error-message">
-          <span className="error-icon">⚠️</span>
-          {error}
-        </div>
-      )}
-
-      <form onSubmit={handleSubmit} className="form-content">
-        <div className="form-group">
-          <label htmlFor="title">Title *</label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={formData.title}
-            onChange={handleInputChange}
-            placeholder="Enter flashcard set title"
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="description">Description</label>
-          <textarea
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleInputChange}
-            placeholder="Enter a description for this flashcard set"
-            rows={3}
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="courseId">Course *</label>
-          {courseId ? (
-            <input
-              type="text"
-              value={courseId}
-              disabled
-              className="disabled-input"
-            />
-          ) : (
-            <select
-              id="courseId"
-              name="courseId"
-              value={formData.courseId}
-              onChange={handleInputChange}
-              required
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: 'rgba(0, 0, 0, 0.5)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 1000,
+        padding: '20px',
+      }}
+    >
+      <div
+        style={{
+          background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+          borderRadius: '20px',
+          padding: '32px',
+          boxShadow: '0 25px 50px rgba(0, 0, 0, 0.25)',
+          border: '1px solid rgba(255, 255, 255, 0.2)',
+          maxWidth: '600px',
+          width: '100%',
+          maxHeight: '90vh',
+          overflowY: 'auto',
+          position: 'relative',
+        }}
+      >
+        {/* Header */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: '24px',
+            paddingBottom: '16px',
+            borderBottom: '1px solid #e5e7eb',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+            }}
+          >
+            <div
+              style={{
+                width: '40px',
+                height: '40px',
+                background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                borderRadius: '10px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)',
+              }}
             >
-              <option value="">Select a course</option>
-              {courses.map((course) => (
-                <option key={course.id} value={course.id}>
-                  {course.name}
-                </option>
-              ))}
-            </select>
-          )}
+              <FileText size={20} color="white" />
+            </div>
+            <h2
+              style={{
+                fontSize: '24px',
+                fontWeight: '700',
+                color: '#1f2937',
+                margin: '0',
+              }}
+            >
+              {editingSet ? 'Edit Flashcard Set' : 'Create New Flashcard Set'}
+            </h2>
+          </div>
+          <button
+            onClick={onCancel}
+            style={{
+              width: '32px',
+              height: '32px',
+              background: 'linear-gradient(135deg, #f3f4f6, #e5e7eb)',
+              border: '1px solid #d1d5db',
+              borderRadius: '8px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background =
+                'linear-gradient(135deg, #ef4444, #dc2626)';
+              e.currentTarget.style.borderColor = '#ef4444';
+              e.currentTarget.style.transform = 'scale(1.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background =
+                'linear-gradient(135deg, #f3f4f6, #e5e7eb)';
+              e.currentTarget.style.borderColor = '#d1d5db';
+              e.currentTarget.style.transform = 'scale(1)';
+            }}
+          >
+            <X size={16} color="#6b7280" />
+          </button>
         </div>
 
-        {classes.length > 0 && (
-          <div className="form-group">
-            <label>Assign to Classes</label>
-            <div className="class-selection">
-              {classes.map((classItem) => (
-                <label key={classItem.id} className="checkbox-label">
-                  <input
-                    type="checkbox"
-                    checked={formData.assignedClassIds.includes(classItem.id)}
-                    onChange={(e) =>
-                      handleClassSelection(classItem.id, e.target.checked)
-                    }
-                  />
-                  <span className="checkbox-text">{classItem.name}</span>
-                </label>
-              ))}
+        {/* Error Message */}
+        {error && (
+          <div
+            style={{
+              background: 'linear-gradient(135deg, #fef2f2, #fee2e2)',
+              border: '1px solid #fecaca',
+              borderRadius: '12px',
+              padding: '16px',
+              marginBottom: '24px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+            }}
+          >
+            <div
+              style={{
+                width: '24px',
+                height: '24px',
+                background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                borderRadius: '6px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <AlertCircle size={14} color="white" />
             </div>
+            <span
+              style={{
+                fontSize: '14px',
+                fontWeight: '600',
+                color: '#dc2626',
+              }}
+            >
+              {error}
+            </span>
           </div>
         )}
 
-        <div className="form-actions">
-          <button
-            type="button"
-            onClick={onCancel}
-            className="btn-secondary"
-            disabled={loading}
+        <form onSubmit={handleSubmit}>
+          {/* Title */}
+          <div style={{ marginBottom: '20px' }}>
+            <label
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                fontSize: '14px',
+                fontWeight: '600',
+                color: '#374151',
+                marginBottom: '8px',
+              }}
+            >
+              <FileText size={16} color="#3b82f6" />
+              Title *
+            </label>
+            <input
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleInputChange}
+              placeholder="Enter flashcard set title"
+              required
+              style={{
+                width: '100%',
+                padding: '12px 16px',
+                border: '2px solid #e5e7eb',
+                borderRadius: '12px',
+                fontSize: '16px',
+                transition: 'all 0.3s ease',
+                background: '#ffffff',
+              }}
+              onFocus={(e) => {
+                e.target.style.borderColor = '#3b82f6';
+                e.target.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)';
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = '#e5e7eb';
+                e.target.style.boxShadow = 'none';
+              }}
+            />
+          </div>
+
+          {/* Description */}
+          <div style={{ marginBottom: '20px' }}>
+            <label
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                fontSize: '14px',
+                fontWeight: '600',
+                color: '#374151',
+                marginBottom: '8px',
+              }}
+            >
+              <BookOpen size={16} color="#3b82f6" />
+              Description
+            </label>
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleInputChange}
+              placeholder="Enter a description for this flashcard set"
+              rows={3}
+              style={{
+                width: '100%',
+                padding: '12px 16px',
+                border: '2px solid #e5e7eb',
+                borderRadius: '12px',
+                fontSize: '16px',
+                transition: 'all 0.3s ease',
+                background: '#ffffff',
+                resize: 'vertical',
+                fontFamily: 'inherit',
+              }}
+              onFocus={(e) => {
+                e.target.style.borderColor = '#3b82f6';
+                e.target.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)';
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = '#e5e7eb';
+                e.target.style.boxShadow = 'none';
+              }}
+            />
+          </div>
+
+          {/* Course */}
+          <div style={{ marginBottom: '20px' }}>
+            <label
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                fontSize: '14px',
+                fontWeight: '600',
+                color: '#374151',
+                marginBottom: '8px',
+              }}
+            >
+              <School size={16} color="#10b981" />
+              Course *
+            </label>
+            {courseId ? (
+              <input
+                type="text"
+                value={courseId}
+                disabled
+                style={{
+                  width: '100%',
+                  padding: '12px 16px',
+                  border: '2px solid #d1d5db',
+                  borderRadius: '12px',
+                  fontSize: '16px',
+                  background: '#f9fafb',
+                  color: '#6b7280',
+                }}
+              />
+            ) : (
+              <select
+                name="courseId"
+                value={formData.courseId}
+                onChange={handleInputChange}
+                required
+                style={{
+                  width: '100%',
+                  padding: '12px 16px',
+                  border: '2px solid #e5e7eb',
+                  borderRadius: '12px',
+                  fontSize: '16px',
+                  transition: 'all 0.3s ease',
+                  background: '#ffffff',
+                  backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
+                  backgroundPosition: 'right 12px center',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundSize: '16px',
+                  paddingRight: '40px',
+                  appearance: 'none',
+                  WebkitAppearance: 'none',
+                  MozAppearance: 'none',
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = '#3b82f6';
+                  e.target.style.boxShadow =
+                    '0 0 0 3px rgba(59, 130, 246, 0.1)';
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = '#e5e7eb';
+                  e.target.style.boxShadow = 'none';
+                }}
+              >
+                <option value="">Select a course</option>
+                {courses.map((course) => (
+                  <option key={course.id} value={course.id}>
+                    {course.name}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
+
+          {/* Class Assignment */}
+          {classes.length > 0 && (
+            <div style={{ marginBottom: '32px' }}>
+              <label
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  color: '#374151',
+                  marginBottom: '12px',
+                }}
+              >
+                <Users size={16} color="#f59e0b" />
+                Assign to Classes
+              </label>
+              <div
+                style={{
+                  background: 'linear-gradient(135deg, #f8fafc, #f1f5f9)',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '12px',
+                  padding: '16px',
+                  maxHeight: '200px',
+                  overflowY: 'auto',
+                }}
+              >
+                {classes.map((classItem) => (
+                  <label
+                    key={classItem.id}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '12px',
+                      padding: '12px',
+                      borderRadius: '8px',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      marginBottom: '8px',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background =
+                        'rgba(59, 130, 246, 0.05)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'transparent';
+                    }}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={formData.assignedClassIds.includes(classItem.id)}
+                      onChange={(e) =>
+                        handleClassSelection(classItem.id, e.target.checked)
+                      }
+                      style={{
+                        width: '18px',
+                        height: '18px',
+                        accentColor: '#3b82f6',
+                        cursor: 'pointer',
+                      }}
+                    />
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        flex: 1,
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: '24px',
+                          height: '24px',
+                          background: formData.assignedClassIds.includes(
+                            classItem.id
+                          )
+                            ? 'linear-gradient(135deg, #3b82f6, #1d4ed8)'
+                            : 'linear-gradient(135deg, #e5e7eb, #d1d5db)',
+                          borderRadius: '6px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          transition: 'all 0.3s ease',
+                        }}
+                      >
+                        <UserCheck size={12} color="white" />
+                      </div>
+                      <span
+                        style={{
+                          fontSize: '14px',
+                          fontWeight: '500',
+                          color: formData.assignedClassIds.includes(
+                            classItem.id
+                          )
+                            ? '#1f2937'
+                            : '#6b7280',
+                          transition: 'all 0.3s ease',
+                        }}
+                      >
+                        {classItem.name}
+                      </span>
+                    </div>
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Form Actions */}
+          <div
+            style={{
+              display: 'flex',
+              gap: '16px',
+              justifyContent: 'flex-end',
+              paddingTop: '24px',
+              borderTop: '1px solid #e5e7eb',
+            }}
           >
-            Cancel
-          </button>
-          <button type="submit" className="btn-primary" disabled={loading}>
-            {loading ? 'Saving...' : editingSet ? 'Update Set' : 'Create Set'}
-          </button>
-        </div>
-      </form>
+            <button
+              type="button"
+              onClick={onCancel}
+              disabled={loading}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                background: 'linear-gradient(135deg, #f8fafc, #e2e8f0)',
+                color: '#374151',
+                border: '1px solid #cbd5e1',
+                padding: '12px 20px',
+                borderRadius: '12px',
+                fontSize: '14px',
+                fontWeight: '600',
+                cursor: loading ? 'not-allowed' : 'pointer',
+                transition: 'all 0.3s ease',
+                opacity: loading ? 0.6 : 1,
+              }}
+              onMouseEnter={(e) => {
+                if (!loading) {
+                  e.currentTarget.style.background =
+                    'linear-gradient(135deg, #3b82f6, #1d4ed8)';
+                  e.currentTarget.style.color = 'white';
+                  e.currentTarget.style.borderColor = '#3b82f6';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow =
+                    '0 4px 12px rgba(59, 130, 246, 0.3)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!loading) {
+                  e.currentTarget.style.background =
+                    'linear-gradient(135deg, #f8fafc, #e2e8f0)';
+                  e.currentTarget.style.color = '#374151';
+                  e.currentTarget.style.borderColor = '#cbd5e1';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }
+              }}
+            >
+              <XCircle size={16} />
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={loading}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                background: loading
+                  ? 'linear-gradient(135deg, #9ca3af, #6b7280)'
+                  : 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                color: 'white',
+                border: 'none',
+                padding: '12px 20px',
+                borderRadius: '12px',
+                fontSize: '14px',
+                fontWeight: '600',
+                cursor: loading ? 'not-allowed' : 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: loading
+                  ? 'none'
+                  : '0 4px 12px rgba(59, 130, 246, 0.3)',
+              }}
+              onMouseEnter={(e) => {
+                if (!loading) {
+                  e.currentTarget.style.transform =
+                    'translateY(-2px) scale(1.02)';
+                  e.currentTarget.style.boxShadow =
+                    '0 8px 25px rgba(59, 130, 246, 0.4)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!loading) {
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                  e.currentTarget.style.boxShadow =
+                    '0 4px 12px rgba(59, 130, 246, 0.3)';
+                }
+              }}
+            >
+              {loading ? (
+                <>
+                  <div
+                    style={{
+                      width: '16px',
+                      height: '16px',
+                      border: '2px solid #fff',
+                      borderBottomColor: 'transparent',
+                      borderRadius: '50%',
+                      display: 'inline-block',
+                      animation: 'spin 1s linear infinite',
+                    }}
+                  />
+                  Saving...
+                </>
+              ) : (
+                <>
+                  <CheckCircle size={16} />
+                  {editingSet ? 'Update Set' : 'Create Set'}
+                </>
+              )}
+            </button>
+          </div>
+        </form>
+
+        {/* CSS Animation */}
+        <style>{`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
+      </div>
     </div>
   );
 };

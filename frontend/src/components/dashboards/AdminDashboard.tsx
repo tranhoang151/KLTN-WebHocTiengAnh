@@ -25,6 +25,8 @@ import {
   Plus,
   BookOpenCheck,
   TrendingUp,
+  ClipboardList,
+  Package,
 } from 'lucide-react';
 
 const AdminDashboardHome: React.FC = () => {
@@ -1081,7 +1083,7 @@ const AdminDashboardHome: React.FC = () => {
               >
                 <div style={{ fontSize: '14px', padding: '12px 20px' }}>
                   <Link
-                    to="/admin/questions"
+                    to="/admin/content?tab=tests"
                     className="link-text"
                     style={{
                       fontWeight: '500',
@@ -1227,6 +1229,270 @@ const AdminDashboardHome: React.FC = () => {
                     }}
                   >
                     <span>View Videos</span>
+                    <span
+                      className="arrow-icon"
+                      style={{
+                        opacity: 0,
+                        transition: 'opacity 0.2s ease',
+                        fontSize: '16px',
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      →
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ⭐ QUAN TRỌNG: Card quản lý câu hỏi */}
+          {/* Question Management */}
+          {hasPermission('content', 'read') && (
+            <div
+              style={{
+                backgroundColor: 'white',
+                overflow: 'hidden',
+                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+                borderRadius: '8px',
+                border: '1px solid #e5e7eb',
+                transition: 'all 0.2s ease',
+              }}
+              onMouseEnter={(e) => {
+                const card = e.currentTarget;
+                const linkDiv = card.querySelector(
+                  '.link-section'
+                ) as HTMLElement;
+                const link = card.querySelector('.link-text') as HTMLElement;
+                const arrow = card.querySelector('.arrow-icon') as HTMLElement;
+
+                if (linkDiv) linkDiv.style.backgroundColor = '#7c3aed';
+                if (link) link.style.color = 'white';
+                if (arrow) arrow.style.opacity = '1';
+              }}
+              onMouseLeave={(e) => {
+                const card = e.currentTarget;
+                const linkDiv = card.querySelector(
+                  '.link-section'
+                ) as HTMLElement;
+                const link = card.querySelector('.link-text') as HTMLElement;
+                const arrow = card.querySelector('.arrow-icon') as HTMLElement;
+
+                if (linkDiv) linkDiv.style.backgroundColor = '#f9fafb';
+                if (link) link.style.color = '#7c3aed';
+                if (arrow) arrow.style.opacity = '0';
+              }}
+            >
+              <div style={{ padding: '20px 20px 0 20px' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                  }}
+                >
+                  <div style={{ marginBottom: '0px' }}>
+                    <div
+                      style={{
+                        width: '32px',
+                        height: '32px',
+                        backgroundColor: '#7c3aed',
+                        borderRadius: '6px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <ClipboardList
+                        size={14}
+                        style={{
+                          color: 'white',
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <dl>
+                      <dt
+                        style={{
+                          fontSize: '18px',
+                          fontWeight: '500',
+                          color: '#111827',
+                          margin: '0 0 8px 0',
+                        }}
+                      >
+                        Question Management
+                      </dt>
+                      <dd
+                        style={{
+                          fontSize: '14px',
+                          fontWeight: '500',
+                          color: '#6b7280',
+                          margin: '0',
+                        }}
+                      >
+                        Manage questions for tests and exercises
+                      </dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="link-section"
+                style={{
+                  backgroundColor: '#f9fafb',
+                  borderTop: '1px solid #e5e7eb',
+                  transition: 'background-color 0.2s ease',
+                }}
+              >
+                <div style={{ fontSize: '14px', padding: '12px 20px' }}>
+                  <Link
+                    to="/admin/questions"
+                    className="link-text"
+                    style={{
+                      fontWeight: '500',
+                      color: '#7c3aed',
+                      textDecoration: 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      transition: 'all 0.2s ease',
+                    }}
+                  >
+                    <span>View Questions</span>
+                    <span
+                      className="arrow-icon"
+                      style={{
+                        opacity: 0,
+                        transition: 'opacity 0.2s ease',
+                        fontSize: '16px',
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      →
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ⭐ QUAN TRỌNG: Card quản lý nội dung tổng thể */}
+          {/* Content Management */}
+          {hasPermission('content', 'read') && (
+            <div
+              style={{
+                backgroundColor: 'white',
+                overflow: 'hidden',
+                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+                borderRadius: '8px',
+                border: '1px solid #e5e7eb',
+                transition: 'all 0.2s ease',
+              }}
+              onMouseEnter={(e) => {
+                const card = e.currentTarget;
+                const linkDiv = card.querySelector(
+                  '.link-section'
+                ) as HTMLElement;
+                const link = card.querySelector('.link-text') as HTMLElement;
+                const arrow = card.querySelector('.arrow-icon') as HTMLElement;
+
+                if (linkDiv) linkDiv.style.backgroundColor = '#059669';
+                if (link) link.style.color = 'white';
+                if (arrow) arrow.style.opacity = '1';
+              }}
+              onMouseLeave={(e) => {
+                const card = e.currentTarget;
+                const linkDiv = card.querySelector(
+                  '.link-section'
+                ) as HTMLElement;
+                const link = card.querySelector('.link-text') as HTMLElement;
+                const arrow = card.querySelector('.arrow-icon') as HTMLElement;
+
+                if (linkDiv) linkDiv.style.backgroundColor = '#f9fafb';
+                if (link) link.style.color = '#059669';
+                if (arrow) arrow.style.opacity = '0';
+              }}
+            >
+              <div style={{ padding: '20px 20px 0 20px' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                  }}
+                >
+                  <div style={{ marginBottom: '0px' }}>
+                    <div
+                      style={{
+                        width: '32px',
+                        height: '32px',
+                        backgroundColor: '#059669',
+                        borderRadius: '6px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <Package
+                        size={14}
+                        style={{
+                          color: 'white',
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <dl>
+                      <dt
+                        style={{
+                          fontSize: '18px',
+                          fontWeight: '500',
+                          color: '#111827',
+                          margin: '0 0 8px 0',
+                        }}
+                      >
+                        Content Management
+                      </dt>
+                      <dd
+                        style={{
+                          fontSize: '14px',
+                          fontWeight: '500',
+                          color: '#6b7280',
+                          margin: '0',
+                        }}
+                      >
+                        Manage all educational content
+                      </dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="link-section"
+                style={{
+                  backgroundColor: '#f9fafb',
+                  borderTop: '1px solid #e5e7eb',
+                  transition: 'background-color 0.2s ease',
+                }}
+              >
+                <div style={{ fontSize: '14px', padding: '12px 20px' }}>
+                  <Link
+                    to="/admin/content"
+                    className="link-text"
+                    style={{
+                      fontWeight: '500',
+                      color: '#059669',
+                      textDecoration: 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      transition: 'all 0.2s ease',
+                    }}
+                  >
+                    <span>Manage Content</span>
                     <span
                       className="arrow-icon"
                       style={{
