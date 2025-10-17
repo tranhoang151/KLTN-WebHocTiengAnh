@@ -254,7 +254,9 @@ const UserList: React.FC<UserListProps> = ({
                   }}
                   src={
                     user.avatar_url ||
-                    `data:image/jpeg;base64,${user.avatar_base64}`
+                    (user.avatar_base64?.startsWith('data:')
+                      ? user.avatar_base64
+                      : `data:image/jpeg;base64,${user.avatar_base64}`)
                   }
                   alt={user.full_name}
                 />
@@ -596,7 +598,9 @@ const UserList: React.FC<UserListProps> = ({
         userAvatar={
           deletePopup.user?.avatar_url || deletePopup.user?.avatar_base64
             ? deletePopup.user?.avatar_url ||
-            `data:image/jpeg;base64,${deletePopup.user?.avatar_base64}`
+            (deletePopup.user?.avatar_base64?.startsWith('data:')
+              ? deletePopup.user?.avatar_base64
+              : `data:image/jpeg;base64,${deletePopup.user?.avatar_base64}`)
             : undefined
         }
       />

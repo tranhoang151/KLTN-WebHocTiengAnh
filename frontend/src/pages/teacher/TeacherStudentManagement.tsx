@@ -163,7 +163,10 @@ const TeacherStudentManagement: React.FC = () => {
                                             <div key={student.id} className="border border-gray-200 rounded-lg p-4">
                                                 <div className="flex items-center space-x-3">
                                                     <img
-                                                        src={student.avatarUrl || student.avatar_base64 || '/default-avatar.png'}
+                                                        src={student.avatarUrl ||
+                                                            (student.avatar_base64?.startsWith('data:')
+                                                                ? student.avatar_base64
+                                                                : `data:image/jpeg;base64,${student.avatar_base64}`) || '/default-avatar.png'}
                                                         alt={student.fullName}
                                                         className="w-10 h-10 rounded-full"
                                                     />
@@ -223,7 +226,10 @@ const TeacherStudentManagement: React.FC = () => {
                                                     className="h-4 w-4 text-blue-600"
                                                 />
                                                 <img
-                                                    src={student.avatarUrl || student.avatar_base64 || '/default-avatar.png'}
+                                                    src={student.avatarUrl ||
+                                                        (student.avatar_base64?.startsWith('data:')
+                                                            ? student.avatar_base64
+                                                            : `data:image/jpeg;base64,${student.avatar_base64}`) || '/default-avatar.png'}
                                                     alt={student.fullName}
                                                     className="w-8 h-8 rounded-full"
                                                 />

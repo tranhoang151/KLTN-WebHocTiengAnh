@@ -94,10 +94,6 @@
   transform: rotateY(90deg);
 }
 
-.flashcard.flip-end {
-  transform: rotateY(180deg);
-}
-
 .flashcard-face {
   position: absolute;
   width: 100%;
@@ -180,6 +176,7 @@
 }
 
 @keyframes pulse {
+
   0%,
   100% {
     opacity: 0.6;

@@ -5,12 +5,14 @@ import { User, Camera, Trash2, Upload } from 'lucide-react';
 
 interface AvatarUploadProps {
   currentAvatar?: string | null;
-  onAvatarChange: () => void; // Used to clear messages in parent
+  onAvatarChange: (avatarBase64?: string) => void; // Callback with avatar data
+  uploadMode?: 'immediate' | 'form'; // New prop to control upload behavior
 }
 
 const AvatarUpload: React.FC<AvatarUploadProps> = ({
   currentAvatar,
   onAvatarChange,
+  uploadMode = 'immediate', // Default to immediate upload for profile page
 }) => {
   const { getAuthToken, user, updateUser } = useAuth();
   const [uploading, setUploading] = useState(false);
@@ -28,7 +30,7 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
 
     // Reset state
     setError(null);
-    onAvatarChange();
+    onAvatarChange(undefined);
 
     // Validate file size (5MB limit)
     if (file.size > 5 * 1024 * 1024) {
@@ -36,28 +38,36 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
       return;
     }
 
-    // Read and upload file
+    // Read file and handle based on upload mode
     const reader = new FileReader();
     reader.onload = async (event) => {
       const base64String = event.target?.result as string;
       if (base64String) {
-        setUploading(true);
-        try {
-          const token = await getToken();
-          const result = await profileService.uploadAvatar({
-            avatarBase64: base64String,
-          });
-          // Update user context
-          if ((result as any).avatarBase64) {
-            updateUser({
-              avatar_base64: (result as any).avatarBase64,
-              avatar_url: null,
+        if (uploadMode === 'form') {
+          // For form mode, just pass the base64 string to callback
+          onAvatarChange(base64String);
+        } else {
+          // For immediate mode, upload to server
+          setUploading(true);
+          try {
+            const token = await getToken();
+            const result = await profileService.uploadAvatar({
+              avatarBase64: base64String,
             });
+            // Update user context
+            if ((result as any).avatarBase64) {
+              updateUser({
+                avatar_base64: (result as any).avatarBase64,
+                avatar_url: null,
+              });
+              // Call callback with new avatar
+              onAvatarChange((result as any).avatarBase64);
+            }
+          } catch (err: any) {
+            setError(err.message || 'Failed to upload avatar.');
+          } finally {
+            setUploading(false);
           }
-        } catch (err: any) {
-          setError(err.message || 'Failed to upload avatar.');
-        } finally {
-          setUploading(false);
         }
       }
     };
@@ -65,19 +75,26 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
   };
 
   const handleRemoveAvatar = async () => {
-    setRemoving(true);
-    setError(null);
-    onAvatarChange();
+    if (uploadMode === 'form') {
+      // For form mode, just call callback with null
+      onAvatarChange(null);
+    } else {
+      // For immediate mode, remove from server
+      setRemoving(true);
+      setError(null);
 
-    try {
-      const token = await getToken();
-      await profileService.removeAvatar();
-      // Update user context
-      updateUser({ avatar_base64: null, avatar_url: null });
-    } catch (err: any) {
-      setError(err.message || 'Failed to remove avatar.');
-    } finally {
-      setRemoving(false);
+      try {
+        const token = await getToken();
+        await profileService.removeAvatar();
+        // Update user context
+        updateUser({ avatar_base64: null, avatar_url: null });
+        // Call callback with null avatar
+        onAvatarChange(null);
+      } catch (err: any) {
+        setError(err.message || 'Failed to remove avatar.');
+      } finally {
+        setRemoving(false);
+      }
     }
   };
 
@@ -85,10 +102,9 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
     fileInputRef.current?.click();
   };
 
-  const avatarSrc =
-    user?.avatar_base64 ||
-    user?.avatar_url ||
-    'https://via.placeholder.com/150';
+  const avatarSrc = uploadMode === 'form'
+    ? (currentAvatar || 'https://via.placeholder.com/150')
+    : (user?.avatar_base64 || user?.avatar_url || 'https://via.placeholder.com/150');
 
   return (
     <div
@@ -183,15 +199,16 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
         }}
       >
         <button
+          type="button"
           onClick={triggerFileSelect}
-          disabled={uploading || removing}
+          disabled={uploadMode === 'immediate' && (uploading || removing)}
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             gap: '8px',
             padding: '10px 16px',
-            background: uploading
+            background: (uploadMode === 'immediate' && uploading)
               ? 'linear-gradient(135deg, #9ca3af, #6b7280)'
               : 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
             color: 'white',
@@ -199,26 +216,26 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
             borderRadius: '8px',
             fontSize: '14px',
             fontWeight: '600',
-            cursor: uploading || removing ? 'not-allowed' : 'pointer',
+            cursor: (uploadMode === 'immediate' && (uploading || removing)) ? 'not-allowed' : 'pointer',
             transition: 'all 0.2s ease',
             boxShadow: '0 2px 8px rgba(59, 130, 246, 0.2)',
           }}
           onMouseEnter={(e) => {
-            if (!uploading && !removing) {
+            if (!(uploadMode === 'immediate' && (uploading || removing))) {
               e.currentTarget.style.transform = 'translateY(-1px)';
               e.currentTarget.style.boxShadow =
                 '0 4px 12px rgba(59, 130, 246, 0.3)';
             }
           }}
           onMouseLeave={(e) => {
-            if (!uploading && !removing) {
+            if (!(uploadMode === 'immediate' && (uploading || removing))) {
               e.currentTarget.style.transform = 'translateY(0)';
               e.currentTarget.style.boxShadow =
                 '0 2px 8px rgba(59, 130, 246, 0.2)';
             }
           }}
         >
-          {uploading ? (
+          {(uploadMode === 'immediate' && uploading) ? (
             <>
               <div
                 style={{
@@ -235,22 +252,23 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
           ) : (
             <>
               <Upload size={16} />
-              Change Avatar
+              Choose Photo
             </>
           )}
         </button>
 
-        {(user?.avatar_base64 || user?.avatar_url) && (
+        {((uploadMode === 'form' && currentAvatar) || (uploadMode === 'immediate' && (user?.avatar_base64 || user?.avatar_url))) && (
           <button
+            type="button"
             onClick={handleRemoveAvatar}
-            disabled={uploading || removing}
+            disabled={uploadMode === 'immediate' && (uploading || removing)}
             style={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               gap: '8px',
               padding: '10px 16px',
-              background: removing
+              background: (uploadMode === 'immediate' && removing)
                 ? 'linear-gradient(135deg, #9ca3af, #6b7280)'
                 : 'linear-gradient(135deg, #ef4444, #dc2626)',
               color: 'white',
@@ -258,26 +276,26 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({
               borderRadius: '8px',
               fontSize: '14px',
               fontWeight: '600',
-              cursor: uploading || removing ? 'not-allowed' : 'pointer',
+              cursor: (uploadMode === 'immediate' && (uploading || removing)) ? 'not-allowed' : 'pointer',
               transition: 'all 0.2s ease',
               boxShadow: '0 2px 8px rgba(239, 68, 68, 0.2)',
             }}
             onMouseEnter={(e) => {
-              if (!uploading && !removing) {
+              if (!(uploadMode === 'immediate' && (uploading || removing))) {
                 e.currentTarget.style.transform = 'translateY(-1px)';
                 e.currentTarget.style.boxShadow =
                   '0 4px 12px rgba(239, 68, 68, 0.3)';
               }
             }}
             onMouseLeave={(e) => {
-              if (!uploading && !removing) {
+              if (!(uploadMode === 'immediate' && (uploading || removing))) {
                 e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.boxShadow =
                   '0 2px 8px rgba(239, 68, 68, 0.2)';
               }
             }}
           >
-            {removing ? (
+            {(uploadMode === 'immediate' && removing) ? (
               <>
                 <div
                   style={{

@@ -1,24 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { videoService } from '../../services/videoService'; // Assuming you have this api service
-import { Video } from '../../types/video'; // Assuming you have this type
+import { videoService } from '../../services/videoService';
+import { Video } from '../../types/video';
 
-const VideoLecturesPage: React.FC = () => {
+interface VideoLecturesPageProps {
+  courseId: string;
+}
+
+const VideoLecturesPage: React.FC<VideoLecturesPageProps> = ({ courseId }) => {
   const [videos, setVideos] = useState<Video[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Hardcoded courseId for now. In a real app, you'd get this from user context or a route param.
-  const courseId = 'LABTsID1zvPRsVjPjhLd';
-
   useEffect(() => {
     const fetchVideos = async () => {
       try {
+        console.log('Fetching videos for courseId:', courseId);
         const fetchedVideos = await videoService.getVideosByCourse(courseId);
+        console.log('Fetched videos:', fetchedVideos);
         setVideos(fetchedVideos);
       } catch (err) {
+        console.error('Error fetching videos:', err);
         setError('Failed to fetch videos. Please try again later.');
-        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -40,9 +43,9 @@ const VideoLecturesPage: React.FC = () => {
       <h2>Video Lectures</h2>
       <div className="list-group">
         {videos.length > 0 ? (
-          videos.map((video) => (
+          videos.map((video, index) => (
             <Link
-              key={video.id}
+              key={video.id || `video-${index}`}
               to={`/student/videos/${video.id}`}
               className="list-group-item list-group-item-action"
             >
