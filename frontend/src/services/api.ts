@@ -1,7 +1,7 @@
 import { ApiResponse } from '../types';
 import { authService } from './authService';
 
-const API_BASE_URL = 'https://localhost:5001/api'; // Hardcoded to user's confirmed port
+const API_BASE_URL = 'https://localhost:5001/api'; // Backend running on HTTPS port 5001
 
 class ApiService {
   private async request<T>(
