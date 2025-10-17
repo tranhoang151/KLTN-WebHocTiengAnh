@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { useUserRole } from '../hooks/usePermissions';
+import { useUserRole, usePermissions } from '../hooks/usePermissions';
 import { User, LogOut, Settings, ChevronDown } from 'lucide-react';
 
 interface AdminHeaderProps {
@@ -11,6 +11,7 @@ interface AdminHeaderProps {
 export const AdminHeader: React.FC<AdminHeaderProps> = ({ title }) => {
   const { logout } = useAuth();
   const { user, displayName } = useUserRole();
+  const { getDashboardPath } = usePermissions();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -91,20 +92,35 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ title }) => {
                   gap: '12px',
                 }}
               >
-                <h1
+                <Link
+                  to={getDashboardPath()}
                   style={{
-                    fontSize: '24px',
-                    fontWeight: '700',
-                    color: 'white',
-                    margin: 0,
-                    background: 'linear-gradient(135deg, #ffffff, #e0e7ff)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
+                    textDecoration: 'none',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'scale(1.05)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)';
                   }}
                 >
-                  BingGo
-                </h1>
+                  <h1
+                    style={{
+                      fontSize: '24px',
+                      fontWeight: '700',
+                      color: 'white',
+                      margin: 0,
+                      background: 'linear-gradient(135deg, #ffffff, #e0e7ff)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text',
+                    }}
+                  >
+                    BingGo
+                  </h1>
+                </Link>
               </div>
               <div
                 style={{
