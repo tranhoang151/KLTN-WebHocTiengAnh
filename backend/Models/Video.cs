@@ -14,8 +14,14 @@ public class Video
     [FirestoreProperty("description")]
     public string Description { get; set; } = string.Empty;
 
-    [FirestoreProperty("youtube_id")]
-    public string YoutubeId { get; set; } = string.Empty;
+    [FirestoreProperty("video_url")]
+    public string VideoUrl { get; set; } = string.Empty;
+
+    [FirestoreProperty("topic")]
+    public string? Topic { get; set; }
+
+    [FirestoreProperty("teacher_id")]
+    public string? TeacherId { get; set; }
 
     [FirestoreProperty("course_id")]
     public string CourseId { get; set; } = string.Empty;

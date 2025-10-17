@@ -214,7 +214,10 @@ const TeacherEvaluationPage: React.FC = () => {
                                     >
                                         <div className="flex items-center space-x-3">
                                             <img
-                                                src={student.avatarUrl || student.avatar_base64 || '/default-avatar.png'}
+                                                src={student.avatarUrl ||
+                                                    (student.avatar_base64?.startsWith('data:')
+                                                        ? student.avatar_base64
+                                                        : `data:image/jpeg;base64,${student.avatar_base64}`) || '/default-avatar.png'}
                                                 alt={student.fullName}
                                                 className="w-10 h-10 rounded-full"
                                             />

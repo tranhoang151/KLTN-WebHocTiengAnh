@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import DashboardLayout from '../DashboardLayout';
 import { usePermissions } from '../../hooks/usePermissions';
 // import { ChildFriendlyCard } from '../ui'; // Removed to avoid circular dependency
@@ -14,10 +14,10 @@ import {
   Sparkles,
 } from 'lucide-react';
 import './StudentDashboard.css';
-import FlashcardLearningFlow from '../learning/FlashcardLearningFlow';
+import StudentFlashcardLearningFlow from '../learning/StudentFlashcardLearningFlow';
 import StudentExerciseList from '../exercise/StudentExerciseList';
 import ExerciseScreen from '../exercise/ExerciseScreen';
-import VideoLecturesPage from '../../pages/student/VideoLecturesPage';
+import StudentVideoLearningFlow from '../learning/StudentVideoLearningFlow';
 import VideoDetailPage from '../../pages/student/VideoDetailPage';
 import VideoProgressPage from '../../pages/student/VideoProgressPage';
 import ProgressDashboardPage from '../../pages/student/ProgressDashboardPage';
@@ -140,7 +140,7 @@ const StudentDashboardHome: React.FC = () => {
                 '0 20px 40px rgba(0, 0, 0, 0.1)';
             }}
             onClick={() =>
-              (window.location.href = '/student/flashcards/animals/learn')
+              (window.location.href = '/student/flashcards')
             }
           >
             {/* Background decoration */}
@@ -200,7 +200,7 @@ const StudentDashboardHome: React.FC = () => {
 
             {/* Action Button */}
             <Link
-              to="/student/flashcards/animals/learn"
+              to="/student/flashcards"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -820,6 +820,8 @@ const StudentDashboardHome: React.FC = () => {
 // For now, we will just replace it in the route.
 
 const StudentDashboard: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <DashboardLayout title="Student Dashboard">
       <Routes>
@@ -831,9 +833,8 @@ const StudentDashboard: React.FC = () => {
         <Route
           path="/flashcards"
           element={
-            <FlashcardLearningFlow
-              courseId="default-course" // TODO: Get from user's enrolled courses
-              onExit={() => window.history.back()}
+            <StudentFlashcardLearningFlow
+              onExit={() => navigate('/student')}
             />
           }
         />
@@ -854,7 +855,7 @@ const StudentDashboard: React.FC = () => {
           path="/flashcards/:setId/learn"
           element={<FlashcardLearningPage />}
         />
-        <Route path="/videos" element={<VideoLecturesPage />} />
+        <Route path="/videos" element={<StudentVideoLearningFlow onExit={() => navigate('/student')} />} />
         <Route path="/videos/progress" element={<VideoProgressPage />} />
         <Route path="/videos/:videoId" element={<VideoDetailPage />} />
         <Route path="/course/:courseId" element={<CourseDetailPage />} />

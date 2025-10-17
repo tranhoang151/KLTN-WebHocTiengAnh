@@ -68,8 +68,6 @@ const UserList: React.FC<UserListProps> = ({
         return <GraduationCap size={16} style={{ color: '#2563eb' }} />;
       case 'student':
         return <UserIcon size={16} style={{ color: '#16a34a' }} />;
-      case 'parent':
-        return <Users size={16} style={{ color: '#9333ea' }} />;
       default:
         return <UserIcon size={16} style={{ color: '#6b7280' }} />;
     }
@@ -83,8 +81,6 @@ const UserList: React.FC<UserListProps> = ({
         return { background: '#eff6ff', color: '#2563eb', border: '#bfdbfe' };
       case 'student':
         return { background: '#f0fdf4', color: '#16a34a', border: '#bbf7d0' };
-      case 'parent':
-        return { background: '#faf5ff', color: '#9333ea', border: '#e9d5ff' };
       default:
         return { background: '#f9fafb', color: '#6b7280', border: '#e5e7eb' };
     }
@@ -258,7 +254,9 @@ const UserList: React.FC<UserListProps> = ({
                   }}
                   src={
                     user.avatar_url ||
-                    `data:image/jpeg;base64,${user.avatar_base64}`
+                    (user.avatar_base64?.startsWith('data:')
+                      ? user.avatar_base64
+                      : `data:image/jpeg;base64,${user.avatar_base64}`)
                   }
                   alt={user.full_name}
                 />
@@ -600,7 +598,9 @@ const UserList: React.FC<UserListProps> = ({
         userAvatar={
           deletePopup.user?.avatar_url || deletePopup.user?.avatar_base64
             ? deletePopup.user?.avatar_url ||
-              `data:image/jpeg;base64,${deletePopup.user?.avatar_base64}`
+            (deletePopup.user?.avatar_base64?.startsWith('data:')
+              ? deletePopup.user?.avatar_base64
+              : `data:image/jpeg;base64,${deletePopup.user?.avatar_base64}`)
             : undefined
         }
       />

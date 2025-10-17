@@ -103,8 +103,14 @@ public class UserController : ControllerBase
     {
         try
         {
+            _logger.LogInformation("CreateUser called with data: FullName={FullName}, Email={Email}, Role={Role}, Gender={Gender}, HasPassword={HasPassword}, HasAvatar={HasAvatar}, ClassIds={ClassIds}",
+                createUserDto.FullName, createUserDto.Email, createUserDto.Role, createUserDto.Gender,
+                !string.IsNullOrEmpty(createUserDto.Password), !string.IsNullOrEmpty(createUserDto.AvatarBase64),
+                createUserDto.ClassIds?.Count ?? 0);
+
             if (!ModelState.IsValid)
             {
+                _logger.LogWarning("ModelState is invalid: {ModelState}", ModelState);
                 return BadRequest(ModelState);
             }
 

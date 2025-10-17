@@ -75,8 +75,6 @@ export const preloadRoutesByRole = (userRole: string) => {
         import('../components/dashboards/AdminDashboard')
       );
       break;
-    case 'parent':
-      break;
   }
 
   // Common routes
