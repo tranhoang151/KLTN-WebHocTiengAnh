@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Class } from '../../types';
-import { classService } from '../../services/classService';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { classService, Class } from '../../services/classService';
 import ClassList from './ClassList';
 import ClassForm from './ClassForm';
 import { usePermissions } from '../../hooks/usePermissions';
@@ -17,12 +17,39 @@ import './ClassManagement.css';
 type ViewMode = 'list' | 'create' | 'edit';
 
 const ClassManagement: React.FC = () => {
+  const { classId } = useParams<{ classId?: string }>();
+  const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [selectedClass, setSelectedClass] = useState<Class | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const permissions = usePermissions();
+
+  // Handle edit mode from URL
+  useEffect(() => {
+    if (classId) {
+      loadClassForEdit(classId);
+    } else {
+      setViewMode('list');
+      setSelectedClass(null);
+    }
+  }, [classId]);
+
+  const loadClassForEdit = async (id: string) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const classData = await classService.getClassById(id);
+      setSelectedClass(classData);
+      setViewMode('edit');
+    } catch (err: any) {
+      setError(err.message || 'Failed to load class for editing');
+      setViewMode('list');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleCreateClass = () => {
     setSelectedClass(null);
@@ -40,6 +67,7 @@ const ClassManagement: React.FC = () => {
     setViewMode('list');
     setSelectedClass(null);
     setError(null);
+    navigate('/admin/classes');
   };
 
   const handleSubmitClass = async (
@@ -57,6 +85,7 @@ const ClassManagement: React.FC = () => {
 
       setViewMode('list');
       setSelectedClass(null);
+      navigate('/admin/classes');
     } catch (err: any) {
       setError(err.message || 'Failed to save class');
     } finally {

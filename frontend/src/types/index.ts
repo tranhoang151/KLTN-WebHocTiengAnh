@@ -39,9 +39,8 @@ export interface Course {
   id: string;
   name: string;
   description: string;
-  image_url: string;
+  image_url?: string; // Optional - not used in Android app
   created_at?: any; // Firebase Timestamp - optional since server provides default
-  target_age_group: string;
 }
 
 // Class Types

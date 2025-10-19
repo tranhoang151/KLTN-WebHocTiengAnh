@@ -391,6 +391,7 @@ public class FirebaseService : IFirebaseService
             }
 
             var course = snapshot.ConvertTo<Course>();
+            _logger.LogInformation($"Loaded course: {course.Name} (ID: {course.Id}, CreatedAt: {course.CreatedAt})");
             _cache.Set(cacheKey, course, _cacheExpiry);
 
             return course;
@@ -508,11 +509,16 @@ public class FirebaseService : IFirebaseService
             }
 
             var query = _firestore.Collection("classes")
-                .WhereEqualTo("course_id", courseId)
-                .WhereEqualTo("is_active", true);
+                .WhereEqualTo("course_id", courseId);
 
             var snapshot = await query.GetSnapshotAsync();
             var classes = snapshot.Documents.Select(doc => doc.ConvertTo<Class>()).ToList();
+
+            _logger.LogInformation($"Found {classes.Count} classes for course {courseId}");
+            foreach (var cls in classes)
+            {
+                _logger.LogInformation($"Class: {cls.Name} (ID: {cls.Id}, CourseId: {cls.CourseId})");
+            }
 
             _cache.Set(cacheKey, classes, _cacheExpiry);
             return classes;
