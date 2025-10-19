@@ -24,7 +24,6 @@ import {
   FileText,
   // UserCheck, // Removed - no longer needed
 } from 'lucide-react';
-import './FlashcardSetManager.css';
 
 interface FlashcardSetManagerProps {
   courseId?: string;
@@ -369,20 +368,22 @@ const FlashcardSetManager: React.FC<FlashcardSetManagerProps> = ({
   return (
     <div
       style={{
-        minHeight: '100vh',
-        background: '#f8fafc',
-        padding: '20px',
+        minHeight: onBack ? '100vh' : 'auto',
+        background: onBack ? '#f8fafc' : 'transparent',
+        padding: onBack ? '20px' : '0',
       }}
     >
-      {/* Back Button */}
-      <div style={{ marginBottom: '24px' }}>
-        <BackButton to="/admin" label="Back to Dashboard" />
-      </div>
+      {/* Back Button - only show when onBack prop is provided */}
+      {onBack && (
+        <div style={{ marginBottom: '24px' }}>
+          <BackButton to="/admin" label="Back to Dashboard" />
+        </div>
+      )}
 
       <div
         style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
+          maxWidth: onBack ? '1200px' : '100%',
+          margin: onBack ? '0 auto' : '0',
         }}
       >
         {/* Header Section */}

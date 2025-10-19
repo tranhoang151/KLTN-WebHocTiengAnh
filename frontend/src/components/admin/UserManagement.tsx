@@ -190,7 +190,136 @@ const UserManagement: React.FC<UserManagementProps> = () => {
         <div style={{ marginBottom: '24px' }}>
           <BackButton />
         </div>
+        {/* Header Section - Function Description */}
+        <div
+          style={{
+            background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+            borderRadius: '16px',
+            padding: '32px',
+            marginBottom: '24px',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
+            border: '1px solid #e5e7eb',
+            position: 'relative',
+            overflow: 'hidden',
+          }}
+        >
+          {/* Background decorations */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '-50px',
+              right: '-50px',
+              width: '100px',
+              height: '100px',
+              background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)',
+              borderRadius: '50%',
+              opacity: '0.05',
+              zIndex: 0,
+            }}
+          ></div>
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '-30px',
+              left: '-30px',
+              width: '60px',
+              height: '60px',
+              background: 'linear-gradient(135deg, #10b981, #06b6d4)',
+              borderRadius: '50%',
+              opacity: '0.05',
+              zIndex: 0,
+            }}
+          ></div>
 
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              position: 'relative',
+              zIndex: 1,
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '16px',
+              }}
+            >
+              <div
+                style={{
+                  width: '56px',
+                  height: '56px',
+                  background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                  borderRadius: '16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 8px 20px rgba(59, 130, 246, 0.3)',
+                }}
+              >
+                <Users size={28} color="white" />
+              </div>
+              <div>
+                <h1
+                  style={{
+                    fontSize: '32px',
+                    fontWeight: '700',
+                    background: 'linear-gradient(135deg, #1f2937, #374151)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    margin: '0 0 8px 0',
+                  }}
+                >
+                  User Management
+                </h1>
+                <p
+                  style={{
+                    fontSize: '16px',
+                    color: '#6b7280',
+                    margin: '0',
+                    fontWeight: '500',
+                  }}
+                >
+                  Manage user accounts and permissions
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => setShowCreateForm(true)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                color: 'white',
+                border: 'none',
+                padding: '12px 24px',
+                borderRadius: '12px',
+                fontSize: '14px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform =
+                  'translateY(-2px) scale(1.02)';
+                e.currentTarget.style.boxShadow =
+                  '0 8px 25px rgba(59, 130, 246, 0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                e.currentTarget.style.boxShadow =
+                  '0 4px 12px rgba(59, 130, 246, 0.3)';
+              }}
+            >
+              <Plus size={18} />
+              Add New User
+            </button>
+          </div>
+        </div>
         {/* Error Message */}
         {error && (
           <div
@@ -223,7 +352,6 @@ const UserManagement: React.FC<UserManagementProps> = () => {
             </button>
           </div>
         )}
-
         {/* Search and Filters */}
         <div
           style={{
@@ -323,99 +451,7 @@ const UserManagement: React.FC<UserManagementProps> = () => {
                 position: 'relative',
                 zIndex: 1,
               }}
-            >
-              <button
-                onClick={loadUsers}
-                disabled={loading}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  padding: '12px 20px',
-                  background: 'linear-gradient(135deg, #f8fafc, #e2e8f0)',
-                  color: '#475569',
-                  border: '1px solid #cbd5e1',
-                  borderRadius: '12px',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  cursor: loading ? 'not-allowed' : 'pointer',
-                  transition: 'all 0.3s ease',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
-                  position: 'relative',
-                  overflow: 'hidden',
-                }}
-                onMouseEnter={(e) => {
-                  if (!loading) {
-                    e.currentTarget.style.background =
-                      'linear-gradient(135deg, #3b82f6, #1d4ed8)';
-                    e.currentTarget.style.color = 'white';
-                    e.currentTarget.style.borderColor = '#3b82f6';
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                    e.currentTarget.style.boxShadow =
-                      '0 8px 25px rgba(59, 130, 246, 0.3)';
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!loading) {
-                    e.currentTarget.style.background =
-                      'linear-gradient(135deg, #f8fafc, #e2e8f0)';
-                    e.currentTarget.style.color = '#475569';
-                    e.currentTarget.style.borderColor = '#cbd5e1';
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow =
-                      '0 2px 8px rgba(0, 0, 0, 0.05)';
-                  }
-                }}
-              >
-                <RefreshCw
-                  size={16}
-                  style={{
-                    animation: loading ? 'spin 1s linear infinite' : 'none',
-                    color: 'inherit',
-                  }}
-                />
-                Refresh
-              </button>
-
-              <button
-                onClick={() => setShowCreateForm(true)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  padding: '12px 20px',
-                  background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '12px',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  boxShadow: '0 4px 16px rgba(59, 130, 246, 0.4)',
-                  position: 'relative',
-                  overflow: 'hidden',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform =
-                    'translateY(-2px) scale(1.02)';
-                  e.currentTarget.style.boxShadow =
-                    '0 8px 30px rgba(59, 130, 246, 0.5)';
-                  e.currentTarget.style.background =
-                    'linear-gradient(135deg, #1d4ed8, #1e40af)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  e.currentTarget.style.boxShadow =
-                    '0 4px 16px rgba(59, 130, 246, 0.4)';
-                  e.currentTarget.style.background =
-                    'linear-gradient(135deg, #3b82f6, #1d4ed8)';
-                }}
-              >
-                <Plus size={16} />
-                Add New User
-              </button>
-            </div>
+            ></div>
           </div>
 
           <div style={{ position: 'relative', zIndex: 1 }}>
@@ -427,8 +463,7 @@ const UserManagement: React.FC<UserManagementProps> = () => {
             />
           </div>
         </div>
-
-        {/* Create/Edit Form Popup */}
+        {/* Create/Edit Form Popup */}image.png
         {(showCreateForm || editingUser) && (
           <UserForm
             user={editingUser}
@@ -443,7 +478,6 @@ const UserManagement: React.FC<UserManagementProps> = () => {
             isEditing={!!editingUser}
           />
         )}
-
         {/* User List */}
         <div
           style={{
@@ -497,7 +531,6 @@ const UserManagement: React.FC<UserManagementProps> = () => {
             currentUser={currentUser as any}
           />
         </div>
-
         {/* Summary */}
         <div
           style={{
