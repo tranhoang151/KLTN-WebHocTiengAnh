@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Class, Course, User } from '../../types';
+import { Course, User } from '../../types';
 import { courseService } from '../../services/courseService';
-import { classService } from '../../services/classService';
+import { userService } from '../../services/userService';
+import { classService, Class } from '../../services/classService';
+import { useAuth } from '../../contexts/AuthContext';
 import {
   School,
   Users,
@@ -13,12 +15,15 @@ import {
   AlertCircle,
   Plus,
   Minus,
+  Search,
+  User as UserIcon,
+  UserPlus,
 } from 'lucide-react';
 import './ClassForm.css';
 
 interface ClassFormProps {
   classData?: Class | null;
-  onSubmit: (classData: Omit<Class, 'id' | 'created_at'>) => Promise<void>;
+  onSubmit: (classData: Omit<Class, 'id' | 'createdAt'>) => Promise<void>;
   onCancel: () => void;
   loading?: boolean;
 }
@@ -29,25 +34,48 @@ const ClassForm: React.FC<ClassFormProps> = ({
   onCancel,
   loading = false,
 }) => {
+  const { getAuthToken } = useAuth();
   const [formData, setFormData] = useState({
     name: '',
     description: '',
     capacity: 30,
-    course_id: '',
-    teacher_id: '',
-    student_ids: [] as string[],
-    is_active: true,
+    courseId: '',
+    teacherId: '',
+    studentIds: [] as string[],
+    isActive: true,
   });
 
   const [courses, setCourses] = useState<Course[]>([]);
   const [teachers, setTeachers] = useState<User[]>([]);
   const [availableStudents, setAvailableStudents] = useState<User[]>([]);
   const [selectedStudents, setSelectedStudents] = useState<User[]>([]);
+  const [allClasses, setAllClasses] = useState<Class[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loadingData, setLoadingData] = useState(true);
+  const [teacherSearchQuery, setTeacherSearchQuery] = useState('');
+  const [studentSearchQuery, setStudentSearchQuery] = useState('');
+  const [showTeacherDropdown, setShowTeacherDropdown] = useState(false);
+  const [showStudentDropdown, setShowStudentDropdown] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState<'bottom' | 'top'>('bottom');
 
   useEffect(() => {
     loadInitialData();
+  }, []);
+
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest('.teacher-dropdown') && !target.closest('.student-dropdown')) {
+        setShowTeacherDropdown(false);
+        setShowStudentDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   useEffect(() => {
@@ -56,22 +84,37 @@ const ClassForm: React.FC<ClassFormProps> = ({
         name: classData.name || '',
         description: classData.description || '',
         capacity: classData.capacity || 30,
-        course_id: classData.course_id || '',
-        teacher_id: classData.teacher_id || '',
-        student_ids: classData.student_ids || [],
-        is_active: classData.is_active ?? true,
+        courseId: classData.courseId || '',
+        teacherId: classData.teacherId || '',
+        studentIds: classData.studentIds || [],
+        isActive: classData.isActive ?? true,
       });
+
+      // Load selected students based on studentIds
+      if (classData.studentIds && classData.studentIds.length > 0) {
+        const selectedStudentsData = availableStudents.filter(student =>
+          classData.studentIds?.includes(student.id)
+        );
+        setSelectedStudents(selectedStudentsData);
+      }
     }
-  }, [classData]);
+  }, [classData, availableStudents]);
 
   const loadInitialData = async () => {
     try {
       setLoadingData(true);
-      const [coursesData] = await Promise.all([courseService.getAllCourses()]);
+      const token = await getAuthToken();
+      const [coursesData, teachersData, studentsData, classesData] = await Promise.all([
+        courseService.getAllCourses(),
+        userService.getAllUsers(token, { role: 'teacher' }),
+        userService.getAllUsers(token, { role: 'student' }),
+        classService.getAllClasses()
+      ]);
 
       setCourses(coursesData);
-      setTeachers([]); // TODO: Implement teacher loading
-      setAvailableStudents([]); // TODO: Implement student loading
+      setTeachers(teachersData);
+      setAvailableStudents(studentsData);
+      setAllClasses(classesData);
     } catch (error) {
       console.error('Error loading initial data:', error);
     } finally {
@@ -90,12 +133,12 @@ const ClassForm: React.FC<ClassFormProps> = ({
       newErrors.description = 'Class description is required';
     }
 
-    if (!formData.course_id) {
-      newErrors.course_id = 'Course selection is required';
+    if (!formData.courseId) {
+      newErrors.courseId = 'Course selection is required';
     }
 
-    if (!formData.teacher_id) {
-      newErrors.teacher_id = 'Teacher assignment is required';
+    if (!formData.teacherId) {
+      newErrors.teacherId = 'Teacher assignment is required';
     }
 
     if (formData.capacity < 1 || formData.capacity > 100) {
@@ -104,6 +147,79 @@ const ClassForm: React.FC<ClassFormProps> = ({
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  };
+
+  // Helper functions for teacher and student management
+  const getFilteredTeachers = () => {
+    if (!teacherSearchQuery.trim()) return teachers;
+    return teachers.filter(teacher =>
+      teacher.full_name.toLowerCase().includes(teacherSearchQuery.toLowerCase()) ||
+      teacher.email.toLowerCase().includes(teacherSearchQuery.toLowerCase())
+    );
+  };
+
+  const getFilteredStudents = () => {
+    // Get students that are not assigned to any other class
+    const unassignedStudents = availableStudents.filter(student => {
+      // If we're editing a class, include students already in this class
+      if (classData && classData.studentIds?.includes(student.id)) {
+        return true;
+      }
+
+      // Check if student is assigned to any other class
+      const isAssignedToOtherClass = allClasses.some(cls =>
+        cls.id !== classData?.id && // Not the current class being edited
+        cls.studentIds?.includes(student.id)
+      );
+
+      return !isAssignedToOtherClass;
+    });
+
+    // Apply search filter
+    if (!studentSearchQuery.trim()) return unassignedStudents;
+    return unassignedStudents.filter(student =>
+      student.full_name.toLowerCase().includes(studentSearchQuery.toLowerCase()) ||
+      student.email.toLowerCase().includes(studentSearchQuery.toLowerCase())
+    );
+  };
+
+  const getSelectedTeacher = () => {
+    return teachers.find(teacher => teacher.id === formData.teacherId);
+  };
+
+  const handleTeacherSelect = (teacher: User) => {
+    setFormData(prev => ({ ...prev, teacherId: teacher.id }));
+    setShowTeacherDropdown(false);
+    setTeacherSearchQuery('');
+  };
+
+  const handleStudentToggle = (student: User) => {
+    const isSelected = selectedStudents.some(s => s.id === student.id);
+    if (isSelected) {
+      setSelectedStudents(prev => prev.filter(s => s.id !== student.id));
+    } else {
+      if (selectedStudents.length < formData.capacity) {
+        setSelectedStudents(prev => [...prev, student]);
+      }
+    }
+  };
+
+  const handleRemoveStudent = (studentId: string) => {
+    setSelectedStudents(prev => prev.filter(s => s.id !== studentId));
+  };
+
+  const getAssignedStudentsInfo = () => {
+    const assignedStudents = availableStudents.filter(student => {
+      if (classData && classData.studentIds?.includes(student.id)) {
+        return false; // Don't count current class students
+      }
+      return allClasses.some(cls =>
+        cls.id !== classData?.id &&
+        cls.studentIds?.includes(student.id)
+      );
+    });
+
+    return assignedStudents;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -116,7 +232,7 @@ const ClassForm: React.FC<ClassFormProps> = ({
     try {
       await onSubmit({
         ...formData,
-        student_ids: selectedStudents.map((s) => s.id),
+        studentIds: selectedStudents.map((s) => s.id),
       });
     } catch (error) {
       console.error('Error submitting class form:', error);
@@ -138,22 +254,6 @@ const ClassForm: React.FC<ClassFormProps> = ({
     }
   };
 
-  const handleStudentToggle = (student: User) => {
-    setSelectedStudents((prev) => {
-      const isSelected = prev.some((s) => s.id === student.id);
-      if (isSelected) {
-        return prev.filter((s) => s.id !== student.id);
-      } else {
-        if (prev.length >= formData.capacity) {
-          alert(
-            `Cannot add more students. Class capacity is ${formData.capacity}.`
-          );
-          return prev;
-        }
-        return [...prev, student];
-      }
-    });
-  };
 
   if (loadingData) {
     return (
@@ -502,13 +602,13 @@ const ClassForm: React.FC<ClassFormProps> = ({
               Course *
             </label>
             <select
-              value={formData.course_id}
-              onChange={(e) => handleInputChange('course_id', e.target.value)}
+              value={formData.courseId}
+              onChange={(e) => handleInputChange('courseId', e.target.value)}
               disabled={loading}
               style={{
                 width: '100%',
                 padding: '12px 16px',
-                border: `2px solid ${errors.course_id ? '#ef4444' : '#e5e7eb'}`,
+                border: `2px solid ${errors.courseId ? '#ef4444' : '#e5e7eb'}`,
                 borderRadius: '12px',
                 fontSize: '16px',
                 transition: 'all 0.3s ease',
@@ -521,7 +621,7 @@ const ClassForm: React.FC<ClassFormProps> = ({
                 e.target.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)';
               }}
               onBlur={(e) => {
-                e.target.style.borderColor = errors.course_id
+                e.target.style.borderColor = errors.courseId
                   ? '#ef4444'
                   : '#e5e7eb';
                 e.target.style.boxShadow = 'none';
@@ -534,7 +634,7 @@ const ClassForm: React.FC<ClassFormProps> = ({
                 </option>
               ))}
             </select>
-            {errors.course_id && (
+            {errors.courseId && (
               <div
                 style={{
                   display: 'flex',
@@ -546,7 +646,7 @@ const ClassForm: React.FC<ClassFormProps> = ({
                 }}
               >
                 <AlertCircle size={14} />
-                {errors.course_id}
+                {errors.courseId}
               </div>
             )}
           </div>
@@ -566,40 +666,207 @@ const ClassForm: React.FC<ClassFormProps> = ({
               <UserCheck size={16} color="#6b7280" />
               Teacher *
             </label>
-            <select
-              value={formData.teacher_id}
-              onChange={(e) => handleInputChange('teacher_id', e.target.value)}
-              disabled={loading}
-              style={{
-                width: '100%',
-                padding: '12px 16px',
-                border: `2px solid ${errors.teacher_id ? '#ef4444' : '#e5e7eb'}`,
-                borderRadius: '12px',
-                fontSize: '16px',
-                transition: 'all 0.3s ease',
-                background: '#ffffff',
-                outline: 'none',
-                cursor: 'pointer',
-              }}
-              onFocus={(e) => {
-                e.target.style.borderColor = '#3b82f6';
-                e.target.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)';
-              }}
-              onBlur={(e) => {
-                e.target.style.borderColor = errors.teacher_id
-                  ? '#ef4444'
-                  : '#e5e7eb';
-                e.target.style.boxShadow = 'none';
-              }}
-            >
-              <option value="">Select a teacher</option>
-              {teachers.map((teacher) => (
-                <option key={teacher.id} value={teacher.id}>
-                  {teacher.full_name}
-                </option>
-              ))}
-            </select>
-            {errors.teacher_id && (
+            <div style={{ position: 'relative' }} className="teacher-dropdown">
+              {/* Selected Teacher Display */}
+              {getSelectedTeacher() ? (
+                <div
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    border: `2px solid ${errors.teacherId ? '#ef4444' : '#e5e7eb'}`,
+                    borderRadius: '12px',
+                    fontSize: '16px',
+                    background: '#ffffff',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => setShowTeacherDropdown(!showTeacherDropdown)}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <div
+                      style={{
+                        width: '32px',
+                        height: '32px',
+                        borderRadius: '50%',
+                        background: '#f3f4f6',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        overflow: 'hidden',
+                      }}
+                    >
+                      {getSelectedTeacher()?.avatar_url || getSelectedTeacher()?.avatar_base64 ? (
+                        <img
+                          src={getSelectedTeacher()?.avatar_url || getSelectedTeacher()?.avatar_base64}
+                          alt={getSelectedTeacher()?.full_name}
+                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        />
+                      ) : (
+                        <UserIcon size={16} color="#6b7280" />
+                      )}
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: '500', color: '#111827' }}>
+                        {getSelectedTeacher()?.full_name}
+                      </div>
+                      <div style={{ fontSize: '14px', color: '#6b7280' }}>
+                        {getSelectedTeacher()?.email}
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ color: '#6b7280' }}>
+                    {showTeacherDropdown ? '▲' : '▼'}
+                  </div>
+                </div>
+              ) : (
+                <div
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    border: `2px solid ${errors.teacherId ? '#ef4444' : '#e5e7eb'}`,
+                    borderRadius: '12px',
+                    fontSize: '16px',
+                    background: '#ffffff',
+                    color: '#9ca3af',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                  }}
+                  onClick={() => setShowTeacherDropdown(!showTeacherDropdown)}
+                >
+                  <span>Select a teacher</span>
+                  <span>▼</span>
+                </div>
+              )}
+
+              {/* Teacher Dropdown */}
+              {showTeacherDropdown && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '100%',
+                    left: 0,
+                    right: 0,
+                    background: 'white',
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '12px',
+                    boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                    zIndex: 9999,
+                    maxHeight: '50vh',
+                    overflow: 'hidden',
+                    minHeight: '150px',
+                  }}
+                >
+                  {/* Search Input */}
+                  <div style={{ padding: '12px', borderBottom: '1px solid #f3f4f6' }}>
+                    <div style={{ position: 'relative' }}>
+                      <Search
+                        size={16}
+                        style={{
+                          position: 'absolute',
+                          left: '12px',
+                          top: '50%',
+                          transform: 'translateY(-50%)',
+                          color: '#9ca3af',
+                        }}
+                      />
+                      <input
+                        type="text"
+                        placeholder="Search teachers..."
+                        value={teacherSearchQuery}
+                        onChange={(e) => setTeacherSearchQuery(e.target.value)}
+                        style={{
+                          width: '100%',
+                          padding: '8px 8px 8px 36px',
+                          border: '1px solid #d1d5db',
+                          borderRadius: '8px',
+                          fontSize: '14px',
+                          outline: 'none',
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Teacher List */}
+                  <div style={{
+                    maxHeight: 'calc(50vh - 100px)',
+                    overflowY: 'auto',
+                    minHeight: '100px',
+                    paddingBottom: '8px'
+                  }}>
+                    {getFilteredTeachers().length === 0 ? (
+                      <div
+                        style={{
+                          padding: '20px',
+                          textAlign: 'center',
+                          color: '#6b7280',
+                          fontSize: '14px',
+                        }}
+                      >
+                        {teacherSearchQuery ? 'No teachers found' : 'No teachers available'}
+                      </div>
+                    ) : (
+                      getFilteredTeachers().map((teacher) => (
+                        <div
+                          key={teacher.id}
+                          onClick={() => handleTeacherSelect(teacher)}
+                          style={{
+                            padding: '12px 16px',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '12px',
+                            borderBottom: '1px solid #f3f4f6',
+                            transition: 'background-color 0.2s',
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = '#f9fafb';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = 'white';
+                          }}
+                        >
+                          <div
+                            style={{
+                              width: '32px',
+                              height: '32px',
+                              borderRadius: '50%',
+                              background: '#f3f4f6',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              overflow: 'hidden',
+                            }}
+                          >
+                            {teacher.avatar_url || teacher.avatar_base64 ? (
+                              <img
+                                src={teacher.avatar_url || teacher.avatar_base64}
+                                alt={teacher.full_name}
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                              />
+                            ) : (
+                              <UserIcon size={16} color="#6b7280" />
+                            )}
+                          </div>
+                          <div>
+                            <div style={{ fontWeight: '500', color: '#111827' }}>
+                              {teacher.full_name}
+                            </div>
+                            <div style={{ fontSize: '14px', color: '#6b7280' }}>
+                              {teacher.email}
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+            {errors.teacherId && (
               <div
                 style={{
                   display: 'flex',
@@ -611,7 +878,7 @@ const ClassForm: React.FC<ClassFormProps> = ({
                 }}
               >
                 <AlertCircle size={14} />
-                {errors.teacher_id}
+                {errors.teacherId}
               </div>
             )}
           </div>
@@ -625,20 +892,20 @@ const ClassForm: React.FC<ClassFormProps> = ({
               alignItems: 'center',
               gap: '12px',
               padding: '16px',
-              background: formData.is_active
+              background: formData.isActive
                 ? 'linear-gradient(135deg, #d1fae5, #a7f3d0)'
                 : 'linear-gradient(135deg, #f3f4f6, #e5e7eb)',
-              border: `2px solid ${formData.is_active ? '#10b981' : '#d1d5db'}`,
+              border: `2px solid ${formData.isActive ? '#10b981' : '#d1d5db'}`,
               borderRadius: '12px',
               cursor: 'pointer',
               transition: 'all 0.3s ease',
             }}
-            onClick={() => handleInputChange('is_active', !formData.is_active)}
+            onClick={() => handleInputChange('isActive', !formData.isActive)}
           >
             <input
               type="checkbox"
-              checked={formData.is_active}
-              onChange={(e) => handleInputChange('is_active', e.target.checked)}
+              checked={formData.isActive}
+              onChange={(e) => handleInputChange('isActive', e.target.checked)}
               disabled={loading}
               style={{
                 width: '20px',
@@ -654,7 +921,7 @@ const ClassForm: React.FC<ClassFormProps> = ({
                 gap: '8px',
               }}
             >
-              {formData.is_active ? (
+              {formData.isActive ? (
                 <CheckCircle size={20} color="#065f46" />
               ) : (
                 <XCircle size={20} color="#6b7280" />
@@ -663,7 +930,7 @@ const ClassForm: React.FC<ClassFormProps> = ({
                 style={{
                   fontSize: '16px',
                   fontWeight: '600',
-                  color: formData.is_active ? '#065f46' : '#6b7280',
+                  color: formData.isActive ? '#065f46' : '#6b7280',
                 }}
               >
                 Class is active
@@ -682,156 +949,328 @@ const ClassForm: React.FC<ClassFormProps> = ({
               fontSize: '16px',
               fontWeight: '600',
               color: '#374151',
-              marginBottom: '16px',
+              marginBottom: '8px',
             }}
           >
             <Users size={20} color="#6b7280" />
             Student Assignment
           </label>
 
-          <div
-            style={{
-              background: '#f8fafc',
-              borderRadius: '12px',
-              padding: '20px',
-              border: '1px solid #e5e7eb',
-            }}
-          >
+          {/* Assigned Students Info */}
+          {getAssignedStudentsInfo().length > 0 && (
             <div
               style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
+                background: '#fef3c7',
+                border: '1px solid #f59e0b',
+                borderRadius: '8px',
+                padding: '12px',
                 marginBottom: '16px',
+                fontSize: '14px',
+                color: '#92400e',
               }}
             >
-              <span
-                style={{
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  color: '#6b7280',
-                }}
-              >
-                Available Students ({availableStudents.length})
-              </span>
-              <span
-                style={{
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  color: '#3b82f6',
-                  background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)',
-                  padding: '4px 12px',
-                  borderRadius: '20px',
-                }}
-              >
-                Selected: {selectedStudents.length}/{formData.capacity}
-              </span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                <AlertCircle size={16} color="#f59e0b" />
+                <span style={{ fontWeight: '600' }}>
+                  {getAssignedStudentsInfo().length} students are already assigned to other classes
+                </span>
+              </div>
+              <div style={{ fontSize: '13px', color: '#a16207' }}>
+                These students will not appear in the selection list below.
+              </div>
             </div>
+          )}
 
-            <div
-              style={{
-                maxHeight: '200px',
-                overflowY: 'auto',
-                display: 'grid',
-                gap: '8px',
-              }}
-            >
-              {availableStudents.map((student) => {
-                const isSelected = selectedStudents.some(
-                  (s) => s.id === student.id
-                );
-                return (
+          {/* Selected Students Display */}
+          {selectedStudents.length > 0 && (
+            <div style={{ marginBottom: '16px' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  marginBottom: '8px',
+                }}
+              >
+                <UserPlus size={16} color="#059669" />
+                <span
+                  style={{
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    color: '#059669',
+                  }}
+                >
+                  Selected Students ({selectedStudents.length}/{formData.capacity})
+                </span>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '8px',
+                }}
+              >
+                {selectedStudents.map((student) => (
                   <div
                     key={student.id}
-                    onClick={() => handleStudentToggle(student)}
                     style={{
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'space-between',
-                      padding: '12px 16px',
-                      background: isSelected
-                        ? 'linear-gradient(135deg, #dbeafe, #bfdbfe)'
-                        : '#ffffff',
-                      border: `2px solid ${isSelected ? '#3b82f6' : '#e5e7eb'}`,
-                      borderRadius: '8px',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s ease',
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.background = '#f8fafc';
-                        e.currentTarget.style.borderColor = '#cbd5e1';
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isSelected) {
-                        e.currentTarget.style.background = '#ffffff';
-                        e.currentTarget.style.borderColor = '#e5e7eb';
-                      }
+                      gap: '8px',
+                      padding: '8px 12px',
+                      background: 'linear-gradient(135deg, #ecfdf5, #d1fae5)',
+                      border: '1px solid #d1fae5',
+                      borderRadius: '20px',
+                      fontSize: '14px',
                     }}
                   >
                     <div
                       style={{
+                        width: '24px',
+                        height: '24px',
+                        borderRadius: '50%',
+                        background: '#f3f4f6',
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '12px',
+                        justifyContent: 'center',
+                        overflow: 'hidden',
                       }}
                     >
-                      <div
-                        style={{
-                          width: '32px',
-                          height: '32px',
-                          background: isSelected
-                            ? 'linear-gradient(135deg, #3b82f6, #1d4ed8)'
-                            : 'linear-gradient(135deg, #f3f4f6, #e5e7eb)',
-                          borderRadius: '8px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}
-                      >
-                        <Users
-                          size={16}
-                          color={isSelected ? 'white' : '#6b7280'}
+                      {student.avatar_url || student.avatar_base64 ? (
+                        <img
+                          src={student.avatar_url || student.avatar_base64}
+                          alt={student.full_name}
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                          }}
                         />
-                      </div>
-                      <div>
-                        <div
-                          style={{
-                            fontSize: '14px',
-                            fontWeight: '600',
-                            color: isSelected ? '#1e40af' : '#1f2937',
-                          }}
-                        >
-                          {student.full_name}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: '12px',
-                            color: isSelected ? '#3b82f6' : '#6b7280',
-                          }}
-                        >
-                          {student.email}
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '8px',
-                      }}
-                    >
-                      {isSelected ? (
-                        <CheckCircle size={20} color="#3b82f6" />
                       ) : (
-                        <Plus size={20} color="#6b7280" />
+                        <UserIcon size={12} color="#6b7280" />
                       )}
                     </div>
+                    <span style={{ color: '#059669', fontWeight: '500' }}>
+                      {student.full_name}
+                    </span>
+                    <button
+                      onClick={() => handleRemoveStudent(student.id)}
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        cursor: 'pointer',
+                        color: '#ef4444',
+                        padding: '2px',
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <XCircle size={14} />
+                    </button>
                   </div>
-                );
-              })}
+                ))}
+              </div>
             </div>
+          )}
+
+          {/* Student Selection */}
+          <div style={{ position: 'relative' }} className="student-dropdown">
+            <div
+              style={{
+                width: '100%',
+                padding: '12px 16px',
+                border: '2px solid #e5e7eb',
+                borderRadius: '12px',
+                fontSize: '16px',
+                background: '#ffffff',
+                color: '#9ca3af',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+              onClick={(e) => {
+                setShowStudentDropdown(!showStudentDropdown);
+                // Check if dropdown would be cut off at bottom
+                const rect = (e.target as HTMLElement).getBoundingClientRect();
+                const viewportHeight = window.innerHeight;
+                const dropdownHeight = 500; // max height of dropdown
+
+                if (rect.bottom + dropdownHeight > viewportHeight) {
+                  setDropdownPosition('top');
+                } else {
+                  setDropdownPosition('bottom');
+                }
+              }}
+            >
+              <span>
+                {selectedStudents.length === 0
+                  ? `Select students (${getFilteredStudents().length} available)`
+                  : `${selectedStudents.length} students selected (${getFilteredStudents().length} available)`}
+              </span>
+              <span>▼</span>
+            </div>
+
+            {/* Student Dropdown */}
+            {showStudentDropdown && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: dropdownPosition === 'top' ? 'auto' : '100%',
+                  bottom: dropdownPosition === 'top' ? '100%' : 'auto',
+                  left: 0,
+                  right: 0,
+                  background: 'white',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '12px',
+                  boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                  zIndex: 9999,
+                  maxHeight: '60vh',
+                  overflow: 'hidden',
+                  minHeight: '200px',
+                }}
+              >
+                {/* Search Input */}
+                <div style={{ padding: '12px', borderBottom: '1px solid #f3f4f6' }}>
+                  <div style={{ position: 'relative' }}>
+                    <Search
+                      size={16}
+                      style={{
+                        position: 'absolute',
+                        left: '12px',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        color: '#9ca3af',
+                      }}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Search students..."
+                      value={studentSearchQuery}
+                      onChange={(e) => setStudentSearchQuery(e.target.value)}
+                      style={{
+                        width: '100%',
+                        padding: '8px 8px 8px 36px',
+                        border: '1px solid #d1d5db',
+                        borderRadius: '8px',
+                        fontSize: '14px',
+                        outline: 'none',
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Student List */}
+                <div style={{
+                  maxHeight: 'calc(60vh - 120px)',
+                  overflowY: 'auto',
+                  minHeight: '150px',
+                  paddingBottom: '8px'
+                }}>
+                  {getFilteredStudents().length === 0 ? (
+                    <div
+                      style={{
+                        padding: '20px',
+                        textAlign: 'center',
+                        color: '#6b7280',
+                        fontSize: '14px',
+                      }}
+                    >
+                      {studentSearchQuery ? (
+                        'No students found matching your search'
+                      ) : getAssignedStudentsInfo().length > 0 ? (
+                        <div>
+                          <div style={{ marginBottom: '8px' }}>
+                            All students are already assigned to other classes
+                          </div>
+                          <div style={{ fontSize: '12px', color: '#9ca3af' }}>
+                            {getAssignedStudentsInfo().length} students are unavailable
+                          </div>
+                        </div>
+                      ) : (
+                        'No students available'
+                      )}
+                    </div>
+                  ) : (
+                    getFilteredStudents().map((student) => {
+                      const isSelected = selectedStudents.some(s => s.id === student.id);
+                      const isAtCapacity = !isSelected && selectedStudents.length >= formData.capacity;
+
+                      return (
+                        <div
+                          key={student.id}
+                          onClick={() => !isAtCapacity && handleStudentToggle(student)}
+                          style={{
+                            padding: '12px 16px',
+                            cursor: isAtCapacity ? 'not-allowed' : 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '12px',
+                            borderBottom: '1px solid #f3f4f6',
+                            transition: 'background-color 0.2s',
+                            opacity: isAtCapacity ? 0.5 : 1,
+                            background: isSelected ? '#eff6ff' : 'white',
+                          }}
+                          onMouseEnter={(e) => {
+                            if (!isAtCapacity) {
+                              e.currentTarget.style.backgroundColor = isSelected ? '#eff6ff' : '#f9fafb';
+                            }
+                          }}
+                          onMouseLeave={(e) => {
+                            if (!isAtCapacity) {
+                              e.currentTarget.style.backgroundColor = isSelected ? '#eff6ff' : 'white';
+                            }
+                          }}
+                        >
+                          <div
+                            style={{
+                              width: '32px',
+                              height: '32px',
+                              borderRadius: '50%',
+                              background: '#f3f4f6',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              overflow: 'hidden',
+                            }}
+                          >
+                            {student.avatar_url || student.avatar_base64 ? (
+                              <img
+                                src={student.avatar_url || student.avatar_base64}
+                                alt={student.full_name}
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                              />
+                            ) : (
+                              <UserIcon size={16} color="#6b7280" />
+                            )}
+                          </div>
+                          <div style={{ flex: 1 }}>
+                            <div style={{ fontWeight: '500', color: '#111827' }}>
+                              {student.full_name}
+                            </div>
+                            <div style={{ fontSize: '14px', color: '#6b7280' }}>
+                              {student.email}
+                            </div>
+                          </div>
+                          {isSelected && (
+                            <div style={{ color: '#3b82f6' }}>
+                              <CheckCircle size={20} />
+                            </div>
+                          )}
+                          {isAtCapacity && (
+                            <div style={{ fontSize: '12px', color: '#ef4444' }}>
+                              Capacity reached
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

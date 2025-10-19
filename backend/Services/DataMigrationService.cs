@@ -88,8 +88,7 @@ namespace BingGoWebAPI.Services
                     Name = course.Name,
                     Description = course.Description,
                     ImageUrl = course.ImageUrl,
-                    CreatedAt = course.CreatedAt,
-                    IsActive = true
+                    CreatedAt = course.CreatedAt
                 };
                 await collection.Document(course.Id).SetAsync(courseModel);
             }

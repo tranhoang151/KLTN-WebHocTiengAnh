@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Course } from '../../types';
 import { courseService } from '../../services/courseService';
 import CourseList from './CourseList';
@@ -10,12 +11,38 @@ import { BackButton } from '../BackButton';
 type ViewMode = 'list' | 'create' | 'edit';
 
 const CourseManagement: React.FC = () => {
+  const { courseId } = useParams<{ courseId: string }>();
+  const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const permissions = usePermissions();
+
+  useEffect(() => {
+    if (courseId) {
+      loadCourseForEdit(courseId);
+    }
+  }, [courseId]);
+
+  const loadCourseForEdit = async (id: string) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const course = await courseService.getCourseById(id);
+      if (course) {
+        setSelectedCourse(course);
+        setViewMode('edit');
+      } else {
+        setError('Course not found');
+      }
+    } catch (err: any) {
+      setError(err.message || 'Failed to load course');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleCreateCourse = () => {
     setSelectedCourse(null);
@@ -33,6 +60,7 @@ const CourseManagement: React.FC = () => {
     setViewMode('list');
     setSelectedCourse(null);
     setError(null);
+    navigate('/admin/courses');
   };
 
   const handleSubmitCourse = async (courseData: Omit<Course, 'id'>) => {
@@ -48,6 +76,7 @@ const CourseManagement: React.FC = () => {
 
       setViewMode('list');
       setSelectedCourse(null);
+      navigate('/admin/courses');
     } catch (err: any) {
       setError(err.message || 'Failed to save course');
     } finally {

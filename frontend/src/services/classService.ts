@@ -30,6 +30,8 @@ export interface UpdateClassRequest {
   description?: string;
   capacity?: number;
   courseId?: string;
+  teacherId?: string;
+  studentIds?: string[];
 }
 
 export interface AssignStudentsRequest {

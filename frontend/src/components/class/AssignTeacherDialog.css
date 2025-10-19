@@ -1,0 +1,305 @@
+.assign-teacher-dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.assign-teacher-dialog {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    width: 100%;
+    max-width: 500px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.assign-teacher-dialog-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.assign-teacher-dialog-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.assign-teacher-dialog-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    color: #6b7280;
+    transition: all 0.2s;
+}
+
+.assign-teacher-dialog-close:hover {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.assign-teacher-dialog-close:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.assign-teacher-dialog-content {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 0 24px;
+}
+
+.assign-teacher-error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.assign-teacher-search {
+    margin-bottom: 16px;
+}
+
+.assign-teacher-search-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.assign-teacher-search-input svg {
+    position: absolute;
+    left: 12px;
+    color: #9ca3af;
+    z-index: 1;
+}
+
+.assign-teacher-search-input input {
+    width: 100%;
+    padding: 12px 12px 12px 40px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.assign-teacher-search-input input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.assign-teacher-search-input input:disabled {
+    background: #f9fafb;
+    cursor: not-allowed;
+}
+
+.assign-teacher-list {
+    flex: 1;
+    overflow-y: auto;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    max-height: 300px;
+}
+
+.assign-teacher-loading,
+.assign-teacher-empty {
+    padding: 40px 20px;
+    text-align: center;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.assign-teacher-item {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid #f3f4f6;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.assign-teacher-item:last-child {
+    border-bottom: none;
+}
+
+.assign-teacher-item:hover {
+    background: #f9fafb;
+}
+
+.assign-teacher-item.selected {
+    background: #eff6ff;
+    border-color: #dbeafe;
+}
+
+.assign-teacher-item-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    overflow: hidden;
+}
+
+.assign-teacher-item-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.assign-teacher-item-avatar svg {
+    color: #6b7280;
+}
+
+.assign-teacher-item-info {
+    flex: 1;
+}
+
+.assign-teacher-item-name {
+    font-weight: 500;
+    color: #111827;
+    margin-bottom: 2px;
+}
+
+.assign-teacher-item-email {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.assign-teacher-item-check {
+    color: #10b981;
+    margin-left: 12px;
+}
+
+.assign-teacher-dialog-footer {
+    padding: 20px 24px;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.assign-teacher-remove-btn {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.assign-teacher-remove-btn:hover {
+    background: #fee2e2;
+    border-color: #fca5a5;
+}
+
+.assign-teacher-remove-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.assign-teacher-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.assign-teacher-cancel-btn {
+    background: white;
+    color: #374151;
+    border: 1px solid #d1d5db;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.assign-teacher-cancel-btn:hover {
+    background: #f9fafb;
+    border-color: #9ca3af;
+}
+
+.assign-teacher-cancel-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.assign-teacher-assign-btn {
+    background: #3b82f6;
+    color: white;
+    border: 1px solid #3b82f6;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.assign-teacher-assign-btn:hover {
+    background: #2563eb;
+    border-color: #2563eb;
+}
+
+.assign-teacher-assign-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #9ca3af;
+    border-color: #9ca3af;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .assign-teacher-dialog {
+        margin: 10px;
+        max-height: 90vh;
+    }
+
+    .assign-teacher-dialog-header,
+    .assign-teacher-dialog-content,
+    .assign-teacher-dialog-footer {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .assign-teacher-dialog-footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .assign-teacher-actions {
+        width: 100%;
+    }
+
+    .assign-teacher-cancel-btn,
+    .assign-teacher-assign-btn {
+        flex: 1;
+    }
+}

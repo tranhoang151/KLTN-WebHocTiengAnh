@@ -1,7 +1,7 @@
 
 import { authService } from './authService';
 
-const API_BASE_URL = 'https://localhost:5001/api';
+const API_BASE_URL = 'http://localhost:5000/api';
 
 class ApiService {
   private async request<T>(

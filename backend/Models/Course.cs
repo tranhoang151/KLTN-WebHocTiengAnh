@@ -15,14 +15,8 @@ public class Course
     public string Description { get; set; } = string.Empty;
 
     [FirestoreProperty("image_url")]
-    public string ImageUrl { get; set; } = string.Empty;
+    public string? ImageUrl { get; set; }
 
     [FirestoreProperty("created_at")]
     public Timestamp CreatedAt { get; set; } = Timestamp.GetCurrentTimestamp();
-
-    [FirestoreProperty("target_age_group")]
-    public string? TargetAgeGroup { get; set; }
-
-    [FirestoreProperty("is_active")]
-    public bool IsActive { get; set; } = true;
 }
