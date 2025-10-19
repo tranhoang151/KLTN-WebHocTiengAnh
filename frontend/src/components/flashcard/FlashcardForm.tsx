@@ -51,7 +51,7 @@ const FlashcardForm: React.FC<FlashcardFormProps> = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(
-    editingCard?.imageUrl || null
+    editingCard?.imageUrl || (editingCard?.imageBase64 ? `data:image/jpeg;base64,${editingCard.imageBase64}` : null)
   );
   const fileInputRef = useRef<HTMLInputElement>(null);
 

@@ -8,12 +8,12 @@ import {
   X,
   FileText,
   BookOpen,
-  Users,
+  // Users, // Removed - no longer needed
   AlertCircle,
   CheckCircle,
   XCircle,
   School,
-  UserCheck,
+  // UserCheck, // Removed - no longer needed
 } from 'lucide-react';
 import './FlashcardSetForm.css';
 
@@ -28,7 +28,7 @@ interface FormData {
   title: string;
   description: string;
   courseId: string;
-  assignedClassIds: string[];
+  // assignedClassIds: string[]; // Removed - using course-based access instead
 }
 
 const FlashcardSetForm: React.FC<FlashcardSetFormProps> = ({
@@ -42,12 +42,12 @@ const FlashcardSetForm: React.FC<FlashcardSetFormProps> = ({
     title: '',
     description: '',
     courseId: courseId || '',
-    assignedClassIds: [],
+    // assignedClassIds: [], // Removed - using course-based access instead
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [courses, setCourses] = useState<any[]>([]);
-  const [classes, setClasses] = useState<any[]>([]);
+  // const [classes, setClasses] = useState<any[]>([]); // Removed - no longer needed
 
   useEffect(() => {
     if (editingSet) {
@@ -55,11 +55,11 @@ const FlashcardSetForm: React.FC<FlashcardSetFormProps> = ({
         title: editingSet.title,
         description: editingSet.description,
         courseId: editingSet.courseId,
-        assignedClassIds: editingSet.assignedClassIds || [],
+        // assignedClassIds: editingSet.assignedClassIds || [], // Removed - using course-based access instead
       });
     }
     loadCourses();
-    loadClasses();
+    // loadClasses(); // Removed - no longer needed
   }, [editingSet]);
 
   const loadCourses = async () => {
@@ -72,6 +72,8 @@ const FlashcardSetForm: React.FC<FlashcardSetFormProps> = ({
     }
   };
 
+  // loadClasses method removed - no longer needed
+  /*
   const loadClasses = async () => {
     try {
       // This would be implemented in a class service
@@ -81,6 +83,7 @@ const FlashcardSetForm: React.FC<FlashcardSetFormProps> = ({
       console.error('Failed to load classes:', err);
     }
   };
+  */
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -94,6 +97,8 @@ const FlashcardSetForm: React.FC<FlashcardSetFormProps> = ({
     }));
   };
 
+  // handleClassSelection method removed - no longer needed
+  /*
   const handleClassSelection = (classId: string, checked: boolean) => {
     setFormData((prev) => ({
       ...prev,
@@ -102,6 +107,7 @@ const FlashcardSetForm: React.FC<FlashcardSetFormProps> = ({
         : prev.assignedClassIds.filter((id) => id !== classId),
     }));
   };
+  */
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -439,113 +445,7 @@ const FlashcardSetForm: React.FC<FlashcardSetFormProps> = ({
             )}
           </div>
 
-          {/* Class Assignment */}
-          {classes.length > 0 && (
-            <div style={{ marginBottom: '32px' }}>
-              <label
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  color: '#374151',
-                  marginBottom: '12px',
-                }}
-              >
-                <Users size={16} color="#f59e0b" />
-                Assign to Classes
-              </label>
-              <div
-                style={{
-                  background: 'linear-gradient(135deg, #f8fafc, #f1f5f9)',
-                  border: '1px solid #e2e8f0',
-                  borderRadius: '12px',
-                  padding: '16px',
-                  maxHeight: '200px',
-                  overflowY: 'auto',
-                }}
-              >
-                {classes.map((classItem) => (
-                  <label
-                    key={classItem.id}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '12px',
-                      padding: '12px',
-                      borderRadius: '8px',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s ease',
-                      marginBottom: '8px',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background =
-                        'rgba(59, 130, 246, 0.05)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'transparent';
-                    }}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={formData.assignedClassIds.includes(classItem.id)}
-                      onChange={(e) =>
-                        handleClassSelection(classItem.id, e.target.checked)
-                      }
-                      style={{
-                        width: '18px',
-                        height: '18px',
-                        accentColor: '#3b82f6',
-                        cursor: 'pointer',
-                      }}
-                    />
-                    <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '8px',
-                        flex: 1,
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: '24px',
-                          height: '24px',
-                          background: formData.assignedClassIds.includes(
-                            classItem.id
-                          )
-                            ? 'linear-gradient(135deg, #3b82f6, #1d4ed8)'
-                            : 'linear-gradient(135deg, #e5e7eb, #d1d5db)',
-                          borderRadius: '6px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          transition: 'all 0.3s ease',
-                        }}
-                      >
-                        <UserCheck size={12} color="white" />
-                      </div>
-                      <span
-                        style={{
-                          fontSize: '14px',
-                          fontWeight: '500',
-                          color: formData.assignedClassIds.includes(
-                            classItem.id
-                          )
-                            ? '#1f2937'
-                            : '#6b7280',
-                          transition: 'all 0.3s ease',
-                        }}
-                      >
-                        {classItem.name}
-                      </span>
-                    </div>
-                  </label>
-                ))}
-              </div>
-            </div>
-          )}
+          {/* Class Assignment section removed - using course-based access instead */}
 
           {/* Form Actions */}
           <div

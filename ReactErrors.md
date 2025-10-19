@@ -1,140 +1,198 @@
-Compiled with problems:
-×
-ERROR in ./src/components/course/CourseDetail.tsx
-Module build failed (from ./node_modules/babel-loader/lib/index.js):
-SyntaxError: D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\src\components\course\CourseDetail.tsx: Unexpected token, expected "," (311:8)
-
-  309 |         </div>
-  310 |
-> 311 |         {/* Assign Classes Dialog */ }
-      |         ^
-  312 |     {
-  313 |         course && (
-  314 |             <AssignClassesDialog
-    at constructor (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:367:19)
-    at TypeScriptParserMixin.raise (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:6630:19)
-    at TypeScriptParserMixin.unexpected (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:6650:16)
-    at TypeScriptParserMixin.expect (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:6930:12)
-    at TypeScriptParserMixin.parseParenAndDistinguishExpression (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:11669:14)
-    at TypeScriptParserMixin.parseExprAtom (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:11335:23)
-    at TypeScriptParserMixin.parseExprAtom (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:4797:20)
-    at TypeScriptParserMixin.parseExprSubscripts (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:11085:23)
-    at TypeScriptParserMixin.parseUpdate (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:11070:21)
-    at TypeScriptParserMixin.parseMaybeUnary (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:11050:23)
-    at TypeScriptParserMixin.parseMaybeUnary (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:9857:18)
-    at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:10903:61)
-    at TypeScriptParserMixin.parseExprOps (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:10908:23)
-    at TypeScriptParserMixin.parseMaybeConditional (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:10885:23)
-    at TypeScriptParserMixin.parseMaybeAssign (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:10835:21)
-    at TypeScriptParserMixin.parseMaybeAssign (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:9806:20)
-    at TypeScriptParserMixin.parseExpressionBase (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:10788:23)
-    at D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:10784:39
-    at TypeScriptParserMixin.allowInAnd (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:12431:16)
-    at TypeScriptParserMixin.parseExpression (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:10784:17)
-    at TypeScriptParserMixin.parseReturnStatement (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:13151:28)
-    at TypeScriptParserMixin.parseStatementContent (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:12807:21)
-    at TypeScriptParserMixin.parseStatementContent (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:9532:18)
-    at TypeScriptParserMixin.parseStatementLike (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:12776:17)
-    at TypeScriptParserMixin.parseStatementListItem (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:12756:17)
-    at TypeScriptParserMixin.parseBlockOrModuleBlockBody (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:13325:61)
-    at TypeScriptParserMixin.parseBlockBody (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:13318:10)
-    at TypeScriptParserMixin.parseBlock (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:13306:10)
-    at TypeScriptParserMixin.parseFunctionBody (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:12110:24)
-    at TypeScriptParserMixin.parseArrowExpression (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:12085:10)
-    at TypeScriptParserMixin.parseParenAndDistinguishExpression (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:11695:12)
-    at TypeScriptParserMixin.parseExprAtom (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:11335:23)
-    at TypeScriptParserMixin.parseExprAtom (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:4797:20)
-    at TypeScriptParserMixin.parseExprSubscripts (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:11085:23)
-    at TypeScriptParserMixin.parseUpdate (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:11070:21)
-    at TypeScriptParserMixin.parseMaybeUnary (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:11050:23)
-    at TypeScriptParserMixin.parseMaybeUnary (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:9857:18)
-    at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:10903:61)
-    at TypeScriptParserMixin.parseExprOps (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:10908:23)
-    at TypeScriptParserMixin.parseMaybeConditional (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:10885:23)
-    at TypeScriptParserMixin.parseMaybeAssign (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:10835:21)
-    at TypeScriptParserMixin.parseMaybeAssign (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:9806:20)
-    at D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:10804:39
-    at TypeScriptParserMixin.allowInAnd (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:12431:16)
-    at TypeScriptParserMixin.parseMaybeAssignAllowIn (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:10804:17)
-    at TypeScriptParserMixin.parseVar (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:13393:91)
-    at TypeScriptParserMixin.parseVarStatement (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:13239:10)
-    at TypeScriptParserMixin.parseVarStatement (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:9498:31)
-    at TypeScriptParserMixin.parseStatementContent (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:12860:23)
-    at TypeScriptParserMixin.parseStatementContent (D:\DoAn\KLTN-WebHocTiengAnh\SourceCode\frontend\node_modules\@babel\parser\lib\index.js:9532:18)
-ERROR
-[eslint] 
-src\components\course\CourseDetail.tsx
-  Line 311:8:  Parsing error: ')' expected
-
-ERROR in src/components/course/AssignClassesDialog.tsx:112:21
-TS2554: Expected 2 arguments, but got 3.
-    110 |                     classId,
-    111 |                     { courseId: undefined },
-  > 112 |                     token
-        |                     ^^^^^
-    113 |                 );
-    114 |             }
-    115 |
-ERROR in src/components/course/AssignClassesDialog.tsx:121:21
-TS2554: Expected 2 arguments, but got 3.
-    119 |                     classId,
-    120 |                     { courseId: courseId },
-  > 121 |                     token
-        |                     ^^^^^
-    122 |                 );
-    123 |             }
-    124 |
-ERROR in src/components/course/CourseDetail.tsx:114:78
-TS2554: Expected 2 arguments, but got 3.
-    112 |
-    113 |             // Update class to remove course_id
-  > 114 |             await classService.updateClass(classId, { courseId: undefined }, token);
-        |                                                                              ^^^^^
-    115 |
-    116 |             // Reload data
-    117 |             await loadCourseData();
-ERROR in src/components/course/CourseDetail.tsx:311:9
-TS1005: ')' expected.
-    309 |         </div>
-    310 |
-  > 311 |         {/* Assign Classes Dialog */ }
-        |         ^
-    312 |     {
-    313 |         course && (
-    314 |             <AssignClassesDialog
-ERROR in src/components/course/CourseDetail.tsx:324:5
-TS1128: Declaration or statement expected.
-    322 |         )
-    323 |     }
-  > 324 |     </div >
-        |     ^^
-    325 |   );
-    326 | };
-    327 |
-ERROR in src/components/course/CourseDetail.tsx:324:7
-TS2304: Cannot find name 'div'.
-    322 |         )
-    323 |     }
-  > 324 |     </div >
-        |       ^^^
-    325 |   );
-    326 | };
-    327 |
-ERROR in src/components/course/CourseDetail.tsx:325:3
-TS1109: Expression expected.
-    323 |     }
-    324 |     </div >
-  > 325 |   );
-        |   ^
-    326 | };
-    327 |
-    328 | export default CourseDetail;
-ERROR in src/components/course/CourseDetail.tsx:326:1
-TS1128: Declaration or statement expected.
-    324 |     </div >
-    325 |   );
-  > 326 | };
-        | ^
-    327 |
-    328 | export default CourseDetail;
-    329 |
+Security measures initialized successfully
+SecurityProvider.tsx:39 Security measures initialized successfully
+index.iife.js:1347 content script loaded
+index.iife.js:1 initial theme: light
+FlashcardSetManager.tsx:109 Selected set: {id: 'WjQLN8xuWrwbRu9BHeO0', title: 'Fruits', description: 'Learn about fruits', courseId: '1Tj7Zug9y2PtKCj3mR1X', createdBy: 'admin', …}
+FlashcardEditor.tsx:57 Fetched cards: (13) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+scheduler.development.js:14 [Violation] 'message' handler took 152ms
+FlashcardEditor.tsx:57 Fetched cards: (13) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+api.ts:31   PUT http://localhost:5000/api/flashcard/card/e3a635ab-14f7-4908-a7b4-78d61a9da966 500 (Internal Server Error)
+request @ api.ts:31
+await in request
+put @ api.ts:97
+updateFlashcard @ flashcardService.ts:161
+handleSubmit @ FlashcardForm.tsx:176
+await in handleSubmit
+executeDispatch @ react-dom-client.development.js:16368
+runWithFiberInDEV @ react-dom-client.development.js:1518
+processDispatchQueue @ react-dom-client.development.js:16417
+(anonymous) @ react-dom-client.development.js:17016
+batchedUpdates$1 @ react-dom-client.development.js:3262
+dispatchEventForPluginEventSystem @ react-dom-client.development.js:16572
+dispatchEvent @ react-dom-client.development.js:20657
+dispatchDiscreteEvent @ react-dom-client.development.js:20625
+<form>
+(anonymous) @ react-jsx-dev-runtime.development.js:336
+FlashcardForm @ FlashcardForm.tsx:328
+react_stack_bottom_frame @ react-dom-client.development.js:23863
+renderWithHooksAgain @ react-dom-client.development.js:5629
+renderWithHooks @ react-dom-client.development.js:5541
+updateFunctionComponent @ react-dom-client.development.js:8897
+beginWork @ react-dom-client.development.js:10522
+runWithFiberInDEV @ react-dom-client.development.js:1518
+performUnitOfWork @ react-dom-client.development.js:15130
+workLoopSync @ react-dom-client.development.js:14956
+renderRootSync @ react-dom-client.development.js:14936
+performWorkOnRoot @ react-dom-client.development.js:14417
+performSyncWorkOnRoot @ react-dom-client.development.js:16231
+flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16068
+processRootScheduleInMicrotask @ react-dom-client.development.js:16116
+(anonymous) @ react-dom-client.development.js:16245
+<FlashcardForm>
+(anonymous) @ react-jsx-dev-runtime.development.js:336
+FlashcardEditor @ FlashcardEditor.tsx:896
+react_stack_bottom_frame @ react-dom-client.development.js:23863
+renderWithHooksAgain @ react-dom-client.development.js:5629
+renderWithHooks @ react-dom-client.development.js:5541
+updateFunctionComponent @ react-dom-client.development.js:8897
+beginWork @ react-dom-client.development.js:10522
+runWithFiberInDEV @ react-dom-client.development.js:1518
+performUnitOfWork @ react-dom-client.development.js:15130
+workLoopSync @ react-dom-client.development.js:14956
+renderRootSync @ react-dom-client.development.js:14936
+performWorkOnRoot @ react-dom-client.development.js:14417
+performSyncWorkOnRoot @ react-dom-client.development.js:16231
+flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16068
+processRootScheduleInMicrotask @ react-dom-client.development.js:16116
+(anonymous) @ react-dom-client.development.js:16245
+api.ts:73  API request failed: Error: Error updating flashcard
+    at ApiService.request (api.ts:63:1)
+    at async FlashcardService.updateFlashcard (flashcardService.ts:161:1)
+    at async handleSubmit (FlashcardForm.tsx:176:1)
+overrideMethod @ hook.js:608
+request @ api.ts:73
+await in request
+put @ api.ts:97
+updateFlashcard @ flashcardService.ts:161
+handleSubmit @ FlashcardForm.tsx:176
+await in handleSubmit
+executeDispatch @ react-dom-client.development.js:16368
+runWithFiberInDEV @ react-dom-client.development.js:1518
+processDispatchQueue @ react-dom-client.development.js:16417
+(anonymous) @ react-dom-client.development.js:17016
+batchedUpdates$1 @ react-dom-client.development.js:3262
+dispatchEventForPluginEventSystem @ react-dom-client.development.js:16572
+dispatchEvent @ react-dom-client.development.js:20657
+dispatchDiscreteEvent @ react-dom-client.development.js:20625
+<form>
+(anonymous) @ react-jsx-dev-runtime.development.js:336
+FlashcardForm @ FlashcardForm.tsx:328
+react_stack_bottom_frame @ react-dom-client.development.js:23863
+renderWithHooksAgain @ react-dom-client.development.js:5629
+renderWithHooks @ react-dom-client.development.js:5541
+updateFunctionComponent @ react-dom-client.development.js:8897
+beginWork @ react-dom-client.development.js:10522
+runWithFiberInDEV @ react-dom-client.development.js:1518
+performUnitOfWork @ react-dom-client.development.js:15130
+workLoopSync @ react-dom-client.development.js:14956
+renderRootSync @ react-dom-client.development.js:14936
+performWorkOnRoot @ react-dom-client.development.js:14417
+performSyncWorkOnRoot @ react-dom-client.development.js:16231
+flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16068
+processRootScheduleInMicrotask @ react-dom-client.development.js:16116
+(anonymous) @ react-dom-client.development.js:16245
+<FlashcardForm>
+(anonymous) @ react-jsx-dev-runtime.development.js:336
+FlashcardEditor @ FlashcardEditor.tsx:896
+react_stack_bottom_frame @ react-dom-client.development.js:23863
+renderWithHooksAgain @ react-dom-client.development.js:5629
+renderWithHooks @ react-dom-client.development.js:5541
+updateFunctionComponent @ react-dom-client.development.js:8897
+beginWork @ react-dom-client.development.js:10522
+runWithFiberInDEV @ react-dom-client.development.js:1518
+performUnitOfWork @ react-dom-client.development.js:15130
+workLoopSync @ react-dom-client.development.js:14956
+renderRootSync @ react-dom-client.development.js:14936
+performWorkOnRoot @ react-dom-client.development.js:14417
+performSyncWorkOnRoot @ react-dom-client.development.js:16231
+flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16068
+processRootScheduleInMicrotask @ react-dom-client.development.js:16116
+(anonymous) @ react-dom-client.development.js:16245
+flashcardService.ts:168  Error updating flashcard: Error: Error updating flashcard
+    at FlashcardService.updateFlashcard (flashcardService.ts:165:1)
+    at async handleSubmit (FlashcardForm.tsx:176:1)
+overrideMethod @ hook.js:608
+updateFlashcard @ flashcardService.ts:168
+await in updateFlashcard
+handleSubmit @ FlashcardForm.tsx:176
+await in handleSubmit
+executeDispatch @ react-dom-client.development.js:16368
+runWithFiberInDEV @ react-dom-client.development.js:1518
+processDispatchQueue @ react-dom-client.development.js:16417
+(anonymous) @ react-dom-client.development.js:17016
+batchedUpdates$1 @ react-dom-client.development.js:3262
+dispatchEventForPluginEventSystem @ react-dom-client.development.js:16572
+dispatchEvent @ react-dom-client.development.js:20657
+dispatchDiscreteEvent @ react-dom-client.development.js:20625
+<form>
+(anonymous) @ react-jsx-dev-runtime.development.js:336
+FlashcardForm @ FlashcardForm.tsx:328
+react_stack_bottom_frame @ react-dom-client.development.js:23863
+renderWithHooksAgain @ react-dom-client.development.js:5629
+renderWithHooks @ react-dom-client.development.js:5541
+updateFunctionComponent @ react-dom-client.development.js:8897
+beginWork @ react-dom-client.development.js:10522
+runWithFiberInDEV @ react-dom-client.development.js:1518
+performUnitOfWork @ react-dom-client.development.js:15130
+workLoopSync @ react-dom-client.development.js:14956
+renderRootSync @ react-dom-client.development.js:14936
+performWorkOnRoot @ react-dom-client.development.js:14417
+performSyncWorkOnRoot @ react-dom-client.development.js:16231
+flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16068
+processRootScheduleInMicrotask @ react-dom-client.development.js:16116
+(anonymous) @ react-dom-client.development.js:16245
+<FlashcardForm>
+(anonymous) @ react-jsx-dev-runtime.development.js:336
+FlashcardEditor @ FlashcardEditor.tsx:896
+react_stack_bottom_frame @ react-dom-client.development.js:23863
+renderWithHooksAgain @ react-dom-client.development.js:5629
+renderWithHooks @ react-dom-client.development.js:5541
+updateFunctionComponent @ react-dom-client.development.js:8897
+beginWork @ react-dom-client.development.js:10522
+runWithFiberInDEV @ react-dom-client.development.js:1518
+performUnitOfWork @ react-dom-client.development.js:15130
+workLoopSync @ react-dom-client.development.js:14956
+renderRootSync @ react-dom-client.development.js:14936
+performWorkOnRoot @ react-dom-client.development.js:14417
+performSyncWorkOnRoot @ react-dom-client.development.js:16231
+flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16068
+processRootScheduleInMicrotask @ react-dom-client.development.js:16116
+(anonymous) @ react-dom-client.development.js:16245
+[Violation] 'click' handler took 1424ms
+api.ts:31   DELETE http://localhost:5000/api/flashcard/card/e3a635ab-14f7-4908-a7b4-78d61a9da966 500 (Internal Server Error)
+request @ api.ts:31
+await in request
+delete @ api.ts:113
+deleteFlashcard @ flashcardService.ts:175
+handleDeleteCard @ FlashcardEditor.tsx:84
+onClick @ FlashcardEditor.tsx:853
+executeDispatch @ react-dom-client.development.js:16368
+runWithFiberInDEV @ react-dom-client.development.js:1518
+processDispatchQueue @ react-dom-client.development.js:16417
+(anonymous) @ react-dom-client.development.js:17016
+batchedUpdates$1 @ react-dom-client.development.js:3262
+dispatchEventForPluginEventSystem @ react-dom-client.development.js:16572
+dispatchEvent @ react-dom-client.development.js:20657
+dispatchDiscreteEvent @ react-dom-client.development.js:20625
+api.ts:73  API request failed: Error: Error deleting flashcard
+    at ApiService.request (api.ts:63:1)
+    at async FlashcardService.deleteFlashcard (flashcardService.ts:175:1)
+    at async handleDeleteCard (FlashcardEditor.tsx:84:1)
+overrideMethod @ hook.js:608
+request @ api.ts:73
+await in request
+delete @ api.ts:113
+deleteFlashcard @ flashcardService.ts:175
+handleDeleteCard @ FlashcardEditor.tsx:84
+onClick @ FlashcardEditor.tsx:853
+executeDispatch @ react-dom-client.development.js:16368
+runWithFiberInDEV @ react-dom-client.development.js:1518
+processDispatchQueue @ react-dom-client.development.js:16417
+(anonymous) @ react-dom-client.development.js:17016
+batchedUpdates$1 @ react-dom-client.development.js:3262
+dispatchEventForPluginEventSystem @ react-dom-client.development.js:16572
+dispatchEvent @ react-dom-client.development.js:20657
+dispatchDiscreteEvent @ react-dom-client.development.js:20625
+flashcardService.ts:180  Error deleting flashcard: Error: Error deleting flashcard
+    at FlashcardService.deleteFlashcard (flashcardService.ts:177:1)
+    at async handleDeleteCard (FlashcardEditor.tsx:84:1)

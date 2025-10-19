@@ -964,16 +964,15 @@ public class FirebaseService : IFirebaseService
         {
             flashcard.Id = Guid.NewGuid().ToString();
 
-            // Handle image upload if base64 data is provided
+            // Handle image - keep base64 data for now (like Android app)
             if (!string.IsNullOrEmpty(flashcard.ImageBase64))
             {
-                var fileName = $"flashcard_{flashcard.Id}_{DateTime.UtcNow:yyyyMMdd_HHmmss}.jpg";
-                var imageUrl = await _storageService.UploadBase64ImageAsync(flashcard.ImageBase64, fileName, "flashcards");
-                flashcard.ImageUrl = imageUrl;
-                flashcard.ImageBase64 = null; // Clear base64 data after upload
+                // Keep the base64 data in the document (like Android app does)
+                // Don't upload to storage for now
+                flashcard.ImageUrl = ""; // Clear URL when using base64
             }
 
-            var docRef = _firestore.Collection("flashcards").Document(flashcard.Id);
+            var docRef = _firestore.Collection("flashcard_sets").Document(flashcard.FlashcardSetId).Collection("cards").Document(flashcard.Id);
             await docRef.SetAsync(flashcard);
 
             // Clear cache
@@ -1005,8 +1004,8 @@ public class FirebaseService : IFirebaseService
             {
                 ["title"] = setDto.Title,
                 ["description"] = setDto.Description,
-                ["course_id"] = setDto.CourseId,
-                ["assigned_class_ids"] = setDto.AssignedClassIds ?? new List<string>()
+                ["course_id"] = setDto.CourseId
+                // ["assigned_class_ids"] = setDto.AssignedClassIds ?? new List<string>() // Removed - using course-based access instead
             };
 
             await docRef.UpdateAsync(updateData);
@@ -1029,6 +1028,8 @@ public class FirebaseService : IFirebaseService
         }
     }
 
+    // AssignFlashcardSetAsync method removed - using course-based access instead
+    /*
     public async Task AssignFlashcardSetAsync(string setId, List<string> classIds)
     {
         try
@@ -1065,6 +1066,7 @@ public class FirebaseService : IFirebaseService
             throw;
         }
     }
+    */
 
     public async Task<bool> DeleteFlashcardSetAsync(string setId)
     {
@@ -1081,9 +1083,8 @@ public class FirebaseService : IFirebaseService
             // Get the course ID for cache clearing
             var set = snapshot.ConvertTo<FlashcardSet>();
 
-            // Delete all flashcards in this set first
-            var flashcardsQuery = _firestore.Collection("flashcards")
-                .WhereEqualTo("flashcard_set_id", setId);
+            // Delete all flashcards in this set first (using new subcollection structure)
+            var flashcardsQuery = _firestore.Collection("flashcard_sets").Document(setId).Collection("cards");
             var flashcardsSnapshot = await flashcardsQuery.GetSnapshotAsync();
 
             var batch = _firestore.StartBatch();
@@ -1115,23 +1116,39 @@ public class FirebaseService : IFirebaseService
     {
         try
         {
-            var docRef = _firestore.Collection("flashcards").Document(cardId);
-            var snapshot = await docRef.GetSnapshotAsync();
+            // We need to find which set this card belongs to
+            // Since we don't have the setId, we'll need to search through all sets
+            // This is not ideal but necessary with the current structure
+            var setsQuery = _firestore.Collection("flashcard_sets");
+            var setsSnapshot = await setsQuery.GetSnapshotAsync();
 
-            if (!snapshot.Exists)
+            DocumentReference? docRef = null;
+            foreach (var setDoc in setsSnapshot.Documents)
+            {
+                var cardDoc = _firestore.Collection("flashcard_sets").Document(setDoc.Id).Collection("cards").Document(cardId);
+                var cardSnapshot = await cardDoc.GetSnapshotAsync();
+                if (cardSnapshot.Exists)
+                {
+                    docRef = cardDoc;
+                    break;
+                }
+            }
+
+            if (docRef == null)
             {
                 return null;
             }
-
+            var snapshot = await docRef.GetSnapshotAsync();
             var existingCard = snapshot.ConvertTo<Flashcard>();
 
             var imageUrl = cardDto.ImageUrl ?? "";
 
-            // Handle image upload if base64 data is provided
+            // Handle image - keep base64 data for now (like Android app)
             if (!string.IsNullOrEmpty(cardDto.ImageBase64))
             {
-                var fileName = $"flashcard_{cardId}_{DateTime.UtcNow:yyyyMMdd_HHmmss}.jpg";
-                imageUrl = await _storageService.UploadBase64ImageAsync(cardDto.ImageBase64, fileName, "flashcards");
+                // Keep the base64 data in the document (like Android app does)
+                // Don't upload to storage for now
+                imageUrl = ""; // Clear URL when using base64
             }
 
             var updateData = new Dictionary<string, object>
@@ -1140,7 +1157,7 @@ public class FirebaseService : IFirebaseService
                 ["back_text"] = cardDto.BackText,
                 ["example_sentence"] = cardDto.ExampleSentence ?? "",
                 ["image_url"] = imageUrl,
-                ["image_base64"] = "", // Clear base64 data after upload
+                ["image_base64"] = cardDto.ImageBase64 ?? "", // Keep base64 data
                 ["order"] = cardDto.Order
             };
 
@@ -1167,19 +1184,36 @@ public class FirebaseService : IFirebaseService
     {
         try
         {
-            var docRef = _firestore.Collection("flashcards").Document(cardId);
-            var snapshot = await docRef.GetSnapshotAsync();
+            // We need to find which set this card belongs to
+            var setsQuery = _firestore.Collection("flashcard_sets");
+            var setsSnapshot = await setsQuery.GetSnapshotAsync();
 
-            if (!snapshot.Exists)
+            DocumentReference? docRef = null;
+            string? setId = null;
+            foreach (var setDoc in setsSnapshot.Documents)
+            {
+                var cardDoc = _firestore.Collection("flashcard_sets").Document(setDoc.Id).Collection("cards").Document(cardId);
+                var cardSnapshot = await cardDoc.GetSnapshotAsync();
+                if (cardSnapshot.Exists)
+                {
+                    docRef = cardDoc;
+                    setId = setDoc.Id;
+                    break;
+                }
+            }
+
+            if (docRef == null)
             {
                 return false;
             }
 
-            var card = snapshot.ConvertTo<Flashcard>();
             await docRef.DeleteAsync();
 
             // Clear cache
-            _cache.Remove($"flashcards_set_{card.FlashcardSetId}");
+            if (!string.IsNullOrEmpty(setId))
+            {
+                _cache.Remove($"flashcards_set_{setId}");
+            }
 
             _logger.LogInformation("Flashcard deleted: {CardId}", cardId);
             return true;
@@ -1674,24 +1708,48 @@ public class FirebaseService : IFirebaseService
                 return new List<FlashcardSet>(); // Student not found or not assigned to any class
             }
 
-            // Assuming a student belongs to one primary class for flashcard assignments
-            // Or we can iterate through all classes if multiple assignments are possible
-            var studentClassId = student.ClassIds.FirstOrDefault();
-            if (string.IsNullOrEmpty(studentClassId))
-            {
-                return new List<FlashcardSet>();
-            }
+            // Get student's classes
+            var studentClassIds = student.ClassIds;
+            var accessibleSets = new List<FlashcardSet>();
 
-            var query = _firestore.Collection("flashcard_sets")
+            // 1. Get flashcard sets for the specific course (course-based access)
+            var courseQuery = _firestore.Collection("flashcard_sets")
                 .WhereEqualTo("course_id", courseId)
-                .WhereArrayContains("assigned_class_ids", studentClassId) // Filter by assigned class
                 .WhereEqualTo("is_active", true);
 
-            var snapshot = await query.GetSnapshotAsync();
-            var sets = snapshot.Documents.Select(doc => doc.ConvertTo<FlashcardSet>()).ToList();
+            var courseSnapshot = await courseQuery.GetSnapshotAsync();
+            var courseSets = courseSnapshot.Documents.Select(doc => doc.ConvertTo<FlashcardSet>()).ToList();
 
-            _cache.Set(cacheKey, sets, _cacheExpiry);
-            return sets;
+            // Filter sets that belong to courses where student's classes are enrolled
+            foreach (var set in courseSets)
+            {
+                // Check if any of student's classes belong to this course
+                var classQuery = _firestore.Collection("classes")
+                    .WhereEqualTo("course_id", set.CourseId)
+                    .WhereIn("id", studentClassIds);
+
+                var classSnapshot = await classQuery.GetSnapshotAsync();
+                if (classSnapshot.Documents.Any())
+                {
+                    accessibleSets.Add(set);
+                }
+            }
+
+            // 2. Get global flashcard sets (animals, colors, numbers) - accessible to all students
+            var globalSetIds = new[] { "animals", "colors", "numbers" };
+            var globalQuery = _firestore.Collection("flashcard_sets")
+                .WhereIn("set_id", globalSetIds)
+                .WhereEqualTo("is_active", true);
+
+            var globalSnapshot = await globalQuery.GetSnapshotAsync();
+            var globalSets = globalSnapshot.Documents.Select(doc => doc.ConvertTo<FlashcardSet>()).ToList();
+            accessibleSets.AddRange(globalSets);
+
+            // Remove duplicates based on ID
+            accessibleSets = accessibleSets.GroupBy(s => s.Id).Select(g => g.First()).ToList();
+
+            _cache.Set(cacheKey, accessibleSets, _cacheExpiry);
+            return accessibleSets;
         }
         catch (Exception ex)
         {

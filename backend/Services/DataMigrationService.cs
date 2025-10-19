@@ -197,7 +197,7 @@ namespace BingGoWebAPI.Services
                     SetId = flashcardSet.SetId,
                     CreatedBy = flashcardSet.CreatedBy,
                     CreatedAt = flashcardSet.CreatedAt,
-                    AssignedClassIds = flashcardSet.AssignedClassIds ?? new List<string>(),
+                    // AssignedClassIds = flashcardSet.AssignedClassIds ?? new List<string>(), // Removed - using course-based access instead
                     IsActive = true
                 };
                 await collection.Document(flashcardSet.Id).SetAsync(flashcardSetModel);
