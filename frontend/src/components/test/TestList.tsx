@@ -1,122 +1,480 @@
 import React from 'react';
 import { Test, Course } from '../../types';
-import { Card } from '../ui/Card';
-import { Button } from '../ui/Button';
-import { Edit, Trash2, Eye, Clock, FileText } from 'lucide-react';
+import { Edit, Trash2, Eye, Clock, FileText, BookOpen } from 'lucide-react';
 
 interface TestListProps {
-    tests: Test[];
-    courses: Course[];
-    onEdit: (test: Test) => void;
-    onDelete: (testId: string) => Promise<void>;
-    onPreview: (test: Test) => void;
+  tests: Test[];
+  courses: Course[];
+  onEdit: (test: Test) => void;
+  onDelete: (testId: string) => Promise<void>;
+  onPreview: (test: Test) => void;
 }
 
 const TestList: React.FC<TestListProps> = ({
-    tests,
-    courses,
-    onEdit,
-    onDelete,
-    onPreview
+  tests,
+  courses,
+  onEdit,
+  onDelete,
+  onPreview,
 }) => {
-    const getCourseName = (courseId: string) => {
-        const course = courses.find(c => c.id === courseId);
-        return course?.name || 'Unknown Course';
-    };
+  const getCourseName = (courseId: string) => {
+    const course = courses.find((c) => c.id === courseId);
+    return course?.name || 'Unknown Course';
+  };
 
-    const formatDuration = (minutes: number) => {
-        if (minutes < 60) {
-            return `${minutes} min`;
-        }
-        const hours = Math.floor(minutes / 60);
-        const mins = minutes % 60;
-        return `${hours}h ${mins}m`;
-    };
-
-    const handleDelete = async (testId: string) => {
-        if (window.confirm('Are you sure you want to delete this test?')) {
-            await onDelete(testId);
-        }
-    };
-
-    if (!tests || tests.length === 0) {
-        return (
-            <Card className="p-8 text-center">
-                <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">No tests found</h3>
-                <p className="text-gray-600">Create your first test to get started.</p>
-            </Card>
-        );
+  const formatDuration = (minutes: number) => {
+    if (minutes < 60) {
+      return `${minutes} min`;
     }
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return `${hours}h ${mins}m`;
+  };
 
+  const handleDelete = async (testId: string) => {
+    if (window.confirm('Are you sure you want to delete this test?')) {
+      await onDelete(testId);
+    }
+  };
+
+  if (!tests || tests.length === 0) {
     return (
-        <div className="grid gap-6">
-            {tests && tests.map((test) => (
-                <Card key={test.id} className="p-6 bg-gradient-to-r from-white to-blue-50 border border-blue-200 hover:shadow-lg transition-all duration-300 hover:border-blue-300">
-                    <div className="flex justify-between items-start">
-                        <div className="flex-1">
-                            <div className="flex items-center gap-3 mb-3">
-                                <h3 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">{test.title}</h3>
-                                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-800 border border-blue-200">
-                                    {getCourseName(test.course_id)}
-                                </span>
-                            </div>
+      <div
+        style={{
+          background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+          borderRadius: '20px',
+          padding: '48px 32px',
+          textAlign: 'center',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08)',
+          border: '1px solid #e5e7eb',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        {/* Background decorations */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '-30px',
+            right: '-30px',
+            width: '80px',
+            height: '80px',
+            background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+            borderRadius: '50%',
+            opacity: '0.05',
+            zIndex: 0,
+          }}
+        ></div>
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '-20px',
+            left: '-20px',
+            width: '60px',
+            height: '60px',
+            background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+            borderRadius: '50%',
+            opacity: '0.05',
+            zIndex: 0,
+          }}
+        ></div>
 
-                            <div className="flex items-center gap-6 text-sm text-gray-700 mb-4">
-                                <div className="flex items-center gap-2 bg-blue-50 px-3 py-1 rounded-lg">
-                                    <FileText className="w-4 h-4 text-blue-500" />
-                                    <span className="font-medium">{test.questions?.length || 0} questions</span>
-                                </div>
-                                <div className="flex items-center gap-2 bg-green-50 px-3 py-1 rounded-lg">
-                                    <Clock className="w-4 h-4 text-green-500" />
-                                    <span className="font-medium">{formatDuration(test.duration)}</span>
-                                </div>
-                                <div className="flex items-center gap-2 bg-purple-50 px-3 py-1 rounded-lg">
-                                    <span className="font-medium text-purple-700">Max Score: {test.maxScore}</span>
-                                </div>
-                            </div>
-
-                            {test.created_at && (
-                                <p className="text-xs text-gray-500 bg-gray-50 px-2 py-1 rounded inline-block">
-                                    Created: {new Date(test.created_at.seconds * 1000).toLocaleDateString()}
-                                </p>
-                            )}
-                        </div>
-
-                        <div className="flex items-center gap-3 ml-6">
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => onPreview(test)}
-                                className="flex items-center gap-2 bg-gradient-to-r from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 border-blue-300 text-blue-700 hover:text-blue-800 transition-all duration-200"
-                            >
-                                <Eye className="w-4 h-4" />
-                                Preview
-                            </Button>
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => onEdit(test)}
-                                className="flex items-center gap-2 bg-gradient-to-r from-indigo-50 to-indigo-100 hover:from-indigo-100 hover:to-indigo-200 border-indigo-300 text-indigo-700 hover:text-indigo-800 transition-all duration-200"
-                            >
-                                <Edit className="w-4 h-4" />
-                                Edit
-                            </Button>
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => handleDelete(test.id)}
-                                className="flex items-center gap-2 bg-gradient-to-r from-red-50 to-red-100 hover:from-red-100 hover:to-red-200 border-red-300 text-red-600 hover:text-red-700 transition-all duration-200"
-                            >
-                                <Trash2 className="w-4 h-4" />
-                                Delete
-                            </Button>
-                        </div>
-                    </div>
-                </Card>
-            ))}
+        <div
+          style={{
+            width: '80px',
+            height: '80px',
+            background: 'linear-gradient(135deg, #6b7280, #4b5563)',
+            borderRadius: '20px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '0 auto 24px',
+            boxShadow: '0 8px 20px rgba(107, 114, 128, 0.3)',
+            position: 'relative',
+            zIndex: 1,
+          }}
+        >
+          <FileText size={40} color="white" />
         </div>
+        <h3
+          style={{
+            fontSize: '24px',
+            fontWeight: '700',
+            color: '#1f2937',
+            margin: '0 0 12px 0',
+            position: 'relative',
+            zIndex: 1,
+          }}
+        >
+          No tests found
+        </h3>
+        <p
+          style={{
+            fontSize: '16px',
+            color: '#6b7280',
+            margin: '0',
+            lineHeight: '1.6',
+            position: 'relative',
+            zIndex: 1,
+          }}
+        >
+          Create your first test to get started.
+        </p>
+      </div>
     );
+  }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      {tests &&
+        tests.map((test) => (
+          <div
+            key={test.id}
+            style={{
+              background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+              borderRadius: '16px',
+              padding: '24px',
+              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
+              border: '1px solid #e5e7eb',
+              position: 'relative',
+              overflow: 'hidden',
+              transition: 'all 0.3s ease',
+              cursor: 'pointer',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-4px)';
+              e.currentTarget.style.boxShadow =
+                '0 8px 32px rgba(0, 0, 0, 0.12)';
+              e.currentTarget.style.borderColor = '#3b82f6';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow =
+                '0 4px 20px rgba(0, 0, 0, 0.08)';
+              e.currentTarget.style.borderColor = '#e5e7eb';
+            }}
+          >
+            {/* Background decorations */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '-20px',
+                right: '-20px',
+                width: '60px',
+                height: '60px',
+                background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                borderRadius: '50%',
+                opacity: '0.05',
+                zIndex: 0,
+              }}
+            ></div>
+            <div
+              style={{
+                position: 'absolute',
+                bottom: '-15px',
+                left: '-15px',
+                width: '40px',
+                height: '40px',
+                background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+                borderRadius: '50%',
+                opacity: '0.05',
+                zIndex: 0,
+              }}
+            ></div>
+
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'flex-start',
+                position: 'relative',
+                zIndex: 1,
+              }}
+            >
+              <div style={{ flex: 1 }}>
+                {/* Header with title and course */}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    marginBottom: '16px',
+                  }}
+                >
+                  <div
+                    style={{
+                      width: '40px',
+                      height: '40px',
+                      background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                      borderRadius: '10px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)',
+                    }}
+                  >
+                    <BookOpen size={20} color="white" />
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <h3
+                      style={{
+                        fontSize: '20px',
+                        fontWeight: '700',
+                        background: 'linear-gradient(135deg, #1f2937, #374151)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        margin: '0 0 4px 0',
+                      }}
+                    >
+                      {test.title}
+                    </h3>
+                    <div
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        padding: '4px 12px',
+                        borderRadius: '20px',
+                        background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)',
+                        border: '1px solid #93c5fd',
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontSize: '12px',
+                          fontWeight: '600',
+                          color: '#1e40af',
+                        }}
+                      >
+                        {getCourseName(test.course_id)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Test details */}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '16px',
+                    marginBottom: '16px',
+                    flexWrap: 'wrap',
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)',
+                      padding: '8px 12px',
+                      borderRadius: '8px',
+                      border: '1px solid #93c5fd',
+                    }}
+                  >
+                    <FileText size={16} color="#1e40af" />
+                    <span
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '600',
+                        color: '#1e40af',
+                      }}
+                    >
+                      {test.questions?.length || 0} questions
+                    </span>
+                  </div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      background: 'linear-gradient(135deg, #dcfce7, #bbf7d0)',
+                      padding: '8px 12px',
+                      borderRadius: '8px',
+                      border: '1px solid #86efac',
+                    }}
+                  >
+                    <Clock size={16} color="#166534" />
+                    <span
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '600',
+                        color: '#166534',
+                      }}
+                    >
+                      {formatDuration(test.duration)}
+                    </span>
+                  </div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      background: 'linear-gradient(135deg, #f3e8ff, #e9d5ff)',
+                      padding: '8px 12px',
+                      borderRadius: '8px',
+                      border: '1px solid #c4b5fd',
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '600',
+                        color: '#7c3aed',
+                      }}
+                    >
+                      Max Score: {test.maxScore || 'N/A'}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Created date */}
+                {test.created_at && (
+                  <div
+                    style={{
+                      display: 'inline-block',
+                      background: 'linear-gradient(135deg, #f9fafb, #f3f4f6)',
+                      padding: '6px 12px',
+                      borderRadius: '6px',
+                      border: '1px solid #e5e7eb',
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: '12px',
+                        color: '#6b7280',
+                        fontWeight: '500',
+                      }}
+                    >
+                      Created:{' '}
+                      {new Date(
+                        test.created_at.seconds * 1000
+                      ).toLocaleDateString()}
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {/* Action buttons */}
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  marginLeft: '16px',
+                }}
+              >
+                <button
+                  onClick={() => onPreview(test)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)',
+                    color: '#1e40af',
+                    border: '1px solid #93c5fd',
+                    padding: '8px 12px',
+                    borderRadius: '8px',
+                    fontSize: '12px',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background =
+                      'linear-gradient(135deg, #3b82f6, #1d4ed8)';
+                    e.currentTarget.style.color = 'white';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow =
+                      '0 4px 12px rgba(59, 130, 246, 0.3)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background =
+                      'linear-gradient(135deg, #dbeafe, #bfdbfe)';
+                    e.currentTarget.style.color = '#1e40af';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
+                >
+                  <Eye size={14} />
+                  Preview
+                </button>
+                <button
+                  onClick={() => onEdit(test)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    background: 'linear-gradient(135deg, #f3e8ff, #e9d5ff)',
+                    color: '#7c3aed',
+                    border: '1px solid #c4b5fd',
+                    padding: '8px 12px',
+                    borderRadius: '8px',
+                    fontSize: '12px',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background =
+                      'linear-gradient(135deg, #8b5cf6, #7c3aed)';
+                    e.currentTarget.style.color = 'white';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow =
+                      '0 4px 12px rgba(139, 92, 246, 0.3)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background =
+                      'linear-gradient(135deg, #f3e8ff, #e9d5ff)';
+                    e.currentTarget.style.color = '#7c3aed';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
+                >
+                  <Edit size={14} />
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(test.id)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    background: 'linear-gradient(135deg, #fee2e2, #fecaca)',
+                    color: '#dc2626',
+                    border: '1px solid #fca5a5',
+                    padding: '8px 12px',
+                    borderRadius: '8px',
+                    fontSize: '12px',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background =
+                      'linear-gradient(135deg, #ef4444, #dc2626)';
+                    e.currentTarget.style.color = 'white';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow =
+                      '0 4px 12px rgba(239, 68, 68, 0.3)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background =
+                      'linear-gradient(135deg, #fee2e2, #fecaca)';
+                    e.currentTarget.style.color = '#dc2626';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
+                >
+                  <Trash2 size={14} />
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+    </div>
+  );
 };
 
 export default TestList;

@@ -30,8 +30,6 @@ export {
   // UserManagement, // Not exported from routeLazyLoading
   // CourseManagement, // Not exported from routeLazyLoading
   // ContentManagement, // Not exported from routeLazyLoading
-  // SystemSettings, // Not exported from routeLazyLoading
-  // SystemConfigManagement, // Not exported from routeLazyLoading
   // FlashcardManagement, // Not exported from routeLazyLoading
   // ParentDashboard, // Removed - parent role no longer exists
   // ParentProgressInterface, // Not exported from routeLazyLoading

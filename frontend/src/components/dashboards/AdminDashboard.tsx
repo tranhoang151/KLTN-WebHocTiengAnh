@@ -4,7 +4,6 @@ import DashboardLayout from '../DashboardLayout';
 import { usePermissions } from '../../hooks/usePermissions';
 import { apiService } from '../../services/apiService';
 import UserManagement from '../admin/UserManagement';
-import SystemConfigManagement from '../admin/SystemConfigManagement';
 import VideoManagementPage from '../../pages/admin/videos/VideoManagementPage';
 import AnalyticsPage from '../../pages/admin/AnalyticsPage';
 import { ContentManagement } from '../content';
@@ -15,13 +14,13 @@ import ClassDetail from '../class/ClassDetail';
 import ExerciseManagement from '../exercise/ExerciseManagement';
 import QuestionManagement from '../question/QuestionManagement';
 import FlashcardManagement from '../flashcard/FlashcardManagement';
+import TestManagement from '../test/TestManagement';
 import {
   Users,
   School,
   GraduationCap,
   BookOpen,
   BarChart3,
-  Settings,
   FileText,
   HelpCircle,
   Plus,
@@ -1085,7 +1084,7 @@ const AdminDashboardHome: React.FC = () => {
               >
                 <div style={{ fontSize: '14px', padding: '12px 20px' }}>
                   <Link
-                    to="/admin/content?tab=tests"
+                    to="/admin/tests"
                     className="link-text"
                     style={{
                       fontWeight: '500',
@@ -1644,139 +1643,6 @@ const AdminDashboardHome: React.FC = () => {
               </div>
             </div>
           )}
-
-          {/* ⭐ QUAN TRỌNG: Card cấu hình hệ thống */}
-          {/* System Configuration */}
-          {hasPermission('system', 'update') && (
-            <div
-              style={{
-                backgroundColor: 'white',
-                overflow: 'hidden',
-                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
-                borderRadius: '8px',
-                border: '1px solid #e5e7eb',
-                transition: 'all 0.2s ease',
-              }}
-              onMouseEnter={(e) => {
-                const card = e.currentTarget;
-                const linkDiv = card.querySelector(
-                  '.link-section'
-                ) as HTMLElement;
-                const link = card.querySelector('.link-text') as HTMLElement;
-                const arrow = card.querySelector('.arrow-icon') as HTMLElement;
-
-                if (linkDiv) linkDiv.style.backgroundColor = '#8b5cf6';
-                if (link) link.style.color = 'white';
-                if (arrow) arrow.style.opacity = '1';
-              }}
-              onMouseLeave={(e) => {
-                const card = e.currentTarget;
-                const linkDiv = card.querySelector(
-                  '.link-section'
-                ) as HTMLElement;
-                const link = card.querySelector('.link-text') as HTMLElement;
-                const arrow = card.querySelector('.arrow-icon') as HTMLElement;
-
-                if (linkDiv) linkDiv.style.backgroundColor = '#f9fafb';
-                if (link) link.style.color = '#7c3aed';
-                if (arrow) arrow.style.opacity = '0';
-              }}
-            >
-              <div style={{ padding: '20px 20px 0 20px' }}>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                  }}
-                >
-                  <div style={{ marginBottom: '0px' }}>
-                    <div
-                      style={{
-                        width: '32px',
-                        height: '32px',
-                        backgroundColor: '#8b5cf6',
-                        borderRadius: '6px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}
-                    >
-                      <Settings
-                        size={14}
-                        style={{
-                          color: 'white',
-                        }}
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <dl>
-                      <dt
-                        style={{
-                          fontSize: '18px',
-                          fontWeight: '500',
-                          color: '#111827',
-                          margin: '0 0 8px 0',
-                        }}
-                      >
-                        System Configuration
-                      </dt>
-                      <dd
-                        style={{
-                          fontSize: '14px',
-                          fontWeight: '500',
-                          color: '#6b7280',
-                          margin: '0',
-                          lineHeight: '1.4',
-                        }}
-                      >
-                        System settings and maintenance
-                      </dd>
-                    </dl>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="link-section"
-                style={{
-                  backgroundColor: '#f9fafb',
-                  borderTop: '1px solid #e5e7eb',
-                  transition: 'all 0.2s ease',
-                }}
-              >
-                <div style={{ fontSize: '14px', padding: '12px 20px' }}>
-                  <Link
-                    to="/admin/system-config"
-                    className="link-text"
-                    style={{
-                      fontWeight: '500',
-                      color: '#7c3aed',
-                      textDecoration: 'none',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      transition: 'all 0.2s ease',
-                    }}
-                  >
-                    <span>System Config</span>
-                    <span
-                      className="arrow-icon"
-                      style={{
-                        opacity: 0,
-                        transition: 'opacity 0.2s ease',
-                        fontSize: '16px',
-                        fontWeight: 'bold',
-                      }}
-                    >
-                      →
-                    </span>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>
@@ -1802,8 +1668,8 @@ export const AdminDashboard: React.FC = () => {
         <Route path="/exercises" element={<ExerciseManagement />} />
         <Route path="/questions" element={<QuestionManagement />} />
         <Route path="/flashcards" element={<FlashcardManagement />} />
+        <Route path="/tests" element={<TestManagement />} />
         <Route path="/content" element={<ContentManagement />} />
-        <Route path="/system-config" element={<SystemConfigManagement />} />
         <Route path="/videos" element={<VideoManagementPage />} />
         <Route path="/analytics" element={<AnalyticsPage />} />
 
