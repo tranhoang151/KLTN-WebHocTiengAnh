@@ -23,8 +23,8 @@ public class FlashcardSet
     [FirestoreProperty("created_at")]
     public Timestamp CreatedAt { get; set; }
 
-    [FirestoreProperty("assigned_class_ids")]
-    public List<string> AssignedClassIds { get; set; } = new();
+    // [FirestoreProperty("assigned_class_ids")] // Removed - using course-based access instead
+    // public List<string> AssignedClassIds { get; set; } = new();
 
     [FirestoreProperty("set_id")]
     public string SetId { get; set; } = string.Empty;

@@ -688,7 +688,7 @@ const FlashcardEditor: React.FC<FlashcardEditorProps> = ({
                       >
                         {card.frontText}
                       </p>
-                      {card.imageUrl && (
+                      {(card.imageUrl || card.imageBase64) && (
                         <div
                           style={{
                             marginTop: '12px',
@@ -697,7 +697,7 @@ const FlashcardEditor: React.FC<FlashcardEditorProps> = ({
                           }}
                         >
                           <img
-                            src={card.imageUrl}
+                            src={card.imageUrl || (card.imageBase64 ? `data:image/jpeg;base64,${card.imageBase64}` : '')}
                             alt="Flashcard"
                             style={{
                               width: '100%',

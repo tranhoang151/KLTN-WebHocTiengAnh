@@ -184,7 +184,7 @@ public class FlashcardController : ControllerBase
                 CourseId = setDto.CourseId,
                 CreatedBy = User.Identity?.Name ?? "system",
                 CreatedAt = Google.Cloud.Firestore.Timestamp.GetCurrentTimestamp(),
-                AssignedClassIds = setDto.AssignedClassIds ?? new List<string>(),
+                // AssignedClassIds = setDto.AssignedClassIds ?? new List<string>(), // Removed - using course-based access instead
                 SetId = Guid.NewGuid().ToString(),
                 IsActive = true
             };
@@ -387,6 +387,8 @@ public class FlashcardController : ControllerBase
         }
     }
 
+    // AssignFlashcardSet method removed - using course-based access instead
+    /*
     [HttpPut("set/{setId}/assign")]
     [Authorize(Roles = "admin,teacher")]
     public async Task<IActionResult> AssignFlashcardSet(string setId, [FromBody] List<string> classIds)
@@ -408,6 +410,7 @@ public class FlashcardController : ControllerBase
             return StatusCode(500, new { message = "Error assigning flashcard set", error = ex.Message });
         }
     }
+    */
 
     [HttpGet("analytics/teacher/{teacherId}")]
     [Authorize(Roles = "admin,teacher")]
