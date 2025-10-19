@@ -71,7 +71,7 @@ public interface IFirebaseService
     Task<bool> DeleteFlashcardAsync(string cardId);
     Task ReorderFlashcardsAsync(string setId, List<FlashcardOrderDto> cards);
     Task<FlashcardProgressResponseDto?> GetFlashcardProgressAsync(string userId, string setId);
-    Task AssignFlashcardSetAsync(string setId, List<string> classIds);
+    // Task AssignFlashcardSetAsync(string setId, List<string> classIds); // Removed - using course-based access instead
 
     // Exercise Management
     Task<List<Exercise>> GetAllExercisesAsync();

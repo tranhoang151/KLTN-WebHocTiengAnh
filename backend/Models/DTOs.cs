@@ -144,7 +144,7 @@ public class CreateFlashcardSetDto
     public string Title { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public string CourseId { get; set; } = string.Empty;
-    public List<string> AssignedClassIds { get; set; } = new();
+    // public List<string> AssignedClassIds { get; set; } = new(); // Removed - using course-based access instead
 }
 
 public class StudentDashboardDto

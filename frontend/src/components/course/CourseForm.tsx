@@ -3,8 +3,6 @@ import { Course } from '../../types';
 import {
   BookOpen,
   FileText,
-  Image,
-  Users,
   AlertCircle,
   CheckCircle,
   XCircle,
@@ -12,7 +10,7 @@ import {
 
 interface CourseFormProps {
   course?: Course | null;
-  onSubmit: (courseData: Omit<Course, 'id'>) => Promise<void>;
+  onSubmit: (courseData: Omit<Course, 'id' | 'created_at'>) => Promise<void>;
   onCancel: () => void;
   loading?: boolean;
 }
@@ -26,8 +24,6 @@ const CourseForm: React.FC<CourseFormProps> = ({
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    image_url: '',
-    target_age_group: '',
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -37,8 +33,6 @@ const CourseForm: React.FC<CourseFormProps> = ({
       setFormData({
         name: course.name || '',
         description: course.description || '',
-        image_url: course.image_url || '',
-        target_age_group: course.target_age_group || '',
       });
     }
   }, [course]);
@@ -54,9 +48,6 @@ const CourseForm: React.FC<CourseFormProps> = ({
       newErrors.description = 'Course description is required';
     }
 
-    if (!formData.target_age_group.trim()) {
-      newErrors.target_age_group = 'Target age group is required';
-    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -70,7 +61,10 @@ const CourseForm: React.FC<CourseFormProps> = ({
     }
 
     try {
-      await onSubmit(formData);
+      await onSubmit({
+        ...formData,
+        image_url: '', // Set empty string for image_url to match Android app
+      });
     } catch (error) {
       console.error('Error submitting course form:', error);
     }
@@ -309,116 +303,7 @@ const CourseForm: React.FC<CourseFormProps> = ({
           )}
         </div>
 
-        {/* Image URL */}
-        <div style={{ marginBottom: '24px' }}>
-          <label
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              fontSize: '14px',
-              fontWeight: '600',
-              color: '#374151',
-              marginBottom: '8px',
-            }}
-          >
-            <Image size={16} color="#6b7280" />
-            Course Image URL
-          </label>
-          <input
-            type="text"
-            value={formData.image_url}
-            onChange={(e) => handleInputChange('image_url', e.target.value)}
-            placeholder="Enter image URL (optional)"
-            disabled={loading}
-            style={{
-              width: '100%',
-              padding: '12px 16px',
-              border: '2px solid #e5e7eb',
-              borderRadius: '12px',
-              fontSize: '16px',
-              transition: 'all 0.3s ease',
-              background: '#ffffff',
-              outline: 'none',
-            }}
-            onFocus={(e) => {
-              e.target.style.borderColor = '#3b82f6';
-              e.target.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)';
-            }}
-            onBlur={(e) => {
-              e.target.style.borderColor = '#e5e7eb';
-              e.target.style.boxShadow = 'none';
-            }}
-          />
-        </div>
 
-        {/* Target Age Group */}
-        <div style={{ marginBottom: '32px' }}>
-          <label
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              fontSize: '14px',
-              fontWeight: '600',
-              color: '#374151',
-              marginBottom: '8px',
-            }}
-          >
-            <Users size={16} color="#6b7280" />
-            Target Age Group *
-          </label>
-          <select
-            value={formData.target_age_group}
-            onChange={(e) =>
-              handleInputChange('target_age_group', e.target.value)
-            }
-            disabled={loading}
-            style={{
-              width: '100%',
-              padding: '12px 16px',
-              border: `2px solid ${errors.target_age_group ? '#ef4444' : '#e5e7eb'}`,
-              borderRadius: '12px',
-              fontSize: '16px',
-              transition: 'all 0.3s ease',
-              background: '#ffffff',
-              outline: 'none',
-              cursor: 'pointer',
-            }}
-            onFocus={(e) => {
-              e.target.style.borderColor = '#3b82f6';
-              e.target.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)';
-            }}
-            onBlur={(e) => {
-              e.target.style.borderColor = errors.target_age_group
-                ? '#ef4444'
-                : '#e5e7eb';
-              e.target.style.boxShadow = 'none';
-            }}
-          >
-            <option value="">Select age group</option>
-            <option value="3-5">3-5 years</option>
-            <option value="6-8">6-8 years</option>
-            <option value="9-12">9-12 years</option>
-            <option value="13-15">13-15 years</option>
-            <option value="16+">16+ years</option>
-          </select>
-          {errors.target_age_group && (
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                marginTop: '6px',
-                color: '#ef4444',
-                fontSize: '14px',
-              }}
-            >
-              <AlertCircle size={14} />
-              {errors.target_age_group}
-            </div>
-          )}
-        </div>
 
         {/* Form Actions */}
         <div

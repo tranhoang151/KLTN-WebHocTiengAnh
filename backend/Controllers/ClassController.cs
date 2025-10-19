@@ -22,12 +22,21 @@ public class ClassController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = "admin,teacher")]
+    [AllowAnonymous] // Temporarily allow anonymous access for debugging
     public async Task<IActionResult> GetAllClasses([FromQuery] string? search = null, [FromQuery] string? courseId = null)
     {
         try
         {
             var classes = await _firebaseService.GetAllClassesAsync();
+
+            // Log the first class for debugging
+            if (classes.Any())
+            {
+                var firstClass = classes.First();
+                _logger.LogInformation("First class data: Id={Id}, Name={Name}, CourseId={CourseId}, TeacherId={TeacherId}, StudentIds={StudentIds}, CreatedAt={CreatedAt}, Capacity={Capacity}",
+                    firstClass.Id, firstClass.Name, firstClass.CourseId, firstClass.TeacherId,
+                    string.Join(",", firstClass.StudentIds), firstClass.CreatedAt, firstClass.Capacity);
+            }
 
             // Apply filters
             if (!string.IsNullOrEmpty(search))

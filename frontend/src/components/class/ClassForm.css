@@ -2,6 +2,18 @@
     max-width: 800px;
     margin: 0 auto;
     padding: 2rem;
+    overflow: visible;
+}
+
+/* Ensure dropdowns are not clipped */
+.teacher-dropdown,
+.student-dropdown {
+    overflow: visible !important;
+}
+
+/* Ensure parent containers don't clip dropdowns */
+.class-form-container>* {
+    overflow: visible;
 }
 
 .class-form-loading {

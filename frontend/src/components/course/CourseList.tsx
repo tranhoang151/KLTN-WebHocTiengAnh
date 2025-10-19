@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Course } from '../../types';
 import { courseService } from '../../services/courseService';
 import {
@@ -10,7 +11,11 @@ import {
   Users,
   AlertCircle,
   RefreshCw,
+  UserCheck,
+  Search,
+  X,
 } from 'lucide-react';
+// import AssignClassesDialog from './AssignClassesDialog'; // Removed - Course is required when creating classes
 
 interface CourseListProps {
   onEditCourse?: (course: Course) => void;
@@ -25,14 +30,23 @@ const CourseList: React.FC<CourseListProps> = ({
   onDeleteCourse,
   showActions = true,
 }) => {
+  const navigate = useNavigate();
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  // const [showAssignClassesDialog, setShowAssignClassesDialog] = useState(false); // Removed
+  // const [selectedCourseForAssign, setSelectedCourseForAssign] = useState<Course | null>(null); // Removed
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredCourses, setFilteredCourses] = useState<Course[]>([]);
 
   useEffect(() => {
     loadCourses();
   }, []);
+
+  useEffect(() => {
+    filterCourses();
+  }, [courses, searchQuery]);
 
   const loadCourses = async () => {
     try {
@@ -66,6 +80,30 @@ const CourseList: React.FC<CourseListProps> = ({
     } finally {
       setDeletingId(null);
     }
+  };
+
+  // const handleAssignClasses = (course: Course) => { // Removed
+  //   setSelectedCourseForAssign(course);
+  //   setShowAssignClassesDialog(true);
+  // };
+
+  // const handleAssignClassesSuccess = () => { // Removed
+  //   loadCourses(); // Reload courses to get updated data
+  // };
+
+  const filterCourses = () => {
+    if (!searchQuery.trim()) {
+      setFilteredCourses(courses);
+      return;
+    }
+
+    const query = searchQuery.toLowerCase();
+    const filtered = courses.filter(
+      (course) =>
+        course.name.toLowerCase().includes(query) ||
+        course.description.toLowerCase().includes(query)
+    );
+    setFilteredCourses(filtered);
   };
 
   if (loading) {
@@ -204,6 +242,97 @@ const CourseList: React.FC<CourseListProps> = ({
 
   return (
     <div>
+      {/* Search Bar */}
+      <div
+        style={{
+          marginBottom: '24px',
+          position: 'relative',
+        }}
+      >
+        <div
+          style={{
+            position: 'relative',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <Search
+            size={20}
+            style={{
+              position: 'absolute',
+              left: '16px',
+              color: '#6b7280',
+              zIndex: 1,
+            }}
+          />
+          <input
+            type="text"
+            placeholder="Search courses..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            style={{
+              width: '100%',
+              padding: '12px 16px 12px 48px',
+              border: '2px solid #e5e7eb',
+              borderRadius: '12px',
+              fontSize: '16px',
+              transition: 'all 0.3s ease',
+              background: 'white',
+              outline: 'none',
+            }}
+            onFocus={(e) => {
+              e.target.style.borderColor = '#3b82f6';
+              e.target.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)';
+            }}
+            onBlur={(e) => {
+              e.target.style.borderColor = '#e5e7eb';
+              e.target.style.boxShadow = 'none';
+            }}
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              style={{
+                position: 'absolute',
+                right: '12px',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                color: '#6b7280',
+                padding: '4px',
+                borderRadius: '4px',
+                transition: 'all 0.3s ease',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#f3f4f6';
+                e.currentTarget.style.color = '#374151';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'none';
+                e.currentTarget.style.color = '#6b7280';
+              }}
+            >
+              <X size={16} />
+            </button>
+          )}
+        </div>
+
+        {/* Search Results Info */}
+        {searchQuery && (
+          <div
+            style={{
+              marginTop: '8px',
+              fontSize: '14px',
+              color: '#6b7280',
+              fontWeight: '500',
+            }}
+          >
+            {filteredCourses.length} course{filteredCourses.length !== 1 ? 's' : ''} found
+            {filteredCourses.length === 0 && ' - try a different search term'}
+          </div>
+        )}
+      </div>
+
       {/* Action Buttons */}
       {showActions && onCreateCourse && (
         <div
@@ -251,7 +380,7 @@ const CourseList: React.FC<CourseListProps> = ({
         </div>
       )}
 
-      {courses.length === 0 ? (
+      {filteredCourses.length === 0 ? (
         <div
           style={{
             background: '#ffffff',
@@ -285,7 +414,7 @@ const CourseList: React.FC<CourseListProps> = ({
               margin: '0 0 12px 0',
             }}
           >
-            No courses yet
+            {searchQuery ? 'No courses found' : 'No courses yet'}
           </h3>
           <p
             style={{
@@ -295,7 +424,10 @@ const CourseList: React.FC<CourseListProps> = ({
               lineHeight: '1.6',
             }}
           >
-            Create your first course to get started
+            {searchQuery
+              ? 'Try adjusting your search terms or create a new course.'
+              : 'Create your first course to get started'
+            }
           </p>
           {showActions && onCreateCourse && (
             <button
@@ -345,7 +477,7 @@ const CourseList: React.FC<CourseListProps> = ({
             gap: '24px',
           }}
         >
-          {courses.map((course) => (
+          {filteredCourses.map((course) => (
             <div
               key={course.id}
               style={{
@@ -357,7 +489,9 @@ const CourseList: React.FC<CourseListProps> = ({
                 transition: 'all 0.3s ease',
                 position: 'relative',
                 overflow: 'hidden',
+                cursor: 'pointer',
               }}
+              onClick={() => navigate(`/admin/courses/detail/${course.id}`)}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-4px)';
                 e.currentTarget.style.boxShadow =
@@ -455,22 +589,6 @@ const CourseList: React.FC<CourseListProps> = ({
                       alignItems: 'center',
                       gap: '6px',
                       padding: '4px 8px',
-                      background: 'linear-gradient(135deg, #dbeafe, #bfdbfe)',
-                      borderRadius: '8px',
-                      fontSize: '12px',
-                      fontWeight: '500',
-                      color: '#1e40af',
-                    }}
-                  >
-                    <Users size={12} />
-                    {course.target_age_group}
-                  </div>
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                      padding: '4px 8px',
                       background: 'linear-gradient(135deg, #f3f4f6, #e5e7eb)',
                       borderRadius: '8px',
                       fontSize: '12px',
@@ -479,9 +597,25 @@ const CourseList: React.FC<CourseListProps> = ({
                     }}
                   >
                     <Calendar size={12} />
-                    {new Date(
-                      course.created_at?.toDate?.() || course.created_at
-                    ).toLocaleDateString()}
+                    {(() => {
+                      try {
+                        if (course.created_at) {
+                          // Handle Firebase Timestamp
+                          if (course.created_at._seconds) {
+                            return new Date(course.created_at._seconds * 1000).toLocaleDateString();
+                          }
+                          // Handle regular Date
+                          if (course.created_at.toDate) {
+                            return course.created_at.toDate().toLocaleDateString();
+                          }
+                          // Handle string date
+                          return new Date(course.created_at).toLocaleDateString();
+                        }
+                        return 'N/A';
+                      } catch (error) {
+                        return 'Invalid Date';
+                      }
+                    })()}
                   </div>
                 </div>
 
@@ -490,14 +624,19 @@ const CourseList: React.FC<CourseListProps> = ({
                   <div
                     style={{
                       display: 'flex',
-                      gap: '12px',
+                      gap: '8px',
+                      flexWrap: 'wrap',
                     }}
                   >
                     {onEditCourse && (
                       <button
-                        onClick={() => onEditCourse(course)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onEditCourse(course);
+                        }}
                         style={{
                           flex: 1,
+                          minWidth: '80px',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
@@ -535,12 +674,63 @@ const CourseList: React.FC<CourseListProps> = ({
                         Edit
                       </button>
                     )}
+                    {/* Assign Classes button removed - Course is required when creating classes */}
+                    {/* 
+                     <button
+                       onClick={(e) => {
+                         e.stopPropagation();
+                         handleAssignClasses(course);
+                       }}
+                       style={{
+                         flex: 1,
+                         minWidth: '100px',
+                         display: 'flex',
+                         alignItems: 'center',
+                         justifyContent: 'center',
+                         gap: '6px',
+                         padding: '10px 16px',
+                         background:
+                           'linear-gradient(135deg, #ecfdf5, #d1fae5)',
+                         color: '#059669',
+                         border: '1px solid #d1fae5',
+                         borderRadius: '10px',
+                         fontSize: '13px',
+                         fontWeight: '600',
+                         cursor: 'pointer',
+                         transition: 'all 0.3s ease',
+                       }}
+                       onMouseEnter={(e) => {
+                         e.currentTarget.style.background =
+                           'linear-gradient(135deg, #059669, #047857)';
+                         e.currentTarget.style.color = 'white';
+                         e.currentTarget.style.borderColor = '#059669';
+                         e.currentTarget.style.transform = 'translateY(-2px)';
+                         e.currentTarget.style.boxShadow =
+                           '0 4px 12px rgba(5, 150, 105, 0.3)';
+                       }}
+                       onMouseLeave={(e) => {
+                         e.currentTarget.style.background =
+                           'linear-gradient(135deg, #ecfdf5, #d1fae5)';
+                         e.currentTarget.style.color = '#059669';
+                         e.currentTarget.style.borderColor = '#d1fae5';
+                         e.currentTarget.style.transform = 'translateY(0)';
+                         e.currentTarget.style.boxShadow = 'none';
+                       }}
+                     >
+                       <UserCheck size={14} />
+                       Assign
+                     </button>
+                     */}
                     {onDeleteCourse && (
                       <button
-                        onClick={() => handleDeleteCourse(course.id)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteCourse(course.id);
+                        }}
                         disabled={deletingId === course.id}
                         style={{
                           flex: 1,
+                          minWidth: '80px',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
@@ -609,6 +799,23 @@ const CourseList: React.FC<CourseListProps> = ({
           ))}
         </div>
       )}
+
+      {/* Assign Classes Dialog removed - Course is required when creating classes */}
+      {/* 
+      {selectedCourseForAssign && (
+        <AssignClassesDialog
+          isOpen={showAssignClassesDialog}
+          onClose={() => {
+            setShowAssignClassesDialog(false);
+            setSelectedCourseForAssign(null);
+          }}
+          courseId={selectedCourseForAssign.id}
+          courseName={selectedCourseForAssign.name}
+          currentClassIds={[]} // We don't have current class IDs in CourseList
+          onSuccess={handleAssignClassesSuccess}
+        />
+      )}
+      */}
     </div>
   );
 };

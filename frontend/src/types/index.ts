@@ -39,9 +39,8 @@ export interface Course {
   id: string;
   name: string;
   description: string;
-  image_url: string;
+  image_url?: string; // Optional - not used in Android app
   created_at?: any; // Firebase Timestamp - optional since server provides default
-  target_age_group: string;
 }
 
 // Class Types
@@ -65,7 +64,7 @@ export interface FlashcardSet {
   course_id: string;
   created_by: string;
   created_at: any; // Firebase Timestamp
-  assigned_class_ids: string[];
+  // assigned_class_ids: string[]; // Removed - using course-based access instead
   set_id: string;
 }
 

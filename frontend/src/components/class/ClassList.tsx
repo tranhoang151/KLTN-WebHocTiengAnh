@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Class, Course, User } from '../../types';
-import { classService } from '../../services/classService';
+import { useNavigate } from 'react-router-dom';
+import { Course, User } from '../../types';
+import { classService, Class } from '../../services/classService';
 import { courseService } from '../../services/courseService';
 import { userService } from '../../services/userService';
+import { useAuth } from '../../contexts/AuthContext';
 import {
   School,
   Plus,
@@ -13,6 +15,9 @@ import {
   Trash2,
   AlertCircle,
   RefreshCw,
+  Search,
+  UserCheck,
+  UserPlus,
 } from 'lucide-react';
 import './ClassList.css';
 
@@ -29,30 +34,55 @@ const ClassList: React.FC<ClassListProps> = ({
   onDeleteClass,
   showActions = true,
 }) => {
+  const { getAuthToken } = useAuth();
+  const navigate = useNavigate();
   const [classes, setClasses] = useState<Class[]>([]);
+  const [filteredClasses, setFilteredClasses] = useState<Class[]>([]);
   const [courses, setCourses] = useState<Course[]>([]);
   const [teachers, setTeachers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     loadData();
   }, []);
+
+  // Filter classes based on search query
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setFilteredClasses(classes);
+    } else {
+      const filtered = classes.filter((cls) => {
+        const className = cls.name || '';
+        return className.toLowerCase().includes(searchQuery.toLowerCase());
+      });
+      setFilteredClasses(filtered);
+    }
+  }, [searchQuery, classes]);
 
   const loadData = async () => {
     try {
       setLoading(true);
       setError(null);
 
-      const [classesData, coursesData] = await Promise.all([
+      const token = await getAuthToken();
+      if (!token) {
+        setError('Authentication required');
+        return;
+      }
+
+      const [classesData, coursesData, teachersData] = await Promise.all([
         classService.getAllClasses(),
         courseService.getAllCourses(),
+        userService.getAllUsers(token, { role: 'teacher' }), // Load teachers only
       ]);
 
-      setClasses(classesData as any[]);
+      setClasses(classesData);
+      setFilteredClasses(classesData);
       setCourses(coursesData);
-      setTeachers([]); // TODO: Implement teacher loading
+      setTeachers(teachersData);
     } catch (err: any) {
       setError(err.message || 'Failed to load classes');
     } finally {
@@ -61,11 +91,11 @@ const ClassList: React.FC<ClassListProps> = ({
   };
 
   const handleDeleteClass = async (classId: string) => {
-    if (
-      !window.confirm(
-        'Are you sure you want to delete this class? This action cannot be undone.'
-      )
-    ) {
+    const confirmed = window.confirm(
+      'Are you sure you want to delete this class? This action cannot be undone.'
+    );
+
+    if (!confirmed) {
       return;
     }
 
@@ -73,7 +103,7 @@ const ClassList: React.FC<ClassListProps> = ({
       setDeletingId(classId);
       await classService.deleteClass(classId);
       setClasses((prev) =>
-        prev.filter((cls) => (cls as any).Id !== classId && cls.id !== classId)
+        prev.filter((cls) => cls.id !== classId)
       );
       onDeleteClass?.(classId);
     } catch (err: any) {
@@ -92,6 +122,7 @@ const ClassList: React.FC<ClassListProps> = ({
     const teacher = teachers.find((t) => t.id === teacherId);
     return teacher?.full_name || 'Unknown Teacher';
   };
+
 
   if (loading) {
     return (
@@ -276,6 +307,97 @@ const ClassList: React.FC<ClassListProps> = ({
             </div>
           </div>
 
+          {/* Total Classes Count */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              marginBottom: '16px',
+              position: 'relative',
+              zIndex: 1,
+            }}
+          >
+            <div
+              style={{
+                fontSize: '14px',
+                color: '#5C748A',
+                fontWeight: '500',
+                background: 'rgba(59, 130, 246, 0.1)',
+                padding: '6px 12px',
+                borderRadius: '8px',
+                border: '1px solid rgba(59, 130, 246, 0.2)',
+              }}
+            >
+              Total Classes: {classes.length}
+            </div>
+          </div>
+
+          {/* Search Bar */}
+          <div
+            style={{
+              position: 'relative',
+              marginBottom: '20px',
+              zIndex: 1,
+            }}
+          >
+            <div
+              style={{
+                position: 'relative',
+                display: 'flex',
+                alignItems: 'center',
+                background: '#ffffff',
+                border: '2px solid #e5e7eb',
+                borderRadius: '12px',
+                padding: '12px 16px',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+              }}
+            >
+              <Search
+                size={20}
+                style={{
+                  color: '#6b7280',
+                  marginRight: '12px',
+                  flexShrink: 0,
+                }}
+              />
+              <input
+                type="text"
+                placeholder="Search classes..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                style={{
+                  flex: 1,
+                  border: 'none',
+                  outline: 'none',
+                  fontSize: '16px',
+                  color: '#1f2937',
+                  background: 'transparent',
+                  fontFamily: 'inherit',
+                }}
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: '#6b7280',
+                    cursor: 'pointer',
+                    padding: '4px',
+                    borderRadius: '4px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  ×
+                </button>
+              )}
+            </div>
+          </div>
+
           {showActions && onCreateClass && (
             <div
               style={{
@@ -381,7 +503,7 @@ const ClassList: React.FC<ClassListProps> = ({
         </div>
       </div>
 
-      {classes.length === 0 ? (
+      {filteredClasses.length === 0 ? (
         <div
           style={{
             background: '#ffffff',
@@ -414,7 +536,7 @@ const ClassList: React.FC<ClassListProps> = ({
               margin: '0 0 8px 0',
             }}
           >
-            No classes yet
+            {searchQuery ? 'No classes found' : 'No classes yet'}
           </h3>
           <p
             style={{
@@ -423,7 +545,10 @@ const ClassList: React.FC<ClassListProps> = ({
               margin: '0 0 24px 0',
             }}
           >
-            Create your first class to get started
+            {searchQuery
+              ? `No classes match "${searchQuery}". Try a different search term.`
+              : 'Create your first class to get started'
+            }
           </p>
           {showActions && onCreateClass && (
             <button
@@ -473,9 +598,9 @@ const ClassList: React.FC<ClassListProps> = ({
             gap: '24px',
           }}
         >
-          {classes.map((classData) => (
+          {filteredClasses.map((classData) => (
             <div
-              key={(classData as any).Id || classData.id}
+              key={classData.id}
               style={{
                 background: '#ffffff',
                 borderRadius: '16px',
@@ -485,6 +610,10 @@ const ClassList: React.FC<ClassListProps> = ({
                 transition: 'all 0.3s ease',
                 position: 'relative',
                 overflow: 'hidden',
+                cursor: 'pointer',
+              }}
+              onClick={() => {
+                navigate(`/admin/classes/detail/${classData.id}`);
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-4px)';
@@ -508,18 +637,16 @@ const ClassList: React.FC<ClassListProps> = ({
                   fontSize: '12px',
                   fontWeight: '600',
                   background:
-                    ((classData as any).IsActive ?? classData.is_active)
+                    classData.isActive
                       ? 'linear-gradient(135deg, #d1fae5, #a7f3d0)'
                       : 'linear-gradient(135deg, #fee2e2, #fecaca)',
                   color:
-                    ((classData as any).IsActive ?? classData.is_active)
+                    classData.isActive
                       ? '#065f46'
                       : '#dc2626',
                 }}
               >
-                {((classData as any).IsActive ?? classData.is_active)
-                  ? 'Active'
-                  : 'Inactive'}
+                {classData.isActive ? 'Active' : 'Inactive'}
               </div>
 
               {/* Header */}
@@ -554,7 +681,7 @@ const ClassList: React.FC<ClassListProps> = ({
                       margin: '0 0 4px 0',
                     }}
                   >
-                    {(classData as any).Name || classData.name}
+                    {classData.name}
                   </h3>
                   <p
                     style={{
@@ -600,9 +727,7 @@ const ClassList: React.FC<ClassListProps> = ({
                       fontWeight: '600',
                     }}
                   >
-                    {getCourseName(
-                      (classData as any).CourseId || classData.course_id
-                    )}
+                    {getCourseName(classData.courseId || '')}
                   </span>
                 </div>
 
@@ -630,9 +755,7 @@ const ClassList: React.FC<ClassListProps> = ({
                       fontWeight: '600',
                     }}
                   >
-                    {getTeacherName(
-                      (classData as any).TeacherId || classData.teacher_id
-                    )}
+                    {getTeacherName(classData.teacherId || '')}
                   </span>
                 </div>
 
@@ -660,14 +783,7 @@ const ClassList: React.FC<ClassListProps> = ({
                       fontWeight: '600',
                     }}
                   >
-                    {
-                      (
-                        (classData as any).StudentIds ||
-                        classData.student_ids ||
-                        []
-                      ).length
-                    }
-                    /{classData.capacity}
+                    {classData.studentIds.length} / {classData.capacity}
                   </span>
                 </div>
 
@@ -695,9 +811,25 @@ const ClassList: React.FC<ClassListProps> = ({
                       fontWeight: '600',
                     }}
                   >
-                    {new Date(
-                      (classData as any).CreatedAt || classData.created_at
-                    ).toLocaleDateString()}
+                    {(() => {
+                      const dateStr = classData.createdAt;
+                      if (!dateStr) return 'N/A';
+
+                      // Handle different date formats
+                      let date;
+                      if (typeof dateStr === 'string') {
+                        // Handle "2025-07-18" format
+                        if (dateStr.includes('-') && !dateStr.includes('T')) {
+                          date = new Date(dateStr + 'T00:00:00');
+                        } else {
+                          date = new Date(dateStr);
+                        }
+                      } else {
+                        date = new Date(dateStr);
+                      }
+
+                      return isNaN(date.getTime()) ? 'Invalid Date' : date.toLocaleDateString();
+                    })()}
                   </span>
                 </div>
               </div>
@@ -732,14 +864,7 @@ const ClassList: React.FC<ClassListProps> = ({
                       color: '#6b7280',
                     }}
                   >
-                    {
-                      (
-                        (classData as any).StudentIds ||
-                        classData.student_ids ||
-                        []
-                      ).length
-                    }
-                    /{classData.capacity}
+                    {classData.studentIds.length} / {classData.capacity}
                   </span>
                 </div>
                 <div
@@ -756,7 +881,7 @@ const ClassList: React.FC<ClassListProps> = ({
                       height: '100%',
                       background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
                       borderRadius: '4px',
-                      width: `${Math.min((((classData as any).StudentIds || classData.student_ids || []).length / classData.capacity) * 100, 100)}%`,
+                      width: `${Math.min((classData.studentIds.length / classData.capacity) * 100, 100)}%`,
                       transition: 'width 0.3s ease',
                     }}
                   />
@@ -773,7 +898,10 @@ const ClassList: React.FC<ClassListProps> = ({
                 >
                   {onEditClass && (
                     <button
-                      onClick={() => onEditClass(classData)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onEditClass(classData);
+                      }}
                       style={{
                         display: 'flex',
                         alignItems: 'center',
@@ -810,11 +938,11 @@ const ClassList: React.FC<ClassListProps> = ({
                   )}
                   {onDeleteClass && (
                     <button
-                      onClick={() =>
-                        handleDeleteClass((classData as any).Id || classData.id)
-                      }
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteClass(classData.id);
+                      }}
                       disabled={
-                        deletingId === (classData as any).Id ||
                         deletingId === classData.id
                       }
                       style={{
@@ -829,14 +957,12 @@ const ClassList: React.FC<ClassListProps> = ({
                         fontSize: '14px',
                         fontWeight: '600',
                         cursor:
-                          deletingId === (classData as any).Id ||
                           deletingId === classData.id
                             ? 'not-allowed'
                             : 'pointer',
                         transition: 'all 0.3s ease',
                         flex: 1,
                         opacity:
-                          deletingId === (classData as any).Id ||
                           deletingId === classData.id
                             ? 0.5
                             : 1,
@@ -844,7 +970,6 @@ const ClassList: React.FC<ClassListProps> = ({
                       onMouseEnter={(e) => {
                         if (
                           !(
-                            deletingId === (classData as any).Id ||
                             deletingId === classData.id
                           )
                         ) {
@@ -858,7 +983,6 @@ const ClassList: React.FC<ClassListProps> = ({
                       onMouseLeave={(e) => {
                         if (
                           !(
-                            deletingId === (classData as any).Id ||
                             deletingId === classData.id
                           )
                         ) {

@@ -3,10 +3,12 @@ import {
   FlashcardSet,
   flashcardService,
 } from '../../services/flashcardService';
+import { courseService } from '../../services/courseService';
+import { Course } from '../../types';
 import { useAuth } from '../../contexts/AuthContext';
 import FlashcardSetForm from './FlashcardSetForm';
 import FlashcardEditor from './FlashcardEditor';
-import AssignDialog from './AssignDialog'; // Import the new dialog
+// import AssignDialog from './AssignDialog'; // Removed - using course-based access instead
 import { BackButton } from '../BackButton';
 import {
   BookOpen,
@@ -20,7 +22,7 @@ import {
   AlertCircle,
   RefreshCw,
   FileText,
-  UserCheck,
+  // UserCheck, // Removed - no longer needed
 } from 'lucide-react';
 import './FlashcardSetManager.css';
 
@@ -35,12 +37,13 @@ const FlashcardSetManager: React.FC<FlashcardSetManagerProps> = ({
 }) => {
   const { user } = useAuth();
   const [sets, setSets] = useState<FlashcardSet[]>([]);
+  const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedSet, setSelectedSet] = useState<FlashcardSet | null>(null);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [editingSet, setEditingSet] = useState<FlashcardSet | null>(null);
-  const [assigningSet, setAssigningSet] = useState<FlashcardSet | null>(null); // State for assignment dialog
+  // const [assigningSet, setAssigningSet] = useState<FlashcardSet | null>(null); // Removed - using course-based access instead
   const [hoveredEditButton, setHoveredEditButton] = useState<string | null>(
     null
   );
@@ -50,6 +53,7 @@ const FlashcardSetManager: React.FC<FlashcardSetManagerProps> = ({
 
   useEffect(() => {
     loadFlashcardSets();
+    loadCourses();
   }, [courseId]);
 
   const loadFlashcardSets = async () => {
@@ -71,6 +75,20 @@ const FlashcardSetManager: React.FC<FlashcardSetManagerProps> = ({
     } finally {
       setLoading(false);
     }
+  };
+
+  const loadCourses = async () => {
+    try {
+      const coursesData = await courseService.getAllCourses();
+      setCourses(coursesData);
+    } catch (err: any) {
+      console.error('Failed to load courses:', err);
+    }
+  };
+
+  const getCourseName = (courseId: string) => {
+    const course = courses.find(c => c.id === courseId);
+    return course ? course.name : courseId;
   };
 
   const handleCreateSet = () => {
@@ -114,6 +132,8 @@ const FlashcardSetManager: React.FC<FlashcardSetManagerProps> = ({
     setSelectedSet(set);
   };
 
+  // Assignment methods removed - using course-based access instead
+  /*
   const handleOpenAssignDialog = (set: FlashcardSet) => {
     setAssigningSet(set);
   };
@@ -126,6 +146,7 @@ const FlashcardSetManager: React.FC<FlashcardSetManagerProps> = ({
     setAssigningSet(null);
     await loadFlashcardSets();
   };
+  */
 
   if (selectedSet) {
     return (
@@ -138,7 +159,7 @@ const FlashcardSetManager: React.FC<FlashcardSetManagerProps> = ({
 
   // Remove the early return for showCreateForm - we'll render it as overlay instead
 
-  // Remove the early return for assigningSet - we'll render it as overlay instead
+  // Assignment dialog removed - using course-based access instead
 
   if (loading) {
     return (
@@ -790,7 +811,7 @@ const FlashcardSetManager: React.FC<FlashcardSetManagerProps> = ({
                         fontWeight: '600',
                       }}
                     >
-                      {set.courseId}
+                      {getCourseName(set.courseId)}
                     </span>
                   </div>
                   <div
@@ -831,45 +852,7 @@ const FlashcardSetManager: React.FC<FlashcardSetManagerProps> = ({
                     gap: '12px',
                   }}
                 >
-                  <button
-                    onClick={() => handleOpenAssignDialog(set)}
-                    style={{
-                      flex: 1,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '8px',
-                      background: 'linear-gradient(135deg, #f8fafc, #e2e8f0)',
-                      color: '#374151',
-                      border: '1px solid #cbd5e1',
-                      padding: '12px 16px',
-                      borderRadius: '12px',
-                      fontSize: '14px',
-                      fontWeight: '600',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s ease',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background =
-                        'linear-gradient(135deg, #3b82f6, #1d4ed8)';
-                      e.currentTarget.style.color = 'white';
-                      e.currentTarget.style.borderColor = '#3b82f6';
-                      e.currentTarget.style.transform = 'translateY(-2px)';
-                      e.currentTarget.style.boxShadow =
-                        '0 4px 12px rgba(59, 130, 246, 0.3)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background =
-                        'linear-gradient(135deg, #f8fafc, #e2e8f0)';
-                      e.currentTarget.style.color = '#374151';
-                      e.currentTarget.style.borderColor = '#cbd5e1';
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = 'none';
-                    }}
-                  >
-                    <UserCheck size={16} />
-                    Assign
-                  </button>
+                  {/* Assign button removed - using course-based access instead */}
                   <button
                     onClick={() => handleManageCards(set)}
                     style={{
@@ -925,14 +908,7 @@ const FlashcardSetManager: React.FC<FlashcardSetManagerProps> = ({
         />
       )}
 
-      {/* Assign Dialog Popup Overlay */}
-      {assigningSet && (
-        <AssignDialog
-          flashcardSet={assigningSet}
-          onClose={handleCloseAssignDialog}
-          onSave={handleAssignSave}
-        />
-      )}
+      {/* Assign Dialog removed - using course-based access instead */}
     </div>
   );
 };
