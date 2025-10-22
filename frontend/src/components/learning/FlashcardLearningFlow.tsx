@@ -5,7 +5,6 @@ import {
 } from '../../services/flashcardService';
 import FlashcardSetSelector from './FlashcardSetSelector';
 import FlashcardLearning from './FlashcardLearning';
-import './FlashcardSetSelector.css';
 
 interface FlashcardLearningFlowProps {
   courseId: string;

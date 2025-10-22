@@ -207,8 +207,6 @@ Write-Host "`n🔒 Step 9: Security Validation..." -ForegroundColor Yellow
 $securityFiles = @(
     "src/utils/securityHeaders.ts",
     "src/utils/inputValidation.ts",
-    "src/services/privacyService.ts",
-    "src/components/privacy",
     "src/components/security"
 )
 
