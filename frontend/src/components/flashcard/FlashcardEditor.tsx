@@ -19,7 +19,6 @@ import {
   Lightbulb,
   Image,
 } from 'lucide-react';
-import './FlashcardEditor.css';
 
 interface FlashcardEditorProps {
   flashcardSet: FlashcardSet;
@@ -697,7 +696,12 @@ const FlashcardEditor: React.FC<FlashcardEditorProps> = ({
                           }}
                         >
                           <img
-                            src={card.imageUrl || (card.imageBase64 ? `data:image/jpeg;base64,${card.imageBase64}` : '')}
+                            src={
+                              card.imageUrl ||
+                              (card.imageBase64
+                                ? `data:image/jpeg;base64,${card.imageBase64}`
+                                : '')
+                            }
                             alt="Flashcard"
                             style={{
                               width: '100%',

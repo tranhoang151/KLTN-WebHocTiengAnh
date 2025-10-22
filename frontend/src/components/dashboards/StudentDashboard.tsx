@@ -13,7 +13,6 @@ import {
   ArrowRight,
   Sparkles,
 } from 'lucide-react';
-import './StudentDashboard.css';
 import StudentFlashcardLearningFlow from '../learning/StudentFlashcardLearningFlow';
 import StudentExerciseList from '../exercise/StudentExerciseList';
 import ExerciseScreen from '../exercise/ExerciseScreen';
@@ -36,9 +35,10 @@ const StudentDashboardHome: React.FC = () => {
       style={{
         minHeight: '100vh',
         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        padding: '40px 20px',
+        padding: '40px',
         position: 'relative',
         overflow: 'hidden',
+        borderRadius: '20px',
       }}
     >
       {/* Background decorations */}
@@ -139,9 +139,7 @@ const StudentDashboardHome: React.FC = () => {
               e.currentTarget.style.boxShadow =
                 '0 20px 40px rgba(0, 0, 0, 0.1)';
             }}
-            onClick={() =>
-              (window.location.href = '/student/flashcards')
-            }
+            onClick={() => (window.location.href = '/student/flashcards')}
           >
             {/* Background decoration */}
             <div
@@ -833,9 +831,7 @@ const StudentDashboard: React.FC = () => {
         <Route
           path="/flashcards"
           element={
-            <StudentFlashcardLearningFlow
-              onExit={() => navigate('/student')}
-            />
+            <StudentFlashcardLearningFlow onExit={() => navigate('/student')} />
           }
         />
         <Route
@@ -855,7 +851,12 @@ const StudentDashboard: React.FC = () => {
           path="/flashcards/:setId/learn"
           element={<FlashcardLearningPage />}
         />
-        <Route path="/videos" element={<StudentVideoLearningFlow onExit={() => navigate('/student')} />} />
+        <Route
+          path="/videos"
+          element={
+            <StudentVideoLearningFlow onExit={() => navigate('/student')} />
+          }
+        />
         <Route path="/videos/progress" element={<VideoProgressPage />} />
         <Route path="/videos/:videoId" element={<VideoDetailPage />} />
         <Route path="/course/:courseId" element={<CourseDetailPage />} />

@@ -152,7 +152,7 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ title }) => {
                   background: 'rgba(255, 255, 255, 0.15)',
                   color: 'white',
                   border: 'none',
-                  padding: '8px 12px',
+                  padding: '8px 16px',
                   borderRadius: '12px',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
@@ -182,6 +182,16 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ title }) => {
                 >
                   <User size={16} style={{ color: 'white' }} />
                 </div>
+                <div
+                  style={{
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    color: 'white',
+                    lineHeight: '1.2',
+                  }}
+                >
+                  Hello, {user?.full_name || 'User'}
+                </div>
                 <ChevronDown
                   size={16}
                   style={{
@@ -205,7 +215,6 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ title }) => {
                     background: 'white',
                     borderRadius: '12px',
                     boxShadow: '0 10px 40px rgba(0, 0, 0, 0.15)',
-                    border: '1px solid rgba(0, 0, 0, 0.1)',
                     minWidth: '240px',
                     overflow: 'hidden',
                     zIndex: 1000,
@@ -265,7 +274,7 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ title }) => {
                   </div>
 
                   {/* Menu Items */}
-                  <div style={{ padding: '8px 0' }}>
+                  <div style={{ padding: '0px' }}>
                     {/* Profile Option */}
                     <Link
                       to="/profile"
@@ -317,7 +326,6 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ title }) => {
                       style={{
                         height: '1px',
                         background: '#e5e7eb',
-                        margin: '8px 0',
                       }}
                     />
 
