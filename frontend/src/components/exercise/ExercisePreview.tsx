@@ -65,7 +65,7 @@ const ExercisePreview: React.FC<ExercisePreviewProps> = ({
     let correct = 0;
     exercise.questions.forEach((question) => {
       const userAnswer = selectedAnswers[question.id];
-      if (userAnswer !== undefined && userAnswer === question.correct_answer) {
+      if (userAnswer !== undefined && userAnswer === question.correctAnswer) {
         correct++;
       }
     });
@@ -309,7 +309,7 @@ const ExercisePreview: React.FC<ExercisePreviewProps> = ({
           >
             {exercise.questions.map((question, index) => {
               const userAnswer = selectedAnswers[question.id];
-              const isCorrect = userAnswer === question.correct_answer;
+              const isCorrect = userAnswer === question.correctAnswer;
 
               return (
                 <div
@@ -395,7 +395,7 @@ const ExercisePreview: React.FC<ExercisePreviewProps> = ({
                         }}
                       >
                         <strong>Correct answer:</strong>{' '}
-                        {question.correct_answer}
+                        {question.correctAnswer}
                       </div>
                     </div>
                     {question.explanation && (
@@ -554,34 +554,10 @@ const ExercisePreview: React.FC<ExercisePreviewProps> = ({
               }}
             >
               {getTypeIcon(exercise.type)}
-              {exercise.type.replace('_', ' ')}
+              {exercise.type ? exercise.type.replace('_', ' ') : 'Unknown'}
             </div>
-            <span
-              style={{
-                padding: '4px 12px',
-                borderRadius: '12px',
-                fontSize: '12px',
-                fontWeight: '600',
-                textTransform: 'uppercase',
-                letterSpacing: '0.025em',
-                ...getDifficultyColor(exercise.difficulty),
-              }}
-            >
-              {exercise.difficulty}
-            </span>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '4px',
-                fontSize: '14px',
-                color: '#6b7280',
-                fontWeight: '500',
-              }}
-            >
-              <Clock size={14} />
-              {exercise.time_limit} min
-            </div>
+            {/* Difficulty badge removed - not in Android app */}
+            {/* Time limit removed - not in Android app */}
           </div>
         </div>
         <div
@@ -728,13 +704,12 @@ const ExercisePreview: React.FC<ExercisePreviewProps> = ({
               width: '32px',
               height: '32px',
               borderRadius: '50%',
-              border: `2px solid ${
-                index === currentQuestionIndex
-                  ? '#3b82f6'
-                  : selectedAnswers[exercise.questions[index].id] !== undefined
-                    ? '#16a34a'
-                    : '#e5e7eb'
-              }`,
+              border: `2px solid ${index === currentQuestionIndex
+                ? '#3b82f6'
+                : selectedAnswers[exercise.questions[index].id] !== undefined
+                  ? '#16a34a'
+                  : '#e5e7eb'
+                }`,
               backgroundColor:
                 index === currentQuestionIndex
                   ? '#3b82f6'
@@ -743,7 +718,7 @@ const ExercisePreview: React.FC<ExercisePreviewProps> = ({
                     : 'white',
               color:
                 index === currentQuestionIndex ||
-                selectedAnswers[exercise.questions[index].id] !== undefined
+                  selectedAnswers[exercise.questions[index].id] !== undefined
                   ? 'white'
                   : '#6b7280',
               fontSize: '12px',
@@ -804,19 +779,7 @@ const ExercisePreview: React.FC<ExercisePreviewProps> = ({
           >
             Question {currentQuestionIndex + 1}
           </h3>
-          <span
-            style={{
-              padding: '4px 12px',
-              borderRadius: '12px',
-              fontSize: '12px',
-              fontWeight: '600',
-              textTransform: 'uppercase',
-              letterSpacing: '0.025em',
-              ...getDifficultyColor(currentQuestion.difficulty),
-            }}
-          >
-            {currentQuestion.difficulty}
-          </span>
+          {/* Difficulty badge removed - not in Android app */}
         </div>
 
         <p
@@ -827,7 +790,7 @@ const ExercisePreview: React.FC<ExercisePreviewProps> = ({
             marginBottom: '24px',
           }}
         >
-          {currentQuestion.content}
+          {(currentQuestion.content || currentQuestion.question_text) || 'No content available'}
         </p>
 
         <div
@@ -852,11 +815,10 @@ const ExercisePreview: React.FC<ExercisePreviewProps> = ({
                       alignItems: 'center',
                       gap: '12px',
                       padding: '12px',
-                      border: `2px solid ${
-                        selectedAnswers[currentQuestion.id] === option
-                          ? '#3b82f6'
-                          : '#e5e7eb'
-                      }`,
+                      border: `2px solid ${selectedAnswers[currentQuestion.id] === option
+                        ? '#3b82f6'
+                        : '#e5e7eb'
+                        }`,
                       borderRadius: '8px',
                       cursor: 'pointer',
                       transition: 'all 0.2s ease',
@@ -1081,3 +1043,5 @@ const ExercisePreview: React.FC<ExercisePreviewProps> = ({
 };
 
 export default ExercisePreview;
+
+

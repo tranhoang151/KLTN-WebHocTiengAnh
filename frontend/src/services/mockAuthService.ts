@@ -59,7 +59,7 @@ export class MockAuthService {
 
             // Generate a mock token
             this.token = `mock_token_${user.id}_${Date.now()}`;
-            this.currentUser = { ...user, role: user.role as UserRole };
+            this.currentUser = { ...user, role: user.role as UserRole, is_active: true };
 
             // Store in localStorage for persistence
             localStorage.setItem('auth_token', this.token);
@@ -112,7 +112,7 @@ export class MockAuthService {
     async getUserData(uid: string): Promise<User | null> {
         const user = MOCK_USERS.find(u => u.id === uid);
         if (user) {
-            return { ...user, role: user.role as UserRole } || null;
+            return { ...user, role: user.role as UserRole, is_active: true } || null;
         }
         return null;
     }

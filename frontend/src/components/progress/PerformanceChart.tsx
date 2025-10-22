@@ -73,3 +73,5 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({
 };
 
 export default PerformanceChart;
+
+

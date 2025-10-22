@@ -274,3 +274,5 @@ const ResourceTimingMonitor: React.FC = () => {
 };
 
 export default PerformanceMonitor;
+
+

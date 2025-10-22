@@ -56,3 +56,5 @@ const BadgeCollection: React.FC<BadgeCollectionProps> = ({ userId }) => {
 };
 
 export default BadgeCollection;
+
+

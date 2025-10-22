@@ -158,12 +158,7 @@ const StudentExerciseList: React.FC = () => {
                                         <span className="detail-value">{exercise.questions.length}</span>
                                     </div>
 
-                                    {exercise.time_limit && (
-                                        <div className="detail-item">
-                                            <span className="detail-label">⏱️ Thời gian:</span>
-                                            <span className="detail-value">{exercise.time_limit} phút</span>
-                                        </div>
-                                    )}
+                                    {/* Time limit removed - not in Android app */}
                                 </div>
 
                                 <div className="question-preview">
@@ -201,3 +196,5 @@ const StudentExerciseList: React.FC = () => {
 };
 
 export default StudentExerciseList;
+
+

@@ -119,3 +119,5 @@ const ClassProgressPage: React.FC = () => {
 };
 
 export default ClassProgressPage;
+
+

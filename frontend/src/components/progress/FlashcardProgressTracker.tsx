@@ -14,7 +14,7 @@ interface CardStatus {
   id: string;
   index: number;
   status: 'not-started' | 'current' | 'learned' | 'not-learned';
-  frontText: string;
+  front_text: string;
 }
 
 const FlashcardProgressTracker: React.FC<FlashcardProgressTrackerProps> = ({
@@ -42,7 +42,7 @@ const FlashcardProgressTracker: React.FC<FlashcardProgressTrackerProps> = ({
         id: card.id,
         index,
         status,
-        frontText: card.frontText,
+        front_text: card.front_text,
       };
     });
 
@@ -167,7 +167,7 @@ const FlashcardProgressTracker: React.FC<FlashcardProgressTrackerProps> = ({
             onClick={() => onCardClick?.(cardStatus.index)}
             title={
               showDetails
-                ? `${cardStatus.frontText} - ${getStatusLabel(cardStatus.status)}`
+                ? `${cardStatus.front_text} - ${getStatusLabel(cardStatus.status)}`
                 : undefined
             }
           >
@@ -180,7 +180,7 @@ const FlashcardProgressTracker: React.FC<FlashcardProgressTrackerProps> = ({
             </div>
             {showDetails && (
               <div className="card-preview">
-                <div className="card-text">{cardStatus.frontText}</div>
+                <div className="card-text">{cardStatus.front_text}</div>
                 <div className="card-status-label">
                   {getStatusLabel(cardStatus.status)}
                 </div>
@@ -216,3 +216,5 @@ const FlashcardProgressTracker: React.FC<FlashcardProgressTrackerProps> = ({
 };
 
 export default FlashcardProgressTracker;
+
+

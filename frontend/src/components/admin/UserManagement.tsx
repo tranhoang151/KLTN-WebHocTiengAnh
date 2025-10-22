@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   userService,
-  User,
   UserFilters,
   CreateUserRequest,
   UpdateUserRequest,
 } from '../../services/userService';
+import { User } from '../../types/index';
 import UserList from './UserList';
 import UserForm from './UserForm';
 import UserSearch from './UserSearch';
@@ -21,7 +21,7 @@ import {
   AlertCircle,
 } from 'lucide-react';
 
-interface UserManagementProps {}
+interface UserManagementProps { }
 
 const UserManagement: React.FC<UserManagementProps> = () => {
   const { user: currentUser, getAuthToken } = useAuth();
@@ -90,12 +90,12 @@ const UserManagement: React.FC<UserManagementProps> = () => {
     }
   };
 
-  const handleToggleUserStatus = async (userId: string, isActive: boolean) => {
+  const handleToggleUserStatus = async (userId: string, is_active: boolean) => {
     try {
       const token = await getAuthToken();
       if (!token) return;
       await userService.updateUserStatus(userId, {
-        isActive: isActive,
+        is_active: is_active,
       });
       await loadUsers();
       setError(null);
@@ -693,3 +693,5 @@ const UserManagement: React.FC<UserManagementProps> = () => {
 };
 
 export default UserManagement;
+
+

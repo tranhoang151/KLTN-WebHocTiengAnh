@@ -30,7 +30,7 @@ const mockFlashcards = [
         order: 0,
         difficulty: 'easy' as const,
         tags: [],
-        createdAt: new Date(),
+        created_at: new Date(),
         updatedAt: new Date(),
     },
     {
@@ -41,7 +41,7 @@ const mockFlashcards = [
         order: 1,
         difficulty: 'medium' as const,
         tags: [],
-        createdAt: new Date(),
+        created_at: new Date(),
         updatedAt: new Date(),
     },
 ];
@@ -325,3 +325,5 @@ describe('FlashcardLearning', () => {
         });
     });
 });
+
+

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { flashcardService } from '../../services/flashcardService';
-import { Flashcard, FlashcardSession } from '../../types/flashcard';
+import { Flashcard, FlashcardSession } from '../../types';
 import { BackButton } from '../../components/BackButton';
 import {
   ArrowLeft,
@@ -661,7 +661,7 @@ const FlashcardLearningPage: React.FC = () => {
                   lineHeight: '1.4',
                 }}
               >
-                {currentCard.frontText}
+                {currentCard.front_text}
               </h3>
               <p
                 style={{
@@ -720,7 +720,7 @@ const FlashcardLearningPage: React.FC = () => {
                   lineHeight: '1.4',
                 }}
               >
-                {currentCard.backText}
+                {currentCard.back_text}
               </h3>
               <p
                 style={{
@@ -998,3 +998,5 @@ const FlashcardLearningPage: React.FC = () => {
 };
 
 export default FlashcardLearningPage;
+
+

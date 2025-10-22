@@ -381,3 +381,5 @@ const QueriesTab: React.FC<{ queryHistory: any[] }> = ({ queryHistory }) => {
 };
 
 export default FirebasePerformanceMonitor;
+
+

@@ -79,7 +79,7 @@ const TestResultPage: React.FC = () => {
         return maxScore > 0 ? (totalScore / maxScore) * 100 : 0;
     };
 
-    const getCorrectAnswersCount = () => {
+    const getcorrectAnswersCount = () => {
         return results.filter(result => result.isCorrect).length;
     };
 
@@ -195,7 +195,7 @@ const TestResultPage: React.FC = () => {
                     <div className="stat-icon">
                         <CheckCircle size={24} style={{ color: '#3f8600' }} />
                     </div>
-                    <div className="stat-value">{getCorrectAnswersCount()}</div>
+                    <div className="stat-value">{getcorrectAnswersCount()}</div>
                     <div className="stat-label">Correct</div>
                 </div>
                 <div className="stat-card">
@@ -293,3 +293,5 @@ const TestResultPage: React.FC = () => {
 };
 
 export default TestResultPage;
+
+

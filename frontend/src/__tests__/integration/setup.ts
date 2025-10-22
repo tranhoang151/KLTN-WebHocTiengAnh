@@ -69,8 +69,8 @@ export const createTestUser = async (role: string = 'student') => {
         email: email,
         displayName: `Test ${role}`,
         role: role,
-        createdAt: new Date(),
-        isActive: true
+        created_at: new Date(),
+        is_active: true
     };
 
     await setDoc(doc(testDb, 'users', user.uid), userData);
@@ -115,9 +115,9 @@ export const createTestCourse = (overrides: any = {}) => {
         description: 'Test Course Description',
         level: 'beginner',
         language: 'en',
-        createdAt: new Date(),
-        createdBy: 'test-user',
-        isActive: true,
+        created_at: new Date(),
+        created_by: 'test-user',
+        is_active: true,
         ...overrides
     };
 };
@@ -132,7 +132,7 @@ export const createTestProgress = (overrides: any = {}) => {
         reviewCount: 0,
         correctCount: 0,
         lastReviewedAt: new Date(),
-        createdAt: new Date(),
+        created_at: new Date(),
         ...overrides
     };
 };

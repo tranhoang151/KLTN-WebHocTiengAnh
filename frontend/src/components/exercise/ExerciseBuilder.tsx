@@ -44,8 +44,6 @@ const ExerciseBuilder: React.FC<ExerciseBuilderProps> = ({
     type: 'multiple_choice' as 'multiple_choice' | 'fill_blank',
     course_id: '',
     questions: [] as Question[],
-    time_limit: 30,
-    difficulty: 'medium' as 'easy' | 'medium' | 'hard',
   });
 
   const [courses, setCourses] = useState<Course[]>([]);
@@ -81,8 +79,6 @@ const ExerciseBuilder: React.FC<ExerciseBuilderProps> = ({
         type: exercise.type || 'multiple_choice',
         course_id: exercise.course_id || '',
         questions: exercise.questions || [],
-        time_limit: exercise.time_limit || 30,
-        difficulty: exercise.difficulty || 'medium',
       });
       setSelectedQuestions(exercise.questions || []);
     }
@@ -114,7 +110,7 @@ const ExerciseBuilder: React.FC<ExerciseBuilderProps> = ({
     try {
       setLoadingQuestions(true);
       const questions = await questionService.getQuestionsByCourse(courseId);
-      setAvailableQuestions(questions.filter((q) => q.is_active));
+      setAvailableQuestions(questions.filter((q) => q.isActive));
     } catch (error) {
       console.error('Error loading questions:', error);
     } finally {
@@ -137,9 +133,7 @@ const ExerciseBuilder: React.FC<ExerciseBuilderProps> = ({
       newErrors.questions = 'At least one question is required';
     }
 
-    if (formData.time_limit < 1 || formData.time_limit > 180) {
-      newErrors.time_limit = 'Time limit must be between 1 and 180 minutes';
-    }
+    // Time limit validation removed - not in Android app
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -555,117 +549,9 @@ const ExerciseBuilder: React.FC<ExerciseBuilderProps> = ({
               gap: '20px',
             }}
           >
-            <div>
-              <label
-                htmlFor="difficulty"
-                style={{
-                  display: 'block',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  color: '#374151',
-                  marginBottom: '8px',
-                }}
-              >
-                Difficulty Level *
-              </label>
-              <select
-                id="difficulty"
-                value={formData.difficulty}
-                onChange={(e) =>
-                  handleInputChange('difficulty', e.target.value)
-                }
-                disabled={loading}
-                style={{
-                  width: '100%',
-                  padding: '12px 16px',
-                  border: '1px solid #d1d5db',
-                  borderRadius: '12px',
-                  fontSize: '14px',
-                  backgroundColor: '#ffffff',
-                  transition: 'all 0.2s ease',
-                  outline: 'none',
-                  appearance: 'none',
-                  WebkitAppearance: 'none',
-                  MozAppearance: 'none',
-                  backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
-                  backgroundPosition: 'right 12px center',
-                  backgroundRepeat: 'no-repeat',
-                  backgroundSize: '16px',
-                  paddingRight: '40px',
-                }}
-                onFocus={(e) => {
-                  e.target.style.borderColor = '#3b82f6';
-                  e.target.style.boxShadow =
-                    '0 0 0 3px rgba(59, 130, 246, 0.1)';
-                }}
-                onBlur={(e) => {
-                  e.target.style.borderColor = '#d1d5db';
-                  e.target.style.boxShadow = 'none';
-                }}
-              >
-                <option value="easy">Easy</option>
-                <option value="medium">Medium</option>
-                <option value="hard">Hard</option>
-              </select>
-            </div>
+            {/* Difficulty field removed - not in Android app */}
 
-            <div>
-              <label
-                htmlFor="time_limit"
-                style={{
-                  display: 'block',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  color: '#374151',
-                  marginBottom: '8px',
-                }}
-              >
-                Time Limit (minutes) *
-              </label>
-              <input
-                type="number"
-                id="time_limit"
-                value={formData.time_limit.toString()}
-                onChange={(e) =>
-                  handleInputChange('time_limit', parseInt(e.target.value) || 0)
-                }
-                placeholder="30"
-                disabled={loading}
-                style={{
-                  width: '100%',
-                  padding: '12px 16px',
-                  border: `1px solid ${errors.time_limit ? '#ef4444' : '#d1d5db'}`,
-                  borderRadius: '12px',
-                  fontSize: '14px',
-                  backgroundColor: '#ffffff',
-                  transition: 'all 0.2s ease',
-                  outline: 'none',
-                }}
-                onFocus={(e) => {
-                  e.target.style.borderColor = '#3b82f6';
-                  e.target.style.boxShadow =
-                    '0 0 0 3px rgba(59, 130, 246, 0.1)';
-                }}
-                onBlur={(e) => {
-                  e.target.style.borderColor = errors.time_limit
-                    ? '#ef4444'
-                    : '#d1d5db';
-                  e.target.style.boxShadow = 'none';
-                }}
-              />
-              {errors.time_limit && (
-                <span
-                  style={{
-                    fontSize: '12px',
-                    color: '#ef4444',
-                    marginTop: '4px',
-                    display: 'block',
-                  }}
-                >
-                  {errors.time_limit}
-                </span>
-              )}
-            </div>
+            {/* Time limit field removed - not in Android app */}
           </div>
         </div>
 
@@ -1710,3 +1596,5 @@ const ExerciseBuilder: React.FC<ExerciseBuilderProps> = ({
 };
 
 export default ExerciseBuilder;
+
+

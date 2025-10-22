@@ -23,7 +23,7 @@ import './ClassForm.css';
 
 interface ClassFormProps {
   classData?: Class | null;
-  onSubmit: (classData: Omit<Class, 'id' | 'createdAt'>) => Promise<void>;
+  onSubmit: (classData: Omit<Class, 'id' | 'created_at'>) => Promise<void>;
   onCancel: () => void;
   loading?: boolean;
 }
@@ -42,7 +42,7 @@ const ClassForm: React.FC<ClassFormProps> = ({
     courseId: '',
     teacherId: '',
     studentIds: [] as string[],
-    isActive: true,
+    is_active: true, // Always true by default
   });
 
   const [courses, setCourses] = useState<Course[]>([]);
@@ -87,7 +87,7 @@ const ClassForm: React.FC<ClassFormProps> = ({
         courseId: classData.courseId || '',
         teacherId: classData.teacherId || '',
         studentIds: classData.studentIds || [],
-        isActive: classData.isActive ?? true,
+        is_active: classData.is_active ?? true,
       });
 
       // Load selected students based on studentIds
@@ -884,60 +884,7 @@ const ClassForm: React.FC<ClassFormProps> = ({
           </div>
         </div>
 
-        {/* Active Status */}
-        <div style={{ marginBottom: '24px' }}>
-          <label
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '12px',
-              padding: '16px',
-              background: formData.isActive
-                ? 'linear-gradient(135deg, #d1fae5, #a7f3d0)'
-                : 'linear-gradient(135deg, #f3f4f6, #e5e7eb)',
-              border: `2px solid ${formData.isActive ? '#10b981' : '#d1d5db'}`,
-              borderRadius: '12px',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-            }}
-            onClick={() => handleInputChange('isActive', !formData.isActive)}
-          >
-            <input
-              type="checkbox"
-              checked={formData.isActive}
-              onChange={(e) => handleInputChange('isActive', e.target.checked)}
-              disabled={loading}
-              style={{
-                width: '20px',
-                height: '20px',
-                accentColor: '#10b981',
-                cursor: 'pointer',
-              }}
-            />
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-              }}
-            >
-              {formData.isActive ? (
-                <CheckCircle size={20} color="#065f46" />
-              ) : (
-                <XCircle size={20} color="#6b7280" />
-              )}
-              <span
-                style={{
-                  fontSize: '16px',
-                  fontWeight: '600',
-                  color: formData.isActive ? '#065f46' : '#6b7280',
-                }}
-              >
-                Class is active
-              </span>
-            </div>
-          </label>
-        </div>
+        {/* Active Status removed - all classes are active by default */}
 
         {/* Student Assignment */}
         <div style={{ marginBottom: '32px' }}>
@@ -1398,3 +1345,5 @@ const ClassForm: React.FC<ClassFormProps> = ({
 };
 
 export default ClassForm;
+
+

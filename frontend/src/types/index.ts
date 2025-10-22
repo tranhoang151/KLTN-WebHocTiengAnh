@@ -12,6 +12,7 @@ export interface User {
   streak_count: number;
   last_login_date: string;
   class_ids?: string[];
+  is_active: boolean;
   badges: Record<
     string,
     {
@@ -79,23 +80,65 @@ export interface Flashcard {
   order: number;
 }
 
+export interface FlashcardSession {
+  id: string;
+  flashcardSetId: string;
+  userId: string;
+  startTime: Date;
+  endTime?: Date;
+  currentIndex: number;
+  totalCards: number;
+  correctAnswers: number;
+  responses: FlashcardResponse[];
+  completed: boolean;
+}
+
+export interface FlashcardResponse {
+  cardId: string;
+  userAnswer: string;
+  isCorrect: boolean;
+  timeSpent: number;
+  timestamp: Date;
+}
+
+export interface FlashcardProgress {
+  userId: string;
+  flashcardSetId: string;
+  courseId: string;
+  completionPercentage: number;
+  learnedCardIds: string[];
+  timeSpent: number;
+  totalSessions: number;
+  totalCardsStudied: number;
+  averageScore: number;
+  bestScore: number;
+  lastStudied: Date;
+  streakCount: number;
+  masteredCards: string[];
+  needsReviewCards: string[];
+}
+
 // Exercise Types
 export interface Exercise {
   id: string;
   title: string;
   type: 'multiple_choice' | 'fill_blank';
-  course_id: string;
+  course_id?: string; // For backward compatibility
+  courseId?: string; // For new exercises (camelCase from backend)
   questions: Question[];
-  time_limit?: number;
-  difficulty: 'easy' | 'medium' | 'hard';
+  total_points?: number; // For backward compatibility
+  totalPoints?: number; // For new exercises (camelCase from backend)
+  created_by?: string;
+  created_at?: any;
+  is_active?: boolean;
 }
 
 // Test Types
 export interface Test {
   id: string;
   title: string;
-  course_id?: string;
-  courseId?: string;
+  courseId?: string; // For backward compatibility
+  course_id?: string; // For new tests
   questions: Question[];
   duration: number; // in minutes
   maxScore: number;
@@ -103,10 +146,8 @@ export interface Test {
   difficulty?: 'easy' | 'medium' | 'hard';
   questionIds?: string[];
   totalQuestions?: number;
-  created_at?: any; // Firebase Timestamp
-  created_by?: string;
+  createdAt?: any; // Firebase Timestamp
   createdBy?: string;
-  createdAt?: Date;
   updatedAt?: Date;
   isPublished?: boolean;
   isActive?: boolean;
@@ -116,17 +157,19 @@ export interface Test {
 
 export interface Question {
   id: string;
-  content: string;
-  type: 'multiple_choice' | 'fill_blank';
+  content?: string; // For new questions
+  question_text?: string; // For old questions in backup.json
+  type?: 'multiple_choice' | 'fill_blank' | 'true_false' | 'essay'; // Optional for old questions
   options?: string[];
-  correct_answer: string | number;
+  correctAnswer?: string | number | boolean; // Optional for old questions
   explanation?: string;
-  difficulty: 'easy' | 'medium' | 'hard';
-  course_id: string;
-  tags: string[];
-  created_by: string;
-  created_at: number;
-  is_active: boolean;
+  difficulty?: 'easy' | 'medium' | 'hard'; // Optional for old questions
+  courseId?: string; // For backward compatibility with old questions
+  course_id?: string; // For new questions and backward compatibility
+  tags?: string[]; // Optional for old questions
+  createdBy?: string; // Optional for old questions
+  createdAt?: number; // Optional for old questions
+  isActive?: boolean; // Optional for old questions
 }
 
 export interface AnswerDto {
@@ -137,7 +180,7 @@ export interface AnswerDto {
 export interface ExerciseSubmissionDto {
   userId: string;
   exerciseId: string;
-  courseId: string;
+  course_id: string;
   answers: AnswerDto[];
   timeSpent: number;
 }
@@ -194,7 +237,7 @@ export interface Badge {
   imageUrl: string;
   condition: string;
   conditionKey: string;
-  isActive: boolean;
+  is_active: boolean;
   earned?: boolean;
   earnedAt?: Date;
 }
@@ -282,6 +325,51 @@ export interface EvaluationTrendDto {
   date: string;
   averageRating: number;
   evaluationCount: number;
+}
+
+// Flashcard Analytics Types
+export interface FlashcardStatistics {
+  totalCards: number;
+  masteredCards: number;
+  needsReviewCards: number;
+  averageTimePerCard: number;
+  longestStreak: number;
+  currentStreak: number;
+  totalStudyTime: number; // in minutes
+}
+
+export interface TeacherAnalytics {
+  totalStudents: number;
+  totalSets: number;
+  averageProgress: number;
+  topPerformingStudents: StudentAnalytics[];
+  classProgress: ClassAnalytics[];
+}
+
+export interface ClassAnalytics {
+  classId: string;
+  className: string;
+  totalStudents: number;
+  averageProgress: number;
+  totalStudyTime: number;
+  topStudents: StudentAnalytics[];
+}
+
+export interface StudentAnalytics {
+  studentId: string;
+  studentName: string;
+  totalStudyTime: number;
+  progress: number;
+  streak: number;
+  masteredCards: number;
+}
+
+export interface StreakData {
+  currentStreak: number;
+  longestStreak: number;
+  lastActivityDate: Date;
+  streakHistory: { [date: string]: boolean };
+  streakCalendar: { [date: string]: boolean };
 }
 
 // API Response Types

@@ -59,3 +59,5 @@ const ActivityDistributionChart: React.FC<ActivityDistributionChartProps> = ({
 };
 
 export default ActivityDistributionChart;
+
+

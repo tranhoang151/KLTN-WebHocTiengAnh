@@ -167,7 +167,7 @@ export const createMockFlashcard = (overrides = {}) => ({
     order: 0,
     difficulty: 'easy',
     tags: [],
-    createdAt: new Date(),
+    created_at: new Date(),
     updatedAt: new Date(),
     ...overrides,
 });
@@ -179,8 +179,8 @@ export const createMockFlashcardSet = (overrides = {}) => ({
     flashcardCount: 5,
     difficulty: 'easy',
     isPublic: true,
-    createdBy: 'test-teacher-id',
-    createdAt: new Date(),
+    created_by: 'test-teacher-id',
+    created_at: new Date(),
     updatedAt: new Date(),
     ...overrides,
 });

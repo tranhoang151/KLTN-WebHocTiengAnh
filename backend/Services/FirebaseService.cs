@@ -1352,6 +1352,37 @@ public class FirebaseService : IFirebaseService
         }
     }
 
+    public async Task<Exercise> CreateExerciseAsync(Dictionary<string, object> exerciseData)
+    {
+        try
+        {
+            var docRef = _firestore.Collection("exercises").Document(exerciseData["id"].ToString());
+            await docRef.SetAsync(exerciseData);
+
+            // Clear cache
+            _cache.Remove("exercises_all");
+            _cache.Remove($"exercises_course_{exerciseData["course_id"]}");
+
+            _logger.LogInformation("Exercise created with ID: {ExerciseId}", exerciseData["id"]);
+
+            // Convert back to Exercise object for return
+            var exercise = new Exercise
+            {
+                Id = exerciseData["id"].ToString(),
+                Type = exerciseData.ContainsKey("type") ? exerciseData["type"].ToString() : null,
+                Title = exerciseData.ContainsKey("title") ? exerciseData["title"].ToString() : null,
+                CourseId = exerciseData["course_id"].ToString()
+            };
+
+            return exercise;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error creating exercise");
+            throw;
+        }
+    }
+
     public async Task<Exercise> UpdateExerciseAsync(string exerciseId, Exercise exercise)
     {
         try
@@ -1459,7 +1490,20 @@ public class FirebaseService : IFirebaseService
             }
 
             var snapshot = await _firestore.Collection("questions").GetSnapshotAsync();
-            var questions = snapshot.Documents.Select(doc => doc.ConvertTo<Question>()).ToList();
+            var questions = new List<Question>();
+
+            foreach (var doc in snapshot.Documents)
+            {
+                var data = doc.ToDictionary();
+                _logger.LogInformation("Raw Firestore data for question {Id}: {Data}", doc.Id,
+                    string.Join(", ", data.Select(kv => $"{kv.Key}={kv.Value}")));
+
+                var question = doc.ConvertTo<Question>();
+                _logger.LogInformation("Converted question {Id}: CorrectAnswer='{CorrectAnswer}', CreatedBy='{CreatedBy}', CreatedAt='{CreatedAt}'",
+                    question.Id, question.CorrectAnswer, question.CreatedBy, question.CreatedAt);
+
+                questions.Add(question);
+            }
 
             _cache.Set(cacheKey, questions, _cacheExpiry);
             return questions;
@@ -1512,6 +1556,9 @@ public class FirebaseService : IFirebaseService
         try
         {
             question.Id = Guid.NewGuid().ToString();
+
+            // Debug logging for tags before saving
+            _logger.LogInformation("CreateQuestionAsync - Saving question with tags: {Tags}", string.Join(", ", question.Tags ?? new List<string>()));
 
             var docRef = _firestore.Collection("questions").Document(question.Id);
             await docRef.SetAsync(question);

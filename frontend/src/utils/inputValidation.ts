@@ -422,7 +422,7 @@ export class SpecificValidators {
         content: string;
         type: string;
         options?: string[];
-        correctAnswer: string | number;
+        correct_answer: string | number;
         explanation?: string;
         difficulty: string;
         tags: string[];
@@ -445,7 +445,7 @@ export class SpecificValidators {
             }
         }
 
-        validator.required(data.correctAnswer, 'Đáp án đúng');
+        validator.required(data.correct_answer, 'Đáp án đúng');
 
         const allowedDifficulties = ['easy', 'medium', 'hard'];
         if (!allowedDifficulties.includes(data.difficulty)) {
@@ -459,7 +459,7 @@ export class SpecificValidators {
         const sanitizedData = InputSanitizer.sanitizeObject(data, {
             content: InputSanitizer.sanitizeText,
             options: (options: string[]) => options?.map(InputSanitizer.sanitizeText),
-            correctAnswer: (answer: string | number) =>
+            correct_answer: (answer: string | number) =>
                 typeof answer === 'string' ? InputSanitizer.sanitizeText(answer) : answer,
             explanation: InputSanitizer.sanitizeText,
             tags: (tags: string[]) => tags?.map(InputSanitizer.sanitizeText)

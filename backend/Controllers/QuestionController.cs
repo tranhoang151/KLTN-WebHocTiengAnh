@@ -90,6 +90,37 @@ public class QuestionController : ControllerBase
         }
     }
 
+    [HttpGet("tags")]
+    [Authorize(Roles = "admin,teacher")]
+    public async Task<IActionResult> GetAvailableTags([FromQuery] string? courseId = null)
+    {
+        try
+        {
+            var questions = await _firebaseService.GetQuestionsAsync();
+
+            // Filter by course if specified
+            if (!string.IsNullOrEmpty(courseId))
+            {
+                questions = questions.Where(q => q.CourseId == courseId).ToList();
+            }
+
+            // Extract all unique tags
+            var allTags = questions
+                .SelectMany(q => q.Tags ?? new List<string>())
+                .Where(tag => !string.IsNullOrWhiteSpace(tag))
+                .Distinct()
+                .OrderBy(tag => tag)
+                .ToList();
+
+            return Ok(allTags);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving available tags");
+            return StatusCode(500, new { message = "Error retrieving available tags", error = ex.Message });
+        }
+    }
+
     [HttpPost]
     [Authorize(Roles = "admin,teacher")]
     public async Task<IActionResult> CreateQuestion([FromBody] CreateQuestionDto createQuestionDto)
@@ -101,21 +132,27 @@ public class QuestionController : ControllerBase
                 return BadRequest(ModelState);
             }
 
+            // Debug logging for tags
+            _logger.LogInformation("CreateQuestion - Received tags: {Tags}", string.Join(", ", createQuestionDto.tags ?? new List<string>()));
+
             var question = new Question
             {
                 Id = Guid.NewGuid().ToString(),
-                Content = createQuestionDto.Content,
-                Type = createQuestionDto.Type,
-                Options = createQuestionDto.Options,
-                CorrectAnswer = createQuestionDto.CorrectAnswer,
-                Explanation = createQuestionDto.Explanation,
-                Difficulty = createQuestionDto.Difficulty,
-                CourseId = createQuestionDto.CourseId,
-                Tags = createQuestionDto.Tags,
+                Content = createQuestionDto.content,
+                Type = createQuestionDto.type,
+                Options = createQuestionDto.type == "multiple_choice" ? createQuestionDto.options : new List<string>(),
+                CorrectAnswer = createQuestionDto.correctAnswer,
+                Explanation = createQuestionDto.explanation,
+                Difficulty = createQuestionDto.difficulty,
+                CourseId = createQuestionDto.course_id,
+                Tags = createQuestionDto.tags,
                 CreatedBy = User.Identity?.Name ?? "system",
                 CreatedAt = Timestamp.FromDateTime(DateTime.UtcNow),
                 IsActive = true
             };
+
+            // Debug logging for question tags
+            _logger.LogInformation("CreateQuestion - Question tags: {Tags}", string.Join(", ", question.Tags ?? new List<string>()));
 
             var createdQuestion = await _firebaseService.CreateQuestionAsync(question);
 
@@ -147,32 +184,46 @@ public class QuestionController : ControllerBase
             }
 
             // Update fields
-            if (!string.IsNullOrEmpty(updateQuestionDto.Content))
-                existingQuestion.Content = updateQuestionDto.Content;
+            if (!string.IsNullOrEmpty(updateQuestionDto.content))
+                existingQuestion.Content = updateQuestionDto.content;
 
-            if (!string.IsNullOrEmpty(updateQuestionDto.Type))
-                existingQuestion.Type = updateQuestionDto.Type;
+            if (!string.IsNullOrEmpty(updateQuestionDto.type))
+                existingQuestion.Type = updateQuestionDto.type;
 
-            if (updateQuestionDto.Options != null)
-                existingQuestion.Options = updateQuestionDto.Options;
+            if (updateQuestionDto.options != null)
+            {
+                // Only update options for multiple_choice questions
+                if (updateQuestionDto.type == "multiple_choice" || existingQuestion.Type == "multiple_choice")
+                {
+                    existingQuestion.Options = updateQuestionDto.options;
+                }
+                else
+                {
+                    // Clear options for non-multiple_choice questions
+                    existingQuestion.Options = new List<string>();
+                }
+            }
 
-            if (!string.IsNullOrEmpty(updateQuestionDto.CorrectAnswer))
-                existingQuestion.CorrectAnswer = updateQuestionDto.CorrectAnswer;
+            if (!string.IsNullOrEmpty(updateQuestionDto.correctAnswer))
+                existingQuestion.CorrectAnswer = updateQuestionDto.correctAnswer;
 
-            if (updateQuestionDto.Explanation != null)
-                existingQuestion.Explanation = updateQuestionDto.Explanation;
+            if (updateQuestionDto.explanation != null)
+                existingQuestion.Explanation = updateQuestionDto.explanation;
 
-            if (!string.IsNullOrEmpty(updateQuestionDto.Difficulty))
-                existingQuestion.Difficulty = updateQuestionDto.Difficulty;
+            if (!string.IsNullOrEmpty(updateQuestionDto.difficulty))
+                existingQuestion.Difficulty = updateQuestionDto.difficulty;
 
-            if (!string.IsNullOrEmpty(updateQuestionDto.CourseId))
-                existingQuestion.CourseId = updateQuestionDto.CourseId;
+            if (!string.IsNullOrEmpty(updateQuestionDto.course_id))
+                existingQuestion.CourseId = updateQuestionDto.course_id;
 
-            if (updateQuestionDto.Tags != null)
-                existingQuestion.Tags = updateQuestionDto.Tags;
+            if (updateQuestionDto.tags != null)
+            {
+                _logger.LogInformation("UpdateQuestion - Updating tags: {Tags}", string.Join(", ", updateQuestionDto.tags));
+                existingQuestion.Tags = updateQuestionDto.tags;
+            }
 
-            if (updateQuestionDto.IsActive.HasValue)
-                existingQuestion.IsActive = updateQuestionDto.IsActive.Value;
+            if (updateQuestionDto.isActive.HasValue)
+                existingQuestion.IsActive = updateQuestionDto.isActive.Value;
 
             var updatedQuestion = await _firebaseService.UpdateQuestionAsync(id, existingQuestion);
 

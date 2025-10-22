@@ -17,7 +17,7 @@ const TestList: React.FC<TestListProps> = ({
   onDelete,
   onPreview,
 }) => {
-  const getCourseName = (courseId: string) => {
+  const getCourseName = (courseId: string | undefined) => {
     const course = courses.find((c) => c.id === courseId);
     return course?.name || 'Unknown Course';
   };
@@ -245,7 +245,7 @@ const TestList: React.FC<TestListProps> = ({
                           color: '#1e40af',
                         }}
                       >
-                        {getCourseName(test.course_id)}
+                        {getCourseName(test.course_id || test.courseId)}
                       </span>
                     </div>
                   </div>
@@ -329,7 +329,7 @@ const TestList: React.FC<TestListProps> = ({
                 </div>
 
                 {/* Created date */}
-                {test.created_at && (
+                {test.createdAt && (
                   <div
                     style={{
                       display: 'inline-block',
@@ -348,7 +348,7 @@ const TestList: React.FC<TestListProps> = ({
                     >
                       Created:{' '}
                       {new Date(
-                        test.created_at.seconds * 1000
+                        test.createdAt.seconds * 1000
                       ).toLocaleDateString()}
                     </span>
                   </div>
@@ -478,3 +478,5 @@ const TestList: React.FC<TestListProps> = ({
 };
 
 export default TestList;
+
+

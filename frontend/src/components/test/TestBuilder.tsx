@@ -35,7 +35,7 @@ const TestBuilder: React.FC<TestBuilderProps> = ({
         if (test) {
             setFormData({
                 title: test.title,
-                course_id: test.course_id,
+                course_id: test.course_id || test.courseId,
                 duration: test.duration,
                 maxScore: test.maxScore,
                 questions: test.questions
@@ -95,7 +95,7 @@ const TestBuilder: React.FC<TestBuilderProps> = ({
     };
 
     const getAvailableQuestionsForCourse = () => {
-        return availableQuestions.filter(q => q.course_id === formData.course_id);
+        return availableQuestions.filter(q => (q.course_id || q.courseId) === formData.course_id);
     };
 
     return (
@@ -270,3 +270,5 @@ const TestBuilder: React.FC<TestBuilderProps> = ({
 };
 
 export default TestBuilder;
+
+

@@ -54,7 +54,7 @@ const FlashcardSetForm: React.FC<FlashcardSetFormProps> = ({
       setFormData({
         title: editingSet.title,
         description: editingSet.description,
-        courseId: editingSet.courseId,
+        courseId: editingSet.course_id,
         // assignedClassIds: editingSet.assignedClassIds || [], // Removed - using course-based access instead
       });
     }
@@ -577,3 +577,5 @@ const FlashcardSetForm: React.FC<FlashcardSetFormProps> = ({
 };
 
 export default FlashcardSetForm;
+
+

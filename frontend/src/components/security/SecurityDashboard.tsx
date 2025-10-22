@@ -59,7 +59,7 @@ interface SecurityIncident {
     title: string;
     severity: string;
     status: string;
-    createdAt: string;
+    created_at: string;
     assignedTo: string;
 }
 
@@ -420,7 +420,7 @@ export const SecurityDashboard: React.FC = () => {
                                                 </span>
                                                 <span className="incident-status">{incident.status}</span>
                                                 <span className="incident-time">
-                                                    {new Date(incident.createdAt).toLocaleString()}
+                                                    {new Date(incident.created_at).toLocaleString()}
                                                 </span>
                                             </div>
                                             <div className="incident-title">{incident.title}</div>
@@ -473,3 +473,5 @@ export const SecurityDashboard: React.FC = () => {
         </div>
     );
 };
+
+

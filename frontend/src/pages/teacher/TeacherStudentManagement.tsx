@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { classService } from '../../services/classService';
 import { Class } from '../../types';
-import { userService, User } from '../../services/userService';
+import { userService } from '../../services/userService';
+import { User } from '../../types/index';
 import DashboardLayout from '../../components/DashboardLayout';
 import { Link } from 'react-router-dom';
 
@@ -59,7 +60,7 @@ const TeacherStudentManagement: React.FC = () => {
             const allStudents = await userService.getAllUsers('', { role: 'student' });
             // Filter students who are not in any class
             const available = allStudents.filter(student =>
-                !student.classIds || student.classIds.length === 0
+                !student.class_ids || student.class_ids.length === 0
             );
             setAvailableStudents(available);
         } catch (err: any) {
@@ -163,15 +164,15 @@ const TeacherStudentManagement: React.FC = () => {
                                             <div key={student.id} className="border border-gray-200 rounded-lg p-4">
                                                 <div className="flex items-center space-x-3">
                                                     <img
-                                                        src={student.avatarUrl ||
+                                                        src={student.avatar_url ||
                                                             (student.avatar_base64?.startsWith('data:')
                                                                 ? student.avatar_base64
                                                                 : `data:image/jpeg;base64,${student.avatar_base64}`) || '/default-avatar.png'}
-                                                        alt={student.fullName}
+                                                        alt={student.full_name}
                                                         className="w-10 h-10 rounded-full"
                                                     />
                                                     <div className="flex-1">
-                                                        <h4 className="font-medium text-gray-900">{student.fullName}</h4>
+                                                        <h4 className="font-medium text-gray-900">{student.full_name}</h4>
                                                         <p className="text-sm text-gray-500">{student.email}</p>
                                                     </div>
                                                 </div>
@@ -226,15 +227,15 @@ const TeacherStudentManagement: React.FC = () => {
                                                     className="h-4 w-4 text-blue-600"
                                                 />
                                                 <img
-                                                    src={student.avatarUrl ||
+                                                    src={student.avatar_url ||
                                                         (student.avatar_base64?.startsWith('data:')
                                                             ? student.avatar_base64
                                                             : `data:image/jpeg;base64,${student.avatar_base64}`) || '/default-avatar.png'}
-                                                    alt={student.fullName}
+                                                    alt={student.full_name}
                                                     className="w-8 h-8 rounded-full"
                                                 />
                                                 <div>
-                                                    <p className="font-medium text-gray-900">{student.fullName}</p>
+                                                    <p className="font-medium text-gray-900">{student.full_name}</p>
                                                     <p className="text-sm text-gray-500">{student.email}</p>
                                                 </div>
                                             </div>
@@ -270,3 +271,5 @@ const TeacherStudentManagement: React.FC = () => {
 };
 
 export default TeacherStudentManagement;
+
+

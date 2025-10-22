@@ -627,27 +627,7 @@ const ClassList: React.FC<ClassListProps> = ({
               }}
             >
               {/* Status Badge */}
-              <div
-                style={{
-                  position: 'absolute',
-                  top: '16px',
-                  right: '16px',
-                  padding: '4px 12px',
-                  borderRadius: '20px',
-                  fontSize: '12px',
-                  fontWeight: '600',
-                  background:
-                    classData.isActive
-                      ? 'linear-gradient(135deg, #d1fae5, #a7f3d0)'
-                      : 'linear-gradient(135deg, #fee2e2, #fecaca)',
-                  color:
-                    classData.isActive
-                      ? '#065f46'
-                      : '#dc2626',
-                }}
-              >
-                {classData.isActive ? 'Active' : 'Inactive'}
-              </div>
+              {/* Status badge removed - all classes are active by default */}
 
               {/* Header */}
               <div
@@ -787,51 +767,7 @@ const ClassList: React.FC<ClassListProps> = ({
                   </span>
                 </div>
 
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                  }}
-                >
-                  <Calendar size={16} color="#6b7280" />
-                  <span
-                    style={{
-                      fontSize: '14px',
-                      color: '#6b7280',
-                      fontWeight: '500',
-                    }}
-                  >
-                    Created:
-                  </span>
-                  <span
-                    style={{
-                      fontSize: '14px',
-                      color: '#1f2937',
-                      fontWeight: '600',
-                    }}
-                  >
-                    {(() => {
-                      const dateStr = classData.createdAt;
-                      if (!dateStr) return 'N/A';
-
-                      // Handle different date formats
-                      let date;
-                      if (typeof dateStr === 'string') {
-                        // Handle "2025-07-18" format
-                        if (dateStr.includes('-') && !dateStr.includes('T')) {
-                          date = new Date(dateStr + 'T00:00:00');
-                        } else {
-                          date = new Date(dateStr);
-                        }
-                      } else {
-                        date = new Date(dateStr);
-                      }
-
-                      return isNaN(date.getTime()) ? 'Invalid Date' : date.toLocaleDateString();
-                    })()}
-                  </span>
-                </div>
+                {/* Created date hidden as requested */}
               </div>
 
               {/* Capacity Progress */}
@@ -1009,3 +945,5 @@ const ClassList: React.FC<ClassListProps> = ({
 };
 
 export default ClassList;
+
+

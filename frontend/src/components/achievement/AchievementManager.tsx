@@ -200,3 +200,5 @@ export default AchievementManager;
 export const showAchievementNotification = (badge: Badge) => {
   window.dispatchEvent(new CustomEvent('show-achievement', { detail: badge }));
 };
+
+

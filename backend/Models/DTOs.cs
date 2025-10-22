@@ -398,27 +398,27 @@ public class SystemHealthDto
 // Question Management DTOs
 public class CreateQuestionDto
 {
-    public string Content { get; set; } = string.Empty;
-    public string Type { get; set; } = string.Empty; // multiple_choice, fill_blank
-    public List<string> Options { get; set; } = new();
-    public string CorrectAnswer { get; set; } = string.Empty;
-    public string? Explanation { get; set; }
-    public string Difficulty { get; set; } = string.Empty;
-    public string CourseId { get; set; } = string.Empty;
-    public List<string> Tags { get; set; } = new();
+    public string content { get; set; } = string.Empty;
+    public string type { get; set; } = string.Empty; // multiple_choice, fill_blank
+    public List<string> options { get; set; } = new();
+    public string correctAnswer { get; set; } = string.Empty;
+    public string? explanation { get; set; }
+    public string difficulty { get; set; } = string.Empty;
+    public string course_id { get; set; } = string.Empty;
+    public List<string> tags { get; set; } = new();
 }
 
 public class UpdateQuestionDto
 {
-    public string? Content { get; set; }
-    public string? Type { get; set; }
-    public List<string>? Options { get; set; }
-    public string? CorrectAnswer { get; set; }
-    public string? Explanation { get; set; }
-    public string? Difficulty { get; set; }
-    public string? CourseId { get; set; }
-    public List<string>? Tags { get; set; }
-    public bool? IsActive { get; set; }
+    public string? content { get; set; }
+    public string? type { get; set; }
+    public List<string>? options { get; set; }
+    public string? correctAnswer { get; set; }
+    public string? explanation { get; set; }
+    public string? difficulty { get; set; }
+    public string? course_id { get; set; }
+    public List<string>? tags { get; set; }
+    public bool? isActive { get; set; }
 }
 
 // Evaluation DTOs

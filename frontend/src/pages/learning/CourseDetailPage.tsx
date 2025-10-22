@@ -61,3 +61,5 @@ const CourseDetailPage: React.FC = () => {
 };
 
 export default CourseDetailPage;
+
+

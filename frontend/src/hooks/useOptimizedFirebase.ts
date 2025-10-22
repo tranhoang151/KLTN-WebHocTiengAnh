@@ -514,7 +514,7 @@ export function useOptimizedFirebaseWrite<T>() {
             ref: docRef,
             data: {
               ...data,
-              createdAt: FirebaseHelpers.fieldValues.serverTimestamp(),
+              created_at: FirebaseHelpers.fieldValues.serverTimestamp(),
               updatedAt: FirebaseHelpers.fieldValues.serverTimestamp(),
             },
           },

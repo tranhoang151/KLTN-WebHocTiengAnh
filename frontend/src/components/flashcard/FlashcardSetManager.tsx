@@ -125,8 +125,8 @@ const FlashcardSetManager: React.FC<FlashcardSetManagerProps> = ({
   const handleManageCards = (set: FlashcardSet) => {
     console.log('Selected set:', set);
     // Ensure the set has an id, fallback to setId if id is missing
-    if (!set.id && set.setId) {
-      set.id = set.setId;
+    if (!set.id && set.set_id) {
+      set.id = set.set_id;
     }
     setSelectedSet(set);
   };
@@ -632,24 +632,7 @@ const FlashcardSetManager: React.FC<FlashcardSetManagerProps> = ({
                 }}
               >
                 {/* Status Badge */}
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: '20px',
-                    right: '16px',
-                    padding: '4px 12px',
-                    borderRadius: '20px',
-                    fontSize: '12px',
-                    fontWeight: '600',
-                    background: set.isActive
-                      ? 'linear-gradient(135deg, #10b981, #059669)'
-                      : 'linear-gradient(135deg, #ef4444, #dc2626)',
-                    color: 'white',
-                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-                  }}
-                >
-                  {set.isActive ? 'ACTIVE' : 'INACTIVE'}
-                </div>
+                {/* Status badge removed - all flashcard sets are active by default */}
 
                 {/* Header */}
                 <div
@@ -812,38 +795,10 @@ const FlashcardSetManager: React.FC<FlashcardSetManagerProps> = ({
                         fontWeight: '600',
                       }}
                     >
-                      {getCourseName(set.courseId)}
+                      {getCourseName(set.course_id)}
                     </span>
                   </div>
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '8px',
-                    }}
-                  >
-                    <Calendar size={16} color="#6b7280" />
-                    <span
-                      style={{
-                        fontSize: '14px',
-                        color: '#6b7280',
-                        fontWeight: '500',
-                      }}
-                    >
-                      Created:
-                    </span>
-                    <span
-                      style={{
-                        fontSize: '14px',
-                        color: '#1f2937',
-                        fontWeight: '600',
-                      }}
-                    >
-                      {new Date(
-                        set.createdAt?.getTime?.() || Date.now()
-                      ).toLocaleDateString()}
-                    </span>
-                  </div>
+                  {/* Created date hidden as requested */}
                 </div>
 
                 {/* Action Buttons */}
@@ -915,3 +870,5 @@ const FlashcardSetManager: React.FC<FlashcardSetManagerProps> = ({
 };
 
 export default FlashcardSetManager;
+
+

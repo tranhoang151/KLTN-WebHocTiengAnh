@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Exercise } from '../../types';
 import { exerciseService } from '../../services/exerciseService';
 import ExerciseList from './ExerciseList';
-import ExerciseBuilder from './ExerciseBuilder';
+import ExerciseForm from './ExerciseForm';
 import ExercisePreview from './ExercisePreview';
 import { usePermissions } from '../../hooks/usePermissions';
 import { BackButton } from '../BackButton';
@@ -86,6 +86,8 @@ const ExerciseManagement: React.FC<ExerciseManagementProps> = ({
 
       setViewMode('list');
       setSelectedExercise(null);
+      // Force refresh of exercise list
+      window.location.reload();
     } catch (err: any) {
       setError(err.message || 'Failed to save exercise');
     } finally {
@@ -541,7 +543,7 @@ const ExerciseManagement: React.FC<ExerciseManagementProps> = ({
 
                 {/* Form Content */}
                 <div style={{ position: 'relative', zIndex: 1 }}>
-                  <ExerciseBuilder
+                  <ExerciseForm
                     exercise={selectedExercise}
                     onSubmit={handleSubmitExercise}
                     onCancel={handleBackToList}
@@ -734,3 +736,5 @@ const ExerciseManagement: React.FC<ExerciseManagementProps> = ({
 };
 
 export default ExerciseManagement;
+
+

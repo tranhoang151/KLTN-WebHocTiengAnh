@@ -11,7 +11,7 @@ import {
   StudentAnalytics,
   Badge,
   StreakData
-} from '../types/flashcard';
+} from '../types/index';
 
 // Re-export types for convenience
 export type {
@@ -61,11 +61,11 @@ export class FlashcardService {
         return response.data;
       } else {
         console.error('Error fetching flashcard sets by course:', response.error);
-        return this.getMockFlashcardSets().filter(set => set.courseId === courseId);
+        return this.getMockFlashcardSets().filter(set => set.course_id === courseId);
       }
     } catch (error) {
       console.error('Error fetching flashcard sets by course:', error);
-      return this.getMockFlashcardSets().filter(set => set.courseId === courseId);
+      return this.getMockFlashcardSets().filter(set => set.course_id === courseId);
     }
   }
 
@@ -433,49 +433,37 @@ export class FlashcardService {
         id: 'animals',
         title: 'Animals',
         description: 'Learn basic animals',
-        courseId: 'LABTsID1zvPRsVjPjhLd',
-        setId: 'animals',
-        createdBy: 'teacher_123',
-        createdAt: new Date('2025-01-01'),
-        assignedClassIds: ['class_1'],
-        isActive: true,
-        totalCards: 10
+        course_id: 'LABTsID1zvPRsVjPjhLd',
+        set_id: 'animals',
+        created_by: 'teacher_123',
+        created_at: new Date('2025-01-01'),
       },
       {
         id: 'colors',
         title: 'Colors',
         description: 'Learn basic colors',
-        courseId: 'LABTsID1zvPRsVjPjhLd',
-        setId: 'colors',
-        createdBy: 'teacher_123',
-        createdAt: new Date('2025-01-01'),
-        assignedClassIds: ['class_1'],
-        isActive: true,
-        totalCards: 8
+        course_id: 'LABTsID1zvPRsVjPjhLd',
+        set_id: 'colors',
+        created_by: 'teacher_123',
+        created_at: new Date('2025-01-01'),
       },
       {
         id: 'numbers',
         title: 'Numbers',
         description: 'Learn basic numbers',
-        courseId: 'LABTsID1zvPRsVjPjhLd',
-        setId: 'numbers',
-        createdBy: 'teacher_123',
-        createdAt: new Date('2025-01-01'),
-        assignedClassIds: ['class_1'],
-        isActive: true,
-        totalCards: 12
+        course_id: 'LABTsID1zvPRsVjPjhLd',
+        set_id: 'numbers',
+        created_by: 'teacher_123',
+        created_at: new Date('2025-01-01'),
       },
       {
         id: 'shool_things',
         title: 'Shool Things',
         description: 'Learning about school things',
-        courseId: '1Tj7Zug9y2PtKCj3mR1X',
-        setId: 'shool_things',
-        createdBy: 'admin',
-        createdAt: new Date('2025-01-01'),
-        assignedClassIds: ['class_1'],
-        isActive: true,
-        totalCards: 5
+        course_id: '1Tj7Zug9y2PtKCj3mR1X',
+        set_id: 'shool_things',
+        created_by: 'admin',
+        created_at: new Date('2025-01-01'),
       }
     ];
   }
@@ -483,32 +471,32 @@ export class FlashcardService {
   private getMockFlashcards(setId: string): Flashcard[] {
     const mockData: { [key: string]: Flashcard[] } = {
       animals: [
-        { id: '1', frontText: 'A _____ says "meow".', backText: 'cat', order: 1, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() },
-        { id: '2', frontText: 'A _____ says "woof".', backText: 'dog', order: 2, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() },
-        { id: '3', frontText: 'A _____ can fly.', backText: 'bird', order: 3, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() },
-        { id: '4', frontText: 'A _____ lives in water.', backText: 'fish', order: 4, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() },
-        { id: '5', frontText: 'A _____ has four legs.', backText: 'dog', order: 5, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() }
+        { id: '1', front_text: 'A _____ says "meow".', back_text: 'cat', order: 1, flashcard_set_id: setId },
+        { id: '2', front_text: 'A _____ says "woof".', back_text: 'dog', order: 2, flashcard_set_id: setId },
+        { id: '3', front_text: 'A _____ can fly.', back_text: 'bird', order: 3, flashcard_set_id: setId },
+        { id: '4', front_text: 'A _____ lives in water.', back_text: 'fish', order: 4, flashcard_set_id: setId },
+        { id: '5', front_text: 'A _____ has four legs.', back_text: 'dog', order: 5, flashcard_set_id: setId }
       ],
       colors: [
-        { id: '6', frontText: 'The sky is _____ on a clear day.', backText: 'blue', order: 6, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() },
-        { id: '7', frontText: 'Grass is _____.', backText: 'green', order: 7, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() },
-        { id: '8', frontText: 'The sun is _____.', backText: 'yellow', order: 8, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() },
-        { id: '9', frontText: 'Blood is _____.', backText: 'red', order: 9, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() },
-        { id: '10', frontText: 'Snow is _____.', backText: 'white', order: 10, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() }
+        { id: '6', front_text: 'The sky is _____ on a clear day.', back_text: 'blue', order: 6, flashcard_set_id: setId },
+        { id: '7', front_text: 'Grass is _____.', back_text: 'green', order: 7, flashcard_set_id: setId },
+        { id: '8', front_text: 'The sun is _____.', back_text: 'yellow', order: 8, flashcard_set_id: setId },
+        { id: '9', front_text: 'Blood is _____.', back_text: 'red', order: 9, flashcard_set_id: setId },
+        { id: '10', front_text: 'Snow is _____.', back_text: 'white', order: 10, flashcard_set_id: setId }
       ],
       numbers: [
-        { id: '11', frontText: 'You have _____ fingers on one hand.', backText: 'five', order: 11, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() },
-        { id: '12', frontText: 'There are _____ days in a week.', backText: 'seven', order: 12, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() },
-        { id: '13', frontText: 'You have _____ eyes.', backText: 'two', order: 13, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() },
-        { id: '14', frontText: 'A cat has _____ legs.', backText: 'four', order: 14, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() },
-        { id: '15', frontText: 'There are _____ months in a year.', backText: 'twelve', order: 15, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() }
+        { id: '11', front_text: 'You have _____ fingers on one hand.', back_text: 'five', order: 11, flashcard_set_id: setId },
+        { id: '12', front_text: 'There are _____ days in a week.', back_text: 'seven', order: 12, flashcard_set_id: setId },
+        { id: '13', front_text: 'You have _____ eyes.', back_text: 'two', order: 13, flashcard_set_id: setId },
+        { id: '14', front_text: 'A cat has _____ legs.', back_text: 'four', order: 14, flashcard_set_id: setId },
+        { id: '15', front_text: 'There are _____ months in a year.', back_text: 'twelve', order: 15, flashcard_set_id: setId }
       ],
       shool_things: [
-        { id: '16', frontText: 'We write with a _____.', backText: 'pencil', order: 1, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() },
-        { id: '17', frontText: 'We sit on a _____.', backText: 'chair', order: 2, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() },
-        { id: '18', frontText: 'We read _____.', backText: 'books', order: 3, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() },
-        { id: '19', frontText: 'The teacher writes on the _____.', backText: 'board', order: 4, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() },
-        { id: '20', frontText: 'We carry our books in a _____.', backText: 'bag', order: 5, flashcardSetId: setId, createdAt: new Date(), updatedAt: new Date() }
+        { id: '16', front_text: 'We write with a _____.', back_text: 'pencil', order: 1, flashcard_set_id: setId },
+        { id: '17', front_text: 'We sit on a _____.', back_text: 'chair', order: 2, flashcard_set_id: setId },
+        { id: '18', front_text: 'We read _____.', back_text: 'books', order: 3, flashcard_set_id: setId },
+        { id: '19', front_text: 'The teacher writes on the _____.', back_text: 'board', order: 4, flashcard_set_id: setId },
+        { id: '20', front_text: 'We carry our books in a _____.', back_text: 'bag', order: 5, flashcard_set_id: setId }
       ]
     };
 

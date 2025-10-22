@@ -512,3 +512,5 @@ const StudentStreakCalendar: React.FC<StudentStreakCalendarProps> = ({
 };
 
 export default StudentStreakCalendar;
+
+

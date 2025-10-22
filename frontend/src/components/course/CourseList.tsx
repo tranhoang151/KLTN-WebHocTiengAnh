@@ -583,40 +583,7 @@ const CourseList: React.FC<CourseListProps> = ({
                     marginBottom: '20px',
                   }}
                 >
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                      padding: '4px 8px',
-                      background: 'linear-gradient(135deg, #f3f4f6, #e5e7eb)',
-                      borderRadius: '8px',
-                      fontSize: '12px',
-                      fontWeight: '500',
-                      color: '#6b7280',
-                    }}
-                  >
-                    <Calendar size={12} />
-                    {(() => {
-                      try {
-                        if (course.created_at) {
-                          // Handle Firebase Timestamp
-                          if (course.created_at._seconds) {
-                            return new Date(course.created_at._seconds * 1000).toLocaleDateString();
-                          }
-                          // Handle regular Date
-                          if (course.created_at.toDate) {
-                            return course.created_at.toDate().toLocaleDateString();
-                          }
-                          // Handle string date
-                          return new Date(course.created_at).toLocaleDateString();
-                        }
-                        return 'N/A';
-                      } catch (error) {
-                        return 'Invalid Date';
-                      }
-                    })()}
-                  </div>
+                  {/* Created date hidden as requested */}
                 </div>
 
                 {/* Action Buttons */}
@@ -821,3 +788,5 @@ const CourseList: React.FC<CourseListProps> = ({
 };
 
 export default CourseList;
+
+

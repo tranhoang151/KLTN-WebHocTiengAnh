@@ -7,7 +7,6 @@ export interface QuestionFilters {
     type?: 'multiple_choice' | 'fill_blank';
     tags?: string[];
     searchTerm?: string;
-    isActive?: boolean;
 }
 
 class QuestionService {
@@ -18,7 +17,7 @@ class QuestionService {
         if (filters?.difficulty) params.append('difficulty', filters.difficulty);
         if (filters?.type) params.append('type', filters.type);
         if (filters?.searchTerm) params.append('search', filters.searchTerm);
-        if (filters?.isActive !== undefined) params.append('isActive', filters.isActive.toString());
+        // is_active filter removed - all questions are active by default
         if (filters?.tags && filters.tags.length > 0) {
             filters.tags.forEach(tag => params.append('tags', tag));
         }

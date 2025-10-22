@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { classService } from '../../services/classService';
 import { evaluationService, Evaluation, StudentEvaluationSummary } from '../../services/evaluationService';
-import { userService, User } from '../../services/userService';
+import { userService } from '../../services/userService';
+import { User } from '../../types/index';
 import { Class } from '../../types';
 import DashboardLayout from '../../components/DashboardLayout';
 
@@ -214,15 +215,15 @@ const TeacherEvaluationPage: React.FC = () => {
                                     >
                                         <div className="flex items-center space-x-3">
                                             <img
-                                                src={student.avatarUrl ||
+                                                src={student.avatar_url ||
                                                     (student.avatar_base64?.startsWith('data:')
                                                         ? student.avatar_base64
                                                         : `data:image/jpeg;base64,${student.avatar_base64}`) || '/default-avatar.png'}
-                                                alt={student.fullName}
+                                                alt={student.full_name}
                                                 className="w-10 h-10 rounded-full"
                                             />
                                             <div>
-                                                <h4 className="font-medium text-gray-900">{student.fullName}</h4>
+                                                <h4 className="font-medium text-gray-900">{student.full_name}</h4>
                                                 <p className="text-sm text-gray-500">{student.email}</p>
                                             </div>
                                         </div>
@@ -237,7 +238,7 @@ const TeacherEvaluationPage: React.FC = () => {
                                 <div className="bg-white shadow rounded-lg">
                                     <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
                                         <h3 className="text-lg font-medium text-gray-900">
-                                            Evaluations for {selectedStudent.fullName}
+                                            Evaluations for {selectedStudent.full_name}
                                         </h3>
                                         <button
                                             onClick={() => {
@@ -385,3 +386,5 @@ const TeacherEvaluationPage: React.FC = () => {
 };
 
 export default TeacherEvaluationPage;
+
+

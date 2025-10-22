@@ -53,6 +53,7 @@ const StudentListForEvaluation: React.FC<StudentListForEvaluationProps> = ({
                     last_login_date: new Date().toISOString(),
                     class_ids: classId ? [classId] : [],
                     badges: {},
+                    is_active: true,
                     needsEvaluation: studentsNeedingEvaluation.some(s => s.id === 'student1'),
                 },
                 {
@@ -66,6 +67,7 @@ const StudentListForEvaluation: React.FC<StudentListForEvaluationProps> = ({
                     last_login_date: new Date().toISOString(),
                     class_ids: classId ? [classId] : [],
                     badges: {},
+                    is_active: true,
                     needsEvaluation: studentsNeedingEvaluation.some(s => s.id === 'student2'),
                 },
                 {
@@ -79,6 +81,7 @@ const StudentListForEvaluation: React.FC<StudentListForEvaluationProps> = ({
                     last_login_date: new Date().toISOString(),
                     class_ids: classId ? [classId] : [],
                     badges: {},
+                    is_active: true,
                     needsEvaluation: studentsNeedingEvaluation.some(s => s.id === 'student3'),
                 },
             ];
@@ -252,3 +255,5 @@ const StudentListForEvaluation: React.FC<StudentListForEvaluationProps> = ({
 };
 
 export default StudentListForEvaluation;
+
+
