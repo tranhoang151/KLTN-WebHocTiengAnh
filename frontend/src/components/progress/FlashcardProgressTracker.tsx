@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Flashcard } from '../../services/flashcardService';
-import './FlashcardProgressTracker.css';
+import { CheckCircle, Eye, XCircle, Circle, Trophy } from 'lucide-react';
 
 interface FlashcardProgressTrackerProps {
   flashcards: Flashcard[];
@@ -49,16 +49,16 @@ const FlashcardProgressTracker: React.FC<FlashcardProgressTrackerProps> = ({
     setCardStatuses(statuses);
   }, [flashcards, learnedCards, currentCardIndex]);
 
-  const getStatusIcon = (status: CardStatus['status']): string => {
+  const getStatusIcon = (status: CardStatus['status']) => {
     switch (status) {
       case 'current':
-        return '👁️';
+        return <Eye size={16} />;
       case 'learned':
-        return '✅';
+        return <CheckCircle size={16} />;
       case 'not-learned':
-        return '❌';
+        return <XCircle size={16} />;
       default:
-        return '⭕';
+        return <Circle size={16} />;
     }
   };
 
@@ -94,94 +94,353 @@ const FlashcardProgressTracker: React.FC<FlashcardProgressTrackerProps> = ({
     totalCards > 0 ? Math.round((learnedCount / totalCards) * 100) : 0;
 
   return (
-    <div className="flashcard-progress-tracker">
-      <div className="progress-header">
-        <div className="progress-summary">
-          <div className="progress-circle-mini">
-            <svg viewBox="0 0 36 36" className="circular-chart">
+    <div
+      style={{
+        background: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(20px)',
+        borderRadius: '20px',
+        padding: '24px',
+        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
+      }}
+    >
+      {/* Progress Header */}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '24px',
+        }}
+      >
+        {/* Progress Summary */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '20px',
+          }}
+        >
+          {/* Circular Progress */}
+          <div
+            style={{
+              position: 'relative',
+              width: '80px',
+              height: '80px',
+            }}
+          >
+            <svg
+              viewBox="0 0 36 36"
+              style={{
+                width: '100%',
+                height: '100%',
+                transform: 'rotate(-90deg)',
+              }}
+            >
               <path
-                className="circle-bg"
-                d="M18 2.0845
-                  a 15.9155 15.9155 0 0 1 0 31.831
-                  a 15.9155 15.9155 0 0 1 0 -31.831"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                fill="none"
+                stroke="rgba(107, 114, 128, 0.2)"
+                strokeWidth="2"
               />
               <path
-                className="circle"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                fill="none"
+                stroke="url(#progressGradient)"
+                strokeWidth="2"
+                strokeLinecap="round"
                 strokeDasharray={`${completionPercentage}, 100`}
-                d="M18 2.0845
-                  a 15.9155 15.9155 0 0 1 0 31.831
-                  a 15.9155 15.9155 0 0 1 0 -31.831"
+                style={{
+                  transition: 'stroke-dasharray 0.3s ease',
+                }}
               />
+              <defs>
+                <linearGradient
+                  id="progressGradient"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="0%"
+                >
+                  <stop offset="0%" stopColor="#10b981" />
+                  <stop offset="100%" stopColor="#059669" />
+                </linearGradient>
+              </defs>
             </svg>
-            <div className="percentage-text">{completionPercentage}%</div>
+            <div
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                fontSize: '16px',
+                fontWeight: '700',
+                color: '#1f2937',
+              }}
+            >
+              {completionPercentage}%
+            </div>
           </div>
 
-          <div className="progress-stats">
-            <div className="stat">
-              <span className="stat-value">{learnedCount}</span>
-              <span className="stat-label">Learned</span>
+          {/* Stats */}
+          <div
+            style={{
+              display: 'flex',
+              gap: '24px',
+            }}
+          >
+            <div
+              style={{
+                textAlign: 'center',
+              }}
+            >
+              <div
+                style={{
+                  fontSize: '24px',
+                  fontWeight: '700',
+                  color: '#10b981',
+                  marginBottom: '4px',
+                }}
+              >
+                {learnedCount}
+              </div>
+              <div
+                style={{
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  color: '#6b7280',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px',
+                }}
+              >
+                Learned
+              </div>
             </div>
-            <div className="stat">
-              <span className="stat-value">{totalCards - learnedCount}</span>
-              <span className="stat-label">Remaining</span>
+            <div
+              style={{
+                textAlign: 'center',
+              }}
+            >
+              <div
+                style={{
+                  fontSize: '24px',
+                  fontWeight: '700',
+                  color: '#ef4444',
+                  marginBottom: '4px',
+                }}
+              >
+                {totalCards - learnedCount}
+              </div>
+              <div
+                style={{
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  color: '#6b7280',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px',
+                }}
+              >
+                Remaining
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="progress-legend">
-          <div className="legend-item">
-            <span
-              className="legend-icon"
-              style={{ color: getStatusColor('learned') }}
+        {/* Legend */}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+            }}
+          >
+            <div
+              style={{
+                width: '16px',
+                height: '16px',
+                borderRadius: '4px',
+                background: '#10b981',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white',
+              }}
             >
-              {getStatusIcon('learned')}
+              <CheckCircle size={12} />
+            </div>
+            <span
+              style={{
+                fontSize: '12px',
+                fontWeight: '500',
+                color: '#374151',
+              }}
+            >
+              Learned
             </span>
-            <span className="legend-label">Learned</span>
           </div>
-          <div className="legend-item">
-            <span
-              className="legend-icon"
-              style={{ color: getStatusColor('current') }}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+            }}
+          >
+            <div
+              style={{
+                width: '16px',
+                height: '16px',
+                borderRadius: '4px',
+                background: '#3b82f6',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white',
+              }}
             >
-              {getStatusIcon('current')}
+              <Eye size={12} />
+            </div>
+            <span
+              style={{
+                fontSize: '12px',
+                fontWeight: '500',
+                color: '#374151',
+              }}
+            >
+              Current
             </span>
-            <span className="legend-label">Current</span>
           </div>
-          <div className="legend-item">
-            <span
-              className="legend-icon"
-              style={{ color: getStatusColor('not-learned') }}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+            }}
+          >
+            <div
+              style={{
+                width: '16px',
+                height: '16px',
+                borderRadius: '4px',
+                background: '#ef4444',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white',
+              }}
             >
-              {getStatusIcon('not-learned')}
+              <XCircle size={12} />
+            </div>
+            <span
+              style={{
+                fontSize: '12px',
+                fontWeight: '500',
+                color: '#374151',
+              }}
+            >
+              Need Practice
             </span>
-            <span className="legend-label">Need Practice</span>
           </div>
         </div>
       </div>
 
-      <div className="cards-grid">
+      {/* Cards Grid */}
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))',
+          gap: '12px',
+          marginBottom: '24px',
+        }}
+      >
         {cardStatuses.map((cardStatus) => (
           <div
             key={cardStatus.id}
-            className={`card-item ${cardStatus.status} ${onCardClick ? 'clickable' : ''}`}
+            style={{
+              background: 'rgba(255, 255, 255, 0.8)',
+              borderRadius: '12px',
+              padding: '12px',
+              textAlign: 'center',
+              cursor: onCardClick ? 'pointer' : 'default',
+              transition: 'all 0.3s ease',
+              border: `2px solid ${getStatusColor(cardStatus.status)}`,
+              position: 'relative',
+              minHeight: '80px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
             onClick={() => onCardClick?.(cardStatus.index)}
+            onMouseEnter={(e) => {
+              if (onCardClick) {
+                e.currentTarget.style.transform = 'translateY(-4px)';
+                e.currentTarget.style.boxShadow =
+                  '0 8px 25px rgba(0, 0, 0, 0.15)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (onCardClick) {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = 'none';
+              }
+            }}
             title={
               showDetails
                 ? `${cardStatus.frontText} - ${getStatusLabel(cardStatus.status)}`
                 : undefined
             }
           >
-            <div className="card-number">{cardStatus.index + 1}</div>
             <div
-              className="card-status-icon"
-              style={{ color: getStatusColor(cardStatus.status) }}
+              style={{
+                fontSize: '12px',
+                fontWeight: '600',
+                color: '#6b7280',
+                marginBottom: '8px',
+              }}
+            >
+              {cardStatus.index + 1}
+            </div>
+            <div
+              style={{
+                color: getStatusColor(cardStatus.status),
+                marginBottom: showDetails ? '8px' : '0',
+              }}
             >
               {getStatusIcon(cardStatus.status)}
             </div>
             {showDetails && (
-              <div className="card-preview">
-                <div className="card-text">{cardStatus.frontText}</div>
-                <div className="card-status-label">
+              <div
+                style={{
+                  fontSize: '10px',
+                  color: '#6b7280',
+                  textAlign: 'center',
+                  lineHeight: '1.2',
+                }}
+              >
+                <div
+                  style={{
+                    fontWeight: '500',
+                    marginBottom: '2px',
+                  }}
+                >
+                  {cardStatus.frontText.length > 15
+                    ? `${cardStatus.frontText.substring(0, 15)}...`
+                    : cardStatus.frontText}
+                </div>
+                <div
+                  style={{
+                    fontSize: '9px',
+                    color: getStatusColor(cardStatus.status),
+                    fontWeight: '600',
+                  }}
+                >
                   {getStatusLabel(cardStatus.status)}
                 </div>
               </div>
@@ -190,25 +449,70 @@ const FlashcardProgressTracker: React.FC<FlashcardProgressTrackerProps> = ({
         ))}
       </div>
 
+      {/* Progress Bar */}
       {totalCards > 0 && (
-        <div className="progress-bar-container">
-          <div className="progress-bar">
+        <div
+          style={{
+            marginBottom: completionPercentage === 100 ? '16px' : '0',
+          }}
+        >
+          <div
+            style={{
+              width: '100%',
+              height: '8px',
+              background: 'rgba(107, 114, 128, 0.2)',
+              borderRadius: '4px',
+              overflow: 'hidden',
+              marginBottom: '8px',
+            }}
+          >
             <div
-              className="progress-fill"
-              style={{ width: `${completionPercentage}%` }}
+              style={{
+                width: `${completionPercentage}%`,
+                height: '100%',
+                background: 'linear-gradient(135deg, #10b981, #059669)',
+                borderRadius: '4px',
+                transition: 'width 0.3s ease',
+              }}
             />
           </div>
-          <div className="progress-text">
+          <div
+            style={{
+              textAlign: 'center',
+              fontSize: '14px',
+              color: '#6b7280',
+              fontWeight: '500',
+            }}
+          >
             {learnedCount} of {totalCards} cards learned ({completionPercentage}
             %)
           </div>
         </div>
       )}
 
+      {/* Completion Message */}
       {completionPercentage === 100 && (
-        <div className="completion-message">
-          <span className="completion-icon">🎉</span>
-          <span className="completion-text">All cards learned! Great job!</span>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '12px',
+            padding: '16px',
+            background: 'linear-gradient(135deg, #10b981, #059669)',
+            borderRadius: '12px',
+            color: 'white',
+          }}
+        >
+          <Trophy size={24} />
+          <span
+            style={{
+              fontSize: '16px',
+              fontWeight: '600',
+            }}
+          >
+            All cards learned! Great job!
+          </span>
         </div>
       )}
     </div>

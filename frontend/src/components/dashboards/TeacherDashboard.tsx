@@ -12,6 +12,18 @@ import AssignmentManagement from '../assignment/AssignmentManagement';
 import DashboardLayout from '../DashboardLayout';
 import { usePermissions } from '../../hooks/usePermissions';
 import { useAuth } from '../../contexts/AuthContext';
+import {
+  School,
+  Users,
+  ClipboardList,
+  BarChart3,
+  FileText,
+  BookOpen,
+  CreditCard,
+  FileCheck,
+  Target,
+  ArrowRight,
+} from 'lucide-react';
 
 export const TeacherDashboard: React.FC = () => {
   const { hasPermission } = usePermissions();
@@ -26,327 +38,822 @@ export const TeacherDashboard: React.FC = () => {
       <Route path="/assignments" element={<AssignmentManagement />} />
       <Route path="/progress" element={<TeacherProgressPage />} />
       <Route path="/progress/class/:classId" element={<ClassProgressPage />} />
-      <Route path="/progress/student/:studentId" element={<StudentProgressDetailPage />} />
+      <Route
+        path="/progress/student/:studentId"
+        element={<StudentProgressDetailPage />}
+      />
       <Route
         path="/"
         element={
           <DashboardLayout title="Teacher Dashboard">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                gap: '24px',
+                marginBottom: '32px',
+              }}
+            >
               {/* Classes */}
               {hasPermission('classes', 'read') && (
-                <div className="bg-white overflow-hidden shadow rounded-lg">
-                  <div className="p-5">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0">
-                        <div className="w-8 h-8 bg-blue-500 rounded-md flex items-center justify-center">
-                          <span className="text-white text-sm font-medium">
-                            🏫
-                          </span>
-                        </div>
-                      </div>
-                      <div className="ml-5 w-0 flex-1">
-                        <dl>
-                          <dt className="text-sm font-medium text-gray-500 truncate">
-                            My Classes
-                          </dt>
-                          <dd className="text-lg font-medium text-gray-900">
-                            Manage classes
-                          </dd>
-                        </dl>
-                      </div>
+                <div
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.95)',
+                    backdropFilter: 'blur(20px)',
+                    borderRadius: '20px',
+                    padding: '24px',
+                    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-8px)';
+                    e.currentTarget.style.boxShadow =
+                      '0 25px 50px rgba(0, 0, 0, 0.15)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow =
+                      '0 20px 40px rgba(0, 0, 0, 0.1)';
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      marginBottom: '16px',
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: '48px',
+                        height: '48px',
+                        background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                        borderRadius: '12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginRight: '16px',
+                        boxShadow: '0 8px 25px rgba(59, 130, 246, 0.3)',
+                      }}
+                    >
+                      <School size={24} color="white" />
                     </div>
-                  </div>
-                  <div className="bg-gray-50 px-5 py-3">
-                    <div className="text-sm">
-                      <a
-                        href="/teacher/classes"
-                        className="font-medium text-blue-700 hover:text-blue-900"
+                    <div>
+                      <h3
+                        style={{
+                          fontSize: '18px',
+                          fontWeight: '700',
+                          color: '#1f2937',
+                          margin: '0 0 4px 0',
+                        }}
                       >
-                        View classes
-                      </a>
+                        My Classes
+                      </h3>
+                      <p
+                        style={{
+                          fontSize: '14px',
+                          color: '#6b7280',
+                          margin: '0',
+                        }}
+                      >
+                        Manage classes
+                      </p>
                     </div>
                   </div>
+                  <a
+                    href="/teacher/classes"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      color: '#3b82f6',
+                      textDecoration: 'none',
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      transition: 'color 0.3s ease',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = '#1d4ed8';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = '#3b82f6';
+                    }}
+                  >
+                    View classes
+                    <ArrowRight size={16} />
+                  </a>
                 </div>
               )}
 
               {/* Students */}
               {hasPermission('students', 'read') && (
-                <div className="bg-white overflow-hidden shadow rounded-lg">
-                  <div className="p-5">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0">
-                        <div className="w-8 h-8 bg-green-500 rounded-md flex items-center justify-center">
-                          <span className="text-white text-sm font-medium">
-                            👥
-                          </span>
-                        </div>
-                      </div>
-                      <div className="ml-5 w-0 flex-1">
-                        <dl>
-                          <dt className="text-sm font-medium text-gray-500 truncate">
-                            Students
-                          </dt>
-                          <dd className="text-lg font-medium text-gray-900">
-                            View student list
-                          </dd>
-                        </dl>
-                      </div>
+                <div
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.95)',
+                    backdropFilter: 'blur(20px)',
+                    borderRadius: '20px',
+                    padding: '24px',
+                    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-8px)';
+                    e.currentTarget.style.boxShadow =
+                      '0 25px 50px rgba(0, 0, 0, 0.15)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow =
+                      '0 20px 40px rgba(0, 0, 0, 0.1)';
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      marginBottom: '16px',
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: '48px',
+                        height: '48px',
+                        background: 'linear-gradient(135deg, #10b981, #059669)',
+                        borderRadius: '12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginRight: '16px',
+                        boxShadow: '0 8px 25px rgba(16, 185, 129, 0.3)',
+                      }}
+                    >
+                      <Users size={24} color="white" />
                     </div>
-                  </div>
-                  <div className="bg-gray-50 px-5 py-3">
-                    <div className="text-sm">
-                      <Link
-                        to="/teacher/students"
-                        className="font-medium text-green-700 hover:text-green-900"
+                    <div>
+                      <h3
+                        style={{
+                          fontSize: '18px',
+                          fontWeight: '700',
+                          color: '#1f2937',
+                          margin: '0 0 4px 0',
+                        }}
                       >
-                        Manage students
-                      </Link>
+                        Students
+                      </h3>
+                      <p
+                        style={{
+                          fontSize: '14px',
+                          color: '#6b7280',
+                          margin: '0',
+                        }}
+                      >
+                        View student list
+                      </p>
                     </div>
                   </div>
+                  <Link
+                    to="/teacher/students"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      color: '#10b981',
+                      textDecoration: 'none',
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      transition: 'color 0.3s ease',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = '#059669';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = '#10b981';
+                    }}
+                  >
+                    Manage students
+                    <ArrowRight size={16} />
+                  </Link>
                 </div>
               )}
 
               {/* Assignments */}
               {hasPermission('assignments', 'read') && (
-                <div className="bg-white overflow-hidden shadow rounded-lg">
-                  <div className="p-5">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0">
-                        <div className="w-8 h-8 bg-yellow-500 rounded-md flex items-center justify-center">
-                          <span className="text-white text-sm font-medium">
-                            📋
-                          </span>
-                        </div>
-                      </div>
-                      <div className="ml-5 w-0 flex-1">
-                        <dl>
-                          <dt className="text-sm font-medium text-gray-500 truncate">
-                            Assignments
-                          </dt>
-                          <dd className="text-lg font-medium text-gray-900">
-                            Create & manage
-                          </dd>
-                        </dl>
-                      </div>
+                <div
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.95)',
+                    backdropFilter: 'blur(20px)',
+                    borderRadius: '20px',
+                    padding: '24px',
+                    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-8px)';
+                    e.currentTarget.style.boxShadow =
+                      '0 25px 50px rgba(0, 0, 0, 0.15)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow =
+                      '0 20px 40px rgba(0, 0, 0, 0.1)';
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      marginBottom: '16px',
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: '48px',
+                        height: '48px',
+                        background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                        borderRadius: '12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginRight: '16px',
+                        boxShadow: '0 8px 25px rgba(245, 158, 11, 0.3)',
+                      }}
+                    >
+                      <ClipboardList size={24} color="white" />
                     </div>
-                  </div>
-                  <div className="bg-gray-50 px-5 py-3">
-                    <div className="text-sm">
-                      <Link
-                        to="/teacher/assignments"
-                        className="font-medium text-yellow-700 hover:text-yellow-900"
+                    <div>
+                      <h3
+                        style={{
+                          fontSize: '18px',
+                          fontWeight: '700',
+                          color: '#1f2937',
+                          margin: '0 0 4px 0',
+                        }}
                       >
-                        Manage assignments
-                      </Link>
+                        Assignments
+                      </h3>
+                      <p
+                        style={{
+                          fontSize: '14px',
+                          color: '#6b7280',
+                          margin: '0',
+                        }}
+                      >
+                        Create & manage
+                      </p>
                     </div>
                   </div>
+                  <Link
+                    to="/teacher/assignments"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      color: '#f59e0b',
+                      textDecoration: 'none',
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      transition: 'color 0.3s ease',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = '#d97706';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = '#f59e0b';
+                    }}
+                  >
+                    Manage assignments
+                    <ArrowRight size={16} />
+                  </Link>
                 </div>
               )}
 
               {/* Progress Tracking */}
               {hasPermission('progress', 'read') && (
-                <div className="bg-white overflow-hidden shadow rounded-lg">
-                  <div className="p-5">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0">
-                        <div className="w-8 h-8 bg-purple-500 rounded-md flex items-center justify-center">
-                          <span className="text-white text-sm font-medium">
-                            📊
-                          </span>
-                        </div>
-                      </div>
-                      <div className="ml-5 w-0 flex-1">
-                        <dl>
-                          <dt className="text-sm font-medium text-gray-500 truncate">
-                            Progress
-                          </dt>
-                          <dd className="text-lg font-medium text-gray-900">
-                            Student progress
-                          </dd>
-                        </dl>
-                      </div>
+                <div
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.95)',
+                    backdropFilter: 'blur(20px)',
+                    borderRadius: '20px',
+                    padding: '24px',
+                    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-8px)';
+                    e.currentTarget.style.boxShadow =
+                      '0 25px 50px rgba(0, 0, 0, 0.15)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow =
+                      '0 20px 40px rgba(0, 0, 0, 0.1)';
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      marginBottom: '16px',
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: '48px',
+                        height: '48px',
+                        background: 'linear-gradient(135deg, #7c3aed, #5b21b6)',
+                        borderRadius: '12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginRight: '16px',
+                        boxShadow: '0 8px 25px rgba(124, 58, 237, 0.3)',
+                      }}
+                    >
+                      <BarChart3 size={24} color="white" />
                     </div>
-                  </div>
-                  <div className="bg-gray-50 px-5 py-3">
-                    <div className="text-sm">
-                      <Link
-                        to="/teacher/progress"
-                        className="font-medium text-purple-700 hover:text-purple-900"
+                    <div>
+                      <h3
+                        style={{
+                          fontSize: '18px',
+                          fontWeight: '700',
+                          color: '#1f2937',
+                          margin: '0 0 4px 0',
+                        }}
                       >
-                        View progress
-                      </Link>
+                        Progress
+                      </h3>
+                      <p
+                        style={{
+                          fontSize: '14px',
+                          color: '#6b7280',
+                          margin: '0',
+                        }}
+                      >
+                        Student progress
+                      </p>
                     </div>
                   </div>
+                  <Link
+                    to="/teacher/progress"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      color: '#7c3aed',
+                      textDecoration: 'none',
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      transition: 'color 0.3s ease',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = '#5b21b6';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = '#7c3aed';
+                    }}
+                  >
+                    View progress
+                    <ArrowRight size={16} />
+                  </Link>
                 </div>
               )}
 
               {/* Reports */}
               {hasPermission('reports', 'read') && (
-                <div className="bg-white overflow-hidden shadow rounded-lg">
-                  <div className="p-5">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0">
-                        <div className="w-8 h-8 bg-indigo-500 rounded-md flex items-center justify-center">
-                          <span className="text-white text-sm font-medium">
-                            📈
-                          </span>
-                        </div>
-                      </div>
-                      <div className="ml-5 w-0 flex-1">
-                        <dl>
-                          <dt className="text-sm font-medium text-gray-500 truncate">
-                            Reports
-                          </dt>
-                          <dd className="text-lg font-medium text-gray-900">
-                            Generate reports
-                          </dd>
-                        </dl>
-                      </div>
+                <div
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.95)',
+                    backdropFilter: 'blur(20px)',
+                    borderRadius: '20px',
+                    padding: '24px',
+                    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-8px)';
+                    e.currentTarget.style.boxShadow =
+                      '0 25px 50px rgba(0, 0, 0, 0.15)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow =
+                      '0 20px 40px rgba(0, 0, 0, 0.1)';
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      marginBottom: '16px',
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: '48px',
+                        height: '48px',
+                        background: 'linear-gradient(135deg, #6366f1, #4f46e5)',
+                        borderRadius: '12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginRight: '16px',
+                        boxShadow: '0 8px 25px rgba(99, 102, 241, 0.3)',
+                      }}
+                    >
+                      <FileText size={24} color="white" />
                     </div>
-                  </div>
-                  <div className="bg-gray-50 px-5 py-3">
-                    <div className="text-sm">
-                      <a
-                        href="/teacher/reports"
-                        className="font-medium text-indigo-700 hover:text-indigo-900"
+                    <div>
+                      <h3
+                        style={{
+                          fontSize: '18px',
+                          fontWeight: '700',
+                          color: '#1f2937',
+                          margin: '0 0 4px 0',
+                        }}
                       >
-                        View reports
-                      </a>
+                        Reports
+                      </h3>
+                      <p
+                        style={{
+                          fontSize: '14px',
+                          color: '#6b7280',
+                          margin: '0',
+                        }}
+                      >
+                        Generate reports
+                      </p>
                     </div>
                   </div>
+                  <a
+                    href="/teacher/reports"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      color: '#6366f1',
+                      textDecoration: 'none',
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      transition: 'color 0.3s ease',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = '#4f46e5';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = '#6366f1';
+                    }}
+                  >
+                    View reports
+                    <ArrowRight size={16} />
+                  </a>
                 </div>
               )}
 
               {/* Content Management */}
               {hasPermission('content', 'read') && (
-                <div className="bg-white overflow-hidden shadow rounded-lg">
-                  <div className="p-5">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0">
-                        <div className="w-8 h-8 bg-pink-500 rounded-md flex items-center justify-center">
-                          <span className="text-white text-sm font-medium">
-                            📚
-                          </span>
-                        </div>
-                      </div>
-                      <div className="ml-5 w-0 flex-1">
-                        <dl>
-                          <dt className="text-sm font-medium text-gray-500 truncate">
-                            Content
-                          </dt>
-                          <dd className="text-lg font-medium text-gray-900">
-                            Assign content
-                          </dd>
-                        </dl>
-                      </div>
+                <div
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.95)',
+                    backdropFilter: 'blur(20px)',
+                    borderRadius: '20px',
+                    padding: '24px',
+                    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-8px)';
+                    e.currentTarget.style.boxShadow =
+                      '0 25px 50px rgba(0, 0, 0, 0.15)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow =
+                      '0 20px 40px rgba(0, 0, 0, 0.1)';
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      marginBottom: '16px',
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: '48px',
+                        height: '48px',
+                        background: 'linear-gradient(135deg, #ec4899, #be185d)',
+                        borderRadius: '12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginRight: '16px',
+                        boxShadow: '0 8px 25px rgba(236, 72, 153, 0.3)',
+                      }}
+                    >
+                      <BookOpen size={24} color="white" />
                     </div>
-                  </div>
-                  <div className="bg-gray-50 px-5 py-3">
-                    <div className="text-sm">
-                      <a
-                        href="/teacher/content"
-                        className="font-medium text-pink-700 hover:text-pink-900"
+                    <div>
+                      <h3
+                        style={{
+                          fontSize: '18px',
+                          fontWeight: '700',
+                          color: '#1f2937',
+                          margin: '0 0 4px 0',
+                        }}
                       >
-                        Manage content
-                      </a>
+                        Content
+                      </h3>
+                      <p
+                        style={{
+                          fontSize: '14px',
+                          color: '#6b7280',
+                          margin: '0',
+                        }}
+                      >
+                        Assign content
+                      </p>
                     </div>
                   </div>
+                  <a
+                    href="/teacher/content"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      color: '#ec4899',
+                      textDecoration: 'none',
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      transition: 'color 0.3s ease',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = '#be185d';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = '#ec4899';
+                    }}
+                  >
+                    Manage content
+                    <ArrowRight size={16} />
+                  </a>
                 </div>
               )}
 
               {/* Flashcard Management */}
               {hasPermission('content', 'write') && (
-                <div className="bg-white overflow-hidden shadow rounded-lg">
-                  <div className="p-5">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0">
-                        <div className="w-8 h-8 bg-orange-500 rounded-md flex items-center justify-center">
-                          <span className="text-white text-sm font-medium">
-                            🃏
-                          </span>
-                        </div>
-                      </div>
-                      <div className="ml-5 w-0 flex-1">
-                        <dl>
-                          <dt className="text-sm font-medium text-gray-500 truncate">
-                            Flashcards
-                          </dt>
-                          <dd className="text-lg font-medium text-gray-900">
-                            Create & manage
-                          </dd>
-                        </dl>
-                      </div>
+                <div
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.95)',
+                    backdropFilter: 'blur(20px)',
+                    borderRadius: '20px',
+                    padding: '24px',
+                    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-8px)';
+                    e.currentTarget.style.boxShadow =
+                      '0 25px 50px rgba(0, 0, 0, 0.15)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow =
+                      '0 20px 40px rgba(0, 0, 0, 0.1)';
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      marginBottom: '16px',
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: '48px',
+                        height: '48px',
+                        background: 'linear-gradient(135deg, #f97316, #ea580c)',
+                        borderRadius: '12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginRight: '16px',
+                        boxShadow: '0 8px 25px rgba(249, 115, 22, 0.3)',
+                      }}
+                    >
+                      <CreditCard size={24} color="white" />
                     </div>
-                  </div>
-                  <div className="bg-gray-50 px-5 py-3">
-                    <div className="text-sm">
-                      <a
-                        href="/teacher/flashcards"
-                        className="font-medium text-orange-700 hover:text-orange-900"
+                    <div>
+                      <h3
+                        style={{
+                          fontSize: '18px',
+                          fontWeight: '700',
+                          color: '#1f2937',
+                          margin: '0 0 4px 0',
+                        }}
                       >
-                        Manage flashcards
-                      </a>
+                        Flashcards
+                      </h3>
+                      <p
+                        style={{
+                          fontSize: '14px',
+                          color: '#6b7280',
+                          margin: '0',
+                        }}
+                      >
+                        Create & manage
+                      </p>
                     </div>
                   </div>
+                  <a
+                    href="/teacher/flashcards"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      color: '#f97316',
+                      textDecoration: 'none',
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      transition: 'color 0.3s ease',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = '#ea580c';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = '#f97316';
+                    }}
+                  >
+                    Manage flashcards
+                    <ArrowRight size={16} />
+                  </a>
                 </div>
               )}
 
               {/* Evaluations */}
               {hasPermission('evaluations', 'read') && (
-                <div className="bg-white overflow-hidden shadow rounded-lg">
-                  <div className="p-5">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0">
-                        <div className="w-8 h-8 bg-purple-500 rounded-md flex items-center justify-center">
-                          <span className="text-white text-sm font-medium">
-                            📝
-                          </span>
-                        </div>
-                      </div>
-                      <div className="ml-5 w-0 flex-1">
-                        <dl>
-                          <dt className="text-sm font-medium text-gray-500 truncate">
-                            Evaluations
-                          </dt>
-                          <dd className="text-lg font-medium text-gray-900">
-                            Student assessments
-                          </dd>
-                        </dl>
-                      </div>
+                <div
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.95)',
+                    backdropFilter: 'blur(20px)',
+                    borderRadius: '20px',
+                    padding: '24px',
+                    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-8px)';
+                    e.currentTarget.style.boxShadow =
+                      '0 25px 50px rgba(0, 0, 0, 0.15)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow =
+                      '0 20px 40px rgba(0, 0, 0, 0.1)';
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      marginBottom: '16px',
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: '48px',
+                        height: '48px',
+                        background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+                        borderRadius: '12px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginRight: '16px',
+                        boxShadow: '0 8px 25px rgba(139, 92, 246, 0.3)',
+                      }}
+                    >
+                      <FileCheck size={24} color="white" />
                     </div>
-                  </div>
-                  <div className="bg-gray-50 px-5 py-3">
-                    <div className="text-sm">
-                      <Link
-                        to="/teacher/evaluations"
-                        className="font-medium text-purple-700 hover:text-purple-900"
+                    <div>
+                      <h3
+                        style={{
+                          fontSize: '18px',
+                          fontWeight: '700',
+                          color: '#1f2937',
+                          margin: '0 0 4px 0',
+                        }}
                       >
-                        Manage evaluations
-                      </Link>
+                        Evaluations
+                      </h3>
+                      <p
+                        style={{
+                          fontSize: '14px',
+                          color: '#6b7280',
+                          margin: '0',
+                        }}
+                      >
+                        Student assessments
+                      </p>
                     </div>
                   </div>
+                  <Link
+                    to="/teacher/evaluations"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      color: '#8b5cf6',
+                      textDecoration: 'none',
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      transition: 'color 0.3s ease',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = '#7c3aed';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = '#8b5cf6';
+                    }}
+                  >
+                    Manage evaluations
+                    <ArrowRight size={16} />
+                  </Link>
                 </div>
               )}
             </div>
 
             {/* Quick Actions */}
-            <div className="mt-8 bg-green-50 border border-green-200 rounded-md p-4">
-              <div className="flex">
-                <div className="flex-shrink-0">
-                  <span className="text-green-400 text-xl">🎯</span>
+            <div
+              style={{
+                background: 'rgba(16, 185, 129, 0.1)',
+                border: '1px solid rgba(16, 185, 129, 0.2)',
+                borderRadius: '16px',
+                padding: '24px',
+                marginTop: '32px',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                }}
+              >
+                <div
+                  style={{
+                    width: '48px',
+                    height: '48px',
+                    background: 'linear-gradient(135deg, #10b981, #059669)',
+                    borderRadius: '12px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginRight: '16px',
+                    boxShadow: '0 8px 25px rgba(16, 185, 129, 0.3)',
+                  }}
+                >
+                  <Target size={24} color="white" />
                 </div>
-                <div className="ml-3">
-                  <h3 className="text-sm font-medium text-green-800">
+                <div>
+                  <h3
+                    style={{
+                      fontSize: '18px',
+                      fontWeight: '700',
+                      color: '#065f46',
+                      margin: '0 0 8px 0',
+                    }}
+                  >
                     Teacher Tools
                   </h3>
-                  <div className="mt-2 text-sm text-green-700">
-                    <p>
-                      Manage your classes, track student progress, create
-                      assignments, and generate reports. Use the content
-                      management tools to assign learning materials to your
-                      students.
-                    </p>
-                  </div>
+                  <p
+                    style={{
+                      fontSize: '14px',
+                      color: '#047857',
+                      margin: '0',
+                      lineHeight: '1.6',
+                    }}
+                  >
+                    Manage your classes, track student progress, create
+                    assignments, and generate reports. Use the content
+                    management tools to assign learning materials to your
+                    students.
+                  </p>
                 </div>
               </div>
             </div>

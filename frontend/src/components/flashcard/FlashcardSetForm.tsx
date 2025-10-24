@@ -15,7 +15,6 @@ import {
   School,
   // UserCheck, // Removed - no longer needed
 } from 'lucide-react';
-import './FlashcardSetForm.css';
 
 interface FlashcardSetFormProps {
   courseId?: string;

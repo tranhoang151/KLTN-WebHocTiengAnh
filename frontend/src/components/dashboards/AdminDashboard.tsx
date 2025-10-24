@@ -66,7 +66,7 @@ const AdminDashboardHome: React.FC = () => {
   }, []);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '50px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
       {/* ⭐ QUAN TRỌNG: Section hiển thị thống kê dashboard */}
       {loading ? (
         <div
@@ -312,8 +312,8 @@ const AdminDashboardHome: React.FC = () => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '24px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+            gap: '20px',
           }}
         >
           {/* ⭐ QUAN TRỌNG: Card quản lý người dùng */}
@@ -324,9 +324,12 @@ const AdminDashboardHome: React.FC = () => {
                 backgroundColor: 'white',
                 overflow: 'hidden',
                 boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
-                borderRadius: '8px',
+                borderRadius: '12px',
                 border: '1px solid #e5e7eb',
                 transition: 'all 0.2s ease',
+                minHeight: '200px',
+                display: 'flex',
+                flexDirection: 'column',
               }}
               onMouseEnter={(e) => {
                 const card = e.currentTarget;
@@ -353,7 +356,7 @@ const AdminDashboardHome: React.FC = () => {
                 if (arrow) arrow.style.opacity = '0';
               }}
             >
-              <div style={{ padding: '20px 20px 0 20px' }}>
+              <div style={{ padding: '20px 5px', flex: 1 }}>
                 <div
                   style={{
                     display: 'flex',
@@ -457,9 +460,12 @@ const AdminDashboardHome: React.FC = () => {
                 backgroundColor: 'white',
                 overflow: 'hidden',
                 boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
-                borderRadius: '8px',
+                borderRadius: '12px',
                 border: '1px solid #e5e7eb',
                 transition: 'all 0.2s ease',
+                minHeight: '200px',
+                display: 'flex',
+                flexDirection: 'column',
               }}
               onMouseEnter={(e) => {
                 const card = e.currentTarget;
@@ -486,7 +492,7 @@ const AdminDashboardHome: React.FC = () => {
                 if (arrow) arrow.style.opacity = '0';
               }}
             >
-              <div style={{ padding: '20px 20px 0 20px' }}>
+              <div style={{ padding: '20px 5px', flex: 1 }}>
                 <div
                   style={{
                     display: 'flex',
@@ -590,9 +596,12 @@ const AdminDashboardHome: React.FC = () => {
                 backgroundColor: 'white',
                 overflow: 'hidden',
                 boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
-                borderRadius: '8px',
+                borderRadius: '12px',
                 border: '1px solid #e5e7eb',
                 transition: 'all 0.2s ease',
+                minHeight: '200px',
+                display: 'flex',
+                flexDirection: 'column',
               }}
               onMouseEnter={(e) => {
                 const card = e.currentTarget;
@@ -619,7 +628,7 @@ const AdminDashboardHome: React.FC = () => {
                 if (arrow) arrow.style.opacity = '0';
               }}
             >
-              <div style={{ padding: '20px 20px 0 20px' }}>
+              <div style={{ padding: '20px 5px', flex: 1 }}>
                 <div
                   style={{
                     display: 'flex',
@@ -723,9 +732,12 @@ const AdminDashboardHome: React.FC = () => {
                 backgroundColor: 'white',
                 overflow: 'hidden',
                 boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
-                borderRadius: '8px',
+                borderRadius: '12px',
                 border: '1px solid #e5e7eb',
                 transition: 'all 0.2s ease',
+                minHeight: '200px',
+                display: 'flex',
+                flexDirection: 'column',
               }}
               onMouseEnter={(e) => {
                 const card = e.currentTarget;
@@ -752,7 +764,7 @@ const AdminDashboardHome: React.FC = () => {
                 if (arrow) arrow.style.opacity = '0';
               }}
             >
-              <div style={{ padding: '20px 20px 0 20px' }}>
+              <div style={{ padding: '20px 5px', flex: 1 }}>
                 <div
                   style={{
                     display: 'flex',
@@ -856,9 +868,12 @@ const AdminDashboardHome: React.FC = () => {
                 backgroundColor: 'white',
                 overflow: 'hidden',
                 boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
-                borderRadius: '8px',
+                borderRadius: '12px',
                 border: '1px solid #e5e7eb',
                 transition: 'all 0.2s ease',
+                minHeight: '200px',
+                display: 'flex',
+                flexDirection: 'column',
               }}
               onMouseEnter={(e) => {
                 const card = e.currentTarget;
@@ -885,7 +900,7 @@ const AdminDashboardHome: React.FC = () => {
                 if (arrow) arrow.style.opacity = '0';
               }}
             >
-              <div style={{ padding: '20px 20px 0 20px' }}>
+              <div style={{ padding: '20px 5px', flex: 1 }}>
                 <div
                   style={{
                     display: 'flex',
@@ -989,9 +1004,12 @@ const AdminDashboardHome: React.FC = () => {
                 backgroundColor: 'white',
                 overflow: 'hidden',
                 boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
-                borderRadius: '8px',
+                borderRadius: '12px',
                 border: '1px solid #e5e7eb',
                 transition: 'all 0.2s ease',
+                minHeight: '200px',
+                display: 'flex',
+                flexDirection: 'column',
               }}
               onMouseEnter={(e) => {
                 const card = e.currentTarget;
@@ -1018,7 +1036,7 @@ const AdminDashboardHome: React.FC = () => {
                 if (arrow) arrow.style.opacity = '0';
               }}
             >
-              <div style={{ padding: '20px 20px 0 20px' }}>
+              <div style={{ padding: '20px 5px', flex: 1 }}>
                 <div
                   style={{
                     display: 'flex',
@@ -1122,9 +1140,12 @@ const AdminDashboardHome: React.FC = () => {
                 backgroundColor: 'white',
                 overflow: 'hidden',
                 boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
-                borderRadius: '8px',
+                borderRadius: '12px',
                 border: '1px solid #e5e7eb',
                 transition: 'all 0.2s ease',
+                minHeight: '200px',
+                display: 'flex',
+                flexDirection: 'column',
               }}
               onMouseEnter={(e) => {
                 const card = e.currentTarget;
@@ -1151,7 +1172,7 @@ const AdminDashboardHome: React.FC = () => {
                 if (arrow) arrow.style.opacity = '0';
               }}
             >
-              <div style={{ padding: '20px 20px 0 20px' }}>
+              <div style={{ padding: '20px 5px', flex: 1 }}>
                 <div
                   style={{
                     display: 'flex',
@@ -1255,9 +1276,12 @@ const AdminDashboardHome: React.FC = () => {
                 backgroundColor: 'white',
                 overflow: 'hidden',
                 boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
-                borderRadius: '8px',
+                borderRadius: '12px',
                 border: '1px solid #e5e7eb',
                 transition: 'all 0.2s ease',
+                minHeight: '200px',
+                display: 'flex',
+                flexDirection: 'column',
               }}
               onMouseEnter={(e) => {
                 const card = e.currentTarget;
@@ -1284,7 +1308,7 @@ const AdminDashboardHome: React.FC = () => {
                 if (arrow) arrow.style.opacity = '0';
               }}
             >
-              <div style={{ padding: '20px 20px 0 20px' }}>
+              <div style={{ padding: '20px 2px' }}>
                 <div
                   style={{
                     display: 'flex',
@@ -1380,8 +1404,8 @@ const AdminDashboardHome: React.FC = () => {
           )}
 
           {/* ⭐ QUAN TRỌNG: Card quản lý nội dung tổng thể */}
-          {/* Content Management */}
-          {hasPermission('content', 'read') && (
+          {/* Content Management - COMMENTED OUT */}
+          {/* {hasPermission('content', 'read') && (
             <div
               style={{
                 backgroundColor: 'white',
@@ -1509,11 +1533,11 @@ const AdminDashboardHome: React.FC = () => {
                 </div>
               </div>
             </div>
-          )}
+          )} */}
 
           {/* ⭐ QUAN TRỌNG: Card xem báo cáo hệ thống */}
-          {/* System Reports */}
-          {hasPermission('reports', 'read') && (
+          {/* System Reports - COMMENTED OUT */}
+          {/* {hasPermission('reports', 'read') && (
             <div
               style={{
                 backgroundColor: 'white',
@@ -1642,7 +1666,7 @@ const AdminDashboardHome: React.FC = () => {
                 </div>
               </div>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </div>
