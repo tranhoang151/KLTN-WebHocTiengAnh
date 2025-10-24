@@ -4,6 +4,9 @@
 *.suo
 *.user
 *.cache
+*.db
+*.db-shm
+*.db-wal
 
 # Build outputs
 bin/
