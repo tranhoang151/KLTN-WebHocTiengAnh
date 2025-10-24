@@ -65,7 +65,7 @@ const TestPreview: React.FC<TestPreviewProps> = ({ test, onBack }) => {
                         <div className="space-y-2">
                             {question.options.map((option, index) => {
                                 const isSelected = userAnswer === index.toString();
-                                const isCorrect = index === question.correctAnswer;
+                                const isCorrect = index === question.correct_answer;
 
                                 return (
                                     <div
@@ -117,15 +117,15 @@ const TestPreview: React.FC<TestPreviewProps> = ({ test, onBack }) => {
                             {userAnswer && (
                                 <div className="flex items-center gap-2 text-sm">
                                     <span className="text-gray-600">Your answer:</span>
-                                    <span className={`font-medium ${typeof userAnswer === 'string' && typeof question.correctAnswer === 'string' &&
-                                        userAnswer.toLowerCase().trim() === question.correctAnswer.toLowerCase().trim()
-                                        ? 'text-green-600'
-                                        : 'text-red-600'
+                                    <span className={`font-medium ${typeof userAnswer === 'string' && typeof question.correct_answer === 'string' &&
+                                            userAnswer.toLowerCase().trim() === question.correct_answer.toLowerCase().trim()
+                                            ? 'text-green-600'
+                                            : 'text-red-600'
                                         }`}>
                                         {userAnswer}
                                     </span>
-                                    {typeof userAnswer === 'string' && typeof question.correctAnswer === 'string' &&
-                                        userAnswer.toLowerCase().trim() === question.correctAnswer.toLowerCase().trim() ? (
+                                    {typeof userAnswer === 'string' && typeof question.correct_answer === 'string' &&
+                                        userAnswer.toLowerCase().trim() === question.correct_answer.toLowerCase().trim() ? (
                                         <CheckCircle className="w-4 h-4 text-green-600" />
                                     ) : (
                                         <XCircle className="w-4 h-4 text-red-600" />
@@ -236,5 +236,3 @@ const TestPreview: React.FC<TestPreviewProps> = ({ test, onBack }) => {
 };
 
 export default TestPreview;
-
-

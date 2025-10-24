@@ -73,5 +73,3 @@ const ExerciseResultDisplay: React.FC<ExerciseResultDisplayProps> = ({
 };
 
 export default ExerciseResultDisplay;
-
-

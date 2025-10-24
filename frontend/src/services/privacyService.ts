@@ -9,7 +9,7 @@ export interface UserConsent {
     acceptedCookies: boolean;
     acceptedMarketing: boolean;
     specificConsents: Record<string, boolean>;
-    created_at: string;
+    createdAt: string;
     updatedAt: string;
     requiresUpdate: boolean;
 }
@@ -21,7 +21,7 @@ export interface CookieConsent {
     analytics: boolean;
     marketing: boolean;
     personalization: boolean;
-    created_at: string;
+    createdAt: string;
     updatedAt: string;
 }
 
@@ -117,7 +117,7 @@ class PrivacyService {
                 acceptedCookies: false,
                 acceptedMarketing: false,
                 specificConsents: {},
-                created_at: new Date().toISOString(),
+                createdAt: new Date().toISOString(),
                 updatedAt: new Date().toISOString(),
                 requiresUpdate: false
             };
@@ -153,7 +153,7 @@ class PrivacyService {
                 analytics: false,
                 marketing: false,
                 personalization: false,
-                created_at: new Date().toISOString(),
+                createdAt: new Date().toISOString(),
                 updatedAt: new Date().toISOString()
             };
         } catch (error) {

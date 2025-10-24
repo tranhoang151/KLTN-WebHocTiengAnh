@@ -1,4 +1,28 @@
-// Flashcard and FlashcardSet are now defined in types/index.ts to avoid duplication
+export interface Flashcard {
+    id: string;
+    frontText: string;
+    backText: string;
+    exampleSentence?: string;
+    imageUrl?: string;
+    imageBase64?: string;
+    order: number;
+    flashcardSetId: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface FlashcardSet {
+    id: string;
+    title: string;
+    description: string;
+    courseId: string;
+    setId: string;
+    createdBy: string;
+    createdAt: Date;
+    assignedClassIds: string[];
+    isActive: boolean;
+    totalCards: number;
+}
 
 export interface FlashcardSession {
     id: string;

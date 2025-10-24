@@ -107,7 +107,7 @@ const FlashcardSetSelector: React.FC<FlashcardSetSelectorProps> = ({
             <div className="set-card-header">
               <h3>{set.title}</h3>
               <div className="set-meta">
-                <span className="set-id">#{set.set_id}</span>
+                <span className="set-id">#{set.setId}</span>
               </div>
             </div>
 
@@ -120,7 +120,7 @@ const FlashcardSetSelector: React.FC<FlashcardSetSelectorProps> = ({
                 <span className="stat">
                   <span className="stat-icon">📅</span>
                   {new Date(
-                    set.created_at?.getTime?.() || Date.now()
+                    set.createdAt?.getTime?.() || Date.now()
                   ).toLocaleDateString()}
                 </span>
               </div>
@@ -135,5 +135,3 @@ const FlashcardSetSelector: React.FC<FlashcardSetSelectorProps> = ({
 };
 
 export default FlashcardSetSelector;
-
-

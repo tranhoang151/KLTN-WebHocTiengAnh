@@ -351,5 +351,3 @@ export const useFocusManagement = () => {
     trapFocus,
   };
 };
-
-

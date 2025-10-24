@@ -172,5 +172,3 @@ const TestStartPage: React.FC = () => {
 };
 
 export default TestStartPage;
-
-

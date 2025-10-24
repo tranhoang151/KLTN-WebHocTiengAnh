@@ -82,5 +82,3 @@ const VideoProgressPage: React.FC = () => {
 };
 
 export default VideoProgressPage;
-
-

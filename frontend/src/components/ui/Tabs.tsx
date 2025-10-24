@@ -58,14 +58,14 @@ export const TabsTrigger: React.FC<TabsTriggerProps> = ({ value, children, class
     }
 
     const { activeTab, setActiveTab } = context;
-    const is_active = activeTab === value;
+    const isActive = activeTab === value;
 
     return (
         <button
-            className={`tabs-trigger ${is_active ? 'tabs-trigger-active' : ''} ${className}`}
+            className={`tabs-trigger ${isActive ? 'tabs-trigger-active' : ''} ${className}`}
             onClick={() => setActiveTab(value)}
             role="tab"
-            aria-selected={is_active}
+            aria-selected={isActive}
             aria-controls={`tabpanel-${value}`}
             id={`tab-${value}`}
         >
@@ -81,9 +81,9 @@ export const TabsContent: React.FC<TabsContentProps> = ({ value, children, class
     }
 
     const { activeTab } = context;
-    const is_active = activeTab === value;
+    const isActive = activeTab === value;
 
-    if (!is_active) return null;
+    if (!isActive) return null;
 
     return (
         <div
@@ -96,5 +96,3 @@ export const TabsContent: React.FC<TabsContentProps> = ({ value, children, class
         </div>
     );
 };
-
-

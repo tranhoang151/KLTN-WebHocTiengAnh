@@ -1,5 +1,4 @@
 using Google.Cloud.Firestore;
-using System.Text.Json.Serialization;
 
 namespace BingGoWebAPI.Models;
 
@@ -7,16 +6,16 @@ namespace BingGoWebAPI.Models;
 public class Exercise
 {
     [FirestoreDocumentId]
-    public string? Id { get; set; }
+    public string Id { get; set; } = string.Empty;
 
     [FirestoreProperty("title")]
-    public string? Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 
     [FirestoreProperty("type")]
-    public string? Type { get; set; } // multiple_choice, fill_blank, true_false, essay
+    public string Type { get; set; } = string.Empty; // multiple_choice, fill_blank
 
     [FirestoreProperty("course_id")]
-    public string? CourseId { get; set; }
+    public string CourseId { get; set; } = string.Empty;
 
     [FirestoreProperty("questions")]
     public List<Question> Questions { get; set; } = new();
@@ -25,22 +24,21 @@ public class Exercise
     public int? TimeLimit { get; set; }
 
     [FirestoreProperty("difficulty")]
-    public string? Difficulty { get; set; } // easy, medium, hard
+    public string Difficulty { get; set; } = string.Empty; // easy, medium, hard
 
-    [FirestoreProperty("createdBy")]
-    public string? CreatedBy { get; set; }
+    [FirestoreProperty("created_by")]
+    public string CreatedBy { get; set; } = string.Empty;
 
-    [FirestoreProperty("createdAt")]
-    public Timestamp? CreatedAt { get; set; }
+    [FirestoreProperty("created_at")]
+    public Timestamp CreatedAt { get; set; }
 
     [FirestoreProperty("updated_at")]
-    public Timestamp? UpdatedAt { get; set; }
+    public Timestamp UpdatedAt { get; set; }
 
     [FirestoreProperty("total_points")]
-    [JsonPropertyName("totalPoints")]
     public int TotalPoints { get; set; }
 
-    [FirestoreProperty("isActive")]
+    [FirestoreProperty("is_active")]
     public bool IsActive { get; set; } = true;
 }
 
@@ -48,43 +46,39 @@ public class Exercise
 public class Question
 {
     [FirestoreDocumentId]
-    public string? Id { get; set; }
+    public string Id { get; set; } = string.Empty;
 
     [FirestoreProperty("content")]
-    public string? Content { get; set; }
-
-    [FirestoreProperty("question_text")]
-    [JsonPropertyName("question_text")]
-    public string? QuestionText { get; set; }
+    public string Content { get; set; } = string.Empty;
 
     [FirestoreProperty("type")]
-    public string? Type { get; set; } // multiple_choice, fill_blank, true_false, essay
+    public string Type { get; set; } = string.Empty; // multiple_choice, fill_blank
 
     [FirestoreProperty("options")]
     public List<string> Options { get; set; } = new();
 
-    [FirestoreProperty("correctAnswer")]
-    public object? CorrectAnswer { get; set; } // Can be string, int, or bool
+    [FirestoreProperty("correct_answer")]
+    public object CorrectAnswer { get; set; } = string.Empty;
 
     [FirestoreProperty("explanation")]
     public string? Explanation { get; set; }
 
     [FirestoreProperty("difficulty")]
-    public string? Difficulty { get; set; }
+    public string Difficulty { get; set; } = string.Empty;
 
     [FirestoreProperty("course_id")]
-    public string? CourseId { get; set; }
+    public string CourseId { get; set; } = string.Empty;
 
     [FirestoreProperty("tags")]
     public List<string> Tags { get; set; } = new();
 
-    [FirestoreProperty("createdBy")]
-    public string? CreatedBy { get; set; }
+    [FirestoreProperty("created_by")]
+    public string CreatedBy { get; set; } = string.Empty;
 
-    private Timestamp? _createdAt;
+    private Timestamp _createdAt;
 
-    [FirestoreProperty("createdAt")]
-    public object? CreatedAtTimestamp
+    [FirestoreProperty("created_at")]
+    public object CreatedAtTimestamp
     {
         get => _createdAt;
         set
@@ -97,19 +91,15 @@ public class Question
             {
                 _createdAt = timestampValue;
             }
-            else if (value == null)
-            {
-                _createdAt = null;
-            }
         }
     }
 
-    public Timestamp? CreatedAt
+    public Timestamp CreatedAt
     {
         get => _createdAt;
         set => _createdAt = value;
     }
 
-    [FirestoreProperty("isActive")]
+    [FirestoreProperty("is_active")]
     public bool IsActive { get; set; } = true;
 }

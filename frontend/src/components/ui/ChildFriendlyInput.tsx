@@ -145,5 +145,3 @@ const ChildFriendlyInput: React.FC<ChildFriendlyInputProps> = ({
 };
 
 export default ChildFriendlyInput;
-
-

@@ -10,8 +10,8 @@ export interface Class {
   teacherId?: string;
   studentIds: string[];
   courseId?: string;
-  created_at: string;
-  is_active: boolean;
+  createdAt: string;
+  isActive: boolean;
 }
 
 export interface ClassWithStudents extends Class {

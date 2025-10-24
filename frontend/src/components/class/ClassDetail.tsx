@@ -425,10 +425,39 @@ const ClassDetail: React.FC = () => {
                             </p>
                         </div>
 
-                        {/* Created Date hidden as requested */}
+                        {/* Created Date */}
+                        <div>
+                            <label style={{ fontSize: '14px', fontWeight: '500', color: '#6b7280', marginBottom: '4px', display: 'block' }}>
+                                Created Date
+                            </label>
+                            <p style={{ fontSize: '16px', color: '#1f2937', margin: '0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <Calendar size={16} />
+                                {formatDate(classData.createdAt)}
+                            </p>
+                        </div>
 
                         {/* Status */}
-                        {/* Status removed - all classes are active by default */}
+                        <div>
+                            <label style={{ fontSize: '14px', fontWeight: '500', color: '#6b7280', marginBottom: '4px', display: 'block' }}>
+                                Status
+                            </label>
+                            <div
+                                style={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    padding: '4px 12px',
+                                    borderRadius: '20px',
+                                    fontSize: '14px',
+                                    fontWeight: '500',
+                                    background: classData.isActive
+                                        ? 'linear-gradient(135deg, #d1fae5, #a7f3d0)'
+                                        : 'linear-gradient(135deg, #fee2e2, #fecaca)',
+                                    color: classData.isActive ? '#065f46' : '#991b1b',
+                                }}
+                            >
+                                {classData.isActive ? 'Active' : 'Inactive'}
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -613,5 +642,3 @@ const ClassDetail: React.FC = () => {
 };
 
 export default ClassDetail;
-
-

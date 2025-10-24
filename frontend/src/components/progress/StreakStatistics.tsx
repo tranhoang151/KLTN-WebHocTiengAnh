@@ -420,5 +420,3 @@ const StreakStatistics: React.FC<StreakStatisticsProps> = ({
 };
 
 export default StreakStatistics;
-
-

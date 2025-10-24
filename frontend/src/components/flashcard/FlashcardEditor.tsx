@@ -38,7 +38,7 @@ const FlashcardEditor: React.FC<FlashcardEditorProps> = ({
   const [draggedCard, setDraggedCard] = useState<Flashcard | null>(null);
 
   // Ensure the flashcardSet has an id
-  const setId = flashcardSet.id || flashcardSet.set_id || '';
+  const setId = flashcardSet.id || flashcardSet.setId || '';
 
   useEffect(() => {
     if (setId) {
@@ -686,9 +686,9 @@ const FlashcardEditor: React.FC<FlashcardEditorProps> = ({
                           fontWeight: '500',
                         }}
                       >
-                        {card.front_text}
+                        {card.frontText}
                       </p>
-                      {(card.image_url || card.image_base64) && (
+                      {(card.imageUrl || card.imageBase64) && (
                         <div
                           style={{
                             marginTop: '12px',
@@ -697,7 +697,7 @@ const FlashcardEditor: React.FC<FlashcardEditorProps> = ({
                           }}
                         >
                           <img
-                            src={card.image_url || (card.image_base64 ? `data:image/jpeg;base64,${card.image_base64}` : '')}
+                            src={card.imageUrl || (card.imageBase64 ? `data:image/jpeg;base64,${card.imageBase64}` : '')}
                             alt="Flashcard"
                             style={{
                               width: '100%',
@@ -757,9 +757,9 @@ const FlashcardEditor: React.FC<FlashcardEditorProps> = ({
                           fontWeight: '500',
                         }}
                       >
-                        {card.back_text}
+                        {card.backText}
                       </p>
-                      {card.example_sentence && (
+                      {card.exampleSentence && (
                         <div
                           style={{
                             padding: '12px',
@@ -796,7 +796,7 @@ const FlashcardEditor: React.FC<FlashcardEditorProps> = ({
                               fontStyle: 'italic',
                             }}
                           >
-                            {card.example_sentence}
+                            {card.exampleSentence}
                           </p>
                         </div>
                       )}
@@ -914,5 +914,3 @@ const FlashcardEditor: React.FC<FlashcardEditorProps> = ({
 };
 
 export default FlashcardEditor;
-
-

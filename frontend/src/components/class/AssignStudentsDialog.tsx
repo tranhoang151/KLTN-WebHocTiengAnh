@@ -282,5 +282,3 @@ const AssignStudentsDialog: React.FC<AssignStudentsDialogProps> = ({
 };
 
 export default AssignStudentsDialog;
-
-

@@ -195,5 +195,3 @@ const VideoFilter: React.FC<VideoFilterProps> = ({ onFilterChange }) => {
 };
 
 export default VideoFilter;
-
-

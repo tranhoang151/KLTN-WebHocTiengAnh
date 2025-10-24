@@ -56,5 +56,3 @@ const FocusTrap: React.FC<FocusTrapProps> = ({
 };
 
 export default FocusTrap;
-
-

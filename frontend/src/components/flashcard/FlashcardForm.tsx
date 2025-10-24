@@ -25,11 +25,11 @@ interface FlashcardFormProps {
 }
 
 interface FormData {
-  front_text: string;
-  back_text: string;
-  example_sentence: string;
+  frontText: string;
+  backText: string;
+  exampleSentence: string;
   imageFile: File | null;
-  image_url: string;
+  imageUrl: string;
   order: number;
 }
 
@@ -41,17 +41,17 @@ const FlashcardForm: React.FC<FlashcardFormProps> = ({
   onCancel,
 }) => {
   const [formData, setFormData] = useState<FormData>({
-    front_text: editingCard?.front_text || '',
-    back_text: editingCard?.back_text || '',
-    example_sentence: editingCard?.example_sentence || '',
+    frontText: editingCard?.frontText || '',
+    backText: editingCard?.backText || '',
+    exampleSentence: editingCard?.exampleSentence || '',
     imageFile: null,
-    image_url: editingCard?.image_url || '',
+    imageUrl: editingCard?.imageUrl || '',
     order: editingCard?.order || nextOrder,
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(
-    editingCard?.image_url || (editingCard?.image_base64 ? `data:image/jpeg;base64,${editingCard.image_base64}` : null)
+    editingCard?.imageUrl || (editingCard?.imageBase64 ? `data:image/jpeg;base64,${editingCard.imageBase64}` : null)
   );
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -84,7 +84,7 @@ const FlashcardForm: React.FC<FlashcardFormProps> = ({
     setFormData((prev) => ({
       ...prev,
       imageFile: file,
-      image_url: '', // Clear URL when file is selected
+      imageUrl: '', // Clear URL when file is selected
     }));
 
     // Create preview
@@ -96,11 +96,11 @@ const FlashcardForm: React.FC<FlashcardFormProps> = ({
     setError(null);
   };
 
-  const handleimage_urlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const url = e.target.value;
     setFormData((prev) => ({
       ...prev,
-      image_url: url,
+      imageUrl: url,
       imageFile: null, // Clear file when URL is entered
     }));
 
@@ -115,7 +115,7 @@ const FlashcardForm: React.FC<FlashcardFormProps> = ({
     setFormData((prev) => ({
       ...prev,
       imageFile: null,
-      image_url: '',
+      imageUrl: '',
     }));
     setImagePreview(null);
     if (fileInputRef.current) {
@@ -140,12 +140,12 @@ const FlashcardForm: React.FC<FlashcardFormProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.front_text.trim()) {
+    if (!formData.frontText.trim()) {
       setError('Front text is required');
       return;
     }
 
-    if (!formData.back_text.trim()) {
+    if (!formData.backText.trim()) {
       setError('Back text is required');
       return;
     }
@@ -154,21 +154,21 @@ const FlashcardForm: React.FC<FlashcardFormProps> = ({
       setLoading(true);
       setError(null);
 
-      let image_base64 = '';
-      let image_url = formData.image_url;
+      let imageBase64 = '';
+      let imageUrl = formData.imageUrl;
 
       // Handle image upload
       if (formData.imageFile) {
-        image_base64 = await convertFileToBase64(formData.imageFile);
+        imageBase64 = await convertFileToBase64(formData.imageFile);
         // The backend will handle uploading to Firebase Storage and return the URL
       }
 
       const cardData = {
-        front_text: formData.front_text.trim(),
-        back_text: formData.back_text.trim(),
-        example_sentence: formData.example_sentence.trim() || undefined,
-        image_url: image_url || undefined,
-        image_base64: image_base64 || undefined,
+        frontText: formData.frontText.trim(),
+        backText: formData.backText.trim(),
+        exampleSentence: formData.exampleSentence.trim() || undefined,
+        imageUrl: imageUrl || undefined,
+        imageBase64: imageBase64 || undefined,
         order: formData.order,
       };
 
@@ -356,8 +356,8 @@ const FlashcardForm: React.FC<FlashcardFormProps> = ({
               </label>
               <input
                 type="text"
-                name="front_text"
-                value={formData.front_text}
+                name="frontText"
+                value={formData.frontText}
                 onChange={handleInputChange}
                 placeholder="Enter the front text (e.g., English word)"
                 required
@@ -399,8 +399,8 @@ const FlashcardForm: React.FC<FlashcardFormProps> = ({
               </label>
               <input
                 type="text"
-                name="back_text"
-                value={formData.back_text}
+                name="backText"
+                value={formData.backText}
                 onChange={handleInputChange}
                 placeholder="Enter the back text (e.g., Vietnamese translation)"
                 required
@@ -443,8 +443,8 @@ const FlashcardForm: React.FC<FlashcardFormProps> = ({
               Example Sentence
             </label>
             <textarea
-              name="example_sentence"
-              value={formData.example_sentence}
+              name="exampleSentence"
+              value={formData.exampleSentence}
               onChange={handleInputChange}
               placeholder="Enter an example sentence (optional)"
               rows={3}
@@ -562,8 +562,8 @@ const FlashcardForm: React.FC<FlashcardFormProps> = ({
 
             <input
               type="url"
-              value={formData.image_url}
-              onChange={handleimage_urlChange}
+              value={formData.imageUrl}
+              onChange={handleImageUrlChange}
               placeholder="Enter image URL"
               style={{
                 width: '100%',
@@ -820,5 +820,3 @@ const FlashcardForm: React.FC<FlashcardFormProps> = ({
 };
 
 export default FlashcardForm;
-
-

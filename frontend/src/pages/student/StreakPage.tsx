@@ -28,5 +28,3 @@ const StreakPage: React.FC = () => {
 };
 
 export default StreakPage;
-
-

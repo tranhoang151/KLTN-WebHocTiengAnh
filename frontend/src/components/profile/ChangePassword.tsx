@@ -444,5 +444,3 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ onMessage }) => {
 };
 
 export default ChangePassword;
-
-

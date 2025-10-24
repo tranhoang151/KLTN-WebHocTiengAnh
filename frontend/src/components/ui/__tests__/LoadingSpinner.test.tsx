@@ -90,5 +90,3 @@ describe('LoadingSpinner', () => {
         expect(spinner).toHaveClass(customClass);
     });
 });
-
-

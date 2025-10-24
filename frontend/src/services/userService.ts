@@ -1,15 +1,42 @@
 import { apiService } from './api';
-import { User } from '../types/index';
 
 // --- TYPE DEFINITIONS ---
 
-// User interface is now imported from types/index.ts
-export type { User };
+export interface User {
+  id: string;
+  fullName: string;
+  email: string;
+  role: 'student' | 'teacher' | 'admin';
+  gender: string;
+  avatarUrl?: string;
+  avatarBase64?: string;
+  isActive: boolean;
+  createdAt: any; // Firestore Timestamp
+  lastLoginDate?: string;
+  streakCount?: number;
+  classIds?: string[];
+  badges: Record<
+    string,
+    {
+      earned: boolean;
+      earnedAt?: Date;
+    }
+  >;
+  // Compatibility with existing components
+  full_name: string;
+  is_active: boolean;
+  created_at: any;
+  last_login_date: string;
+  streak_count: number;
+  class_ids?: string[];
+  avatar_url?: string;
+  avatar_base64?: string;
+}
 
 export interface UserFilters {
   role?: string;
   search?: string;
-  is_active?: boolean;
+  isActive?: boolean;
 }
 
 export interface CreateUserRequest {
@@ -35,7 +62,7 @@ export interface UpdateUserRequest {
 }
 
 export interface UpdateUserStatusDto {
-  is_active: boolean;
+  isActive: boolean;
 }
 
 
@@ -64,7 +91,7 @@ export const userService = {
     const queryParams = new URLSearchParams();
     if (filters.role) queryParams.append('role', filters.role);
     if (filters.search) queryParams.append('search', filters.search);
-    if (filters.is_active !== undefined) queryParams.append('is_active', String(filters.is_active));
+    if (filters.isActive !== undefined) queryParams.append('isActive', String(filters.isActive));
 
     const response = await apiService.get<User[]>(`${API_URL}?${queryParams.toString()}`);
     if (!response.success) {
@@ -77,8 +104,10 @@ export const userService = {
       id: user.id || user.Id, // Handle both id and Id fields
       fullName: user.fullName || user.full_name,
       full_name: user.fullName || user.full_name,
-      is_active: user.is_active ?? user.is_active ?? true,
-      created_at: user.created_at || user.created_at,
+      isActive: user.isActive ?? user.is_active ?? true,
+      is_active: user.isActive ?? user.is_active ?? true,
+      createdAt: user.createdAt || user.created_at,
+      created_at: user.createdAt || user.created_at,
       lastLoginDate: user.lastLoginDate || user.last_login_date,
       last_login_date: user.lastLoginDate || user.last_login_date,
       streakCount: user.streakCount || user.streak_count || 0,

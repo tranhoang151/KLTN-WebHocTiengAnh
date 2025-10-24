@@ -70,10 +70,16 @@ const ExerciseScreen: React.FC = () => {
     setIsSubmitted(false);
     setResult(null);
     setIsPaused(false);
-    // Time limit removed - not in Android app
+    if (exercise.time_limit) {
+      setTimeLeft(exercise.time_limit * 60); // Reset timer
+    }
   };
 
-  // Time limit useEffect removed - not in Android app
+  useEffect(() => {
+    if (exercise && exercise.time_limit && !isSubmitted) {
+      setTimeLeft(exercise.time_limit * 60); // Convert minutes to seconds
+    }
+  }, [exercise, isSubmitted]);
 
   useEffect(() => {
     if (timeLeft === null || isSubmitted || isPaused) return;
@@ -193,7 +199,18 @@ const ExerciseScreen: React.FC = () => {
     <div className="exercise-screen">
       <div className="exercise-header">
         <h2>{exercise.title}</h2>
-        {/* Timer removed - not in Android app */}
+        {exercise.time_limit && (
+          <div className="timer-container ${getTimerClassName()}">
+            <span className="timer-display">{formatTime(timeLeft)}</span>
+            <button
+              onClick={togglePause}
+              className="pause-btn"
+              disabled={isSubmitted}
+            >
+              {isPaused ? '▶️ Resume' : '⏸️ Pause'}
+            </button>
+          </div>
+        )}
         <div className="progress-bar">
           <div
             className="progress-fill"
@@ -251,5 +268,3 @@ const ExerciseScreen: React.FC = () => {
 };
 
 export default ExerciseScreen;
-
-

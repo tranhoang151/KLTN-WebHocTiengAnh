@@ -11,7 +11,7 @@ export interface Evaluation {
     comment: string;
     evaluationDate: string;
     category: 'academic' | 'behavior' | 'participation' | 'overall';
-    is_active: boolean;
+    isActive: boolean;
 }
 
 export interface CreateEvaluationRequest {

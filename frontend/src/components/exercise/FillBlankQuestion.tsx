@@ -40,7 +40,7 @@ const FillBlankQuestion: React.FC<FillBlankQuestionProps> = ({
   const getLiveFeedbackClassName = () => {
     if (!showLiveFeedback || !inputValue || isSubmitted) return '';
     return inputValue.toLowerCase() ===
-      String(question.correctAnswer).toLowerCase()
+      String(question.correct_answer).toLowerCase()
       ? 'correct-feedback'
       : 'incorrect-feedback';
   };
@@ -69,7 +69,7 @@ const FillBlankQuestion: React.FC<FillBlankQuestionProps> = ({
         ))}
         {isSubmitted && (
           <span className="submitted-correct-answer">
-            ({String(correctAnswer || question.correctAnswer)})
+            ({String(correctAnswer || question.correct_answer)})
           </span>
         )}
       </p>
@@ -77,7 +77,7 @@ const FillBlankQuestion: React.FC<FillBlankQuestionProps> = ({
   };
 
   const isAnswerCorrect =
-    inputValue.toLowerCase() === String(question.correctAnswer).toLowerCase();
+    inputValue.toLowerCase() === String(question.correct_answer).toLowerCase();
 
   return (
     <div className="fb-question">
@@ -86,7 +86,7 @@ const FillBlankQuestion: React.FC<FillBlankQuestionProps> = ({
         <div className={`feedback ${getLiveFeedbackClassName()}`}>
           {isAnswerCorrect
             ? 'Correct!'
-            : `Incorrect. The correct answer is: ${question.correctAnswer}`}
+            : `Incorrect. The correct answer is: ${question.correct_answer}`}
         </div>
       )}
       {isSubmitted && (
@@ -95,7 +95,7 @@ const FillBlankQuestion: React.FC<FillBlankQuestionProps> = ({
         >
           Your answer: {inputValue}{' '}
           {isAnswerCorrect ? ' (Correct)' : ' (Incorrect)'}
-          {!isAnswerCorrect && <p>Correct answer: {question.correctAnswer}</p>}
+          {!isAnswerCorrect && <p>Correct answer: {question.correct_answer}</p>}
         </div>
       )}
     </div>
@@ -103,5 +103,3 @@ const FillBlankQuestion: React.FC<FillBlankQuestionProps> = ({
 };
 
 export default FillBlankQuestion;
-
-

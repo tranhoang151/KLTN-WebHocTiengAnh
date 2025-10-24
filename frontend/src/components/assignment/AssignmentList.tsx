@@ -485,5 +485,3 @@ const AssignmentList: React.FC<AssignmentListProps> = ({
 };
 
 export default AssignmentList;
-
-

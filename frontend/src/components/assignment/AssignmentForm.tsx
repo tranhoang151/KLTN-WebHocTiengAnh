@@ -602,5 +602,3 @@ const AssignmentForm: React.FC<AssignmentFormProps> = ({
 };
 
 export default AssignmentForm;
-
-

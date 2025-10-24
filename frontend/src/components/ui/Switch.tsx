@@ -34,5 +34,3 @@ export const Switch: React.FC<SwitchProps> = ({
         </label>
     );
 };
-
-

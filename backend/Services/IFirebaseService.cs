@@ -78,7 +78,6 @@ public interface IFirebaseService
     Task<List<Exercise>> GetExercisesByCourseAsync(string courseId);
     Task<Exercise?> GetExerciseByIdAsync(string exerciseId);
     Task<Exercise> CreateExerciseAsync(Exercise exercise);
-    Task<Exercise> CreateExerciseAsync(Dictionary<string, object> exerciseData);
     Task<Exercise> UpdateExerciseAsync(string exerciseId, Exercise exercise);
     Task DeleteExerciseAsync(string exerciseId);
     Task<Exercise> DuplicateExerciseAsync(string exerciseId);

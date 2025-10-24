@@ -289,5 +289,3 @@ const FlashcardProgressStats: React.FC<FlashcardProgressStatsProps> = ({
 };
 
 export default FlashcardProgressStats;
-
-

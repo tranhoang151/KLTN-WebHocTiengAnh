@@ -47,10 +47,10 @@ export interface SecurityIncident {
     severity: string;
     status: string;
     priority: string;
-    created_at: string;
+    createdAt: string;
     resolvedAt?: string;
     updatedAt?: string;
-    created_by: string;
+    createdBy: string;
     assignedTo: string;
     tags: string[];
     relatedEvents: string[];
@@ -64,7 +64,7 @@ export interface SecurityAlert {
     message: string;
     source: string;
     relatedEventId: string;
-    created_at: string;
+    createdAt: string;
     status: string;
     metadata: Record<string, any>;
 }
@@ -109,7 +109,7 @@ export interface DetectionRule {
     pattern: string;
     severity: string;
     enabled: boolean;
-    created_at: string;
+    createdAt: string;
     updatedAt: string;
 }
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User } from '../../types/index';
+import { User } from '../../services/userService';
 import {
   Edit,
   Trash2,
@@ -16,7 +16,7 @@ interface UserListProps {
   users: User[];
   loading: boolean;
   onEdit: (user: User) => void;
-  onToggleStatus: (userId: string, is_active: boolean) => void;
+  onToggleStatus: (userId: string, isActive: boolean) => void;
   onDelete: (userId: string) => void;
   currentUser?: User | null;
 }
@@ -357,7 +357,30 @@ const UserList: React.FC<UserListProps> = ({
               zIndex: 1,
             }}
           >
-            {/* Created date hidden as requested */}
+            <div>
+              <p
+                style={{
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  color: '#6b7280',
+                  margin: '0 0 4px 0',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px',
+                }}
+              >
+                Created
+              </p>
+              <p
+                style={{
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  color: '#1f2937',
+                  margin: '0',
+                }}
+              >
+                {formatDate(user.created_at)}
+              </p>
+            </div>
             <div>
               <p
                 style={{
@@ -586,5 +609,3 @@ const UserList: React.FC<UserListProps> = ({
 };
 
 export default UserList;
-
-

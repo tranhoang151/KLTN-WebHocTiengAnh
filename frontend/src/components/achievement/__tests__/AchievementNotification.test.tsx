@@ -11,7 +11,7 @@ const mockBadge: Badge = {
   imageUrl: 'https://example.com/badge.png',
   condition: 'Complete 5 lessons',
   conditionKey: 'test_condition',
-  is_active: true,
+  isActive: true,
   earned: true,
   earnedAt: new Date(),
 };
@@ -144,5 +144,3 @@ describe('AchievementNotification', () => {
     expect(particles).toHaveLength(12);
   });
 });
-
-

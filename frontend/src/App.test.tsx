@@ -8,5 +8,3 @@ test('renders app without crashing', () => {
   // Just test that the app renders without errors
   expect(document.body).toBeInTheDocument();
 });
-
-

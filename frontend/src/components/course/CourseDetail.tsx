@@ -56,7 +56,7 @@ const CourseDetail: React.FC = () => {
 
             console.log('Course data received:', courseData);
             console.log('Course created_at:', courseData.created_at, typeof courseData.created_at);
-            console.log('Course (as any).created_at:', (courseData as any).created_at, typeof (courseData as any).created_at);
+            console.log('Course (as any).createdAt:', (courseData as any).createdAt, typeof (courseData as any).createdAt);
 
             setCourse(courseData);
             setClasses(classesData);
@@ -258,7 +258,7 @@ const CourseDetail: React.FC = () => {
                             <div className="course-meta">
                                 <div className="meta-item">
                                     <Calendar size={16} />
-                                    <span>Created: {formatDate((course as any).created_at || course.created_at)}</span>
+                                    <span>Created: {formatDate((course as any).createdAt || course.created_at)}</span>
                                 </div>
                             </div>
                             */}
@@ -371,5 +371,3 @@ const CourseDetail: React.FC = () => {
 };
 
 export default CourseDetail;
-
-

@@ -141,5 +141,3 @@ const VideoDetailPage: React.FC = () => {
 };
 
 export default VideoDetailPage;
-
-

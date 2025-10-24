@@ -9,11 +9,11 @@ export interface Test {
     difficulty: 'easy' | 'medium' | 'hard';
     questionIds: string[];
     totalQuestions: number;
-    created_by: string;
-    created_at: Date;
+    createdBy: string;
+    createdAt: Date;
     updatedAt: Date;
     isPublished: boolean;
-    is_active: boolean;
+    isActive: boolean;
     instructions?: string;
 }
 
@@ -21,7 +21,7 @@ export interface TestQuestion {
     id: string;
     question: string;
     options: string[];
-    correct_answer: number;
+    correctAnswer: number;
     type: 'multiple_choice' | 'fill_blank';
     points: number;
     explanation?: string;
@@ -62,7 +62,7 @@ export interface QuestionResult {
     questionId: string;
     question: TestQuestion;
     userAnswer: number;
-    correct_answer: number;
+    correctAnswer: number;
     isCorrect: boolean;
     points: number;
     timeSpent: number;

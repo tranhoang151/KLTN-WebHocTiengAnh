@@ -112,5 +112,3 @@ describe('ProgressIndicator', () => {
         expect(screen.getByText('2 of 4 completed')).toBeInTheDocument();
     });
 });
-
-

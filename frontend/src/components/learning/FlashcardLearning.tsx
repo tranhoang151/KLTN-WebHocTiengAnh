@@ -326,31 +326,31 @@ const FlashcardLearning: React.FC<FlashcardLearningProps> = ({
         >
           <div className="flashcard-face flashcard-front">
             <div className="card-content">
-              {currentFlashcard?.image_url && (
+              {currentFlashcard?.imageUrl && (
                 <div className="card-image">
                   <img
-                    src={currentFlashcard.image_url}
+                    src={currentFlashcard.imageUrl}
                     alt="flashcard visual"
                     onError={(e) => {
                       // Fallback to base64 if URL fails
-                      if (currentFlashcard.image_base64) {
+                      if (currentFlashcard.imageBase64) {
                         (e.target as HTMLImageElement).src =
-                          `data:image/jpeg;base64,${currentFlashcard.image_base64}`;
+                          `data:image/jpeg;base64,${currentFlashcard.imageBase64}`;
                       }
                     }}
                   />
                 </div>
               )}
-              {currentFlashcard?.image_base64 &&
-                !currentFlashcard?.image_url && (
+              {currentFlashcard?.imageBase64 &&
+                !currentFlashcard?.imageUrl && (
                   <div className="card-image">
                     <img
-                      src={`data:image/jpeg;base64,${currentFlashcard.image_base64}`}
+                      src={`data:image/jpeg;base64,${currentFlashcard.imageBase64}`}
                       alt="flashcard visual"
                     />
                   </div>
                 )}
-              <div className="card-text">{currentFlashcard?.front_text}</div>
+              <div className="card-text">{currentFlashcard?.frontText}</div>
               <div className="flip-hint">Click to flip</div>
             </div>
           </div>
@@ -358,11 +358,11 @@ const FlashcardLearning: React.FC<FlashcardLearningProps> = ({
           <div className="flashcard-face flashcard-back">
             <div className="card-content">
               <div className="card-text main-text">
-                {currentFlashcard?.back_text}
+                {currentFlashcard?.backText}
               </div>
-              {currentFlashcard?.example_sentence && (
+              {currentFlashcard?.exampleSentence && (
                 <div className="example-sentence">
-                  <em>"{currentFlashcard.example_sentence}"</em>
+                  <em>"{currentFlashcard.exampleSentence}"</em>
                 </div>
               )}
               <div className="flip-hint">Click to flip back</div>
@@ -422,5 +422,3 @@ const FlashcardLearning: React.FC<FlashcardLearningProps> = ({
 };
 
 export default FlashcardLearning;
-
-

@@ -31,7 +31,7 @@ const UserSearch: React.FC<UserSearchProps> = ({
   const [searchTerm, setSearchTerm] = useState(filters.search || '');
   const [selectedRole, setSelectedRole] = useState(filters.role || '');
   const [selectedStatus, setSelectedStatus] = useState(
-    filters.is_active === undefined ? '' : filters.is_active.toString()
+    filters.isActive === undefined ? '' : filters.isActive.toString()
   );
   const [availableRoles, setAvailableRoles] = useState<string[]>([]);
 
@@ -45,7 +45,7 @@ const UserSearch: React.FC<UserSearchProps> = ({
       const newFilters: UserFilters = {
         search: searchTerm || undefined,
         role: selectedRole || undefined,
-        is_active: selectedStatus === '' ? undefined : selectedStatus === 'true',
+        isActive: selectedStatus === '' ? undefined : selectedStatus === 'true',
       };
       if (JSON.stringify(newFilters) !== JSON.stringify(filters)) {
         onFiltersChange(newFilters);
@@ -570,5 +570,3 @@ const UserSearch: React.FC<UserSearchProps> = ({
 };
 
 export default UserSearch;
-
-

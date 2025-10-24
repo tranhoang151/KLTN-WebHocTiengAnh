@@ -352,5 +352,3 @@ const SyncTab: React.FC<{
 };
 
 export default CacheManager;
-
-

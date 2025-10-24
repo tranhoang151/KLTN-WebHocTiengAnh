@@ -380,5 +380,3 @@ export const TeacherEvaluationForm: React.FC<TeacherEvaluationFormProps> = ({
         </ChildFriendlyCard>
     );
 };
-
-

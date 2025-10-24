@@ -28,8 +28,8 @@ describe('FlashcardService', () => {
                     flashcardCount: 10,
                     difficulty: 'easy',
                     isPublic: true,
-                    created_by: 'teacher1',
-                    created_at: new Date(),
+                    createdBy: 'teacher1',
+                    createdAt: new Date(),
                     updatedAt: new Date()
                 }
             ];

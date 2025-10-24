@@ -129,5 +129,3 @@ const AssignVideoDialog: React.FC<AssignVideoDialogProps> = ({
 };
 
 export default AssignVideoDialog;
-
-

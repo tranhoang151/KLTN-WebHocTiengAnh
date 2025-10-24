@@ -13,5 +13,3 @@ const ExerciseFlow: React.FC = () => {
 };
 
 export default ExerciseFlow;
-
-

@@ -188,5 +188,3 @@ const AchievementHistory: React.FC<AchievementHistoryProps> = ({
 };
 
 export default AchievementHistory;
-
-

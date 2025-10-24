@@ -19,7 +19,7 @@ interface UserConsent {
     acceptedCookies: boolean;
     acceptedMarketing: boolean;
     specificConsents: Record<string, boolean>;
-    created_at: string;
+    createdAt: string;
     updatedAt: string;
     requiresUpdate: boolean;
 }
@@ -31,7 +31,7 @@ interface CookieConsent {
     analytics: boolean;
     marketing: boolean;
     personalization: boolean;
-    created_at: string;
+    createdAt: string;
     updatedAt: string;
 }
 
@@ -567,5 +567,3 @@ export const PrivacyDashboard: React.FC = () => {
         </div>
     );
 };
-
-

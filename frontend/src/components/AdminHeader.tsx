@@ -384,5 +384,3 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ title }) => {
 };
 
 export default AdminHeader;
-
-

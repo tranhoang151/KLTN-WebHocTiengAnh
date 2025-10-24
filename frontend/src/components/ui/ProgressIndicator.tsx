@@ -83,7 +83,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
 
       <div className="progress-steps">
         {steps.map((step, index) => {
-          const is_active = step.id === currentStep || step.status === 'active';
+          const isActive = step.id === currentStep || step.status === 'active';
           const isCompleted = step.status === 'completed';
           const isError = step.status === 'error';
 
@@ -123,7 +123,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
                 </div>
 
                 {/* Active step indicator */}
-                {is_active && (
+                {isActive && (
                   <div className="active-indicator" aria-hidden="true">
                     <div className="pulse-ring"></div>
                   </div>
@@ -165,5 +165,3 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
 };
 
 export default ProgressIndicator;
-
-

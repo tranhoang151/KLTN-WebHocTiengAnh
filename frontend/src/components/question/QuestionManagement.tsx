@@ -506,5 +506,3 @@ const QuestionManagement: React.FC = () => {
 };
 
 export default QuestionManagement;
-
-

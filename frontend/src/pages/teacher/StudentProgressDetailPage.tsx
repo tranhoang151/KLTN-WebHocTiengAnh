@@ -75,5 +75,3 @@ const StudentProgressDetailPage: React.FC = () => {
 };
 
 export default StudentProgressDetailPage;
-
-

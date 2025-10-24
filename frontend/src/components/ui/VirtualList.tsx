@@ -258,5 +258,3 @@ export const useVirtualList = <T,>(
 };
 
 export default VirtualList;
-
-

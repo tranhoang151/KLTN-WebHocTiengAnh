@@ -482,5 +482,3 @@ const VideoList: React.FC<VideoListProps> = ({
 };
 
 export default VideoList;
-
-

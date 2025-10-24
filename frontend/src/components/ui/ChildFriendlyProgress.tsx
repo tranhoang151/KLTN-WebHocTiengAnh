@@ -108,5 +108,3 @@ const ChildFriendlyProgress: React.FC<ChildFriendlyProgressProps> = ({
 };
 
 export default ChildFriendlyProgress;
-
-

@@ -66,5 +66,3 @@ const VideoLecturesPage: React.FC<VideoLecturesPageProps> = ({ courseId }) => {
 };
 
 export default VideoLecturesPage;
-
-

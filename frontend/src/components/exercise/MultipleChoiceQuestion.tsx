@@ -28,7 +28,7 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
       return selectedAnswer === option ? 'selected' : '';
     }
 
-    const isCorrect = option === question.correctAnswer;
+    const isCorrect = option === question.correct_answer;
     const isSelected = option === selectedAnswer;
 
     if (isCorrect) return 'correct';
@@ -53,11 +53,11 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
       </div>
       {showFeedback && !isSubmitted && (
         <div
-          className={`feedback ${selectedAnswer === question.correctAnswer ? 'correct-feedback' : 'incorrect-feedback'}`}
+          className={`feedback ${selectedAnswer === question.correct_answer ? 'correct-feedback' : 'incorrect-feedback'}`}
         >
-          {selectedAnswer === question.correctAnswer
+          {selectedAnswer === question.correct_answer
             ? 'Correct!'
-            : `Incorrect. The correct answer is: ${question.correctAnswer}`}
+            : `Incorrect. The correct answer is: ${question.correct_answer}`}
         </div>
       )}
     </div>
@@ -65,5 +65,3 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
 };
 
 export default MultipleChoiceQuestion;
-
-

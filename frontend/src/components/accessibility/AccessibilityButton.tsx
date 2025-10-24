@@ -54,5 +54,3 @@ const AccessibilityButton: React.FC<AccessibilityButtonProps> = ({
 };
 
 export default AccessibilityButton;
-
-

@@ -17,7 +17,6 @@ import {
   Trash2,
   FileText,
   Search,
-  RefreshCw,
 } from 'lucide-react';
 
 interface ExerciseListProps {
@@ -112,19 +111,12 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
     }
   };
 
-  const handleRefresh = () => {
-    loadData();
-  };
-
-  const getCourseName = (exercise: Exercise) => {
-    // Handle both courseId (camelCase) and course_id (snake_case)
-    const courseId = exercise.courseId || exercise.course_id;
-    if (!courseId) return 'Unknown Course';
+  const getCourseName = (courseId: string) => {
     const course = courses.find((c) => c.id === courseId);
     return course?.name || 'Unknown Course';
   };
 
-  const getDifficultyColor = (difficulty: string | null | undefined) => {
+  const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case 'easy':
         return 'success';
@@ -137,7 +129,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
     }
   };
 
-  const getTypeIcon = (type: string | null | undefined) => {
+  const getTypeIcon = (type: string) => {
     switch (type) {
       case 'multiple_choice':
         return <HelpCircle size={16} color="#6b7280" />;
@@ -150,8 +142,8 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
 
   const filteredExercises = exercises.filter(
     (exercise) =>
-      (exercise.title || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (getCourseName(exercise) || '')
+      exercise.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      getCourseName(exercise.course_id)
         .toLowerCase()
         .includes(searchTerm.toLowerCase())
   );
@@ -240,52 +232,17 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
           >
             {/* Search */}
             <div>
-              <div
+              <label
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
+                  display: 'block',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  color: '#374151',
                   marginBottom: '8px',
                 }}
               >
-                <label
-                  style={{
-                    fontSize: '14px',
-                    fontWeight: '600',
-                    color: '#374151',
-                  }}
-                >
-                  Search
-                </label>
-                <button
-                  onClick={handleRefresh}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '4px',
-                    padding: '6px 8px',
-                    background: '#f3f4f6',
-                    color: '#6b7280',
-                    border: '1px solid #d1d5db',
-                    borderRadius: '6px',
-                    fontSize: '12px',
-                    fontWeight: '500',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = '#e5e7eb';
-                    e.currentTarget.style.color = '#374151';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = '#f3f4f6';
-                    e.currentTarget.style.color = '#6b7280';
-                  }}
-                >
-                  <RefreshCw size={12} />
-                  Refresh
-                </button>
-              </div>
+                Search
+              </label>
               <input
                 type="text"
                 value={searchTerm}
@@ -368,7 +325,61 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
               </select>
             </div>
 
-            {/* Difficulty filter removed - not in Android app */}
+            {/* Difficulty Filter */}
+            <div>
+              <label
+                style={{
+                  display: 'block',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  color: '#374151',
+                  marginBottom: '8px',
+                }}
+              >
+                Difficulty
+              </label>
+              <select
+                value={filters.difficulty || ''}
+                onChange={(e) =>
+                  setFilters((prev) => ({
+                    ...prev,
+                    difficulty: e.target.value as any,
+                  }))
+                }
+                style={{
+                  width: '100%',
+                  padding: '12px 16px',
+                  border: '1px solid #d1d5db',
+                  borderRadius: '12px',
+                  fontSize: '14px',
+                  backgroundColor: '#ffffff',
+                  transition: 'all 0.2s ease',
+                  outline: 'none',
+                  appearance: 'none',
+                  WebkitAppearance: 'none',
+                  MozAppearance: 'none',
+                  backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
+                  backgroundPosition: 'right 12px center',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundSize: '16px',
+                  paddingRight: '40px',
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = '#3b82f6';
+                  e.target.style.boxShadow =
+                    '0 0 0 3px rgba(59, 130, 246, 0.1)';
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = '#d1d5db';
+                  e.target.style.boxShadow = 'none';
+                }}
+              >
+                <option value="">All Levels</option>
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+              </select>
+            </div>
 
             {/* Type Filter */}
             <div>
@@ -473,7 +484,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
             }}
           >
             {searchTerm ||
-              Object.values(filters).some((v) => v !== undefined && v !== '')
+            Object.values(filters).some((v) => v !== undefined && v !== '')
               ? 'Try adjusting your search or filters'
               : 'Create your first exercise to get started'}
           </p>
@@ -523,7 +534,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
         >
           {filteredExercises.map((exercise) => (
             <div
-              key={exercise.id || Math.random()}
+              key={exercise.id}
               style={{
                 background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
                 borderRadius: '16px',
@@ -588,10 +599,27 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
                         textTransform: 'capitalize',
                       }}
                     >
-                      {exercise.type ? exercise.type.replace('_', ' ') : 'Unknown'}
+                      {exercise.type.replace('_', ' ')}
                     </span>
                   </div>
-                  {/* Difficulty badge removed - not in Android app */}
+                  <span
+                    style={{
+                      padding: '4px 12px',
+                      borderRadius: '20px',
+                      fontSize: '12px',
+                      fontWeight: '600',
+                      textTransform: 'capitalize',
+                      background:
+                        exercise.difficulty === 'easy'
+                          ? 'linear-gradient(135deg, #10b981, #059669)'
+                          : exercise.difficulty === 'medium'
+                            ? 'linear-gradient(135deg, #f59e0b, #d97706)'
+                            : 'linear-gradient(135deg, #ef4444, #dc2626)',
+                      color: 'white',
+                    }}
+                  >
+                    {exercise.difficulty}
+                  </span>
                 </div>
 
                 {/* Title */}
@@ -604,7 +632,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
                     lineHeight: '1.4',
                   }}
                 >
-                  {exercise.title || 'Untitled Exercise'}
+                  {exercise.title}
                 </h3>
 
                 {/* Details */}
@@ -645,7 +673,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
                         fontWeight: '500',
                       }}
                     >
-                      {getCourseName(exercise)}
+                      {getCourseName(exercise.course_id)}
                     </span>
                   </div>
 
@@ -675,11 +703,39 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
                         fontWeight: '500',
                       }}
                     >
-                      {exercise.questions?.length || 0}
+                      {exercise.questions.length}
                     </span>
                   </div>
 
-                  {/* Time Limit removed - not in Android app */}
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      fontSize: '0.85rem',
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        color: '#6b7280',
+                        fontWeight: '500',
+                      }}
+                    >
+                      <Clock size={14} />
+                      <span>Time Limit:</span>
+                    </div>
+                    <span
+                      style={{
+                        color: '#1f2937',
+                        fontWeight: '500',
+                      }}
+                    >
+                      {exercise.time_limit} minutes
+                    </span>
+                  </div>
                 </div>
 
                 {/* Question Preview */}
@@ -708,9 +764,9 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
                       gap: '0.5rem',
                     }}
                   >
-                    {(exercise.questions || []).slice(0, 3).map((question, index) => (
+                    {exercise.questions.slice(0, 3).map((question, index) => (
                       <div
-                        key={question.id || index}
+                        key={question.id}
                         style={{
                           display: 'flex',
                           gap: '0.5rem',
@@ -740,11 +796,11 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
                             overflow: 'hidden',
                           }}
                         >
-                          {(question.content || question.question_text) || 'No content available'}
+                          {question.content}
                         </span>
                       </div>
                     ))}
-                    {(exercise.questions?.length || 0) > 3 && (
+                    {exercise.questions.length > 3 && (
                       <div
                         style={{
                           padding: '0.5rem',
@@ -756,7 +812,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
                           borderRadius: '4px',
                         }}
                       >
-                        +{(exercise.questions?.length || 0) - 3} more questions
+                        +{exercise.questions.length - 3} more questions
                       </div>
                     )}
                   </div>
@@ -806,7 +862,7 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
 
                     {onEditExercise && (
                       <button
-                        onClick={() => handleDuplicateExercise(exercise.id || '')}
+                        onClick={() => handleDuplicateExercise(exercise.id)}
                         style={{
                           minWidth: '90px',
                           padding: '8px 16px',
@@ -864,8 +920,8 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
 
                     {onDeleteExercise && (
                       <button
-                        onClick={() => handleDeleteExercise(exercise.id || '')}
-                        disabled={deletingId === (exercise.id || '')}
+                        onClick={() => handleDeleteExercise(exercise.id)}
+                        disabled={deletingId === exercise.id}
                         style={{
                           minWidth: '90px',
                           padding: '8px 16px',
@@ -876,27 +932,27 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
                           fontSize: '0.85rem',
                           fontWeight: '500',
                           cursor:
-                            deletingId === (exercise.id || '')
+                            deletingId === exercise.id
                               ? 'not-allowed'
                               : 'pointer',
                           transition: 'all 0.2s ease',
-                          opacity: deletingId === (exercise.id || '') ? 0.6 : 1,
+                          opacity: deletingId === exercise.id ? 0.6 : 1,
                         }}
                         onMouseEnter={(e) => {
-                          if (deletingId !== (exercise.id || '')) {
+                          if (deletingId !== exercise.id) {
                             e.currentTarget.style.background = '#dc2626';
                             e.currentTarget.style.color = 'white';
                           }
                         }}
                         onMouseLeave={(e) => {
-                          if (deletingId !== (exercise.id || '')) {
+                          if (deletingId !== exercise.id) {
                             e.currentTarget.style.background = '#fef2f2';
                             e.currentTarget.style.color = '#dc2626';
                           }
                         }}
                       >
                         <Trash2 size={14} />
-                        {deletingId === (exercise.id || '') ? 'Deleting...' : 'Delete'}
+                        {deletingId === exercise.id ? 'Deleting...' : 'Delete'}
                       </button>
                     )}
                   </div>
@@ -911,5 +967,3 @@ const ExerciseList: React.FC<ExerciseListProps> = ({
 };
 
 export default ExerciseList;
-
-

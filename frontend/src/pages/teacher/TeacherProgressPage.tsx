@@ -90,5 +90,3 @@ const TeacherProgressPage: React.FC = () => {
 };
 
 export default TeacherProgressPage;
-
-

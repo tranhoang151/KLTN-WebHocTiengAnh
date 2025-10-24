@@ -1,35 +1,24 @@
-Submitting exercise with: {title: 'a', type: 'fill_blank', course_id: 'WgRFeWZ6Sipili34yEuX', questions: Array(4), total_points: 40, …}course_id: "WgRFeWZ6Sipili34yEuX"created_by: "U003"questions: (4) [{…}, {…}, {…}, {…}]title: "a"total_points: 40type: "fill_blank"[[Prototype]]: Object
-api.ts:31   POST http://localhost:5000/api/exercise 400 (Bad Request)
-request @ api.ts:31
-await in request
-post @ api.ts:89
-createExercise @ exerciseService.ts:80
-handleSubmitExercise @ ExerciseManagement.tsx:82
-handleSubmit @ ExerciseForm.tsx:143
-executeDispatch @ react-dom-client.development.js:16368
-runWithFiberInDEV @ react-dom-client.development.js:1518
-processDispatchQueue @ react-dom-client.development.js:16417
-(anonymous) @ react-dom-client.development.js:17016
-batchedUpdates$1 @ react-dom-client.development.js:3262
-dispatchEventForPluginEventSystem @ react-dom-client.development.js:16572
-dispatchEvent @ react-dom-client.development.js:20657
-dispatchDiscreteEvent @ react-dom-client.development.js:20625
-api.ts:73  API request failed: Error: Total points must be greater than 0
-    at ApiService.request (api.ts:63:1)
-    at async ExerciseService.createExercise (exerciseService.ts:80:1)
-    at async handleSubmitExercise (ExerciseManagement.tsx:82:1)
-overrideMethod @ hook.js:608
-request @ api.ts:73
-await in request
-post @ api.ts:89
-createExercise @ exerciseService.ts:80
-handleSubmitExercise @ ExerciseManagement.tsx:82
-handleSubmit @ ExerciseForm.tsx:143
-executeDispatch @ react-dom-client.development.js:16368
-runWithFiberInDEV @ react-dom-client.development.js:1518
-processDispatchQueue @ react-dom-client.development.js:16417
-(anonymous) @ react-dom-client.development.js:17016
-batchedUpdates$1 @ react-dom-client.development.js:3262
-dispatchEventForPluginEventSystem @ react-dom-client.development.js:16572
-dispatchEvent @ react-dom-client.development.js:20657
-dispatchDiscreteEvent @ react-dom-client.development.js:20625
+Security measures initialized successfully
+SecurityProvider.tsx:39 Security measures initialized successfully
+index.iife.js:1347 content script loaded
+index.iife.js:1 initial theme: light
+CourseDetail.tsx:57 Course data received: {id: '1Tj7Zug9y2PtKCj3mR1X', name: 'Junior English', description: 'Khóa học tiếng Anh nâng cao cho trẻ 7-9 tuổi', imageUrl: '', createdAt: {…}}createdAt: [[Prototype]]: Objectconstructor: ƒ Object()assign: ƒ assign()length: 2name: "assign"arguments: (...)caller: (...)[[Prototype]]: ƒ ()apply: ƒ apply()arguments: (...)bind: ƒ bind()call: ƒ call()caller: (...)constructor: ƒ Function()length: 0name: ""toString: ƒ toString()Symbol(Symbol.hasInstance): ƒ [Symbol.hasInstance]()get arguments: ƒ arguments()set arguments: ƒ arguments()get caller: ƒ caller()set caller: ƒ caller()[[FunctionLocation]]: [[Prototype]]: Object[[Scopes]]: Scopes[0][[Scopes]]: Scopes[0]create: ƒ create()defineProperties: ƒ defineProperties()defineProperty: ƒ defineProperty()entries: ƒ entries()freeze: ƒ freeze()fromEntries: ƒ fromEntries()getOwnPropertyDescriptor: ƒ getOwnPropertyDescriptor()getOwnPropertyDescriptors: ƒ getOwnPropertyDescriptors()getOwnPropertyNames: ƒ getOwnPropertyNames()getOwnPropertySymbols: ƒ getOwnPropertySymbols()getPrototypeOf: ƒ getPrototypeOf()groupBy: ƒ groupBy()hasOwn: ƒ hasOwn()is: ƒ is()isExtensible: ƒ isExtensible()isFrozen: ƒ isFrozen()isSealed: ƒ isSealed()keys: ƒ keys()length: 1name: "Object"preventExtensions: ƒ preventExtensions()prototype: {__defineGetter__: ƒ, __defineSetter__: ƒ, hasOwnProperty: ƒ, __lookupGetter__: ƒ, __lookupSetter__: ƒ, …}seal: ƒ seal()setPrototypeOf: ƒ setPrototypeOf()values: ƒ values()arguments: (...)caller: (...)[[Prototype]]: ƒ ()[[Scopes]]: Scopes[0]hasOwnProperty: ƒ hasOwnProperty()isPrototypeOf: ƒ isPrototypeOf()propertyIsEnumerable: ƒ propertyIsEnumerable()toLocaleString: ƒ toLocaleString()toString: ƒ toString()valueOf: ƒ valueOf()__defineGetter__: ƒ __defineGetter__()__defineSetter__: ƒ __defineSetter__()__lookupGetter__: ƒ __lookupGetter__()__lookupSetter__: ƒ __lookupSetter__()__proto__: (...)get __proto__: ƒ __proto__()set __proto__: ƒ __proto__()description: "Khóa học tiếng Anh nâng cao cho trẻ 7-9 tuổi"id: "1Tj7Zug9y2PtKCj3mR1X"imageUrl: ""name: "Junior English"[[Prototype]]: Objectconstructor: ƒ Object()hasOwnProperty: ƒ hasOwnProperty()isPrototypeOf: ƒ isPrototypeOf()propertyIsEnumerable: ƒ propertyIsEnumerable()toLocaleString: ƒ toLocaleString()toString: ƒ toString()valueOf: ƒ valueOf()__defineGetter__: ƒ __defineGetter__()__defineSetter__: ƒ __defineSetter__()__lookupGetter__: ƒ __lookupGetter__()__lookupSetter__: ƒ __lookupSetter__()__proto__: (...)get __proto__: ƒ __proto__()set __proto__: ƒ __proto__()
+CourseDetail.tsx:58 Course created_at: undefined undefined
+CourseDetail.tsx:127 formatDate input: undefined undefined
+CourseDetail.tsx:130 No dateData provided
+CourseDetail.tsx:127 formatDate input: undefined undefined
+CourseDetail.tsx:130 No dateData provided
+CourseDetail.tsx:57 Course data received: {id: '1Tj7Zug9y2PtKCj3mR1X', name: 'Junior English', description: 'Khóa học tiếng Anh nâng cao cho trẻ 7-9 tuổi', imageUrl: '', createdAt: {…}}createdAt: [[Prototype]]: Objectconstructor: ƒ Object()hasOwnProperty: ƒ hasOwnProperty()isPrototypeOf: ƒ isPrototypeOf()propertyIsEnumerable: ƒ propertyIsEnumerable()toLocaleString: ƒ toLocaleString()toString: ƒ toString()valueOf: ƒ valueOf()__defineGetter__: ƒ __defineGetter__()__defineSetter__: ƒ __defineSetter__()__lookupGetter__: ƒ __lookupGetter__()__lookupSetter__: ƒ __lookupSetter__()__proto__: (...)get __proto__: ƒ __proto__()set __proto__: ƒ __proto__()description: "Khóa học tiếng Anh nâng cao cho trẻ 7-9 tuổi"id: "1Tj7Zug9y2PtKCj3mR1X"imageUrl: ""name: "Junior English"[[Prototype]]: Objectconstructor: ƒ Object()hasOwnProperty: ƒ hasOwnProperty()isPrototypeOf: ƒ isPrototypeOf()propertyIsEnumerable: ƒ propertyIsEnumerable()toLocaleString: ƒ toLocaleString()toString: ƒ toString()valueOf: ƒ valueOf()length: 0name: "valueOf"arguments: (...)caller: (...)[[Prototype]]: ƒ ()[[Scopes]]: Scopes[0]__defineGetter__: ƒ __defineGetter__()__defineSetter__: ƒ __defineSetter__()__lookupGetter__: ƒ __lookupGetter__()__lookupSetter__: ƒ __lookupSetter__()__proto__: (...)get __proto__: ƒ __proto__()set __proto__: ƒ __proto__()
+CourseDetail.tsx:58 Course created_at: undefined undefined
+CourseDetail.tsx:127 formatDate input: undefined undefined
+CourseDetail.tsx:130 No dateData provided
+CourseDetail.tsx:127 formatDate input: undefined undefined
+CourseDetail.tsx:130 No dateData provided
+CourseDetail.tsx:127 formatDate input: undefined undefined
+CourseDetail.tsx:130 No dateData provided
+CourseDetail.tsx:127 formatDate input: undefined undefined
+CourseDetail.tsx:130 No dateData provided
+CourseDetail.tsx:127 formatDate input: undefined undefined
+CourseDetail.tsx:130 No dateData provided
+CourseDetail.tsx:127 formatDate input: undefined undefined
+CourseDetail.tsx:130 No dateData provided

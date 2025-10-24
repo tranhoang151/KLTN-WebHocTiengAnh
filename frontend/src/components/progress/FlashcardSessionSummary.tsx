@@ -315,5 +315,3 @@ const FlashcardSessionSummary: React.FC<FlashcardSessionSummaryProps> = ({
 };
 
 export default FlashcardSessionSummary;
-
-

@@ -381,5 +381,3 @@ const AccessibilityPanel: React.FC<AccessibilityPanelProps> = ({
 };
 
 export default AccessibilityPanel;
-
-

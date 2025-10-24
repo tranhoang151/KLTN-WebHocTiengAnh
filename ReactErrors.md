@@ -1,79 +1,18 @@
 Security measures initialized successfully
-hook.js:377 Security measures initialized successfully
+SecurityProvider.tsx:39 Security measures initialized successfully
 index.iife.js:1347 content script loaded
 index.iife.js:1 initial theme: light
-:5000/api/badges/definitions:1   Failed to load resource: the server responded with a status of 401 (Unauthorized)
-:5000/api/badges/definitions:1   Failed to load resource: the server responded with a status of 401 (Unauthorized)
-:5000/api/dashboard/admin:1   Failed to load resource: the server responded with a status of 401 (Unauthorized)
-hook.js:608  Unauthorized request
-overrideMethod @ hook.js:608
-hook.js:608  Failed to fetch dashboard stats: Error
-    at ApiService.request (apiService.ts:37:1)
-    at async fetchStats (AdminDashboard.tsx:50:1)
-overrideMethod @ hook.js:608
-:5000/api/dashboard/admin:1   Failed to load resource: the server responded with a status of 401 (Unauthorized)
-hook.js:608  Unauthorized request
-overrideMethod @ hook.js:608
-hook.js:608  Failed to fetch dashboard stats: Error
-    at ApiService.request (apiService.ts:37:1)
-    at async fetchStats (AdminDashboard.tsx:50:1)
-overrideMethod @ hook.js:608
-2hook.js:608  Encountered two children with the same key, `2FcGgsAHfVXiZNQtaQCw`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-overrideMethod @ hook.js:608
-2hook.js:608  Encountered two children with the same key, `F8lfadeAiC2aA7G50WTG`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-overrideMethod @ hook.js:608
-2hook.js:608  Encountered two children with the same key, `RQmbJGuFaYrRBQ4rZ2uL`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-overrideMethod @ hook.js:608
-2hook.js:608  Encountered two children with the same key, `fill1`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-overrideMethod @ hook.js:608
-2hook.js:608  Encountered two children with the same key, `fill2`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-overrideMethod @ hook.js:608
-2hook.js:608  Encountered two children with the same key, `fill3`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-overrideMethod @ hook.js:608
-2hook.js:608  Encountered two children with the same key, `multi1`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-overrideMethod @ hook.js:608
-2hook.js:608  Encountered two children with the same key, `multi2`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-overrideMethod @ hook.js:608
-2hook.js:608  Encountered two children with the same key, `multi3`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-overrideMethod @ hook.js:608
-2hook.js:608  Encountered two children with the same key, `teSPMzxV0uM3ZJYyp7cp`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-overrideMethod @ hook.js:608
-2hook.js:608  Encountered two children with the same key, `v1cYgAEnc6ZT2NvAcOsV`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-overrideMethod @ hook.js:608
-2hook.js:608  Encountered two children with the same key, `v68KMjS4tKEsjUQQa0qH`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-overrideMethod @ hook.js:608
-2hook.js:608  Encountered two children with the same key, `2FcGgsAHfVXiZNQtaQCw`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-overrideMethod @ hook.js:608
-2hook.js:608  Encountered two children with the same key, `F8lfadeAiC2aA7G50WTG`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-overrideMethod @ hook.js:608
-2hook.js:608  Encountered two children with the same key, `RQmbJGuFaYrRBQ4rZ2uL`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-overrideMethod @ hook.js:608
-2hook.js:608  Encountered two children with the same key, `fill1`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-overrideMethod @ hook.js:608
-2hook.js:608  Encountered two children with the same key, `fill2`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-overrideMethod @ hook.js:608
-2hook.js:608  Encountered two children with the same key, `fill3`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-overrideMethod @ hook.js:608
-2hook.js:608  Encountered two children with the same key, `multi1`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-overrideMethod @ hook.js:608
-2hook.js:608  Encountered two children with the same key, `multi2`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-overrideMethod @ hook.js:608
-2hook.js:608  Encountered two children with the same key, `multi3`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-overrideMethod @ hook.js:608
-2hook.js:608  Encountered two children with the same key, `teSPMzxV0uM3ZJYyp7cp`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-overrideMethod @ hook.js:608
-2hook.js:608  Encountered two children with the same key, `v1cYgAEnc6ZT2NvAcOsV`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-overrideMethod @ hook.js:608
-2hook.js:608  Encountered two children with the same key, `v68KMjS4tKEsjUQQa0qH`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.
-overrideMethod @ hook.js:608
-ExerciseForm.tsx:159 Submitting exercise with: {title: 'q', type: 'fill_blank', course_id: 'LABTsID1zvPRsVjPjhLd', questions: Array(4), created_by: 'U003'}course_id: "LABTsID1zvPRsVjPjhLd"created_by: "U003"questions: Array(4)0: {id: '0TCs9iOWgKfnPSPZ6rW2', content: 'Rain falls from the ____. ', type: 'fill_blank', options: Array(0), correctAnswer: 'sky', …}1: {id: '0pTT0AxW9h0iQNeQbqSM', content: 'The process by which plants make food is called ____.', type: 'fill_blank', options: Array(0), correctAnswer: 'photosynthesis', …}2: {id: '1EQggFrrkBfYspS1qq6g', content: 'The process by which plants make food is called ____.', type: 'fill_blank', options: Array(0), correctAnswer: 'photosynthesis', …}3: {id: '1U8rdoHMndIH5KYVoijb', content: 'I eat ________ for breakfast. They are small and purple or green.', type: 'fill_blank', options: Array(0), explanation: '', …}length: 4[[Prototype]]: Array(0)title: "q"type: "fill_blank"[[Prototype]]: Object
-api.ts:31   POST http://localhost:5000/api/exercise 500 (Internal Server Error)
+FlashcardSetManager.tsx:109 Selected set: {id: 'WjQLN8xuWrwbRu9BHeO0', title: 'Fruits', description: 'Learn about fruits', courseId: '1Tj7Zug9y2PtKCj3mR1X', createdBy: 'admin', …}
+FlashcardEditor.tsx:57 Fetched cards: (13) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+scheduler.development.js:14 [Violation] 'message' handler took 152ms
+FlashcardEditor.tsx:57 Fetched cards: (13) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+api.ts:31   PUT http://localhost:5000/api/flashcard/card/e3a635ab-14f7-4908-a7b4-78d61a9da966 500 (Internal Server Error)
 request @ api.ts:31
 await in request
-post @ api.ts:89
-createExercise @ exerciseService.ts:80
-handleSubmitExercise @ ExerciseManagement.tsx:82
-handleSubmit @ ExerciseForm.tsx:160
+put @ api.ts:97
+updateFlashcard @ flashcardService.ts:161
+handleSubmit @ FlashcardForm.tsx:176
+await in handleSubmit
 executeDispatch @ react-dom-client.development.js:16368
 runWithFiberInDEV @ react-dom-client.development.js:1518
 processDispatchQueue @ react-dom-client.development.js:16417
@@ -82,17 +21,51 @@ batchedUpdates$1 @ react-dom-client.development.js:3262
 dispatchEventForPluginEventSystem @ react-dom-client.development.js:16572
 dispatchEvent @ react-dom-client.development.js:20657
 dispatchDiscreteEvent @ react-dom-client.development.js:20625
-api.ts:73  API request failed: Error: Error creating exercise
+<form>
+(anonymous) @ react-jsx-dev-runtime.development.js:336
+FlashcardForm @ FlashcardForm.tsx:328
+react_stack_bottom_frame @ react-dom-client.development.js:23863
+renderWithHooksAgain @ react-dom-client.development.js:5629
+renderWithHooks @ react-dom-client.development.js:5541
+updateFunctionComponent @ react-dom-client.development.js:8897
+beginWork @ react-dom-client.development.js:10522
+runWithFiberInDEV @ react-dom-client.development.js:1518
+performUnitOfWork @ react-dom-client.development.js:15130
+workLoopSync @ react-dom-client.development.js:14956
+renderRootSync @ react-dom-client.development.js:14936
+performWorkOnRoot @ react-dom-client.development.js:14417
+performSyncWorkOnRoot @ react-dom-client.development.js:16231
+flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16068
+processRootScheduleInMicrotask @ react-dom-client.development.js:16116
+(anonymous) @ react-dom-client.development.js:16245
+<FlashcardForm>
+(anonymous) @ react-jsx-dev-runtime.development.js:336
+FlashcardEditor @ FlashcardEditor.tsx:896
+react_stack_bottom_frame @ react-dom-client.development.js:23863
+renderWithHooksAgain @ react-dom-client.development.js:5629
+renderWithHooks @ react-dom-client.development.js:5541
+updateFunctionComponent @ react-dom-client.development.js:8897
+beginWork @ react-dom-client.development.js:10522
+runWithFiberInDEV @ react-dom-client.development.js:1518
+performUnitOfWork @ react-dom-client.development.js:15130
+workLoopSync @ react-dom-client.development.js:14956
+renderRootSync @ react-dom-client.development.js:14936
+performWorkOnRoot @ react-dom-client.development.js:14417
+performSyncWorkOnRoot @ react-dom-client.development.js:16231
+flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16068
+processRootScheduleInMicrotask @ react-dom-client.development.js:16116
+(anonymous) @ react-dom-client.development.js:16245
+api.ts:73  API request failed: Error: Error updating flashcard
     at ApiService.request (api.ts:63:1)
-    at async ExerciseService.createExercise (exerciseService.ts:80:1)
-    at async handleSubmitExercise (ExerciseManagement.tsx:82:1)
+    at async FlashcardService.updateFlashcard (flashcardService.ts:161:1)
+    at async handleSubmit (FlashcardForm.tsx:176:1)
 overrideMethod @ hook.js:608
 request @ api.ts:73
 await in request
-post @ api.ts:89
-createExercise @ exerciseService.ts:80
-handleSubmitExercise @ ExerciseManagement.tsx:82
-handleSubmit @ ExerciseForm.tsx:160
+put @ api.ts:97
+updateFlashcard @ flashcardService.ts:161
+handleSubmit @ FlashcardForm.tsx:176
+await in handleSubmit
 executeDispatch @ react-dom-client.development.js:16368
 runWithFiberInDEV @ react-dom-client.development.js:1518
 processDispatchQueue @ react-dom-client.development.js:16417
@@ -101,3 +74,125 @@ batchedUpdates$1 @ react-dom-client.development.js:3262
 dispatchEventForPluginEventSystem @ react-dom-client.development.js:16572
 dispatchEvent @ react-dom-client.development.js:20657
 dispatchDiscreteEvent @ react-dom-client.development.js:20625
+<form>
+(anonymous) @ react-jsx-dev-runtime.development.js:336
+FlashcardForm @ FlashcardForm.tsx:328
+react_stack_bottom_frame @ react-dom-client.development.js:23863
+renderWithHooksAgain @ react-dom-client.development.js:5629
+renderWithHooks @ react-dom-client.development.js:5541
+updateFunctionComponent @ react-dom-client.development.js:8897
+beginWork @ react-dom-client.development.js:10522
+runWithFiberInDEV @ react-dom-client.development.js:1518
+performUnitOfWork @ react-dom-client.development.js:15130
+workLoopSync @ react-dom-client.development.js:14956
+renderRootSync @ react-dom-client.development.js:14936
+performWorkOnRoot @ react-dom-client.development.js:14417
+performSyncWorkOnRoot @ react-dom-client.development.js:16231
+flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16068
+processRootScheduleInMicrotask @ react-dom-client.development.js:16116
+(anonymous) @ react-dom-client.development.js:16245
+<FlashcardForm>
+(anonymous) @ react-jsx-dev-runtime.development.js:336
+FlashcardEditor @ FlashcardEditor.tsx:896
+react_stack_bottom_frame @ react-dom-client.development.js:23863
+renderWithHooksAgain @ react-dom-client.development.js:5629
+renderWithHooks @ react-dom-client.development.js:5541
+updateFunctionComponent @ react-dom-client.development.js:8897
+beginWork @ react-dom-client.development.js:10522
+runWithFiberInDEV @ react-dom-client.development.js:1518
+performUnitOfWork @ react-dom-client.development.js:15130
+workLoopSync @ react-dom-client.development.js:14956
+renderRootSync @ react-dom-client.development.js:14936
+performWorkOnRoot @ react-dom-client.development.js:14417
+performSyncWorkOnRoot @ react-dom-client.development.js:16231
+flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16068
+processRootScheduleInMicrotask @ react-dom-client.development.js:16116
+(anonymous) @ react-dom-client.development.js:16245
+flashcardService.ts:168  Error updating flashcard: Error: Error updating flashcard
+    at FlashcardService.updateFlashcard (flashcardService.ts:165:1)
+    at async handleSubmit (FlashcardForm.tsx:176:1)
+overrideMethod @ hook.js:608
+updateFlashcard @ flashcardService.ts:168
+await in updateFlashcard
+handleSubmit @ FlashcardForm.tsx:176
+await in handleSubmit
+executeDispatch @ react-dom-client.development.js:16368
+runWithFiberInDEV @ react-dom-client.development.js:1518
+processDispatchQueue @ react-dom-client.development.js:16417
+(anonymous) @ react-dom-client.development.js:17016
+batchedUpdates$1 @ react-dom-client.development.js:3262
+dispatchEventForPluginEventSystem @ react-dom-client.development.js:16572
+dispatchEvent @ react-dom-client.development.js:20657
+dispatchDiscreteEvent @ react-dom-client.development.js:20625
+<form>
+(anonymous) @ react-jsx-dev-runtime.development.js:336
+FlashcardForm @ FlashcardForm.tsx:328
+react_stack_bottom_frame @ react-dom-client.development.js:23863
+renderWithHooksAgain @ react-dom-client.development.js:5629
+renderWithHooks @ react-dom-client.development.js:5541
+updateFunctionComponent @ react-dom-client.development.js:8897
+beginWork @ react-dom-client.development.js:10522
+runWithFiberInDEV @ react-dom-client.development.js:1518
+performUnitOfWork @ react-dom-client.development.js:15130
+workLoopSync @ react-dom-client.development.js:14956
+renderRootSync @ react-dom-client.development.js:14936
+performWorkOnRoot @ react-dom-client.development.js:14417
+performSyncWorkOnRoot @ react-dom-client.development.js:16231
+flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16068
+processRootScheduleInMicrotask @ react-dom-client.development.js:16116
+(anonymous) @ react-dom-client.development.js:16245
+<FlashcardForm>
+(anonymous) @ react-jsx-dev-runtime.development.js:336
+FlashcardEditor @ FlashcardEditor.tsx:896
+react_stack_bottom_frame @ react-dom-client.development.js:23863
+renderWithHooksAgain @ react-dom-client.development.js:5629
+renderWithHooks @ react-dom-client.development.js:5541
+updateFunctionComponent @ react-dom-client.development.js:8897
+beginWork @ react-dom-client.development.js:10522
+runWithFiberInDEV @ react-dom-client.development.js:1518
+performUnitOfWork @ react-dom-client.development.js:15130
+workLoopSync @ react-dom-client.development.js:14956
+renderRootSync @ react-dom-client.development.js:14936
+performWorkOnRoot @ react-dom-client.development.js:14417
+performSyncWorkOnRoot @ react-dom-client.development.js:16231
+flushSyncWorkAcrossRoots_impl @ react-dom-client.development.js:16068
+processRootScheduleInMicrotask @ react-dom-client.development.js:16116
+(anonymous) @ react-dom-client.development.js:16245
+[Violation] 'click' handler took 1424ms
+api.ts:31   DELETE http://localhost:5000/api/flashcard/card/e3a635ab-14f7-4908-a7b4-78d61a9da966 500 (Internal Server Error)
+request @ api.ts:31
+await in request
+delete @ api.ts:113
+deleteFlashcard @ flashcardService.ts:175
+handleDeleteCard @ FlashcardEditor.tsx:84
+onClick @ FlashcardEditor.tsx:853
+executeDispatch @ react-dom-client.development.js:16368
+runWithFiberInDEV @ react-dom-client.development.js:1518
+processDispatchQueue @ react-dom-client.development.js:16417
+(anonymous) @ react-dom-client.development.js:17016
+batchedUpdates$1 @ react-dom-client.development.js:3262
+dispatchEventForPluginEventSystem @ react-dom-client.development.js:16572
+dispatchEvent @ react-dom-client.development.js:20657
+dispatchDiscreteEvent @ react-dom-client.development.js:20625
+api.ts:73  API request failed: Error: Error deleting flashcard
+    at ApiService.request (api.ts:63:1)
+    at async FlashcardService.deleteFlashcard (flashcardService.ts:175:1)
+    at async handleDeleteCard (FlashcardEditor.tsx:84:1)
+overrideMethod @ hook.js:608
+request @ api.ts:73
+await in request
+delete @ api.ts:113
+deleteFlashcard @ flashcardService.ts:175
+handleDeleteCard @ FlashcardEditor.tsx:84
+onClick @ FlashcardEditor.tsx:853
+executeDispatch @ react-dom-client.development.js:16368
+runWithFiberInDEV @ react-dom-client.development.js:1518
+processDispatchQueue @ react-dom-client.development.js:16417
+(anonymous) @ react-dom-client.development.js:17016
+batchedUpdates$1 @ react-dom-client.development.js:3262
+dispatchEventForPluginEventSystem @ react-dom-client.development.js:16572
+dispatchEvent @ react-dom-client.development.js:20657
+dispatchDiscreteEvent @ react-dom-client.development.js:20625
+flashcardService.ts:180  Error deleting flashcard: Error: Error deleting flashcard
+    at FlashcardService.deleteFlashcard (flashcardService.ts:177:1)
+    at async handleDeleteCard (FlashcardEditor.tsx:84:1)
